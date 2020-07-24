@@ -195,8 +195,8 @@ const SignIn = props => {
         setSuccess(true);
         setLoading(false);
         // vi du ve chuyen huong qua trang quen mat khau sau khi call api
-        history.push('/forever-password');
-      }, 5000);
+        history.push('/sign-in');
+      }, 2000);
     }    
   };
 
