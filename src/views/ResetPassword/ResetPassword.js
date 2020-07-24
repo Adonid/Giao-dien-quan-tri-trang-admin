@@ -225,7 +225,7 @@ const ResetPassword = props => {
         setSuccess(true);
         setLoading(false);
         // vi du ve chuyen huong qua trang lay mat khau sau khi call api
-        history.push('/');
+        history.push('/reset-password-success');
       }, 2000);
     }    
   };
