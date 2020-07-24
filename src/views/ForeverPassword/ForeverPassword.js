@@ -191,7 +191,7 @@ const ForeverPassword = props => {
         setLoading(false);
         // vi du ve chuyen huong qua trang lay mat khau sau khi call api
         history.push('/reset-password');
-      }, 5000);
+      }, 2000);
     }    
   };
 
