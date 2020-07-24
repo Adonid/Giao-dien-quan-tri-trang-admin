@@ -293,7 +293,6 @@ const ForeverPassword = props => {
           </div>
         </Grid>
       </Grid>
-
       <BackDrop open={openBackdrop} />
     </div>
   );
