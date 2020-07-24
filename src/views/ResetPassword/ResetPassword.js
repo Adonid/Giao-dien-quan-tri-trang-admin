@@ -9,9 +9,11 @@ import {
   IconButton,
   TextField,
   Link,
-  Typography
+  Typography,
+  CircularProgress
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { BackDrop } from 'elements';
 
 const schema = {
   password: {
@@ -156,6 +158,16 @@ const ResetPassword = props => {
     errors: {}
   });
 
+  const [openBackdrop, setOpenBackdrop] = useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const timer = React.useRef();
+  React.useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
+
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handlePopoverOpen = (event) => {
@@ -204,7 +216,18 @@ const ResetPassword = props => {
   const handleSignIn = event => {
     event.preventDefault();
     // HÃY XỬ LÝ DỮ LIỆU Ở ĐÂY!
-    history.push('/');
+    if (!loading) {
+      setSuccess(false);
+      setLoading(true);
+      setOpenBackdrop(true);
+      // THOI GIAN XU LY API O DAY!
+      timer.current = setTimeout(() => {
+        setSuccess(true);
+        setLoading(false);
+        // vi du ve chuyen huong qua trang lay mat khau sau khi call api
+        history.push('/');
+      }, 2000);
+    }    
   };
 
   const hasError = field =>
@@ -328,19 +351,20 @@ const ResetPassword = props => {
                 <Button
                   className={classes.signInButton}
                   color="primary"
-                  disabled={!formState.isValid}
+                  disabled={!formState.isValid||loading}
                   fullWidth
                   size="large"
                   type="submit"
                   variant="contained"
                 >
-                  Đổi mật khẩu
+                  {loading && <CircularProgress size={24} className={classes.buttonProgress} />} Đổi mật khẩu
                 </Button>
               </form>
             </div>
           </div>
         </Grid>
       </Grid>
+      <BackDrop open={openBackdrop} />
     </div>
   );
 };
