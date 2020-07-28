@@ -5,13 +5,11 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import {
   Grid,
-  IconButton,
   CardContent,
   Card,
   Typography,
   Link
 } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const imageCheckDone = "/images/login/check_done.jpg";
 
@@ -58,7 +56,7 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     display: 'flex',
     justifyContent: 'center',
-    marginTop: theme.spacing(4)
+    marginTop: theme.spacing(8)
   },
   contentHeader: {
     display: 'flex',
@@ -97,7 +95,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignUp = props => {
+const ResetPasswordSuccess = props => {
   const { history, className, product, ...rest  } = props;
 
   const classes = useStyles();
@@ -185,8 +183,8 @@ const SignUp = props => {
   );
 };
 
-SignUp.propTypes = {
+ResetPasswordSuccess.propTypes = {
   history: PropTypes.object
 };
 
-export default withRouter(SignUp);
+export default withRouter(ResetPasswordSuccess);
