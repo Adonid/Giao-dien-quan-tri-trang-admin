@@ -195,7 +195,7 @@ const SignIn = props => {
         setSuccess(true);
         setLoading(false);
         // vi du ve chuyen huong qua trang quen mat khau sau khi call api
-        history.push('/sign-in');
+        history.push('/dashboard');
         setOpenBackdrop(false);
       }, 2000);
     }    
