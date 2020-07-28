@@ -1,17 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { AppBar, Toolbar, Badge, Hidden, IconButton } from '@material-ui/core';
+import { 
+  AppBar, 
+  Toolbar, 
+  Badge, 
+  Hidden, 
+  IconButton, 
+  Menu, 
+  List, 
+  ListItem,
+  Divider,
+  ListItemText ,
+  ListItemAvatar ,
+  Avatar,
+  Typography,
+  Link
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    boxShadow: 'none'
+    width: '100%',
+    maxWidth: '36ch',
+    backgroundColor: theme.palette.background.paper,
   },
+  inline: {
+    display: 'inline',
+  },
+  boxShadow: {
+    boxShadow: 'none'
+  },  
   flexGrow: {
     flexGrow: 1
   },
@@ -23,14 +46,25 @@ const useStyles = makeStyles(theme => ({
 const Topbar = props => {
   const { className, onSidebarOpen, ...rest } = props;
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
   const classes = useStyles();
 
-  const [notifications] = useState([]);
+  const [notifications] = useState([1,2,3]);
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <AppBar
       {...rest}
-      className={clsx(classes.root, className)}
+      className={clsx(classes.boxShadow, className)}
     >
       <Toolbar>
         <RouterLink to="/">
@@ -41,15 +75,108 @@ const Topbar = props => {
         </RouterLink>
         <div className={classes.flexGrow} />
         <Hidden mdDown>
-          <IconButton color="inherit">
+          <IconButton 
+            color="inherit"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleMenu}
+          >
             <Badge
               badgeContent={notifications.length}
-              color="primary"
-              variant="dot"
+              color="error"
             >
               <NotificationsIcon />
             </Badge>
           </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={open}
+            onClose={handleClose}
+          >
+            <List className={classes.root}>
+              <Link component="button" variant="inherit" underline="none" color="inherit">
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar alt="Remy Sharp" src="/images/avatars/avatar_1.png" />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Brunch this weekend?"
+                    secondary={
+                      <Fragment>
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          className={classes.inline}
+                          color="textPrimary"
+                        >
+                          Ali Connors
+                        </Typography>
+                        {" — I'll be in your neighborhood doing errands this…"}
+                      </Fragment>
+                    }
+                  />
+                </ListItem>
+              </Link>
+              <Divider variant="inset" component="li" />
+              <Link component="button" variant="inherit" underline="none" color="inherit">
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar alt="Travis Howard" src="/images/avatars/avatar_2.png" />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Summer BBQ"
+                    secondary={
+                      <Fragment>
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          className={classes.inline}
+                          color="textPrimary"
+                        >
+                          to Scott, Alex, Jennifer
+                        </Typography>
+                        {" — Wish I could come, but I'm out of town this…"}
+                      </Fragment>
+                    }
+                  />
+                </ListItem>
+              </Link>
+              <Divider variant="inset" component="li" />
+              <Link component="button" variant="inherit" underline="none" color="inherit">
+                <ListItem alignItems="flex-start">
+                  <ListItemAvatar>
+                    <Avatar alt="Cindy Baker" src="/images/avatars/avatar_3.png" />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="Oui Oui"
+                    secondary={
+                      <Fragment>
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          className={classes.inline}
+                          color="textPrimary"
+                        >
+                          Sandra Adams
+                        </Typography>
+                        {' — Do you have Paris recommendations? Have you ever…'}
+                      </Fragment>
+                    }
+                  />
+                </ListItem>
+              </Link>
+            </List>
+          </Menu>
           <IconButton
             className={classes.signOutButton}
             color="inherit"
