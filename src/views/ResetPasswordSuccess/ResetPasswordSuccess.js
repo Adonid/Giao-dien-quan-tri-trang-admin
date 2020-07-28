@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-const imageCheckDone = "%PUBLIC_URL%/images/login/check_done.jpg";
+const imageCheckDone = "/images/login/check_done.jpg";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -56,7 +56,7 @@ const useStyles = makeStyles(theme => ({
   content: {
     height: '100%',
     display: 'flex',
-    flexDirection: 'column'
+    justifyContent: 'center'
   },
   contentHeader: {
     display: 'flex',
@@ -75,12 +75,13 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     [theme.breakpoints.down('md')]: {
       justifyContent: 'center'
-    }
+    },
+    backgroundColor: 'white'
   },
   imageContainer: {
     height: 64,
     width: 64,
-    margin: '0 auto',
+    margin: '5px auto',
     border: `1px solid ${theme.palette.divider}`,
     borderRadius: '5px',
     overflow: 'hidden',
@@ -90,6 +91,9 @@ const useStyles = makeStyles(theme => ({
   },
   image: {
     width: '100%'
+  },
+  backgroundCard: {
+    backgroundColor: 'white'
   }
 }));
 
@@ -144,7 +148,7 @@ const SignUp = props => {
           lg={7}
           xs={12}
         >
-          <div className={classes.content}>
+          <div>
             <div className={classes.contentHeader}>
               <IconButton onClick={handleBack}>
                 <ArrowBackIcon />
@@ -153,7 +157,7 @@ const SignUp = props => {
             <div className={classes.contentBody}>
             <Card
                 {...rest}
-                className={clsx(classes.root, className)}
+                className={clsx(classes.backgroundCard, className)}
                 >
                 <CardContent>
                     <div className={classes.imageContainer}>
