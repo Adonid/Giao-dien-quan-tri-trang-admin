@@ -11,9 +11,11 @@ import {
   Link,
   FormHelperText,
   Checkbox,
-  Typography
+  Typography,
+  CircularProgress
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { BackDrop } from 'elements';
 
 const schema = {
   firstName: {
@@ -170,6 +172,16 @@ const SignUp = props => {
     errors: {}
   });
 
+  const [openBackdrop, setOpenBackdrop] = useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const timer = React.useRef();
+  React.useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
+
   useEffect(() => {
     const errors = validate(formState.values, schema);
 
@@ -205,7 +217,18 @@ const SignUp = props => {
 
   const handleSignUp = event => {
     event.preventDefault();
-    history.push('/');
+    if (!loading) {
+      setSuccess(false);
+      setLoading(true);
+      setOpenBackdrop(true);
+      // THOI GIAN XU LY API O DAY!
+      timer.current = setTimeout(() => {
+        setSuccess(true);
+        setLoading(false);
+        // vi du ve chuyen huong qua trang quen mat khau sau khi call api
+        history.push('/create-account-success');
+      }, 2000);
+    }
   };
 
   const hasError = field =>
@@ -365,13 +388,13 @@ const SignUp = props => {
                 <Button
                   className={classes.signUpButton}
                   color="primary"
-                  disabled={!formState.isValid}
+                  disabled={!formState.isValid||loading}
                   fullWidth
                   size="large"
                   type="submit"
                   variant="contained"
                 >
-                  Tạo tài khoản 
+                  {loading && <CircularProgress size={24} className={classes.buttonProgress} />} Tạo tài khoản
                 </Button>
                 <Typography
                   color="textSecondary"
@@ -391,6 +414,7 @@ const SignUp = props => {
           </div>
         </Grid>
       </Grid>
+      <BackDrop open={openBackdrop} />
     </div>
   );
 };
