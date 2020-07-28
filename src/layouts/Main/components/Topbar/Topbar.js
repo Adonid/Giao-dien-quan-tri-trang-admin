@@ -103,6 +103,7 @@ const Topbar = props => {
             open={open}
             onClose={handleClose}
           >
+            {/* Dua LIST vao component moi */}
             <List className={classes.root}>
               <Link component="button" variant="inherit" underline="none" color="inherit">
                 <ListItem alignItems="flex-start">
