@@ -9,5 +9,6 @@ export { default as SignUp } from './SignUp';
 export { default as ForeverPassword } from './ForeverPassword';
 export { default as ResetPassword } from './ResetPassword';
 export { default as ResetPasswordSuccess } from './ResetPasswordSuccess';
+export { default as CreateAccountSuccess } from './CreateAccountSuccess';
 export { default as Typography } from './Typography';
 export { default as UserList } from './UserList';
