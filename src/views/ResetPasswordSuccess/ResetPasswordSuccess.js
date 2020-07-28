@@ -8,7 +8,8 @@ import {
   IconButton,
   CardContent,
   Card,
-  Typography
+  Typography,
+  Link
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
@@ -56,7 +57,8 @@ const useStyles = makeStyles(theme => ({
   content: {
     height: '100%',
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginTop: theme.spacing(4)
   },
   contentHeader: {
     display: 'flex',
@@ -82,8 +84,6 @@ const useStyles = makeStyles(theme => ({
     height: 64,
     width: 64,
     margin: '5px auto',
-    border: `1px solid ${theme.palette.divider}`,
-    borderRadius: '5px',
     overflow: 'hidden',
     display: 'flex',
     alignItems: 'center',
@@ -103,7 +103,7 @@ const SignUp = props => {
   const classes = useStyles();
 
   const handleBack = () => {
-    history.goBack();
+    history.push('/sign-in');
   };
 
   return (
@@ -149,11 +149,6 @@ const SignUp = props => {
           xs={12}
         >
           <div>
-            <div className={classes.contentHeader}>
-              <IconButton onClick={handleBack}>
-                <ArrowBackIcon />
-              </IconButton>
-            </div>
             <div className={classes.contentBody}>
             <Card
                 {...rest}
@@ -172,13 +167,13 @@ const SignUp = props => {
                     gutterBottom
                     variant="h4"
                     >
-                        THAY ĐỔI THÀNH CÔNG
+                        THAY ĐỔI MẬT KHẨU THÀNH CÔNG
                     </Typography>
                     <Typography
                     align="center"
                     variant="body1"
                     >
-                     Mật khẩu của bạn đã được thay đổi, vui lòng đăng nhập trở lại hệ thống.
+                     Mật khẩu của bạn đã được thay đổi, vui lòng <Link onClick={handleBack} component="button" variant="h6">đăng nhập</Link> trở lại hệ thống.
                     </Typography>
                 </CardContent>
             </Card>
