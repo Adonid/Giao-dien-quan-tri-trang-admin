@@ -35,7 +35,7 @@ const Topbar = props => {
 
   const [notifications] = useState([1,2,3]);
 
-  const notify = [
+  const nofity = [
     {
       type: "Người dùng",
       items: [
@@ -101,7 +101,7 @@ const Topbar = props => {
           />
         </RouterLink>
         <div className={classes.root} />
-        <Hidden mdDown>
+        <Hidden smDown>
           <IconButton 
             color="inherit"
             aria-controls="menu-appbar"
@@ -131,7 +131,7 @@ const Topbar = props => {
             onClose={handleClose}
           >
             {/* Dua LIST vao component moi */}
-            <ListBar nofity={notify} />
+            <ListBar nofity={nofity} />
 
           </Menu>
           <IconButton
