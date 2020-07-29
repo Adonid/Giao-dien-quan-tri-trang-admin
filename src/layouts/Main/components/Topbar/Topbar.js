@@ -9,33 +9,15 @@ import {
   Badge, 
   Hidden, 
   IconButton, 
-  Menu, 
-  List, 
-  ListItem,
-  Divider,
-  ListItemText ,
-  ListItemAvatar ,
-  Avatar,
-  Typography,
-  Link
+  Menu
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
+import { ListBar } from 'elements';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({  
   root: {
-    width: '100%',
-    maxWidth: '36ch',
-    backgroundColor: theme.palette.background.paper,
-  },
-  inline: {
-    display: 'inline',
-  },
-  boxShadow: {
-    boxShadow: 'none'
-  },  
-  flexGrow: {
     flexGrow: 1
   },
   signOutButton: {
@@ -52,6 +34,51 @@ const Topbar = props => {
   const classes = useStyles();
 
   const [notifications] = useState([1,2,3]);
+
+  const notify = [
+    {
+      type: "Người dùng",
+      items: [
+        {
+          id      : 1,
+          name    : "Lê Viết Dũng",
+          avatar  : "/images/avatars/avatar_1.png",
+          topic   : "Ali Connors",
+          content : "I'll be in your neighborhood doing errands this..",
+          time    : "5 phút trước"
+        },
+        {
+          id      : 2,
+          name    : "Nguyễn Thế Cường",
+          avatar  : "/images/avatars/avatar_2.png",
+          topic   : "to Scott, Alex, Jennifer",
+          content : "Wish I could come, but I'm out of town this…",
+          time    : "15 phút trước"
+        },
+        {
+          id      : 3,
+          name    : "Trần Đơn",
+          avatar  : "/images/avatars/avatar_3.png",
+          topic   : "Sandra Adams",
+          content : "Do you have Paris recommendations? Have you ever…",
+          time    : "1 giờ trước"
+        },
+      ]
+    },
+    {
+      type: "Hệ thống",
+      items: [
+        {
+          id      : 1,
+          name    : "Dịch vụ email",
+          avatar  : "/images/avatars/avatar_4.png",
+          topic   : "Trả lời comment",
+          content : "Hãy trả lời các câu hỏi cho độc giả của bạn..",
+          time    : "2 giờ trước"
+        }
+      ]
+    }
+  ];
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -73,7 +100,7 @@ const Topbar = props => {
             src="/images/logos/logo--white.svg"
           />
         </RouterLink>
-        <div className={classes.flexGrow} />
+        <div className={classes.root} />
         <Hidden mdDown>
           <IconButton 
             color="inherit"
@@ -104,79 +131,8 @@ const Topbar = props => {
             onClose={handleClose}
           >
             {/* Dua LIST vao component moi */}
-            <List className={classes.root}>
-              <Link component="button" variant="inherit" underline="none" color="inherit">
-                <ListItem alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar alt="Remy Sharp" src="/images/avatars/avatar_1.png" />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Brunch this weekend?"
-                    secondary={
-                      <Fragment>
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          className={classes.inline}
-                          color="textPrimary"
-                        >
-                          Ali Connors
-                        </Typography>
-                        {" — I'll be in your neighborhood doing errands this…"}
-                      </Fragment>
-                    }
-                  />
-                </ListItem>
-              </Link>
-              <Divider variant="inset" component="li" />
-              <Link component="button" variant="inherit" underline="none" color="inherit">
-                <ListItem alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar alt="Travis Howard" src="/images/avatars/avatar_2.png" />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Summer BBQ"
-                    secondary={
-                      <Fragment>
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          className={classes.inline}
-                          color="textPrimary"
-                        >
-                          to Scott, Alex, Jennifer
-                        </Typography>
-                        {" — Wish I could come, but I'm out of town this…"}
-                      </Fragment>
-                    }
-                  />
-                </ListItem>
-              </Link>
-              <Divider variant="inset" component="li" />
-              <Link component="button" variant="inherit" underline="none" color="inherit">
-                <ListItem alignItems="flex-start">
-                  <ListItemAvatar>
-                    <Avatar alt="Cindy Baker" src="/images/avatars/avatar_3.png" />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Oui Oui"
-                    secondary={
-                      <Fragment>
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          className={classes.inline}
-                          color="textPrimary"
-                        >
-                          Sandra Adams
-                        </Typography>
-                        {' — Do you have Paris recommendations? Have you ever…'}
-                      </Fragment>
-                    }
-                  />
-                </ListItem>
-              </Link>
-            </List>
+            <ListBar nofity={notify} />
+
           </Menu>
           <IconButton
             className={classes.signOutButton}
