@@ -6,13 +6,11 @@ import { makeStyles } from '@material-ui/styles';
 import {
   Grid,
   Button,
-  IconButton,
   TextField,
   Link,
   Typography,
   CircularProgress 
 } from '@material-ui/core';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { BackDrop } from 'elements';
 
 const schema = {
@@ -247,11 +245,6 @@ const SignIn = props => {
           xs={12}
         >
           <div className={classes.content}>
-            <div className={classes.contentHeader}>
-              <IconButton onClick={handleBack}>
-                <ArrowBackIcon />
-              </IconButton>
-            </div>
             <div className={classes.contentBody}>
               <form
                 className={classes.form}
