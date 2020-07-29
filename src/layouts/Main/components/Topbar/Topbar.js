@@ -35,7 +35,7 @@ const Topbar = props => {
 
   const [notifications] = useState([1,2,3]);
 
-  const nofity = [
+  const notify = [
     {
       type: "Người dùng",
       items: [
@@ -129,9 +129,10 @@ const Topbar = props => {
             }}
             open={open}
             onClose={handleClose}
+            component={ListBar}
           >
             {/* Dua LIST vao component moi */}
-            <ListBar nofity={nofity} />
+            <ListBar refs={notify} />
 
           </Menu>
           <IconButton
