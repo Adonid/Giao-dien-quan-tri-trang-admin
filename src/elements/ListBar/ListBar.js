@@ -38,12 +38,12 @@ import {
   }));
   
 const ListBar = props => {
-    const { nofity, ...rest } = props;
     const classes = useStyles();
+    console.log(props.refs);
     return (
         <Fragment>
             {
-                nofity.map( cluster => {
+                [...props.refs].map( cluster => {
                     <List key={cluster.key} subheader={<ListSubheader> {cluster.type} </ListSubheader>} className={classes.root}>
                         {
                             cluster.items.map( item => {
