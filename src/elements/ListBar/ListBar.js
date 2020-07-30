@@ -38,12 +38,12 @@ import {
   }));
   
 const ListBar = props => {
+    const {notifys, ...rest} = props;
     const classes = useStyles();
-    console.log(props.refs);
     return (
         <Fragment>
             {
-                [...props.refs].map( cluster => {
+                [...props.notify].map( cluster => {
                     <List key={cluster.key} subheader={<ListSubheader> {cluster.type} </ListSubheader>} className={classes.root}>
                         {
                             cluster.items.map( item => {
@@ -98,7 +98,7 @@ const ListBar = props => {
 };
 
 ListBar.propTypes = {
-    
+    notifys: PropTypes.array
 };
 
 export default ListBar;
