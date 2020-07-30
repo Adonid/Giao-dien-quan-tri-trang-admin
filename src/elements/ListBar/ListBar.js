@@ -38,14 +38,13 @@ import mockData from './data';
         direction: "row",
         justify: "space-between"
     },
-    isRead: {
-        backgroundColor: "#eee",
+    marginBottom: {
         marginBottom: theme.spacing(0.25)
     }
   }));
 
   const handleNotify = (event) => {
-    console.log(1);
+    console.log(event);
   }
   
 const ListBar = props => {
@@ -63,10 +62,11 @@ const ListBar = props => {
                             cluster.items.map( item => (
                                 <Fragment key={ item.id }>
                                     <ListItem 
-                                        className={ !item.isRead ? classes.isRead : null}
+                                        className={classes.marginBottom}
                                         button 
-                                        alignItems="flex-start" 
-                                        onClick={(event) => handleNotify(event)}
+                                        alignItems="flex-start"
+                                        onClick={ handleNotify }
+                                        selected={!item.isRead}
                                     >
                                         <ListItemAvatar>
                                             <Avatar alt={ item.name } src={ item.avatar } />
