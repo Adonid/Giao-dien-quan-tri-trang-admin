@@ -41,6 +41,10 @@ import mockData from './data';
         margin: 0
     }
   }));
+
+  const handleNotify = (event) => {
+    console.log(1);
+  }
   
 const ListBar = props => {
     const {className, ...rest} = props;
@@ -52,11 +56,11 @@ const ListBar = props => {
         <Fragment>
             {
                 notifys.map( cluster => (
-                    <List key={cluster.key} subheader={<ListSubheader> {cluster.type} </ListSubheader>} className={classes.root}>
+                    <List key={cluster.ref} subheader={<ListSubheader> {cluster.type} </ListSubheader>} className={classes.root}>
                         {
                             cluster.items.map( item => (
-                                <Fragment key={ item.key }>
-                                    <ListItem button alignItems="flex-start">
+                                <Fragment key={ item.id }>
+                                    <ListItem button alignItems="flex-start" onClick={(event) => handleNotify(event)}>
                                         <ListItemAvatar>
                                             <Avatar alt={ item.name } src={ item.avatar } />
                                         </ListItemAvatar>
