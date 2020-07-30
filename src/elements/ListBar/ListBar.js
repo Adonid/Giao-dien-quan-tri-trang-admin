@@ -13,6 +13,8 @@ import {
     ListSubheader
   } from '@material-ui/core';
 
+import mockData from './data';
+
   const useStyles = makeStyles(theme => ({
     root: {
       width: '100%',
@@ -34,25 +36,32 @@ import {
         display: "flex",
         direction: "row",
         justify: "space-between"
+    },
+    marginNone: {
+        margin: 0
     }
   }));
   
 const ListBar = props => {
-    const {notifys, ...rest} = props;
+    const {className, ...rest} = props;
+
     const classes = useStyles();
+
+    const [notifys] = useState(mockData);
     return (
         <Fragment>
             {
-                [...props.notify].map( cluster => {
+                notifys.map( cluster => (
                     <List key={cluster.key} subheader={<ListSubheader> {cluster.type} </ListSubheader>} className={classes.root}>
                         {
-                            cluster.items.map( item => {
+                            cluster.items.map( item => (
                                 <Fragment key={ item.key }>
                                     <ListItem button alignItems="flex-start">
                                         <ListItemAvatar>
                                             <Avatar alt={ item.name } src={ item.avatar } />
                                         </ListItemAvatar>
                                         <ListItemText
+                                            className={classes.marginNone}
                                             primary={ item.name }
                                             secondary={
                                                 <Fragment>
@@ -74,10 +83,10 @@ const ListBar = props => {
                                     </ListItem>
                                     <Divider variant="inset" component="li" />
                                 </Fragment>
-                            })
+                            ))
                         }
                     </List>
-                })
+                ))
             }   
             <Divider />
             <List className={classes.footerList}>
@@ -98,7 +107,7 @@ const ListBar = props => {
 };
 
 ListBar.propTypes = {
-    notifys: PropTypes.array
+    className: PropTypes.string
 };
 
 export default ListBar;
