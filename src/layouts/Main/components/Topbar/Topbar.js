@@ -2,18 +2,20 @@ import React, { useState, Fragment } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, fade } from '@material-ui/core/styles';
 import { 
   AppBar, 
   Toolbar, 
   Badge, 
   Hidden, 
   IconButton, 
-  Menu
+  Menu,
+  InputBase
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
+import SearchIcon from '@material-ui/icons/Search';
 import { ListBar } from 'elements';
 
 const useStyles = makeStyles(theme => ({  
@@ -22,6 +24,45 @@ const useStyles = makeStyles(theme => ({
   },
   signOutButton: {
     marginLeft: theme.spacing(1)
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
+    },
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
   }
 }));
 
@@ -101,6 +142,19 @@ const Topbar = props => {
           />
         </RouterLink>
         <div className={classes.root} />
+        <div className={classes.search}>
+          <div className={classes.searchIcon}>
+            <SearchIcon />
+          </div>
+          <InputBase
+            placeholder="Search…"
+            classes={{
+              root: classes.inputRoot,
+              input: classes.inputInput,
+            }}
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </div>
         <Hidden smDown>
           <IconButton 
             color="inherit"
@@ -129,10 +183,9 @@ const Topbar = props => {
             }}
             open={open}
             onClose={handleClose}
-            component={ListBar}
           >
             {/* Dua LIST vao component moi */}
-            <ListBar refs={notify} />
+            <ListBar notify={notify} />
 
           </Menu>
           <IconButton
