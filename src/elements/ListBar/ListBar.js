@@ -1,6 +1,7 @@
 import React, { useState, Fragment} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
+import clsx from 'clsx';
 import { 
     List, 
     ListItem,
@@ -37,8 +38,9 @@ import mockData from './data';
         direction: "row",
         justify: "space-between"
     },
-    marginNone: {
-        margin: 0
+    isRead: {
+        backgroundColor: "#eee",
+        marginBottom: theme.spacing(0.25)
     }
   }));
 
@@ -60,12 +62,16 @@ const ListBar = props => {
                         {
                             cluster.items.map( item => (
                                 <Fragment key={ item.id }>
-                                    <ListItem button alignItems="flex-start" onClick={(event) => handleNotify(event)}>
+                                    <ListItem 
+                                        className={ !item.isRead ? classes.isRead : null}
+                                        button 
+                                        alignItems="flex-start" 
+                                        onClick={(event) => handleNotify(event)}
+                                    >
                                         <ListItemAvatar>
                                             <Avatar alt={ item.name } src={ item.avatar } />
                                         </ListItemAvatar>
                                         <ListItemText
-                                            className={classes.marginNone}
                                             primary={ item.name }
                                             secondary={
                                                 <Fragment>
