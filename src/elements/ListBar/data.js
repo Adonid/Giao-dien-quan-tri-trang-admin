@@ -3,6 +3,7 @@
 export default [
     {
       type: "Người dùng",
+      ref: 1,
       items: [
         {
           id      : 1,
@@ -32,6 +33,7 @@ export default [
     },
     {
       type: "Hệ thống",
+      ref: 2,
       items: [
         {
           id      : 1,
