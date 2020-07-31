@@ -16,7 +16,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import SearchIcon from '@material-ui/icons/Search';
-import { ListBar } from 'elements';
+import { ListNotifys } from './components';
 
 const useStyles = makeStyles(theme => ({  
   root: {
@@ -140,7 +140,7 @@ const Topbar = props => {
             onClose={handleClose}
           >
             {/* Dua LIST vao component moi */}
-            <ListBar/>
+            <ListNotifys />
 
           </Menu>
           <IconButton
