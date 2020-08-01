@@ -48,7 +48,7 @@ const ListNotifys = props => {
 
     const classes = useStyles();
 
-    const [notifys] = useState(mockData);
+    const [notifys, setNotifys] = useState(mockData);
 
     const [alert, setAlert] = useState({type:'',ref:0,id:0,name:'S',avatar:'',topic:'',content:'',time:'',link:'',isRead:false});
 
@@ -66,6 +66,7 @@ const ListNotifys = props => {
         notify.link = target.getAttribute("notify-link");
         notify.isRead = !target.getAttribute("selected");
         setAlert(notify);
+        // event.currentTarget.getAttribute("selected") = true;
     }
 
     return (
