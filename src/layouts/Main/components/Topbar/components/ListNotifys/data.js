@@ -12,7 +12,8 @@ export default [
           topic   : "Ali Connors",
           content : "I'll be in your neighborhood doing errands this..",
           time    : "5 phút trước",
-          isRead  : false
+          isRead  : false,
+          link    : ''
         },
         {
           id      : 2,
@@ -21,7 +22,8 @@ export default [
           topic   : "to Scott, Alex, Jennifer",
           content : "Wish I could come, but I'm out of town this…",
           time    : "15 phút trước",
-          isRead  : false
+          isRead  : false,
+          link    : ''
         },
         {
           id      : 3,
@@ -30,7 +32,8 @@ export default [
           topic   : "Sandra Adams",
           content : "Do you have Paris recommendations? Have you ever…",
           time    : "1 giờ trước",
-          isRead  : true
+          isRead  : true,
+          link    : ''
         },
       ]
     },
@@ -45,7 +48,8 @@ export default [
           topic   : "Du lịch Hà Thành không thể bỏ qua 5 địa điểm này",
           content : "Khi nào tour du lịch Hà Nội-Vinh mở bạn ơi!",
           time    : "19 phút trước",
-          isRead  : false
+          isRead  : false,
+          link    : ''
         },
         {
           id      : 2,
@@ -54,7 +58,8 @@ export default [
           topic   : "Du lịch Hà Thành không thể bỏ qua 5 địa điểm này",
           content : "Khi nào tour du lịch Hà Nội-Vinh mở bạn ơi!",
           time    : "19 phút trước",
-          isRead  : false
+          isRead  : false,
+          link    : ''
         },
         {
           id      : 3,
@@ -63,7 +68,8 @@ export default [
           topic   : "Du lịch Hà Thành không thể bỏ qua 5 địa điểm này",
           content : "Khi nào tour du lịch Hà Nội-Vinh mở bạn ơi!",
           time    : "19 phút trước",
-          isRead  : true
+          isRead  : true,
+          link    : ''
         },
         {
           id      : 4,
@@ -72,7 +78,8 @@ export default [
           topic   : "Du lịch Hà Thành không thể bỏ qua 5 địa điểm này",
           content : "Khi nào tour du lịch Hà Nội-Vinh mở bạn ơi!",
           time    : "19 phút trước",
-          isRead  : false
+          isRead  : false,
+          link    : ''
         },
         {
           id      : 5,
@@ -81,7 +88,8 @@ export default [
           topic   : "Du lịch Hà Thành không thể bỏ qua 5 địa điểm này",
           content : "Khi nào tour du lịch Hà Nội-Vinh mở bạn ơi!",
           time    : "19 phút trước",
-          isRead  : true
+          isRead  : true,
+          link    : ''
         }
       ]
     }
