@@ -42,11 +42,6 @@ import AlertNotify from './AlertNotify';
         marginBottom: theme.spacing(0.25)
     }
   }));
-
-  const handleNotify = event => {
-    const target = event.currentTarget;
-    console.log(target.getAttribute("notify-id"));
-  }
   
 const ListNotifys = props => {
     const {className, ...rest} = props;
@@ -54,6 +49,25 @@ const ListNotifys = props => {
     const classes = useStyles();
 
     const [notifys] = useState(mockData);
+
+    const [alert, setAlert] = useState({type:'',ref:0,id:0,name:'S',avatar:'',topic:'',content:'',time:'',link:'',isRead:false});
+
+    const handleNotify = event => {
+        const target = event.currentTarget;
+        let notify = {};
+        notify.type = target.getAttribute("notify-type");
+        notify.ref = target.getAttribute("notify-ref");
+        notify.id = target.getAttribute("notify-id");
+        notify.name = target.getAttribute("notify-name");
+        notify.avatar = target.getAttribute("notify-avatar");
+        notify.topic = target.getAttribute("notify-topic");
+        notify.content = target.getAttribute("notify-content");
+        notify.time = target.getAttribute("notify-time");
+        notify.link = target.getAttribute("notify-link");
+        notify.isRead = !target.getAttribute("selected");
+        setAlert(notify);
+    }
+
     return (
         <Fragment>
             {
@@ -68,6 +82,8 @@ const ListNotifys = props => {
                                         alignItems="flex-start"
                                         onClick={ handleNotify }
                                         selected={ !item.isRead }
+                                        notify-type={ cluster.type }
+                                        notify-ref={ cluster.ref }
                                         notify-id={ item.id }
                                         notify-name={ item.name }
                                         notify-avatar={ item.avatar }
@@ -119,7 +135,7 @@ const ListNotifys = props => {
               </ListItem>
             </List>
             <Divider />
-            <AlertNotify />
+            <AlertNotify notify={alert} />
         </Fragment>
     );
 };
