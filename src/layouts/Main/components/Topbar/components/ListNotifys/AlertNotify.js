@@ -126,10 +126,10 @@ const AlertNotify = props => {
                       </IconButton>
                     </Tooltip>
                     
-                    <Tooltip title="Đánh dấu là đã đọc">
+                    <Tooltip title={ props.notify.isRead ? "Đánh dấu là chưa đọc" : "Đánh dấu là đã đọc" }>
                       <IconButton 
                         className={ props.notify.isRead ? classes.colorSuccess : null } 
-                        aria-label={ props.notify.isRead ? "Đánh dấu là đã đọc" : "Đánh dấu là chưa đọc" }
+                        aria-label="Đánh dấu là đã đọc"
                         onClick={ handleMark }
                         >
                           <AssignmentTurnedInIcon />
