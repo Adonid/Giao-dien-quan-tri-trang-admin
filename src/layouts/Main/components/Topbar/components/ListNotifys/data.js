@@ -28,7 +28,7 @@ export default [
         {
           id      : 3,
           name    : "Trần Đơn",
-          avatar  : "/images/avatars/avatar_3.png",
+          avatar  : "",
           topic   : "Sandra Adams",
           content : "Do you have Paris recommendations? Have you ever…",
           time    : "1 giờ trước",
@@ -64,7 +64,7 @@ export default [
         {
           id      : 3,
           name    : "Nguyễn Chiến",
-          avatar  : "/images/avatars/avatar_7.png",
+          avatar  : "",
           topic   : "Du lịch Hà Thành không thể bỏ qua 5 địa điểm này",
           content : "Khi nào tour du lịch Hà Nội-Vinh mở bạn ơi!",
           time    : "19 phút trước",
