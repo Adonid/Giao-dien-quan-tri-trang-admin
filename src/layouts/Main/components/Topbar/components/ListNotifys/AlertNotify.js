@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef  } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -44,39 +44,48 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const AlertNotify = props => {
+
     const [open, setOpen] = React.useState(false);
+
+    /** Khong xuat hien dialog lan dau khi chay va chi chay khi co su thay doi du lieu vao thay doi */
+    const firstUpdate = useRef(true);
+    useLayoutEffect (() => {
+      if (firstUpdate.current) {
+        firstUpdate.current = false;
+        return;
+      }
+      setOpen(true);
+    },[props.notify])
+    /** End */
 
     const classes = useStyles();
 
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
     const handleClose = () => {
-        setOpen(false);
+      setOpen(false);
     };
 
     const handleReply = () => {
         setOpen(false);
-        // go to page target
+        // go to page target: props.link
     };
 
     const handleDelete = () => {
-      
+      console.log(props.notify.type);
+      console.log(props.notify.ref);
+      console.log(props.notify.id);
     }
 
     const handleMark = () => {
-
+      console.log(props.notify.type);
+      console.log(props.notify.ref);
+      console.log(props.notify.id);
     }
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button>
       <Dialog
         fullScreen={fullScreen}
         open={open}
@@ -85,7 +94,7 @@ const AlertNotify = props => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          <Typography className={classes.titleDialog}>{"Use Google's location service?"}</Typography>
+          <Typography className={classes.titleDialog}>Thông báo từ {props.notify.type.toLowerCase()}</Typography>
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -93,17 +102,17 @@ const AlertNotify = props => {
             <Card className={classes.root}>
                 <CardHeader
                     avatar={
-                    !props.avatar ? <Avatar aria-label="recipe" className={ classes.avatar }>{'props.name'.substring(0,1)}</Avatar> : <Avatar alt={ props.name } src={ props.avatar } />
+                      !props.notify.avatar ? <Avatar aria-label="recipe" className={ classes.avatar }>{props.notify.name.substring(0,1)}</Avatar> : <Avatar alt={ props.notify.name } src={ props.notify.avatar } />
                     }
-                    title={<Typography variant="h6" component="p"> { props.name } </Typography>}
-                    subheader={<Typography variant="caption">{ props.time }</Typography>}
+                    title={<Typography variant="h6" component="p"> { props.notify.name } </Typography>}
+                    subheader={<Typography variant="caption">{ props.notify.time }</Typography>}
                 />
                 <CardContent>
                     <Typography variant="h6" component="span">
-                      { props.topic }
+                      { props.notify.topic }
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="span">
-                      { "— " + props.content }
+                      { "— " + props.notify.content }
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
@@ -119,8 +128,8 @@ const AlertNotify = props => {
                     
                     <Tooltip title="Đánh dấu là đã đọc">
                       <IconButton 
-                        className={ props.isReaded ? classes.colorSuccess : null } 
-                        aria-label={ props.isReaded ? "Đánh dấu là đã đọc" : "Đánh dấu là chưa đọc" }
+                        className={ props.notify.isRead ? classes.colorSuccess : null } 
+                        aria-label={ props.notify.isRead ? "Đánh dấu là đã đọc" : "Đánh dấu là chưa đọc" }
                         onClick={ handleMark }
                         >
                           <AssignmentTurnedInIcon />
@@ -144,8 +153,9 @@ const AlertNotify = props => {
   );
 };
 
-AlertNotify.propTypes = {
-    
+AlertNotify.PropTypes = {
+  // notify : PropTypes.object,
+  // open   : PropTypes.bool
 };
 
 export default AlertNotify;
