@@ -1,4 +1,5 @@
 import React, { useLayoutEffect, useRef, useState  } from 'react';
+import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -46,6 +47,8 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const AlertNotify = props => {
+    let history = useHistory();
+
     const { notify, apiReMarkNote, apiDeleteNote, ...rest } = props;
 
     const [open, setOpen] = useState(false);
@@ -74,6 +77,9 @@ const AlertNotify = props => {
     };
 
     const handleReply = () => {
+        // Tuy theo ref va id ma dan toi link page tuong ung
+        
+        history.push('/dashboard');
         setOpen(false);
     };
 
@@ -145,7 +151,7 @@ const AlertNotify = props => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleReply} color="primary" autoFocus>
-            <Link to="/products">Phản hồi</Link>
+            Phản hồi
           </Button>
           <Button onClick={handleClose} color="secondary">
             Đóng
