@@ -140,7 +140,7 @@ const Topbar = props => {
             onClose={handleClose}
           >
             {/* Dua LIST vao component moi */}
-            <ListNotifys />
+            <ListNotifys closeMenu={() => handleClose()} />
 
           </Menu>
           <IconButton
