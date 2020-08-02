@@ -113,6 +113,32 @@ const ListNotifys = props => {
         element.nextSibling.remove();
         element.remove();
     }
+
+    const apiDeleteAll = () => {
+
+        /** api xoa het cac thong bao */
+
+        /** end */
+        // Sau do dua ra hien thi
+        setNotifys([]);
+        closeMenu();
+    }
+
+    const apiMarkAll = () => {
+
+        /** api danh dau tat ca thong bao da duoc doc */
+
+        /** end */
+        
+        // Sau do refresh lai trang thai
+        let newNotifys = [...notifys];
+        newNotifys.map( el => {
+            el.items.map( item => {
+                item.isRead = true;
+            })
+        })
+        setNotifys(newNotifys);
+    }
     /** END */
 
     return (
@@ -170,16 +196,29 @@ const ListNotifys = props => {
             }   
             <Divider />
             <List className={classes.footerList}>
-              <ListItem>
-                <Link component="button" color="inherit" underline="none">
-                    <Typography variant="caption">Xóa tất cả</Typography>
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link component="button" color="inherit" underline="none">
-                    <Typography variant="caption">Đã đọc tất cả</Typography>
-                </Link>
-              </ListItem>
+                {
+                    notifys.length 
+                    ? 
+                        <Fragment>
+                            <ListItem>
+                                <Link component="button" color="inherit" underline="none" onClick={ apiDeleteAll }>
+                                    <Typography variant="caption">Xóa tất cả</Typography>
+                                </Link>
+                            </ListItem>
+                            <ListItem>
+                                <Link component="button" color="inherit" underline="none" onClick={ apiMarkAll }>
+                                    <Typography variant="caption">Đã đọc tất cả</Typography>
+                                </Link>
+                            </ListItem>
+                        </Fragment>
+                    : 
+                        <ListItem>
+                            <Link color="inherit" underline="none" >
+                                <Typography variant="caption">Không có thông báo</Typography>
+                            </Link>
+                        </ListItem>
+                }
+                
             </List>
             <Divider />
             <AlertNotify notify={ alert } apiReMarkNote={ el => apiReMarkNote(el) } apiDeleteNote={ el => apiDeleteNote(el) } />
