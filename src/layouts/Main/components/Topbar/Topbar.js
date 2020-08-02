@@ -118,7 +118,7 @@ const Topbar = props => {
             onClick={handleMenu}
           >
             <Badge
-              badgeContent={notifications.length}
+              badgeContent={notifications.length} // So luong notify moi nay lay tu REDUX tra ve
               color="error"
             >
               <NotificationsIcon />
