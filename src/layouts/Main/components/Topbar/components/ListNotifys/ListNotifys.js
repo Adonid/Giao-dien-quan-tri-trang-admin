@@ -52,6 +52,8 @@ const ListNotifys = props => {
 
     const [alert, setAlert] = useState({type:'',ref:0,id:0,name:'S',avatar:'',topic:'',content:'',time:'',link:'',isRead:false});
 
+    const [element, setElement] = useState(null);
+
     const handleNotify = event => {
         const target = event.currentTarget;
         let notify = {};
@@ -64,10 +66,46 @@ const ListNotifys = props => {
         notify.content = target.getAttribute("notify-content");
         notify.time = target.getAttribute("notify-time");
         notify.link = target.getAttribute("notify-link");
-        notify.isRead = !target.getAttribute("selected");
+
+        // Dua sang component thong bao
         setAlert(notify);
-        // event.currentTarget.getAttribute("selected") = true;
+        // end
+
+        // Danh dau la da doc
+        event.currentTarget.setAttribute("class", target.getAttribute("class").replace("Mui-selected", ""));
+        // end
+        setElement(event.currentTarget)
     }
+
+    /** CALL API */
+    const apiReMarkNote = el => {
+        console.log(el.ref, el.id, el.isRead);
+        // ref : la thuoc cum tin nhan(bang) nao
+        // id  : id cua tin nhan
+        // isRead: tinh trang da doc tin nhan hay chua
+
+        /** Call api de thuc hien MARK READED */
+
+        /** end */
+
+        // Sau do danh dau tinh trang tin nhan
+        element.setAttribute("class", el.isRead ? element.getAttribute("class").replace("Mui-selected", "") : element.getAttribute("class")+" Mui-selected");
+    }
+
+    const apiDeleteNote = el => {
+        console.log(el.ref, el.id, el.isRead);
+        // ref : la thuoc cum tin nhan(bang) nao
+        // id  : id cua tin nhan
+        // isRead: tinh trang da doc tin nhan hay chua
+
+        /** Call api de thuc hien DELETE */
+
+        /** end */
+
+        // Sau do cap nhat lai notifys
+        const newNotifys = notifys.filter(cluster => cluster.ref===el.ref&&cluster.item)
+    }
+    /** END */
 
     return (
         <Fragment>
@@ -82,9 +120,9 @@ const ListNotifys = props => {
                                         button 
                                         alignItems="flex-start"
                                         onClick={ handleNotify }
-                                        selected={ !item.isRead }
                                         notify-type={ cluster.type }
                                         notify-ref={ cluster.ref }
+                                        selected={ !item.isRead }
                                         notify-id={ item.id }
                                         notify-name={ item.name }
                                         notify-avatar={ item.avatar }
@@ -136,7 +174,7 @@ const ListNotifys = props => {
               </ListItem>
             </List>
             <Divider />
-            <AlertNotify notify={alert} />
+            <AlertNotify notify={ alert } apiReMarkNote={ el => apiReMarkNote(el) } apiDeleteNote={ el => apiDeleteNote(el) } />
         </Fragment>
     );
 };
