@@ -21,6 +21,9 @@ import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 import Tooltip from '@material-ui/core/Tooltip';
+import {
+  Link
+} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -72,7 +75,6 @@ const AlertNotify = props => {
 
     const handleReply = () => {
         setOpen(false);
-        // go to page target: link
     };
 
     const handleDelete = () => {
@@ -127,7 +129,7 @@ const AlertNotify = props => {
                       </IconButton>
                     </Tooltip>
                     
-                    <Tooltip title={ isRead ? "Đánh dấu là chưa đọc" : "Đánh dấu là đã đọc" }>
+                    <Tooltip title={ isRead ? "Đánh dấu là đã đọc" : "Đánh dấu là chưa đọc" }>
                       <IconButton 
                         className={ isRead ? classes.colorSuccess : null } 
                         aria-label="Đánh dấu là đã đọc"
@@ -143,7 +145,7 @@ const AlertNotify = props => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleReply} color="primary" autoFocus>
-            Phản hồi
+            <Link to="/products">Phản hồi</Link>
           </Button>
           <Button onClick={handleClose} color="secondary">
             Đóng
