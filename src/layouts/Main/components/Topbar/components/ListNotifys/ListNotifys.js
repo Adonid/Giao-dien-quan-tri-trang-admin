@@ -103,7 +103,8 @@ const ListNotifys = props => {
         /** end */
 
         // Sau do cap nhat lai notifys
-        const newNotifys = notifys.filter(cluster => cluster.ref===el.ref&&cluster.item)
+        element.nextSibling.remove();
+        element.remove();
     }
     /** END */
 
