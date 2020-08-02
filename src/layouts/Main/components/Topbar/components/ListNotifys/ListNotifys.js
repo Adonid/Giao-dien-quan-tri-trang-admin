@@ -44,7 +44,7 @@ import AlertNotify from './AlertNotify';
   }));
   
 const ListNotifys = props => {
-    const {className, ...rest} = props;
+    const {closeMenu, className, ...rest} = props;
 
     const classes = useStyles();
 
@@ -70,16 +70,24 @@ const ListNotifys = props => {
         // Dua sang component thong bao
         setAlert(notify);
         // end
+        // Luu lai doi tuong notify
+        setElement(event.currentTarget);
+        // end
+
+        /** api danh dau la da doc */
+
+        /** end */
 
         // Danh dau la da doc
         event.currentTarget.setAttribute("class", target.getAttribute("class").replace("Mui-selected", ""));
         // end
-        setElement(event.currentTarget)
+        // Dong MENU
+        closeMenu();
+        // end
     }
 
     /** CALL API */
     const apiReMarkNote = el => {
-        console.log(el.ref, el.id, el.isRead);
         // ref : la thuoc cum tin nhan(bang) nao
         // id  : id cua tin nhan
         // isRead: tinh trang da doc tin nhan hay chua
@@ -93,7 +101,6 @@ const ListNotifys = props => {
     }
 
     const apiDeleteNote = el => {
-        console.log(el.ref, el.id, el.isRead);
         // ref : la thuoc cum tin nhan(bang) nao
         // id  : id cua tin nhan
         // isRead: tinh trang da doc tin nhan hay chua
@@ -181,7 +188,8 @@ const ListNotifys = props => {
 };
 
 ListNotifys.propTypes = {
-    className: PropTypes.string
+    className: PropTypes.string,
+    closeMenu: PropTypes.func
 };
 
 export default ListNotifys;
