@@ -78,7 +78,7 @@ const AlertNotify = props => {
 
     const handleReply = () => {
         // Tuy theo ref va id ma dan toi link page tuong ung
-        
+        // Tim hieu cach dua tham so vao component bang useParams - route dom
         history.push('/dashboard');
         setOpen(false);
     };
