@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef  } from 'react';
+import React, { useLayoutEffect, useRef, useState  } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -39,15 +39,17 @@ const useStyles = makeStyles((theme) => ({
     },
     colorSuccess: {
       color: '#43a047',
-      padding: theme.spacing(0.75)
     }
   }));
 
 const AlertNotify = props => {
+    const { notify, apiReMarkNote, apiDeleteNote, ...rest } = props;
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
-    /** Khong xuat hien dialog lan dau khi chay va chi chay khi co su thay doi du lieu vao thay doi */
+    const [isRead, setIsRead] = useState(true);
+
+    /** Khong xuat hien dialog lan dau khi chay. Sau do chi mo khi co du lieu vao td. tu set la da doc */
     const firstUpdate = useRef(true);
     useLayoutEffect (() => {
       if (firstUpdate.current) {
@@ -55,7 +57,8 @@ const AlertNotify = props => {
         return;
       }
       setOpen(true);
-    },[props.notify])
+      setIsRead(true);
+    },[notify])
     /** End */
 
     const classes = useStyles();
@@ -69,19 +72,17 @@ const AlertNotify = props => {
 
     const handleReply = () => {
         setOpen(false);
-        // go to page target: props.link
+        // go to page target: link
     };
 
     const handleDelete = () => {
-      console.log(props.notify.type);
-      console.log(props.notify.ref);
-      console.log(props.notify.id);
+      setOpen(false);
+      apiDeleteNote({ ref: notify.ref, id: notify.id });
     }
 
     const handleMark = () => {
-      console.log(props.notify.type);
-      console.log(props.notify.ref);
-      console.log(props.notify.id);
+      setIsRead(!isRead);
+      apiReMarkNote({ ref: notify.ref, id: notify.id, isRead: !isRead });
     }
 
   return (
@@ -94,7 +95,7 @@ const AlertNotify = props => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          <Typography className={classes.titleDialog}>Thông báo từ {props.notify.type.toLowerCase()}</Typography>
+          <Typography className={classes.titleDialog}>Thông báo từ {notify.type.toLowerCase()}</Typography>
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -102,17 +103,17 @@ const AlertNotify = props => {
             <Card className={classes.root}>
                 <CardHeader
                     avatar={
-                      !props.notify.avatar ? <Avatar aria-label="recipe" className={ classes.avatar }>{props.notify.name.substring(0,1)}</Avatar> : <Avatar alt={ props.notify.name } src={ props.notify.avatar } />
+                      !notify.avatar ? <Avatar aria-label="recipe" className={ classes.avatar }>{notify.name.substring(0,1)}</Avatar> : <Avatar alt={ notify.name } src={ notify.avatar } />
                     }
-                    title={<Typography variant="h6" component="p"> { props.notify.name } </Typography>}
-                    subheader={<Typography variant="caption">{ props.notify.time }</Typography>}
+                    title={<Typography variant="h6" component="p"> { notify.name } </Typography>}
+                    subheader={<Typography variant="caption">{ notify.time }</Typography>}
                 />
                 <CardContent>
                     <Typography variant="h6" component="span">
-                      { props.notify.topic }
+                      { notify.topic }
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="span">
-                      { "— " + props.notify.content }
+                      { "— " + notify.content }
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
@@ -126,9 +127,9 @@ const AlertNotify = props => {
                       </IconButton>
                     </Tooltip>
                     
-                    <Tooltip title={ props.notify.isRead ? "Đánh dấu là chưa đọc" : "Đánh dấu là đã đọc" }>
+                    <Tooltip title={ isRead ? "Đánh dấu là chưa đọc" : "Đánh dấu là đã đọc" }>
                       <IconButton 
-                        className={ props.notify.isRead ? classes.colorSuccess : null } 
+                        className={ isRead ? classes.colorSuccess : null } 
                         aria-label="Đánh dấu là đã đọc"
                         onClick={ handleMark }
                         >
@@ -153,9 +154,10 @@ const AlertNotify = props => {
   );
 };
 
-AlertNotify.PropTypes = {
-  // notify : PropTypes.object,
-  // open   : PropTypes.bool
+AlertNotify.propTypes = {
+  notify : PropTypes.object,
+  apiReMarkNote : PropTypes.func,
+  apiDeleteNote : PropTypes.func,
 };
 
 export default AlertNotify;
