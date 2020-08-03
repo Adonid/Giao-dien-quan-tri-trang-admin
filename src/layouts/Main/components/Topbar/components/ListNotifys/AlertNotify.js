@@ -22,9 +22,7 @@ import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 import Tooltip from '@material-ui/core/Tooltip';
-import {
-  Link
-} from "react-router-dom";
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,6 +41,15 @@ const useStyles = makeStyles((theme) => ({
     },
     colorSuccess: {
       color: '#43a047',
+    },
+    formReply: {
+      '& .MuiTextField-root': {
+        margin: theme.spacing(1),
+        width: '100%',
+        '& .MuiInputBase-multiline':{
+          fontSize: 13
+        }
+      }
     }
   }));
 
@@ -55,7 +62,11 @@ const AlertNotify = props => {
 
     const [isRead, setIsRead] = useState(true);
 
-    /** Khong xuat hien dialog lan dau khi chay. Sau do chi mo khi co du lieu vao td. tu set la da doc */
+    const [ disableReply, setDisableReply ] = useState(false);
+
+    const [ reply, setReply] = useState('');
+
+    /** Khong xuat hien dialog lan dau khi chay. Khoi tao cac useState ve tt ban dau */
     const firstUpdate = useRef(true);
     useLayoutEffect (() => {
       if (firstUpdate.current) {
@@ -64,6 +75,8 @@ const AlertNotify = props => {
       }
       setOpen(true);
       setIsRead(true);
+      setDisableReply(false);
+      setReply('');
     },[notify])
     /** End */
 
@@ -76,13 +89,6 @@ const AlertNotify = props => {
       setOpen(false);
     };
 
-    const handleReply = () => {
-        // Tuy theo ref va id ma dan toi link page tuong ung
-        // Tim hieu cach dua tham so vao component bang useParams - route dom
-        history.push('/dashboard');
-        setOpen(false);
-    };
-
     const handleDelete = () => {
       setOpen(false);
       apiDeleteNote({ ref: notify.ref, id: notify.id });
@@ -92,6 +98,20 @@ const AlertNotify = props => {
       setIsRead(!isRead);
       apiReMarkNote({ ref: notify.ref, id: notify.id, isRead: !isRead });
     }
+
+    const handleChange = event => {
+        const rep = event.target.value;
+        rep ? setDisableReply(true) : setDisableReply(false);
+        setReply(rep);
+    };
+
+    const handleReply = () => {
+      // Tuy theo ref va id ma dan toi link page tuong ung
+      // Tim hieu cach dua tham so vao component bang useParams - route dom
+      console.log(reply);
+      history.push('/dashboard');
+      setOpen(false);
+  };
 
   return (
     <div>
@@ -123,6 +143,14 @@ const AlertNotify = props => {
                     <Typography variant="body2" color="textSecondary" component="span">
                       { "— " + notify.content }
                     </Typography>
+                    <form className={classes.formReply} noValidate autoComplete="off">
+                      <TextField 
+                        multiline 
+                        id="standard-textarea" 
+                        label={"Reply to "+notify.name} 
+                        onChange={ handleChange }
+                      />
+                    </form>
                 </CardContent>
                 <CardActions disableSpacing>
                     
@@ -150,7 +178,7 @@ const AlertNotify = props => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleReply} color="primary" autoFocus>
+          <Button onClick={handleReply} color="primary" autoFocus disabled={ !disableReply }>
             Phản hồi
           </Button>
           <Button onClick={handleClose} color="secondary">
