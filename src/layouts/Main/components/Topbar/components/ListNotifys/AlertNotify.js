@@ -1,5 +1,4 @@
 import React, { useLayoutEffect, useRef, useState  } from 'react';
-import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -46,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
       '& .MuiTextField-root': {
         margin: theme.spacing(1),
         width: '100%',
+        '& .MuiFormLabel-root': {
+          fontSize: 12
+        },
         '& .MuiInputBase-multiline':{
           fontSize: 13
         }
@@ -54,9 +56,8 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const AlertNotify = props => {
-    let history = useHistory();
 
-    const { notify, apiReMarkNote, apiDeleteNote, ...rest } = props;
+    const { notify, apiReMarkNote, apiDeleteNote, apiReply, ...rest } = props;
 
     const [open, setOpen] = useState(false);
 
@@ -106,10 +107,8 @@ const AlertNotify = props => {
     };
 
     const handleReply = () => {
-      // Tuy theo ref va id ma dan toi link page tuong ung
-      // Tim hieu cach dua tham so vao component bang useParams - route dom
-      console.log(reply);
-      history.push('/dashboard');
+      // Gui noi dung reply toi api
+      apiReply({ ref: notify.ref, id: notify.id, name: notify.name, reply: reply });
       setOpen(false);
   };
 
@@ -194,6 +193,7 @@ AlertNotify.propTypes = {
   notify : PropTypes.object,
   apiReMarkNote : PropTypes.func,
   apiDeleteNote : PropTypes.func,
+  apiReply : PropTypes.func
 };
 
 export default AlertNotify;
