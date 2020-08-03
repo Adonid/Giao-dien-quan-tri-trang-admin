@@ -15,6 +15,7 @@ import {
 
 import mockData from './data';
 import AlertNotify from './AlertNotify';
+// import { Snackbars } from 'alerts';
 
   const useStyles = makeStyles(theme => ({
     root: {
@@ -53,6 +54,10 @@ const ListNotifys = props => {
     const [alert, setAlert] = useState({type:'',ref:0,id:0,name:'S',avatar:'',topic:'',content:'',time:'',link:'',isRead:false});
 
     const [element, setElement] = useState(null);
+
+    const [ openAlert, setOpenAlert ] = useState(false);
+
+    const [ dataAlert, setDataAlert ] = useState('');
 
     const handleNotify = event => {
         const target = event.currentTarget;
@@ -139,6 +144,16 @@ const ListNotifys = props => {
         })
         setNotifys(newNotifys);
     }
+
+    const apiReply = rep => {
+        /** api reply vao nguoi binh luan bai viet */
+
+        /** end */
+        
+        /** Goi Redux de show ra SnackBar */
+        
+        // setDataAlert({ type: "info", content: "Đã gửi bình luận tới " + rep.name });
+    }
     /** END */
 
     return (
@@ -193,7 +208,8 @@ const ListNotifys = props => {
                         }
                     </List>
                 ))
-            }   
+            }
+
             <Divider />
             <List className={classes.footerList}>
                 {
@@ -221,7 +237,10 @@ const ListNotifys = props => {
                 
             </List>
             <Divider />
-            <AlertNotify notify={ alert } apiReMarkNote={ el => apiReMarkNote(el) } apiDeleteNote={ el => apiDeleteNote(el) } />
+
+            <AlertNotify notify={ alert } apiReMarkNote={ el => apiReMarkNote(el) } apiDeleteNote={ el => apiDeleteNote(el) } apiReply={ reply => apiReply(reply) } />
+            
+            {/* <Snackbars data={ dataAlert }/> */}
         </Fragment>
     );
 };
