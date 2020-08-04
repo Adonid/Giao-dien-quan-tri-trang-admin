@@ -1,11 +1,11 @@
 import {
-    SnackBarReducer as SnackBar
+    NotifysReducers as Notifys
 } from './reducers';
 
 const redux = require('redux');
 
 var allReducers = redux.combineReducers({
-    dataSnackBar: SnackBar
+    dataNotifys: Notifys
 });
 
 const Store = redux.createStore(allReducers);
