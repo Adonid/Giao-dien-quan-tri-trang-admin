@@ -247,7 +247,7 @@ ListNotifys.propTypes = {
 
     const mapStateToProps = (state, ownProps) => {
         return {
-            data: state.dataSnackBar
+            data: state.dataNotifys
         }
     }
 
