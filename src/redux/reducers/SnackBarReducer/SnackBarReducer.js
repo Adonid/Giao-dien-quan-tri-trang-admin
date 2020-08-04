@@ -1,6 +1,6 @@
 const dataSnackBar = {
-    type    : "",
-    content : ""
+    type    : "info",
+    content : "Hello Word"
 }
 
 const SnackBarReducer = (state = dataSnackBar, actions) => {
