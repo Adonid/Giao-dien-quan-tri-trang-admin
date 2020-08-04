@@ -1,1 +1,1 @@
-export { default as SnackBarReducer  } from './SnackBarReducer';
+export { default as NotifysReducers  } from './NotifysReducers';
