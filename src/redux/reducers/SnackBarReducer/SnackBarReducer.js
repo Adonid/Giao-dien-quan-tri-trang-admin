@@ -1,0 +1,18 @@
+const dataSnackBar = {
+    type    : "",
+    content : ""
+}
+
+const SnackBarReducer = (state = dataSnackBar, actions) => {
+
+    switch (actions.type) {
+        case 'OPEN_SNACKBAR':
+            state = actions.data;
+            return state
+
+        default:
+            return state
+    }
+}
+
+export default SnackBarReducer;
