@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import { useMediaQuery } from '@material-ui/core';
 
 import { Sidebar, Topbar, Footer } from './components';
+import { Snackbars } from 'alerts';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -60,6 +62,7 @@ const Main = props => {
         {children}
         <Footer />
       </main>
+      <Snackbars data={ props.data } />
     </div>
   );
 };
@@ -68,4 +71,18 @@ Main.propTypes = {
   children: PropTypes.node
 };
 
-export default Main;
+  const mapStateToProps = (state, ownProps) => {
+    return {
+      data: state.dataSnackBar
+    }
+  }
+
+  const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+      dispatch1: () => {
+        dispatch(actionCreator)
+      }
+    }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
