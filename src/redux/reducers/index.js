@@ -1,1 +1,1 @@
-// export { default } from './'
+export { default as SnackBarReducer  } from './SnackBarReducer';
