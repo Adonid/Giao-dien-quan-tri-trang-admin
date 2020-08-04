@@ -146,9 +146,9 @@ const ListNotifys = props => {
 
         /** end */
         
-        /** Goi Redux de show ra SnackBar */
+        /** Thuc thi reducer de show ra SnackBar */
         
-        props.updateSnackBar({ type: "info", content: "Đã gửi bình luận tới " + rep.name });
+        props.replyReader({ ref: alert.ref, id: alert.id, name: rep.name });
     }
     /** END */
 
@@ -253,10 +253,10 @@ ListNotifys.propTypes = {
 
     const mapDispatchToProps = (dispatch, ownProps) => {
         return {
-            updateSnackBar: newSnackBar => {
+            replyReader: dataReply => {
                 dispatch({
-                    type: 'OPEN_SNACKBAR',
-                    data: newSnackBar
+                    type: 'REPLY',
+                    data: dataReply
                 })
             }
         }
