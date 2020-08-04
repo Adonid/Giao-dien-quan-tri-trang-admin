@@ -1,4 +1,5 @@
 import React, { useState, Fragment} from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { 
@@ -15,7 +16,6 @@ import {
 
 import mockData from './data';
 import AlertNotify from './AlertNotify';
-// import { Snackbars } from 'alerts';
 
   const useStyles = makeStyles(theme => ({
     root: {
@@ -54,10 +54,6 @@ const ListNotifys = props => {
     const [alert, setAlert] = useState({type:'',ref:0,id:0,name:'S',avatar:'',topic:'',content:'',time:'',link:'',isRead:false});
 
     const [element, setElement] = useState(null);
-
-    const [ openAlert, setOpenAlert ] = useState(false);
-
-    const [ dataAlert, setDataAlert ] = useState('');
 
     const handleNotify = event => {
         const target = event.currentTarget;
@@ -152,7 +148,7 @@ const ListNotifys = props => {
         
         /** Goi Redux de show ra SnackBar */
         
-        // setDataAlert({ type: "info", content: "Đã gửi bình luận tới " + rep.name });
+        props.updateSnackBar({ type: "info", content: "Đã gửi bình luận tới " + rep.name });
     }
     /** END */
 
@@ -240,7 +236,6 @@ const ListNotifys = props => {
 
             <AlertNotify notify={ alert } apiReMarkNote={ el => apiReMarkNote(el) } apiDeleteNote={ el => apiDeleteNote(el) } apiReply={ reply => apiReply(reply) } />
             
-            {/* <Snackbars data={ dataAlert }/> */}
         </Fragment>
     );
 };
@@ -250,4 +245,21 @@ ListNotifys.propTypes = {
     closeMenu: PropTypes.func
 };
 
-export default ListNotifys;
+    const mapStateToProps = (state, ownProps) => {
+        return {
+            data: state.dataSnackBar
+        }
+    }
+
+    const mapDispatchToProps = (dispatch, ownProps) => {
+        return {
+            updateSnackBar: newSnackBar => {
+                dispatch({
+                    type: 'OPEN_SNACKBAR',
+                    data: newSnackBar
+                })
+            }
+        }
+    }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListNotifys)
