@@ -27,7 +27,9 @@ const SnackBarReducer = (state = dataNotify, actions) => {
             /** api danh dau tat ca la da doc */
             
             /** end */
-            console.log('da mark all');
+            let newNotify = [...state.notifys];
+            newNotify.map( els => els.items.map( item => item.isRead=true));
+            state = { ...state, notifys: newNotify }
             return state;
 
         case 'DELETEALL':
