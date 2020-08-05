@@ -1,4 +1,4 @@
-import React, { useState, Fragment} from 'react';
+import React, { useState, Fragment, useEffect} from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
@@ -54,6 +54,10 @@ const ListNotifys = props => {
 
     const [element, setElement] = useState(null);
 
+    useEffect( () => {
+        setNotifys(props.notifys);
+    }, [props.notifys]);
+
     const handleNotify = event => {
         const target = event.currentTarget;
         let notify = {};
@@ -103,10 +107,7 @@ const ListNotifys = props => {
         /** DISPATH xoa thong bao */
         props.deleteNote({ ref: alert.ref, id: alert.id, name: alert.name });
         /** end */
-
-        // Sau do cap nhat lai notifys
-        element.nextSibling.remove();
-        element.remove();
+        
     }
 
     const apiDeleteAll = () => {
@@ -148,48 +149,50 @@ const ListNotifys = props => {
                     <List key={cluster.ref} subheader={<ListSubheader> {cluster.type} </ListSubheader>} className={classes.root}>
                         {
                             cluster.items.map( item => (
-                                <Fragment key={ item.id }>
-                                    <ListItem 
-                                        className={classes.marginBottom}
-                                        button 
-                                        alignItems="flex-start"
-                                        onClick={ handleNotify }
-                                        notify-type={ cluster.type }
-                                        notify-ref={ cluster.ref }
-                                        selected={ !item.isRead }
-                                        notify-id={ item.id }
-                                        notify-name={ item.name }
-                                        notify-avatar={ item.avatar }
-                                        notify-topic={ item.topic }
-                                        notify-content={ item.content }
-                                        notify-time={ item.time }
-                                        notify-read={ item.isRead ? '1' : '0' }
-                                    >
-                                        <ListItemAvatar>
-                                            <Avatar alt={ item.name } src={ item.avatar } />
-                                        </ListItemAvatar>
-                                        <ListItemText
-                                            primary={ item.name }
-                                            secondary={
-                                                <Fragment>
-                                                <Typography
-                                                    component="span"
-                                                    variant="body2"
-                                                    className={classes.content}
-                                                    color="textPrimary"
-                                                >
-                                                    { item.topic }
-                                                </Typography>
-                                                {"— " + item.content}
-                                                <Typography className={classes.time} variant="caption" color="initial" gutterTop>
-                                                    { item.time }
-                                                </Typography>
-                                                </Fragment>
-                                            }
-                                        />
-                                    </ListItem>
-                                    <Divider variant="inset" component="li" />
-                                </Fragment>
+                                !item.isDelete ? 
+                                    <Fragment key={ item.id }>
+                                        <ListItem 
+                                            className={classes.marginBottom}
+                                            button 
+                                            alignItems="flex-start"
+                                            onClick={ handleNotify }
+                                            notify-type={ cluster.type }
+                                            notify-ref={ cluster.ref }
+                                            selected={ !item.isRead }
+                                            notify-id={ item.id }
+                                            notify-name={ item.name }
+                                            notify-avatar={ item.avatar }
+                                            notify-topic={ item.topic }
+                                            notify-content={ item.content }
+                                            notify-time={ item.time }
+                                            notify-read={ item.isRead ? '1' : '0' }
+                                        >
+                                            <ListItemAvatar>
+                                                <Avatar alt={ item.name } src={ item.avatar } />
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                primary={ item.name }
+                                                secondary={
+                                                    <Fragment>
+                                                    <Typography
+                                                        component="span"
+                                                        variant="body2"
+                                                        className={classes.content}
+                                                        color="textPrimary"
+                                                    >
+                                                        { item.topic }
+                                                    </Typography>
+                                                    {"— " + item.content}
+                                                    <Typography className={classes.time} variant="caption" color="initial" gutterTop>
+                                                        { item.time }
+                                                    </Typography>
+                                                    </Fragment>
+                                                }
+                                            />
+                                        </ListItem>
+                                        <Divider variant="inset" component="li" />
+                                    </Fragment>
+                                : null
                             ))
                         }
                     </List>
