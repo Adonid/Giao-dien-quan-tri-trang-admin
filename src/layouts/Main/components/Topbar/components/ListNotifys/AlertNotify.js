@@ -84,7 +84,7 @@ const AlertNotify = props => {
     const classes = useStyles();
 
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
     const handleClose = () => {
       setOpen(false);
@@ -92,12 +92,12 @@ const AlertNotify = props => {
 
     const handleDelete = () => {
       setOpen(false);
-      apiDeleteNote({ ref: notify.ref, id: notify.id });
+      apiDeleteNote();
     }
 
     const handleMark = () => {
       setIsRead(!isRead);
-      apiReMarkNote({ ref: notify.ref, id: notify.id, isRead: !isRead });
+      apiReMarkNote({ ref: notify.ref, id: notify.id, isRead: !isRead, name: notify.name });
     }
 
     const handleChange = event => {
