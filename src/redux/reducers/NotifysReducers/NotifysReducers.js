@@ -34,7 +34,7 @@ const SnackBarReducer = (state = dataNotify, actions) => {
             /** api xoa tat ca thong bao */
             
             /** end */
-            console.log('da xoa het thong bao');
+            state = { ...state, notifys: [] }
             return state;
         
         case 'DELETENOTE':
