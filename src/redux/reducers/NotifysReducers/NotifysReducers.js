@@ -43,9 +43,18 @@ const SnackBarReducer = (state = dataNotify, actions) => {
             /** end */
             const note = actions.note;
 
-            let newN = [...state.notifys];
+            let newNotifys = [...state.notifys];
+            newNotifys.map( els => {
+                if( els.ref===Number(note.ref) ){
+                    els.items.map( item => {
+                        if(item.id===Number(note.id)){
+                            item.isDelete = true;
+                        }
+                    });
+                }
+            });
 
-            state = { ...state, alert: { ...state.alert, type: "info", content: `Đã xóa 1 thông báo từ ${note.name} !` } }
+            state = { ...state, alert: { ...state.alert, type: "info", content: `Đã xóa 1 thông báo từ ${note.name} !` }, notifys: newNotifys }
             return state;
         
         case 'MARKNOTE':
