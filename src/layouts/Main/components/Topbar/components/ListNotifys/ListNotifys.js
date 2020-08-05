@@ -83,9 +83,6 @@ const ListNotifys = props => {
         props.markNote({ ref: notify.ref, id: notify.id, isRead: true, name: notify.name });
         /** end */
 
-        // Danh dau la da doc
-        event.currentTarget.setAttribute("class", target.getAttribute("class").replace("Mui-selected", ""));
-        // end
         // Dong MENU
         closeMenu();
         // end
@@ -98,8 +95,6 @@ const ListNotifys = props => {
         props.markNote(el);
         /** end */
 
-        // Sau do danh dau tinh trang tin nhan
-        element.setAttribute("class", el.isRead ? element.getAttribute("class").replace("Mui-selected", "") : element.getAttribute("class")+" Mui-selected");
     }
 
     const apiDeleteNote = () => {
@@ -107,7 +102,7 @@ const ListNotifys = props => {
         /** DISPATH xoa thong bao */
         props.deleteNote({ ref: alert.ref, id: alert.id, name: alert.name });
         /** end */
-        
+
     }
 
     const apiDeleteAll = () => {
