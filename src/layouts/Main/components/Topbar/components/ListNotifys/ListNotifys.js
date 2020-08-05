@@ -111,9 +111,9 @@ const ListNotifys = props => {
         props.deleteAll();
         /** end */
 
-        // Sau do dua ra hien thi
-        setNotifys([]);
+        // Dong MENU
         closeMenu();
+        // end
     }
 
     const apiMarkAll = () => {
