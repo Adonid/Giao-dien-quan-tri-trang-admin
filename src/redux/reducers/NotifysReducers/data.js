@@ -13,7 +13,8 @@ export default [
           content : "I'll be in your neighborhood doing errands this..",
           time    : "5 phút trước",
           isRead  : false,
-          link    : ''
+          link    : '',
+          isDelete: false
         },
         {
           id      : 2,
@@ -23,7 +24,8 @@ export default [
           content : "Wish I could come, but I'm out of town this…",
           time    : "15 phút trước",
           isRead  : false,
-          link    : ''
+          link    : '',
+          isDelete: false
         },
         {
           id      : 3,
@@ -33,7 +35,8 @@ export default [
           content : "Do you have Paris recommendations? Have you ever…",
           time    : "1 giờ trước",
           isRead  : true,
-          link    : ''
+          link    : '',
+          isDelete: false
         },
       ]
     },
@@ -49,7 +52,8 @@ export default [
           content : "Khi nào tour du lịch Hà Nội-Vinh mở bạn ơi!",
           time    : "19 phút trước",
           isRead  : false,
-          link    : ''
+          link    : '',
+          isDelete: false
         },
         {
           id      : 2,
@@ -59,7 +63,8 @@ export default [
           content : "Khi nào tour du lịch Hà Nội-Vinh mở bạn ơi!",
           time    : "19 phút trước",
           isRead  : false,
-          link    : ''
+          link    : '',
+          isDelete: false
         },
         {
           id      : 3,
@@ -69,7 +74,8 @@ export default [
           content : "Khi nào tour du lịch Hà Nội-Vinh mở bạn ơi!",
           time    : "19 phút trước",
           isRead  : true,
-          link    : ''
+          link    : '',
+          isDelete: false
         },
         {
           id      : 4,
@@ -79,7 +85,8 @@ export default [
           content : "Khi nào tour du lịch Hà Nội-Vinh mở bạn ơi!",
           time    : "19 phút trước",
           isRead  : false,
-          link    : ''
+          link    : '',
+          isDelete: false
         },
         {
           id      : 5,
@@ -89,7 +96,8 @@ export default [
           content : "Khi nào tour du lịch Hà Nội-Vinh mở bạn ơi!",
           time    : "19 phút trước",
           isRead  : true,
-          link    : ''
+          link    : '',
+          isDelete: false
         }
       ]
     }
