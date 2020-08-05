@@ -110,7 +110,7 @@ const Topbar = props => {
             inputProps={{ 'aria-label': 'search' }}
           />
         </div>
-        <Hidden smDown>
+        <Hidden xsDown>
           <IconButton 
             color="inherit"
             aria-controls="menu-appbar"
