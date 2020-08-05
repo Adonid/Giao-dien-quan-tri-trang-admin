@@ -122,13 +122,6 @@ const ListNotifys = props => {
         props.markAll();
         /** end */
 
-        let newNotifys = [...notifys];
-        newNotifys.map( el => {
-            el.items.map( item => {
-                item.isRead = true;
-            })
-        })
-        setNotifys(newNotifys);
     }
 
     /** DISPATH reply */
