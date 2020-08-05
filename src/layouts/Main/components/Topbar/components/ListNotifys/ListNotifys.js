@@ -14,7 +14,6 @@ import {
     ListSubheader
   } from '@material-ui/core';
 
-import mockData from './data';
 import AlertNotify from './AlertNotify';
 
   const useStyles = makeStyles(theme => ({
@@ -49,7 +48,7 @@ const ListNotifys = props => {
 
     const classes = useStyles();
 
-    const [notifys, setNotifys] = useState(mockData);
+    const [notifys, setNotifys] = useState(props.notifys);
 
     const [alert, setAlert] = useState({type:'',ref:0,id:0,name:'S',avatar:'',topic:'',content:'',time:'',link:'',read:'0'});
 
@@ -238,7 +237,7 @@ ListNotifys.propTypes = {
 
     const mapStateToProps = (state, ownProps) => {
         return {
-            data: state.dataNotifys
+            notifys: state.dataNotifys.notifys
         }
     }
 
