@@ -53,7 +53,6 @@ const SnackBarReducer = (state = dataNotify, actions) => {
                     });
                 }
             });
-
             state = { ...state, alert: { ...state.alert, type: "info", content: `Đã xóa 1 thông báo từ ${note.name} !` }, notifys: newNotifys }
             return state;
         
@@ -62,8 +61,18 @@ const SnackBarReducer = (state = dataNotify, actions) => {
                 // not.ref, not.id, not.isRead, not.name
             /** end */
             const not = actions.not;
-            console.log(not);
             
+            let newNotifyss = [...state.notifys];
+            newNotifyss.map( els => {
+                if( els.ref===Number(not.ref) ){
+                    els.items.map( item => {
+                        if(item.id===Number(not.id)){
+                            item.isRead = not.isRead;
+                        }
+                    });
+                }
+            });
+            state = { ...state, notifys: newNotifyss }
             return state;
 
         default:
