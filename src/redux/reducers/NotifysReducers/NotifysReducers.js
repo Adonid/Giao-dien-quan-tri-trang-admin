@@ -42,12 +42,9 @@ const SnackBarReducer = (state = dataNotify, actions) => {
             
             /** end */
             const note = actions.note;
-            let newNotifys = [...state.notifys];
-            console.log(note);
 
-            newNotifys = newNotifys.filter( el => el.ref!==Number(note.ref) && el.items.forEach( item => item.id!==Number(note.id)));
+            let newN = [...state.notifys];
 
-            console.log(newNotifys);
             state = { ...state, alert: { ...state.alert, type: "info", content: `Đã xóa 1 thông báo từ ${note.name} !` } }
             return state;
         
