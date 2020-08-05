@@ -1,9 +1,9 @@
-const dataSnackBar = {
+const dataNotify = {
     type    : "info",
     content : "Hello Word"
 }
 
-const SnackBarReducer = (state = dataSnackBar, actions) => {
+const SnackBarReducer = (state = dataNotify, actions) => {
 
     switch (actions.type) {
         // Thuc ra day phai goi API de luu lai feedback, sau do moi dua ra thong bao. day la vd sau khi da goi api xong
@@ -17,7 +17,11 @@ const SnackBarReducer = (state = dataSnackBar, actions) => {
             // Neu call api fail
             // state = { ...state, type: "warning", content: `Đã có lỗi! Chưa trả lời được vào bình luận của ${dataReader.name} !` }
             return state
-
+        case 'MARKALL':
+            /** api danh dau tat ca la da doc */
+            
+            /** end */
+            break;
         default:
             return state
     }
