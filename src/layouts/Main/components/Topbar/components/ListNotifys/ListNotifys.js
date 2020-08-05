@@ -51,7 +51,7 @@ const ListNotifys = props => {
 
     const [notifys, setNotifys] = useState(mockData);
 
-    const [alert, setAlert] = useState({type:'',ref:0,id:0,name:'S',avatar:'',topic:'',content:'',time:'',link:'',isRead:false});
+    const [alert, setAlert] = useState({type:'',ref:0,id:0,name:'S',avatar:'',topic:'',content:'',time:'',link:'',read:'0'});
 
     const [element, setElement] = useState(null);
 
@@ -67,6 +67,7 @@ const ListNotifys = props => {
         notify.content = target.getAttribute("notify-content");
         notify.time = target.getAttribute("notify-time");
         notify.link = target.getAttribute("notify-link");
+        notify.read = target.getAttribute("notify-read");
 
         // Dua sang component thong bao
         setAlert(notify);
@@ -75,8 +76,8 @@ const ListNotifys = props => {
         setElement(event.currentTarget);
         // end
 
-        /** api danh dau la da doc */
-
+        /** DISPATH danh dau la da doc */
+        props.markNote({ ref: notify.ref, id: notify.id, isRead: true, name: notify.name });
         /** end */
 
         // Danh dau la da doc
@@ -89,25 +90,19 @@ const ListNotifys = props => {
 
     /** CALL API */
     const apiReMarkNote = el => {
-        // ref : la thuoc cum tin nhan(bang) nao
-        // id  : id cua tin nhan
-        // isRead: tinh trang da doc tin nhan hay chua
 
-        /** Call api de thuc hien MARK READED */
-
+        /** DISPATH thay doi da doc hay chua doc */
+        props.markNote(el);
         /** end */
 
         // Sau do danh dau tinh trang tin nhan
         element.setAttribute("class", el.isRead ? element.getAttribute("class").replace("Mui-selected", "") : element.getAttribute("class")+" Mui-selected");
     }
 
-    const apiDeleteNote = el => {
-        // ref : la thuoc cum tin nhan(bang) nao
-        // id  : id cua tin nhan
-        // isRead: tinh trang da doc tin nhan hay chua
+    const apiDeleteNote = () => {
 
-        /** Call api de thuc hien DELETE */
-
+        /** DISPATH xoa thong bao */
+        props.deleteNote({ ref: alert.ref, id: alert.id, name: alert.name });
         /** end */
 
         // Sau do cap nhat lai notifys
@@ -117,21 +112,21 @@ const ListNotifys = props => {
 
     const apiDeleteAll = () => {
 
-        /** api xoa het cac thong bao */
-
+        /** DISPATH xoa tat ca thong bao */
+        props.deleteAll();
         /** end */
+
         // Sau do dua ra hien thi
         setNotifys([]);
         closeMenu();
     }
 
     const apiMarkAll = () => {
-
-        /** api danh dau tat ca thong bao da duoc doc */
-
-        /** end */
         
-        // Sau do refresh lai trang thai
+        /** DISPATH danh dau tat ca la da doc */
+        props.markAll();
+        /** end */
+
         let newNotifys = [...notifys];
         newNotifys.map( el => {
             el.items.map( item => {
@@ -141,15 +136,10 @@ const ListNotifys = props => {
         setNotifys(newNotifys);
     }
 
-    const apiReply = rep => {
-        /** api reply vao nguoi binh luan bai viet */
+    /** DISPATH reply */
+    const apiReply = rep => props.replyReader({ ref: alert.ref, id: alert.id, name: rep.name });
+    /** end */
 
-        /** end */
-        
-        /** Thuc thi reducer de show ra SnackBar */
-        
-        props.replyReader({ ref: alert.ref, id: alert.id, name: rep.name });
-    }
     /** END */
 
     return (
@@ -174,6 +164,7 @@ const ListNotifys = props => {
                                         notify-topic={ item.topic }
                                         notify-content={ item.content }
                                         notify-time={ item.time }
+                                        notify-read={ item.isRead ? '1' : '0' }
                                     >
                                         <ListItemAvatar>
                                             <Avatar alt={ item.name } src={ item.avatar } />
@@ -234,7 +225,7 @@ const ListNotifys = props => {
             </List>
             <Divider />
 
-            <AlertNotify notify={ alert } apiReMarkNote={ el => apiReMarkNote(el) } apiDeleteNote={ el => apiDeleteNote(el) } apiReply={ reply => apiReply(reply) } />
+            <AlertNotify notify={ alert } apiReMarkNote={ el => apiReMarkNote(el) } apiDeleteNote={ () => apiDeleteNote() } apiReply={ reply => apiReply(reply) } />
             
         </Fragment>
     );
@@ -257,6 +248,28 @@ ListNotifys.propTypes = {
                 dispatch({
                     type: 'REPLY',
                     data: dataReply
+                })
+            },
+            markAll: () => {
+                dispatch({
+                    type: 'MARKALL'
+                })
+            },
+            deleteAll: () => {
+                dispatch({
+                    type: 'DELETEALL'
+                })
+            },
+            deleteNote: note => {
+                dispatch({
+                    type: 'DELETENOTE',
+                    note: note
+                })
+            },
+            markNote: note => {
+                dispatch({
+                    type: 'MARKNOTE',
+                    not: note
                 })
             }
         }
