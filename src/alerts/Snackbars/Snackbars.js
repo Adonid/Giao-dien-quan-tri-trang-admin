@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import Snackbar from '@material-ui/core/Snackbar';
+import {Snackbar} from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -43,7 +43,12 @@ const Snackbars = props => {
 
   return (
     <div className={classes.root}>
-      <Snackbar open={ open } anchorOrigin={{ vertical: 'top', horizontal: 'right' }} autoHideDuration={5000} onClose={handleClose}>
+      <Snackbar 
+        open={ open } 
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }} 
+        autoHideDuration={5000} 
+        onClose={handleClose}
+      >
         <Alert onClose={handleClose} severity={ data.type }>
           { data.content }
         </Alert>
