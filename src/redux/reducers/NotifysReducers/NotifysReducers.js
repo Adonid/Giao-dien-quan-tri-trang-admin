@@ -3,7 +3,7 @@ const dataNotify = {
         type    : "info",
         content : "Hello Word"
     },
-    dataNotifys: {
+    notifys: {
 
     }
 }
