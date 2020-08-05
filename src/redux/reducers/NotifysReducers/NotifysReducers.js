@@ -1,15 +1,11 @@
+import mockData from './data'
+
 const dataNotify = {
     alert: {
         type    : "info",
         content : "Hello Word"
     },
-    notifys: {
-
-    }
-}
-
-const datax = {
-    hello: 'xin chao'
+    notifys: mockData
 }
 
 const SnackBarReducer = (state = dataNotify, actions) => {
