@@ -73,7 +73,7 @@ Main.propTypes = {
 
   const mapStateToProps = (state, ownProps) => {
     return {
-      data: state.dataNotifys
+      data: state.dataNotifys.alert
     }
   }
 
