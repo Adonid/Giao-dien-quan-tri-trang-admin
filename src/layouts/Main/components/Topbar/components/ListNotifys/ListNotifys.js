@@ -23,7 +23,7 @@ import AlertNotify from './AlertNotify';
       backgroundColor: theme.palette.background.paper,
     },
     content: {
-      display: 'inline',
+      display: 'block',
       marginBottom: theme.spacing(0),
     },
     time: {
@@ -159,7 +159,7 @@ const ListNotifys = props => {
                                                 <Avatar alt={ item.name } src={ item.avatar } />
                                             </ListItemAvatar>
                                             <ListItemText
-                                                primary={ item.name }
+                                                primary={ <b>{item.name}</b> }
                                                 secondary={
                                                     <Fragment>
                                                     <Typography
@@ -168,7 +168,7 @@ const ListNotifys = props => {
                                                         className={classes.content}
                                                         color="textPrimary"
                                                     >
-                                                        { item.topic }
+                                                        <b>{ item.topic }</b>
                                                     </Typography>
                                                     {"— " + item.content}
                                                     <Typography className={classes.time} variant="caption" color="initial" gutterTop>
