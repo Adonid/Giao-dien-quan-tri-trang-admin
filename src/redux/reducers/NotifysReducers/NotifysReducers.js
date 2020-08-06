@@ -1,11 +1,18 @@
 import mockData from './data'
 
+const countNote = notes => {
+    let counter = 0;
+    notes.map( els => els.items.map( item => item.isRead ? counter=counter : counter++));
+    return counter;
+}
+
 const dataNotify = {
     alert: {
         type    : "info",
         content : "Hello Word"
     },
-    notifys: mockData
+    notifys: mockData,
+    notesNoRead: countNote(mockData)
 }
 
 const SnackBarReducer = (state = dataNotify, actions) => {
@@ -29,14 +36,14 @@ const SnackBarReducer = (state = dataNotify, actions) => {
             /** end */
             let newNotify = [...state.notifys];
             newNotify.map( els => els.items.map( item => item.isRead=true));
-            state = { ...state, notifys: newNotify }
+            state = { ...state, notifys: newNotify, notesNoRead: 0 }
             return state;
 
         case 'DELETEALL':
             /** api xoa tat ca thong bao */
             
             /** end */
-            state = { ...state, notifys: [] }
+            state = { ...state, notifys: [], notesNoRead: 0 }
             return state;
         
         case 'DELETENOTE':
@@ -55,7 +62,7 @@ const SnackBarReducer = (state = dataNotify, actions) => {
                     });
                 }
             });
-            state = { ...state, alert: { ...state.alert, type: "info", content: `Đã xóa 1 thông báo từ ${note.name} !` }, notifys: newNotifys }
+            state = { ...state, alert: { ...state.alert, type: "info", content: `Đã xóa 1 thông báo từ ${note.name} !` }, notifys: newNotifys, notesNoRead: countNote(newNotifys) }
             return state;
         
         case 'MARKNOTE':
@@ -74,7 +81,7 @@ const SnackBarReducer = (state = dataNotify, actions) => {
                     });
                 }
             });
-            state = { ...state, notifys: newNotifyss }
+            state = { ...state, notifys: newNotifyss, notesNoRead: countNote(newNotifys) }
             return state;
 
         default:
