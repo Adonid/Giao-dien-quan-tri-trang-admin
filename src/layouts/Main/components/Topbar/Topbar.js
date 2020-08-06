@@ -1,5 +1,6 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { connect } from 'react-redux';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles, fade } from '@material-ui/core/styles';
@@ -74,7 +75,11 @@ const Topbar = props => {
 
   const classes = useStyles();
 
-  const [notifications] = useState([1,2,3]);
+  const [notes, setNotes] = useState(0);
+
+  useEffect( () => {
+    setNotes(props.amount);
+  }, [props.amount]);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -118,7 +123,7 @@ const Topbar = props => {
             onClick={handleMenu}
           >
             <Badge
-              badgeContent={notifications.length} // So luong notify moi nay lay tu REDUX tra ve
+              badgeContent={notes ?? null} // So luong notify moi nay lay tu REDUX tra ve
               color="error"
             >
               <NotificationsIcon />
@@ -168,4 +173,10 @@ Topbar.propTypes = {
   onSidebarOpen: PropTypes.func
 };
 
-export default Topbar;
+  const mapStateToProps = (state, ownProps) => {
+    return {
+      amount: state.dataNotifys.notesNoRead
+    }
+  }
+
+export default connect(mapStateToProps)(Topbar)
