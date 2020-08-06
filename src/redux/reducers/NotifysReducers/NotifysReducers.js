@@ -2,7 +2,7 @@ import mockData from './data'
 
 const countNote = notes => {
     let counter = 0;
-    notes.map( els => els.items.map( item => item.isRead ? counter=counter : counter++));
+    notes.map( els => els.items.map( item => !item.isRead&&!item.isDelete ? counter++ : null));
     return counter;
 }
 
@@ -81,7 +81,7 @@ const SnackBarReducer = (state = dataNotify, actions) => {
                     });
                 }
             });
-            state = { ...state, notifys: newNotifyss, notesNoRead: countNote(newNotifys) }
+            state = { ...state, notifys: newNotifyss, notesNoRead: countNote(newNotifyss) }
             return state;
 
         default:
