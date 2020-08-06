@@ -2,11 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
-import { Button } from '@material-ui/core';
+import { 
+  Button, 
+  Typography,
+  Breadcrumbs,
+  Link
+ } from '@material-ui/core';
 import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 import CloudDownloadOutlinedIcon from '@material-ui/icons/CloudDownloadOutlined';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { SearchInput } from 'components';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -14,16 +19,15 @@ const useStyles = makeStyles(theme => ({
     height: '42px',
     display: 'flex',
     alignItems: 'center',
-    marginTop: theme.spacing(1)
-  },
-  spacer: {
-    flexGrow: 1
-  },
-  importButton: {
-    marginRight: theme.spacing(1)
-  },
-  exportButton: {
-    marginRight: theme.spacing(1)
+    justifyContent: 'space-between',
+    marginBottom: theme.spacing(0.5)
+    },
+  groupButton: {
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(2),
+    '& button': {
+      marginRight: theme.spacing(1),
+    }
   },
   searchInput: {
     marginRight: theme.spacing(1)
@@ -41,9 +45,15 @@ const UsersToolbar = props => {
       className={clsx(classes.root, className)}
     >
       <div className={classes.row}>
-        <span className={classes.spacer} />
-        <Button className={classes.importButton}><CloudUploadOutlinedIcon/> Import</Button>
-        <Button className={classes.exportButton}><CloudDownloadOutlinedIcon/> Export</Button>
+        <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb" gutterBottom>
+          <Link color="inherit" component="button">
+            Material-UI
+          </Link>
+          <Link color="inherit" component="button">
+            Core
+          </Link>
+          <Typography color="textPrimary">Breadcrumb</Typography>
+        </Breadcrumbs>
         <Button
           color="primary"
           variant="contained"
@@ -51,12 +61,16 @@ const UsersToolbar = props => {
           <AddCircleOutlineIcon/> Add user
         </Button>
       </div>
-      <div className={classes.row}>
-        <SearchInput
-          className={classes.searchInput}
-          placeholder="Search user"
-        />
+      <div>
+        <Typography variant="h3" gutterBottom>
+          Quản lý người dùng
+        </Typography>
       </div>
+      <div className={classes.groupButton}>
+        <Button><CloudUploadOutlinedIcon/> Import</Button>
+        <Button><CloudDownloadOutlinedIcon/> Export</Button>
+      </div>
+      
     </div>
   );
 };
