@@ -16,9 +16,11 @@ import {
   TableHead,
   TableRow,
   Typography,
-  TablePagination
+  TablePagination,
+  TextField,
+  MenuItem
 } from '@material-ui/core';
-
+import { SearchInput } from 'components';
 import { getInitials } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
@@ -38,13 +40,42 @@ const useStyles = makeStyles(theme => ({
   },
   actions: {
     justifyContent: 'flex-end'
-  }
+  },
+  row: {
+    margin: theme.spacing(2),
+    paddingBottom: theme.spacing(1.5),
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: theme.spacing(0.5)
+  },
 }));
+
+const currencies = [
+  {
+    value: '1',
+    label: 'Theo tên A-Z',
+  },
+  {
+    value: '2',
+    label: 'Theo tên Z-A',
+  },
+  {
+    value: '3',
+    label: 'Theo ngày đăng ký mới nhất',
+  },
+  {
+    value: '4',
+    label: 'Theo ngày đăng ký cũ nhất',
+  },
+];
 
 const UsersTable = props => {
   const { className, users, ...rest } = props;
 
   const classes = useStyles();
+
+  const [currency, setCurrency] = React.useState('1');
 
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -99,6 +130,27 @@ const UsersTable = props => {
     >
       <CardContent className={classes.content}>
         <PerfectScrollbar>
+        <div className={classes.row}>
+          <SearchInput
+            className={classes.searchInput}
+            placeholder="Search user"
+          />
+          <TextField
+            id="outlined-select-currency"
+            select
+            label="Sắp xếp"
+            value={currency}
+            // onChange={handleChange}
+            helperText="Sắp xếp theo thứ tự"
+            variant="outlined"
+          >
+            {currencies.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+        </div>
           <div className={classes.inner}>
             <Table>
               <TableHead>
