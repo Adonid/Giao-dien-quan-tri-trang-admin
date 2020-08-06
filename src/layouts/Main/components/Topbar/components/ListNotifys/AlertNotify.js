@@ -136,7 +136,7 @@ const AlertNotify = props => {
                     subheader={<Typography variant="caption">{ notify.time }</Typography>}
                 />
                 <CardContent>
-                    <Typography variant="h6" component="span">
+                    <Typography variant="h6" component="p">
                       { notify.topic }
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="span">
