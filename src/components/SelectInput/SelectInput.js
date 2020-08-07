@@ -5,40 +5,23 @@ import {
     MenuItem
   } from '@material-ui/core';
 
-  const currencies = [
-    {
-      value: '1',
-      label: 'Theo tên A-Z',
-    },
-    {
-      value: '2',
-      label: 'Theo tên Z-A',
-    },
-    {
-      value: '3',
-      label: 'Theo ngày đăng ký mới nhất',
-    },
-    {
-      value: '4',
-      label: 'Theo ngày đăng ký cũ nhất',
-    },
-  ];
-
 const SelectInput = props => {
 
-    const [currency, setCurrency] = React.useState('1');
-    
+    const { list, ...rest } = props;
+
+    const [ item, setCurrency ] = React.useState(list[0].value);
+
     return (
         <TextField
-            id="outlined-select-currency"
+            id="outlined-select-item"
             select
             label="Sắp xếp"
-            value={currency}
+            value={item}
             // onChange={handleChange}
-            helperText="Sắp xếp theo thứ tự"
+            helperText="Thứ tự sắp xếp"
             variant="outlined"
         >
-            {currencies.map((option) => (
+            {list.map((option) => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}
               </MenuItem>
@@ -48,7 +31,7 @@ const SelectInput = props => {
 };
 
 SelectInput.propTypes = {
-    
+    list : PropTypes.array
 };
 
 export default SelectInput;
