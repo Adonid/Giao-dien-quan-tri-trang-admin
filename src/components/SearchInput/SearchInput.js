@@ -50,6 +50,7 @@ const SearchInput = props => {
               </InputAdornment>
             ),
           }}
+          type="search"
         />
     </Paper>
   );
