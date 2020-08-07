@@ -128,15 +128,18 @@ const UsersTable = props => {
     >
       <CardContent className={classes.content}>
         <PerfectScrollbar>
-        <div className={classes.row}>
-          <SearchInput
-            className={classes.searchInput}
-            placeholder="Search user"
-          />
-          <SelectInput list={ currency } />
-        </div>
+          
+          <div className={classes.row}>
+            <SearchInput
+              className={classes.searchInput}
+              placeholder="Search user"
+            />
+            <SelectInput list={ currency } />
+          </div>
+
           <div className={classes.inner}>
             <Table>
+              
               <TableHead>
                 <TableRow>
                   <TableCell padding="checkbox">
@@ -157,6 +160,7 @@ const UsersTable = props => {
                   <TableCell>Registration date</TableCell>
                 </TableRow>
               </TableHead>
+
               <TableBody>
                 {users.slice(0, rowsPerPage).map(user => (
                   <TableRow
@@ -200,6 +204,7 @@ const UsersTable = props => {
           </div>
         </PerfectScrollbar>
       </CardContent>
+
       <CardActions className={classes.actions}>
         <TablePagination
           component="div"
