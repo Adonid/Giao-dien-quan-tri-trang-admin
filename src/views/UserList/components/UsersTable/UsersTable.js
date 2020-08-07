@@ -49,10 +49,31 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const currencies = [
+  {
+    value: '1',
+    label: 'Theo tên A-Z',
+  },
+  {
+    value: '2',
+    label: 'Theo tên Z-A',
+  },
+  {
+    value: '3',
+    label: 'Theo ngày đăng ký mới nhất',
+  },
+  {
+    value: '4',
+    label: 'Theo ngày đăng ký cũ nhất',
+  },
+];
+
 const UsersTable = props => {
   const { className, users, ...rest } = props;
 
   const classes = useStyles();
+
+  const [currency, setCurrency] = React.useState('1');
 
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -112,7 +133,7 @@ const UsersTable = props => {
             className={classes.searchInput}
             placeholder="Search user"
           />
-          <SelectInput/>
+          <SelectInput list={ currency } />
         </div>
           <div className={classes.inner}>
             <Table>
