@@ -11,6 +11,7 @@ import ImageIcon from '@material-ui/icons/Image';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 import { Profile, SidebarNav, UpgradePlan } from './components';
 
@@ -86,26 +87,28 @@ const Sidebar = props => {
   ];
 
   return (
-    <Drawer
-      anchor="left"
-      classes={{ paper: classes.drawer }}
-      onClose={onClose}
-      open={open}
-      variant={variant}
-    >
-      <div
-        {...rest}
-        className={clsx(classes.root, className)}
+      <Drawer
+        anchor="left"
+        classes={{ paper: classes.drawer }}
+        onClose={onClose}
+        open={open}
+        variant={variant}
       >
-        <Profile />
-        <Divider className={classes.divider} />
-        <SidebarNav
-          className={classes.nav}
-          pages={pages}
-        />
-        <UpgradePlan />
-      </div>
-    </Drawer>
+        <PerfectScrollbar>
+          <div
+            {...rest}
+            className={clsx(classes.root, className)}
+          >
+              <Profile />
+              <Divider className={classes.divider} />
+              <SidebarNav
+                className={classes.nav}
+                pages={pages}
+              />
+              <UpgradePlan />
+          </div>
+        </PerfectScrollbar>
+      </Drawer>
   );
 };
 
