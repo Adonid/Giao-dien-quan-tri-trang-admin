@@ -22,17 +22,15 @@ import {
 
 } from './views'; 
 
-// import { Confirm } from 'alerts';
 // import { Snackbars } from './alerts';
 // import { BackDrop, Skeletons } from 'elements';
 
 const Routes = () => {
   return (
     // <>
-    //   <Snackbars content='This is a success message number 1!' type='info'/>
-    //   <Confirm type="edit" title="Tiêu đề dialog" note="Nội dung cần chú ý" titleButton="Đăng bài" />
-    //   <BackDrop open={true}/>
-    //   <Skeletons qtys={8} />
+    // {/* //   <Snackbars content='This is a success message number 1!' type='info'/> */}
+    // {/* //   <BackDrop open={true}/> */}
+    // {/* //   <Skeletons qtys={8} /> */}
     // </>
     
     <Switch>
