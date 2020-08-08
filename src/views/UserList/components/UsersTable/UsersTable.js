@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const currencies = [
+const lists = [
   {
     value: '1',
     label: 'Theo tên A-Z',
@@ -73,7 +73,7 @@ const UsersTable = props => {
 
   const classes = useStyles();
 
-  const [currency, setCurrency] = React.useState('1');
+  const list =  lists;
 
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -134,7 +134,7 @@ const UsersTable = props => {
               className={classes.searchInput}
               placeholder="Search user"
             />
-            <SelectInput list={ currency } />
+            <SelectInput list={ list } />
           </div>
 
           <div className={classes.inner}>
@@ -153,11 +153,13 @@ const UsersTable = props => {
                       onChange={handleSelectAll}
                     />
                   </TableCell>
+                  <React.Fragment>
                   <TableCell>Name</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Location</TableCell>
-                  <TableCell>Phone</TableCell>
-                  <TableCell>Registration date</TableCell>
+                    <TableCell>Email</TableCell>
+                    <TableCell>Location</TableCell>
+                    <TableCell>Phone</TableCell>
+                    <TableCell>Registration date</TableCell>
+                  </React.Fragment>
                 </TableRow>
               </TableHead>
 
@@ -200,6 +202,7 @@ const UsersTable = props => {
                   </TableRow>
                 ))}
               </TableBody>
+
             </Table>
           </div>
         </PerfectScrollbar>
