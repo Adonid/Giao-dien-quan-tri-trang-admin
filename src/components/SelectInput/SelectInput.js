@@ -18,7 +18,7 @@ const SelectInput = props => {
             label="Sắp xếp"
             value={item}
             // onChange={handleChange}
-            helperText="Thứ tự sắp xếp"
+            // helperText="Thứ tự sắp xếp"
             variant="outlined"
         >
             {list.map((option) => (
