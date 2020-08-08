@@ -17,10 +17,15 @@ import {
   TableRow,
   Typography,
   TablePagination,
-  Button
+  Button,
+  Box,
+  Link,
+  IconButton
 } from '@material-ui/core';
 import { SearchInput, SelectInput } from 'components';
 import { getInitials } from 'helpers';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import EditAttributesIcon from '@material-ui/icons/EditAttributes';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -38,7 +43,9 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2)
   },
   actions: {
-    justifyContent: 'flex-end'
+    justifyContent: 'space-between',
+    padding: theme.spacing(1),
+    paddingLeft: theme.spacing(0.5)
   },
   row: {
     padding: theme.spacing(2),
@@ -47,8 +54,8 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  gutterRight: {
-    marginLeft: theme.spacing(2)
+  gutterLeft: {
+    marginLeft: theme.spacing(4)
   }
 }));
 
@@ -145,25 +152,12 @@ const UsersTable = props => {
               
               <TableHead>
                 <TableRow>
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      checked={selectedUsers.length === users.length}
-                      color="primary"
-                      indeterminate={
-                        selectedUsers.length > 0 &&
-                        selectedUsers.length < users.length
-                      }
-                      onChange={handleSelectAll}
-                    />
-                  </TableCell>
-                  <React.Fragment>
-                    {/* <TableCell>Name</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Location</TableCell>
-                    <TableCell>Phone</TableCell>
-                    <TableCell>Registration date</TableCell> */}
-                    <Button variant="outlined" className={classes.gutterRight}>XÓA HẾT</Button>
-                  </React.Fragment>
+                  <TableCell>Chọn</TableCell>
+                  <TableCell>Người dùng</TableCell>
+                  <TableCell>Số điện thoại</TableCell>
+                  <TableCell>Bài viết</TableCell>
+                  <TableCell>Ngày đăng kí</TableCell>
+                  <TableCell align="center">Actions</TableCell>
                 </TableRow>
               </TableHead>
 
@@ -184,24 +178,39 @@ const UsersTable = props => {
                       />
                     </TableCell>
                     <TableCell>
-                      <div className={classes.nameContainer}>
+                      <Box className={classes.nameContainer}>
                         <Avatar
                           className={classes.avatar}
                           src={user.avatarUrl}
                         >
                           {getInitials(user.name)}
                         </Avatar>
-                        <Typography variant="body1">{user.name}</Typography>
-                      </div>
+                        <div>
+                          <Typography variant="h6">{user.name}</Typography>
+                          <Link ></Link>
+                          <Link href={'mailto:'+user.email} variant="body2" color="inherit">
+                            {user.email}
+                          </Link>
+                        </div>
+                      </Box>
                     </TableCell>
-                    <TableCell>{user.email}</TableCell>
+                    <TableCell>
+                      <Link href={'tel:'+user.phone} color="inherit">
+                          {user.phone}
+                      </Link>
+                    </TableCell>
                     <TableCell>
                       {user.address.city}, {user.address.state},{' '}
                       {user.address.country}
                     </TableCell>
-                    <TableCell>{user.phone}</TableCell>
-                    <TableCell>
-                      {moment(user.createdAt).format('DD/MM/YYYY')}
+                    <TableCell>{moment(user.createdAt).format('DD/MM/YYYY')}</TableCell>
+                    <TableCell align="right">
+                      <Link>
+                        <IconButton><EditAttributesIcon /></IconButton>
+                      </Link>
+                      <Link>
+                        <IconButton><ArrowForwardIcon fontSize="small" /></IconButton>
+                      </Link>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -213,6 +222,25 @@ const UsersTable = props => {
       </CardContent>
 
       <CardActions className={classes.actions}>
+        <div>
+        <Checkbox
+            checked={selectedUsers.length === users.length}
+            color="primary"
+            indeterminate={
+              selectedUsers.length > 0 &&
+              selectedUsers.length < users.length
+            }
+            onChange={handleSelectAll}
+          />
+        <Button 
+          variant="outlined" 
+          disabled={ !selectedUsers.length ? true : false } 
+          className={ classes.gutterLeft} 
+        >
+          XÓA{ selectedUsers.length ? `(${selectedUsers.length})` : ''}
+        </Button>
+        </div>
+        
         <TablePagination
           component="div"
           count={users.length}
