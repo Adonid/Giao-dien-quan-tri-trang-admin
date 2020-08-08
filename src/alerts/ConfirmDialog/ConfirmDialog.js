@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -26,19 +26,28 @@ const useStyles = makeStyles((theme) => ({
 
 const ConfirmDialog = props => {
 
-  const { content, openDialog, ...rest } = props;
+  const { action, content, openDialog, ...rest } = props;
 
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(openDialog);
+
+  const firstUpdate = useRef(true);
+  useLayoutEffect (() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    setOpen(true);
+  },[openDialog]);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleConfirm = () => {
-    // Xu ly hande chap nhan o day. Hoac truyen len store de xu ly
-    console.log('ok');
+    action();
+    handleClose();
   };
 
   const handleClose = () => {
@@ -91,6 +100,7 @@ const ConfirmDialog = props => {
 }
 
 ConfirmDialog.propTypes = {
+  action : PropTypes.func,
   content : PropTypes.object,
   openDialog : PropTypes.bool
 }
