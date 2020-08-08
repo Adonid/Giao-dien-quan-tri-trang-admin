@@ -16,7 +16,8 @@ import {
   TableHead,
   TableRow,
   Typography,
-  TablePagination
+  TablePagination,
+  Button
 } from '@material-ui/core';
 import { SearchInput, SelectInput } from 'components';
 import { getInitials } from 'helpers';
@@ -40,13 +41,15 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-end'
   },
   row: {
-    margin: theme.spacing(2),
-    paddingBottom: theme.spacing(1.5),
+    padding: theme.spacing(2),
+    paddingBottom: theme.spacing(3),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: theme.spacing(0.5)
   },
+  gutterRight: {
+    marginLeft: theme.spacing(2)
+  }
 }));
 
 const lists = [
@@ -154,11 +157,12 @@ const UsersTable = props => {
                     />
                   </TableCell>
                   <React.Fragment>
-                  <TableCell>Name</TableCell>
+                    {/* <TableCell>Name</TableCell>
                     <TableCell>Email</TableCell>
                     <TableCell>Location</TableCell>
                     <TableCell>Phone</TableCell>
-                    <TableCell>Registration date</TableCell>
+                    <TableCell>Registration date</TableCell> */}
+                    <Button variant="outlined" className={classes.gutterRight}>XÓA HẾT</Button>
                   </React.Fragment>
                 </TableRow>
               </TableHead>
