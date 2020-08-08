@@ -27,6 +27,9 @@ import { getInitials } from 'helpers';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import EditAttributesIcon from '@material-ui/icons/EditAttributes';
 
+import { ConfirmDialog } from 'alerts';
+import mockData from './data';
+
 const useStyles = makeStyles(theme => ({
   root: {},
   content: {
@@ -79,19 +82,21 @@ const lists = [
 ];
 
 const UsersTable = props => {
-  const { className, users, ...rest } = props;
+  const { className, ...rest } = props;
 
   const classes = useStyles();
 
   const list =  lists;
 
+  const [ users, setUsers] = useState(mockData);
+
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
 
-  const handleSelectAll = event => {
-    const { users } = props;
+  const [ openDialog, setOpenDialog ] = useState(false);
 
+  const handleSelectAll = event => {
     let selectedUsers;
 
     if (event.target.checked) {
@@ -119,7 +124,6 @@ const UsersTable = props => {
         selectedUsers.slice(selectedIndex + 1)
       );
     }
-
     setSelectedUsers(newSelectedUsers);
   };
 
@@ -131,127 +135,136 @@ const UsersTable = props => {
     setRowsPerPage(event.target.value);
   };
 
+  const deleteUsers = () => {
+    // Goi redux xoa cac nguoi dung da chon trong selectedUsers
+    // Dua ra notify sau khi api thuc thi tra ve ket qua
+  }
+
   return (
-    <Card
-      {...rest}
-      className={clsx(classes.root, className)}
-    >
-      <CardContent className={classes.content}>
-        <PerfectScrollbar>
-          
-          <div className={classes.row}>
-            <SearchInput
-              className={classes.searchInput}
-              placeholder="Search user"
-            />
-            <SelectInput list={ list } />
-          </div>
+    <React.Fragment>
+      <Card
+        {...rest}
+        className={clsx(classes.root, className)}
+      >
+        <CardContent className={classes.content}>
+          <PerfectScrollbar>
+            
+            <div className={classes.row}>
+              <SearchInput
+                className={classes.searchInput}
+                placeholder="Search user"
+              />
+              <SelectInput list={ list } />
+            </div>
 
-          <div className={classes.inner}>
-            <Table>
-              
-              <TableHead>
-                <TableRow>
-                  <TableCell>Chọn</TableCell>
-                  <TableCell>Người dùng</TableCell>
-                  <TableCell>Số điện thoại</TableCell>
-                  <TableCell>Bài viết</TableCell>
-                  <TableCell>Ngày đăng kí</TableCell>
-                  <TableCell align="center">Actions</TableCell>
-                </TableRow>
-              </TableHead>
-
-              <TableBody>
-                {users.slice(0, rowsPerPage).map(user => (
-                  <TableRow
-                    className={classes.tableRow}
-                    hover
-                    key={user.id}
-                    selected={selectedUsers.indexOf(user.id) !== -1}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={selectedUsers.indexOf(user.id) !== -1}
-                        color="primary"
-                        onChange={event => handleSelectOne(event, user.id)}
-                        value="true"
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Box className={classes.nameContainer}>
-                        <Avatar
-                          className={classes.avatar}
-                          src={user.avatarUrl}
-                        >
-                          {getInitials(user.name)}
-                        </Avatar>
-                        <div>
-                          <Typography variant="h6">{user.name}</Typography>
-                          <Link ></Link>
-                          <Link href={'mailto:'+user.email} variant="body2" color="inherit">
-                            {user.email}
-                          </Link>
-                        </div>
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      <Link href={'tel:'+user.phone} color="inherit">
-                          {user.phone}
-                      </Link>
-                    </TableCell>
-                    <TableCell>
-                      {user.address.city}, {user.address.state},{' '}
-                      {user.address.country}
-                    </TableCell>
-                    <TableCell>{moment(user.createdAt).format('DD/MM/YYYY')}</TableCell>
-                    <TableCell align="right">
-                      <Link>
-                        <IconButton><EditAttributesIcon /></IconButton>
-                      </Link>
-                      <Link>
-                        <IconButton><ArrowForwardIcon fontSize="small" /></IconButton>
-                      </Link>
-                    </TableCell>
+            <div className={classes.inner}>
+              <Table>
+                
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Chọn</TableCell>
+                    <TableCell>Người dùng</TableCell>
+                    <TableCell>Số điện thoại</TableCell>
+                    <TableCell>Bài viết</TableCell>
+                    <TableCell>Ngày đăng kí</TableCell>
+                    <TableCell align="center">Actions</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
+                </TableHead>
 
-            </Table>
+                <TableBody>
+                  {users.slice(0, rowsPerPage).map(user => (
+                    <TableRow
+                      className={classes.tableRow}
+                      hover
+                      key={user.id}
+                      selected={selectedUsers.indexOf(user.id) !== -1}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          checked={selectedUsers.indexOf(user.id) !== -1}
+                          color="primary"
+                          onChange={event => handleSelectOne(event, user.id)}
+                          value="true"
+                        />
+                      </TableCell>
+                      <TableCell>
+                        <Box className={classes.nameContainer}>
+                          <Avatar
+                            className={classes.avatar}
+                            src={user.avatarUrl}
+                          >
+                            {getInitials(user.name)}
+                          </Avatar>
+                          <div>
+                            <Typography variant="h6">{user.name}</Typography>
+                            <Link ></Link>
+                            <Link href={'mailto:'+user.email} variant="body2" color="inherit">
+                              {user.email}
+                            </Link>
+                          </div>
+                        </Box>
+                      </TableCell>
+                      <TableCell>
+                        <Link href={'tel:'+user.phone} color="inherit">
+                            {user.phone}
+                        </Link>
+                      </TableCell>
+                      <TableCell>
+                        {user.address.city}, {user.address.state},{' '}
+                        {user.address.country}
+                      </TableCell>
+                      <TableCell>{moment(user.createdAt).format('DD/MM/YYYY')}</TableCell>
+                      <TableCell align="right">
+                        <Link>
+                          <IconButton><EditAttributesIcon /></IconButton>
+                        </Link>
+                        <Link>
+                          <IconButton><ArrowForwardIcon fontSize="small" /></IconButton>
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+
+              </Table>
+            </div>
+          </PerfectScrollbar>
+        </CardContent>
+
+        <CardActions className={classes.actions}>
+          <div>
+          <Checkbox
+              checked={selectedUsers.length === users.length}
+              color="primary"
+              indeterminate={
+                selectedUsers.length > 0 &&
+                selectedUsers.length < users.length
+              }
+              onChange={handleSelectAll}
+            />
+          <Button 
+            variant="outlined" 
+            disabled={ !selectedUsers.length ? true : false } 
+            className={ classes.gutterLeft} 
+            onClick={() => {setOpenDialog(!openDialog)}}
+          >
+            XÓA{ selectedUsers.length ? `(${selectedUsers.length})` : ''}
+          </Button>
           </div>
-        </PerfectScrollbar>
-      </CardContent>
-
-      <CardActions className={classes.actions}>
-        <div>
-        <Checkbox
-            checked={selectedUsers.length === users.length}
-            color="primary"
-            indeterminate={
-              selectedUsers.length > 0 &&
-              selectedUsers.length < users.length
-            }
-            onChange={handleSelectAll}
+          
+          <TablePagination
+            component="div"
+            count={users.length}
+            onChangePage={handlePageChange}
+            onChangeRowsPerPage={handleRowsPerPageChange}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={[5, 10, 25]}
           />
-        <Button 
-          variant="outlined" 
-          disabled={ !selectedUsers.length ? true : false } 
-          className={ classes.gutterLeft} 
-        >
-          XÓA{ selectedUsers.length ? `(${selectedUsers.length})` : ''}
-        </Button>
-        </div>
-        
-        <TablePagination
-          component="div"
-          count={users.length}
-          onChangePage={handlePageChange}
-          onChangeRowsPerPage={handleRowsPerPageChange}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          rowsPerPageOptions={[5, 10, 25]}
-        />
-      </CardActions>
-    </Card>
+        </CardActions>
+      </Card>
+      <ConfirmDialog action={ deleteUsers} openDialog={ openDialog } content={{type:'info', title:`Xóa ${selectedUsers.length>1 ? selectedUsers.length : ''} người dùng đã chọn`, note:`Loại bỏ ${selectedUsers.length>1 ? selectedUsers.length : ''} người này dùng khỏi hệ thống. Bạn có chắc?`}} />
+    </React.Fragment>
   );
 };
 
