@@ -229,6 +229,11 @@ const UsersTable = props => {
     }
   }
 
+  const handleSearch = val => {
+    const index = [...users].map( item => (item.name.indexOf(val) !== -1) ? item : null)
+    console.log(index);
+  }
+
   return (
     <React.Fragment>
       <Card
@@ -242,6 +247,7 @@ const UsersTable = props => {
               <SearchInput
                 className={classes.searchInput}
                 placeholder="Search user"
+                search={ val => handleSearch(val) }
               />
               <SelectInput list={ list } action={ val => sortBy(val) } />
             </div>
