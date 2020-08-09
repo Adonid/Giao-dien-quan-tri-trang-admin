@@ -365,8 +365,13 @@ const UsersTable = props => {
 };
 
 UsersTable.propTypes = {
-  className: PropTypes.string,
-  users: PropTypes.array.isRequired
+  className: PropTypes.string
 };
+
+  const mapStateToProps = (state, ownProps) => {
+    return {
+      prop: state.prop
+    }
+  }
 
 export default UsersTable;
