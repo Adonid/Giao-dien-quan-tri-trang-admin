@@ -134,6 +134,7 @@ const UsersTable = props => {
 
   const handleRowsPerPageChange = event => {
     setRowsPerPage(event.target.value);
+    setPage(0);
   };
 
   const deleteUsers = () => {
@@ -173,7 +174,7 @@ const UsersTable = props => {
                 </TableHead>
 
                 <TableBody>
-                  {users.slice(0, rowsPerPage).map(user => (
+                  { users.slice( page*rowsPerPage, page*rowsPerPage+rowsPerPage).map(user => (
                     <TableRow
                       className={classes.tableRow}
                       hover
