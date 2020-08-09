@@ -12,6 +12,7 @@ import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 import CloudDownloadOutlinedIcon from '@material-ui/icons/CloudDownloadOutlined';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -39,6 +40,10 @@ const UsersToolbar = props => {
 
   const classes = useStyles();
 
+  const showModalAddUser = () => {
+    props.showModalAddNewUser();
+}
+
   return (
     <div
       {...rest}
@@ -57,6 +62,7 @@ const UsersToolbar = props => {
         <Button
           color="primary"
           variant="contained"
+          onClick={ showModalAddUser }
         >
           <AddCircleOutlineIcon/> Add user
         </Button>
@@ -79,4 +85,20 @@ UsersToolbar.propTypes = {
   className: PropTypes.string
 };
 
-export default UsersToolbar;
+  const mapStateToProps = (state, ownProps) => {
+    return {
+      prop: state.prop
+    }
+  }
+
+  const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+      showModalAddNewUser: () => {
+        dispatch({
+          type: 'SHOW_MODAL_ADD_USER'
+        })
+      }
+    }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(UsersToolbar)
