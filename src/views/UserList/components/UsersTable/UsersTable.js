@@ -93,6 +93,7 @@ const UsersTable = props => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
+  const [usersDisplay, setUsersDisplay] = useState([]);
 
   const [ openDialog, setOpenDialog ] = useState(false);
 
