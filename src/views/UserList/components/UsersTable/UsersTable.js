@@ -65,19 +65,19 @@ const useStyles = makeStyles(theme => ({
 const lists = [
   {
     value: '1',
-    label: 'Theo tên A-Z',
+    label: 'Người dùng mới nhất',
   },
   {
     value: '2',
-    label: 'Theo tên Z-A',
+    label: 'Người dùng cũ nhất',
   },
   {
     value: '3',
-    label: 'Theo ngày đăng ký mới nhất',
+    label: 'Theo tên A-Z',
   },
   {
     value: '4',
-    label: 'Theo ngày đăng ký cũ nhất',
+    label: 'Theo tên Z-A',
   },
 ];
 
