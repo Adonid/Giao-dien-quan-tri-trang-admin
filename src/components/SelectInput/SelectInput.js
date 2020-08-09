@@ -7,9 +7,15 @@ import {
 
 const SelectInput = props => {
 
-    const { list, ...rest } = props;
+    const { list, action, ...rest } = props;
 
-    const [ item, setCurrency ] = React.useState(list[0].value);
+    const [ item, setItem ] = React.useState(list[0].value);
+
+    const handleChange = event => {
+      const val = event.target.value;
+      setItem(val);
+      action(val);
+    }
 
     return (
         <TextField
@@ -17,21 +23,24 @@ const SelectInput = props => {
             select
             label="Sắp xếp"
             value={item}
-            // onChange={handleChange}
+            onChange={handleChange}
             // helperText="Thứ tự sắp xếp"
             variant="outlined"
         >
-            {list.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
+            {
+              list.map( option => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))
+            }
         </TextField>
     );
 };
 
 SelectInput.propTypes = {
-    list : PropTypes.array
+    list : PropTypes.array,
+    action: PropTypes.func
 };
 
 export default SelectInput;
