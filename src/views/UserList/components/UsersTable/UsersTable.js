@@ -81,6 +81,36 @@ const lists = [
   },
 ];
 
+const to_slug = str => {
+
+    // Chuyển hết sang chữ thường
+    str = str.toLowerCase();     
+ 
+    // xóa dấu
+    str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, 'a');
+    str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, 'e');
+    str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, 'i');
+    str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, 'o');
+    str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, 'u');
+    str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, 'y');
+    str = str.replace(/(đ)/g, 'd');
+ 
+    // Xóa ký tự đặc biệt
+    str = str.replace(/([^0-9a-z-\s])/g, '');
+ 
+    // Xóa khoảng trắng thay bằng ký tự -
+    str = str.replace(/(\s+)/g, '-');
+ 
+    // xóa phần dự - ở đầu
+    str = str.replace(/^-+/g, '');
+ 
+    // xóa phần dư - ở cuối
+    str = str.replace(/-+$/g, '');
+ 
+    // return
+    return str;
+}
+
 const UsersTable = props => {
   const { className, ...rest } = props;
 
@@ -93,7 +123,6 @@ const UsersTable = props => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
-  const [usersDisplay, setUsersDisplay] = useState([]);
 
   const [ openDialog, setOpenDialog ] = useState(false);
 
@@ -142,6 +171,64 @@ const UsersTable = props => {
     // Dua ra notify sau khi api thuc thi tra ve ket qua
   }
 
+  const sortBy = val => {
+    let usersBy = [...users];
+    switch (Number(val)) {
+      case 1:
+        // Theo moi nhat
+        usersBy.sort( (a, b) =>  a.createdAt - b.createdAt).reverse();
+        setUsers(usersBy);
+        // end
+        break;
+      
+      case 2:
+        // Theo cu nhat 
+        usersBy.sort( (a, b) =>  a.createdAt - b.createdAt);
+        setUsers(usersBy);
+        // end
+        break;
+      
+      case 3:
+        // Theo ten A-Z
+        usersBy.sort( (a, b) => {
+          let x = to_slug(a.name);
+          let y = to_slug(b.name);
+          if(x < y) {
+           return -1;
+         }
+         if(x > y) {
+             return 1;
+         }
+         // name same same
+         return 0;
+        });
+        setUsers(usersBy);
+        // end
+        break;
+      
+      case 4:
+        // Theo ten Z-A
+        usersBy.sort( (a, b) => {
+          let x = to_slug(a.name);
+          let y = to_slug(b.name);
+          if(x < y) {
+           return -1;
+         }
+         if(x > y) {
+             return 1;
+         }
+         // name same same
+         return 0;
+        }).reverse();
+        setUsers(usersBy);
+        // end
+        break;
+      
+      default:
+        break;
+    }
+  }
+
   return (
     <React.Fragment>
       <Card
@@ -156,7 +243,7 @@ const UsersTable = props => {
                 className={classes.searchInput}
                 placeholder="Search user"
               />
-              <SelectInput list={ list } />
+              <SelectInput list={ list } action={ val => sortBy(val) } />
             </div>
 
             <div className={classes.inner}>
