@@ -118,6 +118,7 @@ const UsersTable = props => {
 
   const list =  lists;
 
+  const [ originUsers, setOriginUsers] = useState(mockData);
   const [ users, setUsers] = useState(mockData);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -230,8 +231,8 @@ const UsersTable = props => {
   }
 
   const handleSearch = val => {
-    const index = [...users].map( item => (item.name.indexOf(val) !== -1) ? item : null)
-    console.log(index);
+    const index = [...originUsers].map( item => (item.name.indexOf(val) !== -1) ? item : null).filter( item => item!=null);
+    setUsers( index );
   }
 
   return (
