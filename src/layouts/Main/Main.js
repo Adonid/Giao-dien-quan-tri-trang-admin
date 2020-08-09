@@ -7,6 +7,7 @@ import { useMediaQuery } from '@material-ui/core';
 
 import { Sidebar, Topbar, Footer } from './components';
 import { Snackbars } from 'alerts';
+import { FormAddUser } from 'components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,6 +36,8 @@ const Main = props => {
 
   const [openSidebar, setOpenSidebar] = useState(false);
 
+  const [openAddUser, setOpenAddUser] = useState(false);
+
   const handleSidebarOpen = () => {
     setOpenSidebar(true);
   };
@@ -62,7 +65,8 @@ const Main = props => {
         {children}
         <Footer />
       </main>
-      <Snackbars data={ props.data } />
+      <Snackbars data={ props.dataNotify } />
+      <FormAddUser openCall={props.openAddUser} />
     </div>
   );
 };
@@ -73,7 +77,8 @@ Main.propTypes = {
 
   const mapStateToProps = (state, ownProps) => {
     return {
-      data: state.dataNotifys.alert
+      dataNotify: state.dataNotifys.alert,
+      openAddUser: state.dataUser.show,
     }
   }
 
