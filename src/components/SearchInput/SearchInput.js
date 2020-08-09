@@ -24,9 +24,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SearchInput = props => {
-  const { className, onChange, style, ...rest } = props;
+  const { className, search, style, ...rest } = props;
 
   const classes = useStyles();
+
+  const handleSearch = val => search(val.target.value);
 
   return (
     <Paper
@@ -39,7 +41,7 @@ const SearchInput = props => {
           {...rest}
           className={classes.input}
           disableUnderline
-          onChange={onChange}
+          onChange={ handleSearch }
           id="outlined-helperText"
           placeholder="Tìm kiếm"
           variant="outlined"
@@ -58,7 +60,7 @@ const SearchInput = props => {
 
 SearchInput.propTypes = {
   className: PropTypes.string,
-  onChange: PropTypes.func,
+  search: PropTypes.func,
   style: PropTypes.object
 };
 
