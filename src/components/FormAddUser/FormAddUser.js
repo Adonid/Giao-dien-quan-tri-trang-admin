@@ -9,9 +9,10 @@ import {
     Dialog,
     Grid
  } from '@material-ui/core';
+import { connect } from 'react-redux';
 
  const schema = {
-    firstName: {
+    userName: {
       presence: { allowEmpty: false, message: '^Tên không để trống' },
       length: {
         maximum: 32
@@ -117,11 +118,7 @@ const FormAddUser = props =>  {
         values: {},
         touched: {},
         errors: {}
-      });
-    
-    const [loading, setLoading] = useState(false);
-    const [success, setSuccess] = useState(false);
-    
+      });    
 
     useEffect(() => {
         const errors = validate(formState.values, schema);
@@ -140,16 +137,12 @@ const FormAddUser = props =>  {
         firstUpdate.current = false;
         return;
       }
-      setOpen(true);
+      setOpen(openCall);
     },[openCall])
     /** End */
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
     const handleClose = () => {
-        setOpen(false);
+        props.closeFormAddNewUser();
     };
 
     const handleChange = event => {
@@ -173,18 +166,7 @@ const FormAddUser = props =>  {
 
     const handleSignUp = event => {
         event.preventDefault();
-        if (!loading) {
-          setSuccess(false);
-          setLoading(true);
-          setOpenBackdrop(true);
-          // THOI GIAN XU LY API O DAY!
-          timer.current = setTimeout(() => {
-            setSuccess(true);
-            setLoading(false);
-            // vi du ve chuyen huong qua trang quen mat khau sau khi call api
-            history.push('/create-account-success');
-          }, 2000);
-        }
+        props.addNewUser(formState.values);
       };
 
     const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
@@ -210,20 +192,20 @@ const FormAddUser = props =>  {
                             color="textSecondary"
                             gutterBottom
                             >
-                            Sử dụng email để tạo mới 1 tài khoản
+                            Sử dụng 1 email và 1 số điện thoại để tạo mới 1 tài khoản
                             </Typography>
                             <TextField
                             className={classes.textField}
-                            error={hasError('firstName')}
+                            error={hasError('userName')}
                             fullWidth
                             helperText={
-                                hasError('firstName') ? formState.errors.firstName[0] : null
+                                hasError('userName') ? formState.errors.userName[0] : null
                             }
                             label="Họ tên"
-                            name="firstName"
+                            name="userName"
                             onChange={handleChange}
                             type="text"
-                            value={formState.values.firstName || ''}
+                            value={formState.values.userName || ''}
                             variant="outlined"
                             />
                             <TextField
@@ -273,8 +255,9 @@ const FormAddUser = props =>  {
                                     <Button 
                                         variant="contained" 
                                         color="primary" 
-                                        disabled={!formState.isValid||loading}
-                                        onClick={handleClose}>
+                                        disabled={!formState.isValid}
+                                        type="submit"
+                                    >
                                         Thêm người dùng
                                     </Button>
                                 </ThemeProvider>
@@ -294,7 +277,29 @@ const FormAddUser = props =>  {
 }
 
 FormAddUser.propTypes = {
-    
+  openCall : PropTypes.bool
 };
 
-export default FormAddUser;
+  const mapStateToProps = (state, ownProps) => {
+    return {
+      prop: state.prop
+    }
+  }
+
+  const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+      closeFormAddNewUser: () => {
+        dispatch({
+          type: 'CLOSE_MODAL_ADD_NEW_USER'
+        });
+      },
+      addNewUser: dataForm => {
+        dispatch({
+          type: 'ADD_NEW_USER',
+          dataForm: dataForm
+        });
+      }
+    }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormAddUser)
