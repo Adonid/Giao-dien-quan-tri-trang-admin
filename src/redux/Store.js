@@ -7,7 +7,7 @@ const redux = require('redux');
 
 var allReducers = redux.combineReducers({
     dataNotifys: Notifys,
-    dataUser: User
+    dataNewUser: User
 });
 
 const Store = redux.createStore(allReducers);
