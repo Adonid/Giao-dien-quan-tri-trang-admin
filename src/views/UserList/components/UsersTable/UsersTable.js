@@ -118,7 +118,7 @@ const UsersTable = props => {
 
   const list =  lists;
 
-  const [ originUsers, setOriginUsers] = useState(mockData);
+  const [ originUsers ] = useState(mockData);
   const [ users, setUsers] = useState(mockData);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -241,6 +241,7 @@ const UsersTable = props => {
         {...rest}
         className={clsx(classes.root, className)}
       >
+
         <CardContent className={classes.content}>
           <PerfectScrollbar>
             
@@ -358,6 +359,7 @@ const UsersTable = props => {
             rowsPerPageOptions={[5, 10, 25]}
           />
         </CardActions>
+      
       </Card>
       <ConfirmDialog action={ deleteUsers} openDialog={ openDialog } content={{type:'info', title:`Xóa ${selectedUsers.length>1 ? selectedUsers.length : ''} người dùng đã chọn`, note:`Loại bỏ ${selectedUsers.length>1 ? selectedUsers.length : ''} người này dùng khỏi hệ thống. Bạn có chắc?`}} />
     </React.Fragment>
