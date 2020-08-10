@@ -19,11 +19,11 @@ const UserReducers = (state = dataNewUser, action) => {
             return state;
 
         case 'DELETE_SELECT_USERS':
-            const amount = action.amount;
+            const selectedUsers = action.selectedUsers;
             /** api xoa het tat ca users */
 
             /** end */
-            state = { ...state,  alert: {...state.alert, type: 'info', content: `Đã xóa xong ${amount} người dùng ra khỏi hệ thống`} };
+            state = { ...state,  alert: {...state.alert, type: 'info', content: `Đã xóa xong ${ selectedUsers.length } người dùng ra khỏi hệ thống`} };
             return state;
 
         case 'ADD_NEW_USER':
