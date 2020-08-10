@@ -310,7 +310,7 @@ const UsersTable = props => {
                         {user.address.city}, {user.address.state},{' '}
                         {user.address.country}
                       </TableCell>
-                      <TableCell>{moment(user.createdAt).format('DD/MM/YYYY')}</TableCell>
+                      <TableCell>{moment(user.createdAt).format('DD/MM/YYYY | HH:MM')}</TableCell>
                       <TableCell align="right">
                         <Link>
                           <IconButton><EditAttributesIcon /></IconButton>
