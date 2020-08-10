@@ -65,8 +65,11 @@ const Main = props => {
         {children}
         <Footer />
       </main>
-      <Snackbars data={ props.dataNotify } />
+
+      <Snackbars data={ props.dataAlertNotify } />
+      <Snackbars data={ props.dataAlertAddUser } />
       <FormAddUser openCall={props.openAddUser} />
+
     </div>
   );
 };
@@ -77,8 +80,9 @@ Main.propTypes = {
 
   const mapStateToProps = (state, ownProps) => {
     return {
-      dataNotify: state.dataNotifys.alert,
-      openAddUser: state.dataUser.show,
+      dataAlertNotify: state.dataNotifys.alert,
+      dataAlertAddUser: state.dataNewUser.alert,
+      openAddUser: state.dataNewUser.show,
     }
   }
 
