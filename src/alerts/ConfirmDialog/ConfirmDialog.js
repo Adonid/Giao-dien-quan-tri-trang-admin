@@ -123,14 +123,14 @@ const ConfirmDialog = props => {
                                     <Button 
                                         variant="contained" 
                                         color="primary" 
-                                        onClick={ handleClose }
+                                        onClick={ handleConfirm }
                                         startIcon={<DeleteOutlineIcon />}
                                     >
                                         Xóa
                                     </Button>
                                 </ThemeProvider>
                                 <ThemeProvider theme={themeButtonClose}>
-                                    <Button color="primary" className={classes.margin}  onClick={ handleConfirm } >
+                                    <Button color="primary" className={classes.margin}  onClick={ handleClose } >
                                         Đóng lại
                                     </Button>
                                 </ThemeProvider>
