@@ -29,6 +29,7 @@ import EditAttributesIcon from '@material-ui/icons/EditAttributes';
 
 import { ConfirmDialog } from 'alerts';
 import mockData from './data';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -168,8 +169,7 @@ const UsersTable = props => {
   };
 
   const deleteUsers = () => {
-    // Goi redux xoa cac nguoi dung da chon trong selectedUsers
-    // Dua ra notify sau khi api thuc thi tra ve ket qua
+    props.selectedUsers(selectedUsers);
   }
 
   const sortBy = val => {
@@ -361,7 +361,7 @@ const UsersTable = props => {
         </CardActions>
       
       </Card>
-      <ConfirmDialog action={ deleteUsers} openDialog={ openDialog } content={{type:'info', title:`Xóa ${selectedUsers.length>1 ? selectedUsers.length : ''} người dùng đã chọn`, note:`Loại bỏ ${selectedUsers.length>1 ? selectedUsers.length : ''} người này dùng khỏi hệ thống. Bạn có chắc?`}} />
+      <ConfirmDialog action={ deleteUsers } openDialog={ openDialog } content={{type:'info', title:`Xóa ${selectedUsers.length>1 ? selectedUsers.length : ''} người dùng đã chọn`, note:`Loại bỏ ${selectedUsers.length>1 ? selectedUsers.length : ''} người này dùng khỏi hệ thống. Bạn có chắc?`}} />
     </React.Fragment>
   );
 };
@@ -376,4 +376,15 @@ UsersTable.propTypes = {
     }
   }
 
-export default UsersTable;
+  const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+      selectedUsers: usersTick => {
+        dispatch({
+          type: 'DELETE_SELECT_USERS',
+          selectedUsers: usersTick
+        })
+      }
+    }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(UsersTable)
