@@ -18,6 +18,14 @@ const UserReducers = (state = dataNewUser, action) => {
             state = { ...state, show: false};
             return state;
 
+        case 'DELETE_SELECT_USERS':
+            const amount = action.amount;
+            /** api xoa het tat ca users */
+
+            /** end */
+            state = { ...state,  alert: {...state.alert, type: 'info', content: `Đã xóa xong ${amount} người dùng ra khỏi hệ thống`} };
+            return state;
+
         case 'ADD_NEW_USER':
             const dataUser = action.dataForm;
             /** api them moi user. chu ys co validate du lieu nen ket qua co the khac nhau */
