@@ -52,12 +52,9 @@ const UsersToolbar = props => {
       <div className={classes.row}>
         <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb" gutterBottom>
           <Link color="inherit" component="button">
-            Material-UI
+            Dashboard
           </Link>
-          <Link color="inherit" component="button">
-            Core
-          </Link>
-          <Typography color="textPrimary">Breadcrumb</Typography>
+          <Typography color="textPrimary">Quản lý người dùng</Typography>
         </Breadcrumbs>
         <Button
           color="primary"
@@ -72,11 +69,6 @@ const UsersToolbar = props => {
           Quản lý người dùng
         </Typography>
       </div>
-      <div className={classes.groupButton}>
-        <Button><CloudUploadOutlinedIcon/> Import</Button>
-        <Button><CloudDownloadOutlinedIcon/> Export</Button>
-      </div>
-      
     </div>
   );
 };
