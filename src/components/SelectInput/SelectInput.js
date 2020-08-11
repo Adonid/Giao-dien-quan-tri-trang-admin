@@ -7,7 +7,7 @@ import {
 
 const SelectInput = props => {
 
-    const { list, action, ...rest } = props;
+    const { label, list, action, ...rest } = props;
 
     const [ item, setItem ] = React.useState(list[0].value);
 
@@ -21,7 +21,7 @@ const SelectInput = props => {
         <TextField
             id="outlined-select-item"
             select
-            label="Sắp xếp"
+            label={label??"Sắp xếp"}
             value={item}
             onChange={handleChange}
             // helperText="Thứ tự sắp xếp"
@@ -40,7 +40,8 @@ const SelectInput = props => {
 
 SelectInput.propTypes = {
     list : PropTypes.array,
-    action: PropTypes.func
+    action: PropTypes.func,
+    label: PropTypes.string
 };
 
 export default SelectInput;
