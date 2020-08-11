@@ -314,7 +314,7 @@ const UsersTable = props => {
                       </TableCell>
                       <TableCell>{moment(user.createdAt).format('DD/MM/YYYY | HH:MM')}</TableCell>
                       <TableCell align="right">
-                        <Link>
+                        <Link component={RouterLink} to="/edit-user">
                           <IconButton><EditAttributesIcon /></IconButton>
                         </Link>
                         <Link component={RouterLink} to="/users-detail">
