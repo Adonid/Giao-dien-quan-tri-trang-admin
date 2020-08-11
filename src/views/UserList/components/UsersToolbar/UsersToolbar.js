@@ -8,8 +8,6 @@ import {
   Breadcrumbs,
   Link
  } from '@material-ui/core';
-import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
-import CloudDownloadOutlinedIcon from '@material-ui/icons/CloudDownloadOutlined';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { connect } from 'react-redux';
