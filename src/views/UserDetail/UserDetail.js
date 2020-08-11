@@ -166,6 +166,8 @@ const UserDetail = () => {
   const handleSend = () => {
     // goi redux de tien hanh thuc thi
     
+    // Gui xong roi
+    setContextNotify('');
   }
 
   return (
