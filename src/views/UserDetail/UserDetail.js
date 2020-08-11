@@ -138,17 +138,33 @@ const themeButtonDelete = createMuiTheme({
 const UserDetail = () => {
   const classes = useStyles();
 
+  const [ typeSend, setTypeSend ] = useState(1);
+
+  const [ hidenTextField, setHidenTextField ] = useState(true);
+
+  const [ contextNotify, setContextNotify ] = useState('');
+
   const listSendActions = lists;
 
   const actionSend = val => {
-    switch (Number(val)) {
-      case 1:
-        
-        break;
-      
-      default:
-        break;
+    const value = Number(val);
+    setTypeSend(value);
+    // Neu la thong bao cho field hien len, neu khong de an
+    if(value===2){
+      setHidenTextField(false);
+      setContextNotify('');
     }
+    else{
+      setHidenTextField(true);
+    }
+    // end
+  }
+
+  const handleTextField = val => setContextNotify(val.target.value);
+
+  const handleSend = () => {
+    // goi redux de tien hanh thuc thi
+    
   }
 
   return (
@@ -375,7 +391,7 @@ const UserDetail = () => {
                   <Divider/>
                   <CardContent className={ classes.contentSend}>
                     <SelectInput label="Chọn hành động" list={ listSendActions } action={ val => actionSend(val) } />
-                    <Box className={ classes.isHidenField }>
+                    <Box className={ hidenTextField ? classes.isHidenField : null }>
                       <TextField
                         id="standard-multiline-flexible"
                         label="Nội dung thông báo"
@@ -383,6 +399,8 @@ const UserDetail = () => {
                         rowsMax={3}
                         fullWidth={true}
                         autoComplete
+                        value={contextNotify}
+                        onChange={ handleTextField }
                       />
                     </Box>
                     <Box>
@@ -391,6 +409,7 @@ const UserDetail = () => {
                               variant="contained" 
                               color="default" 
                               startIcon={ <MailOutlineIcon fontSize="small" />}
+                              onClick={ handleSend }
                           >
                               GỬI
                           </Button>
