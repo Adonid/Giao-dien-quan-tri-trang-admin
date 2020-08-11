@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/styles';
 import { 
     Breadcrumbs, 
     Link, 
-    Typography 
+    Typography, 
+    Button
 } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -42,17 +43,17 @@ const UserDetail = () => {
       <div>
         <div className={classes.row}>
             <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb" gutterBottom>
-            <Link color="inherit" component="button">
-                Dashboard
-            </Link>
-            <Typography color="textPrimary">Quản lý người dùng</Typography>
+                <Link color="inherit" component="button">
+                    Dashboard
+                </Link>
+                <Typography color="textPrimary">Quản lý người dùng</Typography>
             </Breadcrumbs>
             <Button
             color="primary"
             variant="contained"
-            onClick={ showModalAddUser }
+            // onClick={ showModalAddUser }
             >
-            <AddCircleOutlineIcon/> Add user
+                <AddCircleOutlineIcon/> Add user
             </Button>
         </div>
         <div>
