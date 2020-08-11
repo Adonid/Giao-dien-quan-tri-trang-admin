@@ -142,7 +142,7 @@ const UserDetail = () => {
 
   const [ hidenTextField, setHidenTextField ] = useState(true);
 
-  const [ contextNotify, setContextNotify ] = useState('');
+  const [ contextNotify, setContextNotify ] = useState('Nothing');
 
   const listSendActions = lists;
 
@@ -156,6 +156,7 @@ const UserDetail = () => {
     }
     else{
       setHidenTextField(true);
+      setContextNotify('Nothing');
     }
     // end
   }
@@ -410,6 +411,7 @@ const UserDetail = () => {
                               color="default" 
                               startIcon={ <MailOutlineIcon fontSize="small" />}
                               onClick={ handleSend }
+                              disabled={Boolean(contextNotify) ? false : true}
                           >
                               GỬI
                           </Button>
