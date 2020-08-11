@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import {
+  Link as RouterLink
+} from "react-router-dom";
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -294,7 +297,6 @@ const UsersTable = props => {
                           </Avatar>
                           <div>
                             <Typography variant="h6">{user.name}</Typography>
-                            <Link ></Link>
                             <Link href={'mailto:'+user.email} variant="body2" color="inherit">
                               {user.email}
                             </Link>
@@ -315,7 +317,7 @@ const UsersTable = props => {
                         <Link>
                           <IconButton><EditAttributesIcon /></IconButton>
                         </Link>
-                        <Link>
+                        <Link component={RouterLink} to="/users-detail">
                           <IconButton><ArrowForwardIcon fontSize="small" /></IconButton>
                         </Link>
                       </TableCell>
