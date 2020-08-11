@@ -135,14 +135,21 @@ const themeButtonDelete = createMuiTheme({
   },
 });
 
-const actionSend = val => {
-  console.log(val);
-}
-
 const UserDetail = () => {
   const classes = useStyles();
 
   const listSendActions = lists;
+
+  const actionSend = val => {
+    switch (Number(val)) {
+      case 1:
+        
+        break;
+      
+      default:
+        break;
+    }
+  }
 
   return (
     <div className={classes.root}>
