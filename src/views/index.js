@@ -12,3 +12,4 @@ export { default as ResetPasswordSuccess } from './ResetPasswordSuccess';
 export { default as CreateAccountSuccess } from './CreateAccountSuccess';
 export { default as Typography } from './Typography';
 export { default as UserList } from './UserList';
+export { default as UserDetail } from './UserDetail';
