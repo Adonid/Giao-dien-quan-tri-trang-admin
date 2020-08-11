@@ -15,7 +15,8 @@ import {
     TableCell,
     Box,
     CardContent,
-    createMuiTheme
+    createMuiTheme,
+    TextField
 } from '@material-ui/core';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import EditAttributesOutlinedIcon from '@material-ui/icons/EditAttributesOutlined';
@@ -83,12 +84,17 @@ const useStyles = makeStyles(theme => ({
       color: '#546e7ad9'
     }
   },
-  gutterTopBottom: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+  contentSend: {
+    '& .MuiBox-root': {
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2)
+    }
   },
   maxHeightPerfectScrollbar: {
-    maxHeight: 184
+    maxHeight: 123
+  },
+  isHidenField: {
+    display: 'none'
   }
 }));
 
@@ -111,11 +117,20 @@ const lists = [
   },
 ];
 
+const themeButtonSend = createMuiTheme({
+  palette: {
+    default : {
+      main: '#d5d5d5ad',
+      contrastText: '#000000de',
+    },
+  },
+});
+
 const themeButtonDelete = createMuiTheme({
   palette: {
     primary : {
-      main: '#e0e0e0',
-      contrastText: '#000000de',
+      main: '#f44336',
+      contrastText: '#fff',
     },
   },
 });
@@ -349,15 +364,25 @@ const UserDetail = () => {
                 spacing={3}
               >
                 <Card>
-                  <CardHeader title="Gửi emai" />
+                  <CardHeader title="Gửi email / thông báo" />
                   <Divider/>
-                  <CardContent>
+                  <CardContent className={ classes.contentSend}>
                     <SelectInput label="Chọn hành động" list={ listSendActions } action={ val => actionSend(val) } />
-                    <Box className={ classes.gutterTopBottom }>
-                      <ThemeProvider theme={themeButtonDelete}>
+                    <Box className={ classes.isHidenField }>
+                      <TextField
+                        id="standard-multiline-flexible"
+                        label="Nội dung thông báo"
+                        multiline
+                        rowsMax={3}
+                        fullWidth={true}
+                        autoComplete
+                      />
+                    </Box>
+                    <Box>
+                      <ThemeProvider theme={themeButtonSend}>
                           <Button 
                               variant="contained" 
-                              color="primary" 
+                              color="default" 
                               startIcon={ <MailOutlineIcon fontSize="small" />}
                           >
                               GỬI
@@ -367,6 +392,30 @@ const UserDetail = () => {
                     <Table>
                       <TableBody>
                         <PerfectScrollbar className={ classes.maxHeightPerfectScrollbar }>
+                          <TableRow>
+                            <TableCell>
+                              <Typography variant="p">
+                                  08/08/2020 | 03:08
+                              </Typography>
+                            </TableCell>
+                            <TableCell>
+                              <Typography variant="body1" color="textSecondary">
+                                  Gửi link reset password
+                              </Typography>
+                            </TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell>
+                              <Typography variant="p">
+                                  08/08/2020 | 03:08
+                              </Typography>
+                            </TableCell>
+                            <TableCell>
+                              <Typography variant="body1" color="textSecondary">
+                                  Gửi link reset password
+                              </Typography>
+                            </TableCell>
+                          </TableRow>
                           <TableRow>
                             <TableCell>
                               <Typography variant="p">
@@ -407,9 +456,15 @@ const UserDetail = () => {
                             Xóa toàn bộ dữ liệu của người dùng này, nếu không chắc chắn bạn hãy chọn đóng tài khoản vì điều này sẽ xóa không trở lại.
                         </Typography>
                     </Box>
-                    <Button variant="contained" className={ classes.buttonDelete} startIcon={ <DeleteOutlinedIcon fontSize="small" />}>
-                        XÓA TÀI KHOẢN
-                    </Button>
+                    <ThemeProvider theme={themeButtonDelete}>
+                        <Button 
+                            variant="contained" 
+                            color="primary" 
+                            startIcon={ <DeleteOutlinedIcon fontSize="small" />}
+                        >
+                            XÓA TÀI KHOẢN
+                        </Button>
+                    </ThemeProvider>
                   </CardContent>
                 </Card>
               </Grid>
