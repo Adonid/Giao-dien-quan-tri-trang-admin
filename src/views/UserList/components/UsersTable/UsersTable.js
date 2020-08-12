@@ -347,7 +347,7 @@ const UsersTable = props => {
             className={ classes.gutterLeft} 
             onClick={() => {setOpenDialog(!openDialog)}}
           >
-            XÓA{ selectedUsers.length ? `(${selectedUsers.length})` : ''}
+            ĐÓNG TK{ selectedUsers.length ? `(${selectedUsers.length})` : ''}
           </Button>
           </div>
           
@@ -363,7 +363,7 @@ const UsersTable = props => {
         </CardActions>
       
       </Card>
-      <ConfirmDialog action={ deleteUsers } openDialog={ openDialog } content={{type:'delete', title:`Xóa ${selectedUsers.length>1 ? selectedUsers.length : ''} người dùng đã chọn`, note:`Loại bỏ ${selectedUsers.length>1 ? selectedUsers.length : ''} người này dùng khỏi hệ thống. Bạn có chắc?`}} />
+      <ConfirmDialog action={ deleteUsers } openDialog={ openDialog } content={{type:'block', title:`Đóng ${selectedUsers.length>1 ? selectedUsers.length : ''} tài khoản đã chọn`, note:`Vô hiệu hóa ${selectedUsers.length>1 ? selectedUsers.length : ''} người này dùng khỏi hệ thống. Bạn có chắc?`}} />
     </React.Fragment>
   );
 };
