@@ -8,6 +8,7 @@ import {
   Grid
 } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import NotInterestedIcon from '@material-ui/icons/NotInterested';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -60,9 +61,18 @@ const themeButtonClose = createMuiTheme({
   },
 });
 
+const themeButtonBlock = createMuiTheme({
+  palette: {
+    default : {
+      main: '#9e9e9e29',
+      contrastText: '#fff',
+    },
+  },
+});
+
 const ConfirmDialog = props => {
 
-  const {type, action, content, openDialog, ...rest } = props;
+  const {action, content, openDialog, ...rest } = props;
 
   const classes = useStyles();
 
@@ -76,10 +86,6 @@ const ConfirmDialog = props => {
     }
     setOpen(true);
   },[openDialog]);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
   const handleConfirm = () => {
     action();
@@ -119,16 +125,30 @@ const ConfirmDialog = props => {
                             { content.note }
                             </Typography>
                             <div className={classes.groupButton}>
-                                <ThemeProvider theme={themeButtonDelete}>
-                                    <Button 
-                                        variant="contained" 
-                                        color="primary" 
-                                        onClick={ handleConfirm }
-                                        startIcon={<DeleteOutlineIcon />}
-                                    >
-                                        Xóa
-                                    </Button>
-                                </ThemeProvider>
+                                {
+                                  content.type==='delete'
+                                  ?
+                                  <ThemeProvider theme={themeButtonDelete}>
+                                      <Button 
+                                          variant="contained" 
+                                          color="primary" 
+                                          onClick={ handleConfirm }
+                                          startIcon={<DeleteOutlineIcon />}
+                                      >
+                                          ok, Xóa tài khoản
+                                      </Button>
+                                  </ThemeProvider>
+                                  :
+                                  <ThemeProvider theme={themeButtonBlock}>
+                                      <Button 
+                                          variant="contained" 
+                                          onClick={ handleConfirm }
+                                          startIcon={<NotInterestedIcon />}
+                                      >
+                                          ok, Đóng tài khoản
+                                      </Button>
+                                  </ThemeProvider>
+                                }
                                 <ThemeProvider theme={themeButtonClose}>
                                     <Button color="primary" className={classes.margin}  onClick={ handleClose } >
                                         Đóng lại
@@ -148,7 +168,6 @@ ConfirmDialog.propTypes = {
   action : PropTypes.func,
   content : PropTypes.object,
   openDialog : PropTypes.bool,
-  type: PropTypes.string
 }
 
 export default ConfirmDialog;
