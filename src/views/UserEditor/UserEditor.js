@@ -163,7 +163,7 @@ const UserEditor = props => {
                                 sm={6}
                                 spacing={3}
                             >
-                                <Typography variant="h5" color="inherit">
+                                <Typography variant="h5" color="textSecondary">
                                     Xác nhận email
                                 </Typography>
                                 <Typography variant="body1" color="textSecondary">
@@ -185,7 +185,7 @@ const UserEditor = props => {
                                 sm={6}
                                 spacing={3}
                             >
-                                <Typography variant="h5" color="inherit">
+                                <Typography variant="h5" color="textSecondary">
                                     Discounted Prices
                                 </Typography>
                                 <Typography variant="body1" color="textSecondary">
