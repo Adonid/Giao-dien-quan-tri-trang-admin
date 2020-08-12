@@ -174,7 +174,7 @@ const UserDetail = props => {
     // goi redux de tien hanh thuc thi
     
     // Gui xong roi
-    setContextNotify('');
+    typeSend===2?setContextNotify(''):null;
   }
 
   const handleBlocking = () => {
