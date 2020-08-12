@@ -13,3 +13,4 @@ export { default as CreateAccountSuccess } from './CreateAccountSuccess';
 export { default as Typography } from './Typography';
 export { default as UserList } from './UserList';
 export { default as UserDetail } from './UserDetail';
+export { default as UserEditor } from './UserEditor';
