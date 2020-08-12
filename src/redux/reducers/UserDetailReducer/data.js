@@ -15,7 +15,8 @@ export default {
     },
     phone: '038-428-3097',
     avatarUrl: '/images/avatars/avatar_3.png',
-    createdAt: 1555014400000
+    createdAt: 1555014400000,
+    isClosed: false
   },
   postinfo :
   {
