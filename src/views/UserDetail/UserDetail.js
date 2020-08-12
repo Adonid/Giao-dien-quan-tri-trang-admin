@@ -26,6 +26,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { SelectInput } from 'components';
 import { ConfirmDialog } from 'alerts';
 
@@ -149,6 +150,7 @@ const UserDetail = props => {
   const [ contextNotify, setContextNotify ] = useState('Nothing');
 
   const [ openBlock, setOpenBlock ] = useState(false);
+  const [ openOpen, setOpenOpen ] = useState(false);
   const [ openDistroy, setOpenDistroy ] = useState(false);
 
   const listSendActions = lists;
@@ -185,6 +187,8 @@ const UserDetail = props => {
   }
 
   const handleBlocking = () => props.closeAccount({id: props.userinfo, name: props.userinfo.name});
+
+  const handleOpening = () => props.openAccount({id: props.userinfo, name: props.userinfo.name});
 
   const handleDistroyUser = () => props.distroyAccount({id: props.userinfo, name: props.userinfo.name});
 
@@ -483,13 +487,23 @@ const UserDetail = props => {
                   <Divider/>
                   <CardContent>
                     <Box>
+                      {
+                        props.userinfo.isClosed 
+                        ?
                         <Button 
-                          startIcon={ <NotInterestedIcon 
-                          fontSize="small" />}
+                          startIcon={ <LockOpenIcon fontSize="small" />}
+                          onClick={ ()=>setOpenOpen(!openOpen) }
+                        >
+                            MỞ TÀI KHOẢN
+                        </Button>
+                        :
+                        <Button 
+                          startIcon={ <NotInterestedIcon fontSize="small" />}
                           onClick={ ()=>setOpenBlock(!openBlock) }
                         >
                             ĐÓNG TÀI KHOẢN
                         </Button>
+                      }
                     </Box>
                     <Box className={ classes.textWarning}>
                         <Typography variant="body2" color="textSecondary">
@@ -513,6 +527,7 @@ const UserDetail = props => {
         </Box>
       </div>
       <ConfirmDialog action={ handleBlocking } openDialog={openBlock} content={{type:'block', title:'Đóng tài khoản người dùng', note:`Tài khoản người dùng ${ props.userinfo.name } sẽ bị vô hiệu hóa cho đến khi bạn cho phép kích hoạt trở lại. Đóng tài khoản?`}} />
+      <ConfirmDialog action={ handleOpening } openDialog={openOpen} content={{type:'open', title:'Mở khóa tài khoản người dùng', note:`Tài khoản người dùng ${ props.userinfo.name } sẽ được phép hoạt động trở lại. Mở khóa cho tài khoản?`}} />
       <ConfirmDialog action={ handleDistroyUser } openDialog={openDistroy} content={{type:'delete', title:'Xóa vĩnh viễn tài khoản người dùng', note:`Tài khoản ${ props.userinfo.name } sẽ bị xóa hoàn toàn trên hệ thống, thực thi sẽ không khôi phục được. Bạn có chắc?`}}/>
     </div>
   );
@@ -537,6 +552,12 @@ const UserDetail = props => {
       closeAccount: user => {
         dispatch({
           type : 'CLOSE_ACCOUNT',
+          user : user
+        })
+      },
+      openAccount: user => {
+        dispatch({
+          type : 'OPEN_ACCOUNT',
           user : user
         })
       },
