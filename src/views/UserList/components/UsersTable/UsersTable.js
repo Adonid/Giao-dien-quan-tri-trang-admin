@@ -31,7 +31,6 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import EditAttributesIcon from '@material-ui/icons/EditAttributes';
 
 import { ConfirmDialog } from 'alerts';
-import mockData from './data';
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
@@ -122,8 +121,8 @@ const UsersTable = props => {
 
   const list =  lists;
 
-  const [ originUsers ] = useState(mockData);
-  const [ users, setUsers] = useState(mockData);
+  const [ originUsers ] = useState(props.mockData);
+  const [ users, setUsers] = useState(props.mockData);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -374,7 +373,7 @@ UsersTable.propTypes = {
 
   const mapStateToProps = (state, ownProps) => {
     return {
-      prop: state.prop
+      mockData: state.dataNewUser.users
     }
   }
 
