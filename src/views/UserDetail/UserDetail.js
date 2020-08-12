@@ -25,6 +25,7 @@ import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import { SelectInput } from 'components';
+import { ConfirmDialog } from 'alerts';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -144,6 +145,9 @@ const UserDetail = () => {
 
   const [ contextNotify, setContextNotify ] = useState('Nothing');
 
+  const [ openBlock, setOpenBlock ] = useState(false);
+  const [ openDistroy, setOpenDistroy ] = useState(false);
+
   const listSendActions = lists;
 
   const actionSend = val => {
@@ -168,6 +172,14 @@ const UserDetail = () => {
     
     // Gui xong roi
     setContextNotify('');
+  }
+
+  const handleBlocking = () => {
+    console.log('being block');
+  }
+
+  const handleDistroyUser = () => {
+    console.log('being distroy');
   }
 
   return (
@@ -477,7 +489,11 @@ const UserDetail = () => {
                   <Divider/>
                   <CardContent>
                     <Box>
-                        <Button startIcon={ <NotInterestedIcon fontSize="small" />}>
+                        <Button 
+                          startIcon={ <NotInterestedIcon 
+                          fontSize="small" />}
+                          onClick={ ()=>setOpenBlock(!openBlock) }
+                        >
                             ĐÓNG TÀI KHOẢN
                         </Button>
                     </Box>
@@ -491,6 +507,7 @@ const UserDetail = () => {
                             variant="contained" 
                             color="primary" 
                             startIcon={ <DeleteOutlinedIcon fontSize="small" />}
+                          onClick={ ()=>setOpenDistroy(!openDistroy) }
                         >
                             XÓA TÀI KHOẢN
                         </Button>
@@ -501,6 +518,8 @@ const UserDetail = () => {
           </Grid>
         </Box>
       </div>
+      <ConfirmDialog action={ handleBlocking } content={{type:"warning",title:"Đóng tài khoản người dùng", node:"Tài khoản người dùng này sẽ bị vô hiệu hóa cho đến khi bạn cho phép kích hoạt trở lại. Đóng tài khoản?"}} openDialog={openBlock} />
+      <ConfirmDialog action={ handleDistroyUser } content={{type:"warning",title:"Xóa vĩnh viễn tài khoản người dùng này", node:"Tài khoản người dùng này sẽ bị xóa hoàn toàn trên hệ thống, thực thi sẽ không khôi phục được. Bạn có chắc?"}} openDialog={openDistroy} />
     </div>
   );
 };
