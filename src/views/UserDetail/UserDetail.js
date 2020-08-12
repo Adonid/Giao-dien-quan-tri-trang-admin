@@ -519,8 +519,8 @@ const UserDetail = props => {
           </Grid>
         </Box>
       </div>
-      <ConfirmDialog action={ handleBlocking } content={{type:"block",title:"Đóng tài khoản người dùng", node:"Tài khoản người dùng này sẽ bị vô hiệu hóa cho đến khi bạn cho phép kích hoạt trở lại. Đóng tài khoản?"}} openDialog={openBlock} />
-      <ConfirmDialog action={ handleDistroyUser } content={{type:"delete",title:"Xóa vĩnh viễn tài khoản người dùng này", node:"Tài khoản người dùng này sẽ bị xóa hoàn toàn trên hệ thống, thực thi sẽ không khôi phục được. Bạn có chắc?"}} openDialog={openDistroy} />
+      <ConfirmDialog action={ handleBlocking } openDialog={openBlock} content={{type:'block', title:'Đóng tài khoản người dùng', note:'Tài khoản người dùng này sẽ bị vô hiệu hóa cho đến khi bạn cho phép kích hoạt trở lại. Đóng tài khoản?'}} />
+      <ConfirmDialog action={ handleDistroyUser } openDialog={openDistroy} content={{type:'delete', title:'Xóa vĩnh viễn tài khoản người dùng này', note:'Tài khoản người dùng này sẽ bị xóa hoàn toàn trên hệ thống, thực thi sẽ không khôi phục được. Bạn có chắc?'}}/>
     </div>
   );
 };
