@@ -209,13 +209,14 @@ const UserDetail = props => {
                 </Link>
                 <Typography color="textPrimary">{ props.userinfo.name }</Typography>
             </Breadcrumbs>
-            <Button
-            color="primary"
-            variant="contained"
-            // onClick={ showModalAddUser }
-            >
-                <EditAttributesOutlinedIcon/> Edit User
-            </Button>
+            <Link color="inherit" underline="none" component={RouterLink} to="/user-editor">
+              <Button
+                color="primary"
+                variant="contained"
+              >
+                  <EditAttributesOutlinedIcon/> Edit User
+              </Button>
+            </Link>
         </div>
         <div>
             <Typography variant="h3" gutterBottom>
