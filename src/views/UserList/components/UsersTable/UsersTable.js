@@ -363,7 +363,7 @@ const UsersTable = props => {
         </CardActions>
       
       </Card>
-      <ConfirmDialog action={ deleteUsers } openDialog={ openDialog } content={{type:'info', title:`Xóa ${selectedUsers.length>1 ? selectedUsers.length : ''} người dùng đã chọn`, note:`Loại bỏ ${selectedUsers.length>1 ? selectedUsers.length : ''} người này dùng khỏi hệ thống. Bạn có chắc?`}} />
+      <ConfirmDialog action={ deleteUsers } openDialog={ openDialog } content={{type:'delete', title:`Xóa ${selectedUsers.length>1 ? selectedUsers.length : ''} người dùng đã chọn`, note:`Loại bỏ ${selectedUsers.length>1 ? selectedUsers.length : ''} người này dùng khỏi hệ thống. Bạn có chắc?`}} />
     </React.Fragment>
   );
 };
