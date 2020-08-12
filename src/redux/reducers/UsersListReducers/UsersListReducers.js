@@ -26,7 +26,7 @@ const UsersListReducers = (state = dataNewUser, action) => {
             /** api xoa het tat ca users */
 
             /** end */
-            state = { ...state,  alert: {...state.alert, type: 'info', content: `Đã xóa xong ${ selectedUsers.length } người dùng ra khỏi hệ thống`} };
+            state = { ...state,  alert: {...state.alert, type: 'info', content: `Đã khóa xong ${ selectedUsers.length } người dùng ra khỏi hệ thống`} };
             return state;
 
         case 'ADD_NEW_USER':
