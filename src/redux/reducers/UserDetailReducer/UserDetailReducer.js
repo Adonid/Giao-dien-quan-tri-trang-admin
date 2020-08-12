@@ -26,6 +26,11 @@ const UserDetailReducer = (state = dataUserDetail, action) => {
                 /** end */
             }
             else{
+                // Day ra thong bao khong gui duoc thong bao vi account dang bi dong.
+                if(user.isClosed){
+                    state = { ...state, alert: {...state.alert, type: "warning", content: `Không thể gửi thông báo. Tài khoản của ${user.name} đang bị đóng!`}}
+                    return state;
+                }
                 /** api gui thong bao */
                 state = { ...state, alert: {...state.alert, type: "success", content: `Gửi thông báo đến ${user.name} thành công!`}}
                 return state;
@@ -42,11 +47,19 @@ const UserDetailReducer = (state = dataUserDetail, action) => {
             return state;
         case 'OPEN_ACCOUNT':
             const userOpen = action.user;
-            /** api dong tai khoan user */
+            /** api mo tai khoan user */
 
             /** end */
-            // sau khi api dong xong. dua ra thong bao
+            // sau khi api mo xong. dua ra thong bao
             state = { ...state, alert: { ...state.alert, type: "info", content: `Mở khóa cho tài khoản ${userOpen.name} thành công. Thông báo này sẽ đi kèm với email thông báo tới người dùng!`}}
+            return state;
+        case 'DISTROY_ACCOUNT':
+            const userDistroy = action.user;
+            /** api xoa tai khoan user */
+
+            /** end */
+            // sau khi api xoa xong. dua ra thong bao . Quay tro ve danh sach nguoi dung
+            state = { ...state, alert: { ...state.alert, type: "info", content: `Tài khoản của ${userDistroy.name} đã bị xóa khỏi hệ thống. Thông báo này sẽ đi kèm với email thông báo!`}}
             return state;
         default:
             return state
