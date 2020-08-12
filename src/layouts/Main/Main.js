@@ -68,8 +68,8 @@ const Main = props => {
 
       <Snackbars data={ props.dataAlertNotify } />
       <Snackbars data={ props.dataAlertAddUser } />
+      <Snackbars data={ props.dataAlertUserDetail } />
       <FormAddUser openCall={props.openAddUser} />
-
     </div>
   );
 };
@@ -82,6 +82,7 @@ Main.propTypes = {
     return {
       dataAlertNotify: state.dataNotifys.alert,
       dataAlertAddUser: state.dataNewUser.alert,
+      dataAlertUserDetail: state.dataUserDetail.alert,
       openAddUser: state.dataNewUser.show,
     }
   }
