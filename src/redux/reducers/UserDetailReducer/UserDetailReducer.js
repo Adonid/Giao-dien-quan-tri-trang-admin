@@ -43,7 +43,7 @@ const UserDetailReducer = (state = dataUserDetail, action) => {
 
             /** end */
             // sau khi api dong xong. dua ra thong bao
-            state = { ...state, alert: { ...state.alert, type: "info", content: `Tài khoản của ${userClose.name} đã bị đóng. Thông báo này sẽ đi kèm với email thông báo tới người dùng!`}}
+            state = { ...state, user: { ...state.user, userinfo: { ...state.user.userinfo, isClosed: true}}, alert: { ...state.alert, type: "info", content: `Tài khoản của ${userClose.name} đã bị đóng. Thông báo này sẽ đi kèm với email thông báo tới người dùng!`}}
             return state;
         case 'OPEN_ACCOUNT':
             const userOpen = action.user;
@@ -51,7 +51,7 @@ const UserDetailReducer = (state = dataUserDetail, action) => {
 
             /** end */
             // sau khi api mo xong. dua ra thong bao
-            state = { ...state, alert: { ...state.alert, type: "info", content: `Mở khóa cho tài khoản ${userOpen.name} thành công. Thông báo này sẽ đi kèm với email thông báo tới người dùng!`}}
+            state = { ...state, user: { ...state.user, userinfo: { ...state.user.userinfo, isClosed: false}} , alert: { ...state.alert, type: "info", content: `Mở khóa cho tài khoản ${userOpen.name} thành công. Thông báo này sẽ đi kèm với email thông báo tới người dùng!`}}
             return state;
         case 'DISTROY_ACCOUNT':
             const userDistroy = action.user;
