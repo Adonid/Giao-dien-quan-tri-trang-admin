@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import {
+  Link as RouterLink
+} from "react-router-dom";
 import moment from 'moment';
 import { makeStyles, ThemeProvider } from '@material-ui/styles';
 import { 
@@ -179,7 +182,8 @@ const UserDetail = props => {
       email: props.userinfo.email,
       name: props.userinfo.name,
       type: typeSend,
-      notify: contextNotify
+      notify: contextNotify,
+      isClosed: props.userinfo.isClosed
     }
     props.actionSend(u);
     // Gui xong roi
@@ -197,10 +201,10 @@ const UserDetail = props => {
       <div>
         <div className={classes.row}>
             <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb" gutterBottom>
-                <Link color="inherit" component="button">
+                <Link color="inherit" component={RouterLink} to="/dashboard">
                     Dashboard
                 </Link>
-                <Link color="inherit" component="button">
+                <Link color="inherit" component={RouterLink} to="/users">
                   Quản lý người dùng
                 </Link>
                 <Typography color="textPrimary">{ props.userinfo.name }</Typography>
