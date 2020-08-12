@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  Link as RouterLink
+} from "react-router-dom";
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import { 
@@ -49,8 +52,8 @@ const UsersToolbar = props => {
     >
       <div className={classes.row}>
         <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb" gutterBottom>
-          <Link color="inherit" component="button">
-            Dashboard
+          <Link color="inherit" component={RouterLink} to="/dashboard">
+              Dashboard
           </Link>
           <Typography color="textPrimary">Quản lý người dùng</Typography>
         </Breadcrumbs>
