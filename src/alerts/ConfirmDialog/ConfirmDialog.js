@@ -147,7 +147,8 @@ const ConfirmDialog = props => {
 ConfirmDialog.propTypes = {
   action : PropTypes.func,
   content : PropTypes.object,
-  openDialog : PropTypes.bool
+  openDialog : PropTypes.bool,
+  type: PropTypes.string
 }
 
 export default ConfirmDialog;
