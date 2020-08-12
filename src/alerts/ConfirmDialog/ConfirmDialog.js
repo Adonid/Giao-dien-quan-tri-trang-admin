@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -65,6 +66,15 @@ const themeButtonBlock = createMuiTheme({
   palette: {
     default : {
       main: '#9e9e9e29',
+      contrastText: '#fff',
+    },
+  },
+});
+
+const themeButtonOpen = createMuiTheme({
+  palette: {
+    primary : {
+      main: '#4caf50',
       contrastText: '#fff',
     },
   },
@@ -139,7 +149,9 @@ const ConfirmDialog = props => {
                                       </Button>
                                   </ThemeProvider>
                                   :
-                                  <ThemeProvider theme={themeButtonBlock}>
+                                    content.type==='block'
+                                    ?
+                                    <ThemeProvider theme={themeButtonBlock}>
                                       <Button 
                                           variant="contained" 
                                           onClick={ handleConfirm }
@@ -147,7 +159,18 @@ const ConfirmDialog = props => {
                                       >
                                           ok, Đóng tài khoản
                                       </Button>
-                                  </ThemeProvider>
+                                    </ThemeProvider>
+                                    :
+                                    <ThemeProvider theme={themeButtonOpen}>
+                                      <Button 
+                                          variant="contained" 
+                                          color="primary"
+                                          onClick={ handleConfirm }
+                                          startIcon={<LockOpenIcon />}
+                                      >
+                                          ok, Mở tài khoản
+                                      </Button>
+                                    </ThemeProvider>
                                 }
                                 <ThemeProvider theme={themeButtonClose}>
                                     <Button color="primary" className={classes.margin}  onClick={ handleClose } >
