@@ -172,18 +172,21 @@ const UserDetail = props => {
 
   const handleSend = () => {
     // goi redux de tien hanh thuc thi
-    
+    const u = {
+      id: props.userinfo.id,
+      email: props.userinfo.email,
+      name: props.userinfo.name,
+      type: typeSend,
+      notify: contextNotify
+    }
+    props.actionSend(u);
     // Gui xong roi
     typeSend===2?setContextNotify(''):null;
   }
 
-  const handleBlocking = () => {
-    console.log('being block');
-  }
+  const handleBlocking = () => props.closeAccount({id: props.userinfo, name: props.userinfo.name});
 
-  const handleDistroyUser = () => {
-    console.log('being distroy');
-  }
+  const handleDistroyUser = () => props.distroyAccount({id: props.userinfo, name: props.userinfo.name});
 
   return (
     <div className={classes.root}>
@@ -525,8 +528,23 @@ const UserDetail = props => {
 
   const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-      dispatch1: () => {
-        dispatch(actionCreator)
+      actionSend: user => {
+        dispatch({
+          type : 'ACTION_SEND',
+          user : user
+        })
+      },
+      closeAccount: user => {
+        dispatch({
+          type : 'CLOSE_ACCOUNT',
+          user : user
+        })
+      },
+      distroyAccount: user => {
+        dispatch({
+          type : 'DISTROY_ACCOUNT',
+          user : user
+        })
       }
     }
   }
