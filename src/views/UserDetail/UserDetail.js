@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import moment from 'moment';
 import { makeStyles, ThemeProvider } from '@material-ui/styles';
 import { 
     Breadcrumbs, 
@@ -194,7 +196,7 @@ const UserDetail = props => {
                 <Link color="inherit" component="button">
                   Quản lý người dùng
                 </Link>
-                <Typography color="textPrimary">Phan Tien Dung</Typography>
+                <Typography color="textPrimary">{ props.userinfo.name }</Typography>
             </Breadcrumbs>
             <Button
             color="primary"
@@ -206,7 +208,7 @@ const UserDetail = props => {
         </div>
         <div>
             <Typography variant="h3" gutterBottom>
-              Phan Tien Dung
+              { props.userinfo.name }
             </Typography>
         </div>
       </div>
@@ -233,11 +235,19 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                              xavan912@gmail.com
+                            { props.userinfo.email.address }
                           </Typography>
-                          <Typography variant="span" className={ classes.textHighLightVerify }>
-                              EMAIL ĐÃ XÁC NHẬN
-                          </Typography>
+                          {
+                            props.userinfo.email.verify
+                            ?
+                              <Typography variant="span" className={ classes.textHighLightVerify }>
+                                  EMAIL ĐÃ XÁC NHẬN
+                              </Typography>
+                            :
+                              <Typography variant="span" className={ classes.textHighLightNoVerify }>
+                                EMAIL CHƯA XÁC THỰC
+                              </Typography>
+                          }
                         </TableCell>
                       </TableRow>
                       <TableRow>
@@ -248,7 +258,7 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                              0944637733
+                              { props.userinfo.phone }
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -260,7 +270,7 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                              Kiên Giang
+                            { props.userinfo.address.province }
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -272,7 +282,7 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                              Phú Quốc
+                            { props.userinfo.address.district }
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -284,7 +294,7 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                              Th.Trấn An Thới
+                            { props.userinfo.address.commune }
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -296,7 +306,7 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                              100 Nguyễn Văn Cừ
+                            { props.userinfo.address.street }
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -324,10 +334,10 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                              12
+                              { props.postinfo.postUser } 
                           </Typography>
                           <Typography variant="span" className={ classes.textHighLightInfo }>
-                              3 chưa duyệt
+                            { props.postinfo.postNoApproved }  chưa duyệt
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -339,7 +349,7 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                              3
+                            { props.postinfo.topicPosted }
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -351,7 +361,7 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                              12 / 48 (25%)
+                            { props.postinfo.postUser } / { props.postinfo.postTotal } ({ 100*parseFloat(props.postinfo.postUser/props.postinfo.postTotal).toFixed(3)}%)
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -363,7 +373,7 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                              76
+                            { props.postinfo.following }
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -375,7 +385,7 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                              4.8 / 5.0
+                            { props.postinfo.rateAvg } / 5.0
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -387,7 +397,7 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                              39 / 107
+                            { props.postinfo.replyComment } / { props.postinfo.allNotifyComment } ({ 100*parseFloat(props.postinfo.replyComment/props.postinfo.allNotifyComment).toFixed(3)}%)
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -435,42 +445,22 @@ const UserDetail = props => {
                     <Table>
                       <TableBody>
                         <PerfectScrollbar className={ classes.maxHeightPerfectScrollbar }>
-                          <TableRow>
-                            <TableCell>
-                              <Typography variant="p">
-                                  08/08/2020 | 03:08
-                              </Typography>
-                            </TableCell>
-                            <TableCell>
-                              <Typography variant="body1" color="textSecondary">
-                                  Gửi link reset password
-                              </Typography>
-                            </TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>
-                              <Typography variant="p">
-                                  08/08/2020 | 03:08
-                              </Typography>
-                            </TableCell>
-                            <TableCell>
-                              <Typography variant="body1" color="textSecondary">
-                                  Gửi link reset password
-                              </Typography>
-                            </TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>
-                              <Typography variant="p">
-                                  08/08/2020 | 03:08
-                              </Typography>
-                            </TableCell>
-                            <TableCell>
-                              <Typography variant="body1" color="textSecondary">
-                                  Gửi link reset password
-                              </Typography>
-                            </TableCell>
-                          </TableRow>
+                          {
+                            props.listSent.map( item => 
+                              <TableRow key={item.key}>
+                                <TableCell>
+                                  <Typography variant="p">
+                                    {moment(item.dateTime).format('DD/MM/YYYY | HH:MM')}
+                                  </Typography>
+                                </TableCell>
+                                <TableCell>
+                                  <Typography variant="body1" color="textSecondary">
+                                      { item.reason }
+                                  </Typography>
+                                </TableCell>
+                              </TableRow>
+                            )
+                          }
                         </PerfectScrollbar>
                       </TableBody>
                     </Table>
@@ -500,7 +490,7 @@ const UserDetail = props => {
                     </Box>
                     <Box className={ classes.textWarning}>
                         <Typography variant="body2" color="textSecondary">
-                            Xóa toàn bộ dữ liệu của người dùng này, nếu không chắc chắn bạn hãy chọn đóng tài khoản vì điều này sẽ xóa không trở lại.
+                            Xóa toàn bộ dữ liệu của người dùng, nếu không chắc chắn bạn hãy chọn đóng tài khoản vì điều này sẽ xóa không trở lại.
                         </Typography>
                     </Box>
                     <ThemeProvider theme={themeButtonDelete}>
@@ -519,10 +509,26 @@ const UserDetail = props => {
           </Grid>
         </Box>
       </div>
-      <ConfirmDialog action={ handleBlocking } openDialog={openBlock} content={{type:'block', title:'Đóng tài khoản người dùng', note:'Tài khoản người dùng này sẽ bị vô hiệu hóa cho đến khi bạn cho phép kích hoạt trở lại. Đóng tài khoản?'}} />
-      <ConfirmDialog action={ handleDistroyUser } openDialog={openDistroy} content={{type:'delete', title:'Xóa vĩnh viễn tài khoản người dùng này', note:'Tài khoản người dùng này sẽ bị xóa hoàn toàn trên hệ thống, thực thi sẽ không khôi phục được. Bạn có chắc?'}}/>
+      <ConfirmDialog action={ handleBlocking } openDialog={openBlock} content={{type:'block', title:'Đóng tài khoản người dùng', note:`Tài khoản người dùng ${ props.userinfo.name } sẽ bị vô hiệu hóa cho đến khi bạn cho phép kích hoạt trở lại. Đóng tài khoản?`}} />
+      <ConfirmDialog action={ handleDistroyUser } openDialog={openDistroy} content={{type:'delete', title:'Xóa vĩnh viễn tài khoản người dùng', note:`Tài khoản ${ props.userinfo.name } sẽ bị xóa hoàn toàn trên hệ thống, thực thi sẽ không khôi phục được. Bạn có chắc?`}}/>
     </div>
   );
 };
 
-export default UserDetail;
+  const mapStateToProps = (state, ownProps) => {
+    return {
+      userinfo: state.dataUserDetail.user.userinfo,
+      postinfo: state.dataUserDetail.user.postinfo,
+      listSent: state.dataUserDetail.user.listSent,
+    }
+  }
+
+  const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+      dispatch1: () => {
+        dispatch(actionCreator)
+      }
+    }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserDetail)
