@@ -62,7 +62,7 @@ const themeButtonClose = createMuiTheme({
 
 const ConfirmDialog = props => {
 
-  const { action, content, openDialog, ...rest } = props;
+  const {type, action, content, openDialog, ...rest } = props;
 
   const classes = useStyles();
 
