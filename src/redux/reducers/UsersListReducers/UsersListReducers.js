@@ -1,4 +1,7 @@
+import mockData from './data';
+
 const dataNewUser = {
+    users: mockData,
     show: false,
     alert: {
         type    : "info",
