@@ -14,7 +14,8 @@ import {
     CardContent,
     createMuiTheme,
     TextField,
-    Switch
+    Switch,
+    Avatar
 } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PublishOutlinedIcon from '@material-ui/icons/PublishOutlined';
@@ -35,8 +36,14 @@ const useStyles = makeStyles(theme => ({
         }
     }
   },
-  buttonUpload: {
+  upload: {
     marginTop: theme.spacing(1.5),
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  largeAvatar: {
+    width: theme.spacing(8),
+    height: theme.spacing(8),
   }
 }));
 
@@ -60,8 +67,18 @@ const UserEditor = props => {
 
   const [ openUploader, setOpenUploader ] = useState(false);
 
+  const [ dataImage, setDataImage ] = useState('/images/products/product_1.png');
+
+  const [ dataNewImage, setDataNewImage ] = useState('');
+
   const handleChangeSwitch = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
+  };
+
+  const getDataImage = imgBase64 => {
+    setDataNewImage(imgBase64);
+    setDataImage(imgBase64);
+    console.log(imgBase64);
   };
 
   return (
@@ -120,15 +137,21 @@ const UserEditor = props => {
                                     type="text"
                                     variant="outlined"
                                 />
-                                <Button
-                                    variant="contained"
-                                    color="default"
-                                    className={classes.buttonUpload}
-                                    startIcon={<PublishOutlinedIcon />}
-                                    onClick={ () => setOpenUploader(!openUploader) }
-                                >
-                                    Cập nhật avatar 
-                                </Button>
+                                <Box className={classes.upload}>
+                                    <Button
+                                        variant="contained"
+                                        color="default"
+                                        startIcon={<PublishOutlinedIcon />}
+                                        onClick={ () => setOpenUploader(!openUploader) }
+                                    >
+                                        Cập nhật avatar 
+                                    </Button>
+                                    <Avatar 
+                                        alt="Remy Sharp" 
+                                        src={ dataImage } 
+                                        className={classes.largeAvatar} 
+                                    />
+                                </Box>
                             </Grid>
                             <Grid 
                                 item 
@@ -232,7 +255,7 @@ const UserEditor = props => {
             </Card>
         </Box>
       </div>
-      <UploadCropSingleImage openDialog={openUploader} />
+      <UploadCropSingleImage openDialog={openUploader} imageInit={dataImage} dataNewImg={ getDataImage} />
     </div>
   );
 };
