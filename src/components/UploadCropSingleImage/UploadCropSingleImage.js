@@ -34,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const pixelRatio = 1;
+
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -137,6 +139,7 @@ const UploadCropSingleImage = props => {
           crop.width,
           crop.height
         );
+        console.log(canvas.toDataURL('image/jpeg'));
     }, [completedCrop]);
 
   return (
@@ -150,7 +153,7 @@ const UploadCropSingleImage = props => {
             <Typography variant="h3" color="inherit" className={classes.title}>
                 Trình upload ảnh
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
+            <Button autoFocus color="inherit" onClick={() => console.log(completedCrop)}>
                 Lưu lại
             </Button>
           </Toolbar>
@@ -182,6 +185,15 @@ const UploadCropSingleImage = props => {
                                 onChange={(c) => setCrop(c)}
                                 onComplete={(c) => setCompletedCrop(c)}
                             />
+                            <div>
+                                <canvas
+                                ref={previewCanvasRef}
+                                style={{
+                                    width: completedCrop?.width ?? 0,
+                                    height: completedCrop?.height ?? 0
+                                }}
+                                />
+                            </div>
                         </Grid>
                     </Grid>
                 </CardContent>
