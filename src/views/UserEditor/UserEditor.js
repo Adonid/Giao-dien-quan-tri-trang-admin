@@ -15,7 +15,11 @@ import {
     createMuiTheme,
     TextField,
     Switch,
-    Avatar
+    Avatar,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select
 } from '@material-ui/core';
 import { deepOrange } from '@material-ui/core/colors';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -31,9 +35,11 @@ const useStyles = makeStyles(theme => ({
   },
   customspace: {
     '& .MuiGrid-root': {
-        '& .MuiTextField-root': {
+        '& .MuiTextField-root, .MuiFormControl-root': {
             marginTop: theme.spacing(1.5),
             marginBottom: theme.spacing(1.5),
+            minWidth: '10%',
+            width: '100%'
         }
     }
   },
@@ -70,7 +76,7 @@ const UserEditor = props => {
 
   const [ openUploader, setOpenUploader ] = useState(false);
 
-  const [ dataImage, setDataImage ] = useState('/images/products/product_1.d');
+  const [ dataImage, setDataImage ] = useState('/images/products/product_1.png');
 
   const [ dataNewImage, setDataNewImage ] = useState('');
 
@@ -162,33 +168,67 @@ const UserEditor = props => {
                                 sm={6}
                                 spacing={3}
                             >
-                                <TextField
-                                    fullWidth
-                                    label="Tỉnh/thành phố"
-                                    name="province"
-                                    type="text"
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    fullWidth
-                                    label="Quận/huyện"
-                                    name="district"
-                                    type="text"
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    fullWidth
-                                    label="Phường/xã"
-                                    name="commune"
-                                    type="text"
-                                    variant="outlined"
-                                />
+                                <FormControl variant="outlined">
+                                    <InputLabel id="select-province">Tỉnh/thành phố</InputLabel>
+                                    <Select
+                                        labelId="select-province"
+                                        id="demo-simple-select-outlined"
+                                        value={0}
+                                        // onChange={handleChange}
+                                        label="Tỉnh/thành phố"
+                                        name="province"
+                                    >
+                                    <MenuItem value={0}>
+                                        <em>Tỉnh/thành phố</em>
+                                    </MenuItem>
+                                    <MenuItem value={10}>Ten</MenuItem>
+                                    <MenuItem value={20}>Twenty</MenuItem>
+                                    <MenuItem value={30}>Thirty</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                <FormControl variant="outlined">
+                                    <InputLabel id="select-province">Quận/huyện</InputLabel>
+                                    <Select
+                                        labelId="select-province"
+                                        id="demo-simple-select-outlined"
+                                        value={0}
+                                        // onChange={handleChange}
+                                        label="Quận/huyện"
+                                        name="district"
+                                    >
+                                    <MenuItem value={0}>
+                                        <em>Quận/huyện</em>
+                                    </MenuItem>
+                                    <MenuItem value={10}>Ten</MenuItem>
+                                    <MenuItem value={20}>Twenty</MenuItem>
+                                    <MenuItem value={30}>Thirty</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                <FormControl variant="outlined">
+                                    <InputLabel id="select-province">Phường/xã</InputLabel>
+                                    <Select
+                                        labelId="select-province"
+                                        id="demo-simple-select-outlined"
+                                        value={0}
+                                        // onChange={handleChange}
+                                        label="Phường/xã"
+                                        name="commune"
+                                    >
+                                    <MenuItem value={0}>
+                                        <em>Phường/xã</em>
+                                    </MenuItem>
+                                    <MenuItem value={10}>Ten</MenuItem>
+                                    <MenuItem value={20}>Twenty</MenuItem>
+                                    <MenuItem value={30}>Thirty</MenuItem>
+                                    </Select>
+                                </FormControl>
                                 <TextField
                                     fullWidth
                                     label="Số nhà/đường/thôn/xóm"
                                     name="street"
                                     type="text"
                                     variant="outlined"
+                                    disabled
                                 />
                             </Grid>
                         </Grid>
