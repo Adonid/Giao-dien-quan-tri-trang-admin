@@ -17,7 +17,7 @@ import {
     Switch
 } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import PublishOutlinedIcon from '@material-ui/icons/PublishOutlined';
 import { UploadCropSingleImage } from 'components';
 
 const useStyles = makeStyles(theme => ({
@@ -124,10 +124,10 @@ const UserEditor = props => {
                                     variant="contained"
                                     color="default"
                                     className={classes.buttonUpload}
-                                    startIcon={<CloudUploadIcon />}
+                                    startIcon={<PublishOutlinedIcon />}
                                     onClick={ () => setOpenUploader(!openUploader) }
                                 >
-                                    Upload ảnh avatar 
+                                    Cập nhật avatar 
                                 </Button>
                             </Grid>
                             <Grid 
