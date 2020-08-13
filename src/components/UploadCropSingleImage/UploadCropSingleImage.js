@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState, forwardRef} from 'react';
+import React, { useLayoutEffect, useRef, useState, forwardRef, useCallback} from 'react';
 import ReactCrop from "react-image-crop";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,6 +19,7 @@ import {
  import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
  import "react-image-crop/dist/ReactCrop.css";
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -45,18 +46,11 @@ const UploadCropSingleImage = props => {
 
   const [open, setOpen] = useState(false);
 
-  const [dataImage, setDataImage] = useState('https://images.unsplash.com/photo-1591880856710-a812170a5795?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');
-
-  const [state, setState] = useState({
-    crop: {
-        unit: 'px',
-        x: 20,
-        y: 20,
-        width: 50,
-        height: 35,
-        aspect: 4/3,
-      }
-  });
+  const [upImg, setUpImg] = useState();
+  const imgRef = useRef(null);
+  const previewCanvasRef = useRef(null);
+  const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 4 / 3 });
+  const [completedCrop, setCompletedCrop] = useState(null);
 
   const firstUpdate = useRef(true);
     useLayoutEffect(() => {
@@ -65,17 +59,85 @@ const UploadCropSingleImage = props => {
         return;
       }
       setOpen(true);
-    },[openDialog])
+    },[openDialog]);
+
+    useEffect(() => {
+        if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
+        return;
+        }
+
+        const image = imgRef.current;
+        const canvas = previewCanvasRef.current;
+        const crop = completedCrop;
+
+        const scaleX = image.naturalWidth / image.width;
+        const scaleY = image.naturalHeight / image.height;
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = crop.width * pixelRatio;
+        canvas.height = crop.height * pixelRatio;
+
+        ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        ctx.imageSmoothingEnabled = false;
+
+        ctx.drawImage(
+        image,
+        crop.x * scaleX,
+        crop.y * scaleY,
+        crop.width * scaleX,
+        crop.height * scaleY,
+        0,
+        0,
+        crop.width,
+        crop.height
+        );
+  }, [completedCrop]);
 
   const handleClose = () => setOpen(false);
 
     const onSelectFile = e => {
         if (e.target.files && e.target.files.length > 0) {
             const reader = new FileReader();
-            reader.addEventListener('load', () => setDataImage(reader.result));
+            reader.addEventListener('load', () => setUpImg(reader.result));
             reader.readAsDataURL(e.target.files[0]);
         }
     };
+
+    const onLoad = useCallback((img) => {
+        imgRef.current = img;
+      }, []);
+
+      useEffect(() => {
+        if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
+          return;
+        }
+    
+        const image = imgRef.current;
+        const canvas = previewCanvasRef.current;
+        const crop = completedCrop;
+    
+        const scaleX = image.naturalWidth / image.width;
+        const scaleY = image.naturalHeight / image.height;
+        const ctx = canvas.getContext("2d");
+    
+        canvas.width = crop.width * pixelRatio;
+        canvas.height = crop.height * pixelRatio;
+    
+        ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        ctx.imageSmoothingEnabled = false;
+    
+        ctx.drawImage(
+          image,
+          crop.x * scaleX,
+          crop.y * scaleY,
+          crop.width * scaleX,
+          crop.height * scaleY,
+          0,
+          0,
+          crop.width,
+          crop.height
+        );
+    }, [completedCrop]);
 
   return (
     <div>
@@ -113,14 +175,13 @@ const UploadCropSingleImage = props => {
                         </Grid>
                         <Grid item xs={12}>
                             {/* Dua crop image o day */}
-                            {/* <ReactCrop
-                                src={'this.state.src'}
-                                crop={state.crop}
-                                ruleOfThirds
-                                onImageLoaded={this.onImageLoaded}
-                                onComplete={this.onCropComplete}
-                                onChange={this.onCropChange}
-                            /> */}
+                            <ReactCrop
+                                src={upImg}
+                                onImageLoaded={onLoad}
+                                crop={crop}
+                                onChange={(c) => setCrop(c)}
+                                onComplete={(c) => setCompletedCrop(c)}
+                            />
                         </Grid>
                     </Grid>
                 </CardContent>
