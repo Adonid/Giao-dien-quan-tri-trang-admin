@@ -78,7 +78,7 @@ const UserEditor = props => {
   const getDataImage = imgBase64 => {
     setDataNewImage(imgBase64);
     setDataImage(imgBase64);
-    console.log(imgBase64);
+    // Thuc hien den day coi nhu da thay doi avatar
   };
 
   return (
