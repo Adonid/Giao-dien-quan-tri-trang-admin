@@ -14,6 +14,7 @@ import {
     IconButton,
     Typography,
     Slide,
+    Divider,
  } from '@material-ui/core';
  import CloseIcon from '@material-ui/icons/Close';
  import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -42,17 +43,19 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const UploadCropSingleImage = props => {
 
-    const { openDialog, ...rest } = props;
+    const { openDialog, imageInit, dataNewImg, ...rest } = props;
 
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
 
-  const [upImg, setUpImg] = useState();
+  const [upImg, setUpImg] = useState(imageInit);
   const imgRef = useRef(null);
   const previewCanvasRef = useRef(null);
   const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 4 / 3 });
   const [completedCrop, setCompletedCrop] = useState(null);
+
+  const [ dataImage, setDataImage ] = useState('');
 
   const firstUpdate = useRef(true);
     useLayoutEffect(() => {
@@ -126,7 +129,7 @@ const UploadCropSingleImage = props => {
         canvas.height = crop.height * pixelRatio;
     
         ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-        ctx.imageSmoothingEnabled = false;
+        ctx.imageSmoothingEnabled = true;
     
         ctx.drawImage(
           image,
@@ -139,21 +142,26 @@ const UploadCropSingleImage = props => {
           crop.width,
           crop.height
         );
-        console.log(canvas.toDataURL('image/jpeg'));
+        setDataImage(canvas.toDataURL('image/jpeg'));
     }, [completedCrop]);
+
+    const sendImageBase64 = () => {
+      dataNewImg(dataImage);
+      setOpen(false);
+    }
 
   return (
     <div>
-      <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
+      <Dialog fullScreen open={open} onClose={ () => setOpen(false) } TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
           <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
+            <IconButton edge="start" color="inherit" onClick={ () => setOpen(false) } aria-label="close">
               <CloseIcon />
             </IconButton>
             <Typography variant="h3" color="inherit" className={classes.title}>
                 Trình upload ảnh
             </Typography>
-            <Button autoFocus color="inherit" onClick={() => console.log(completedCrop)}>
+            <Button autoFocus color="inherit" onClick={ sendImageBase64 }>
                 Lưu lại
             </Button>
           </Toolbar>
@@ -176,8 +184,11 @@ const UploadCropSingleImage = props => {
                                     </Button>
                                 </label>
                         </Grid>
-                        <Grid item xs={12}>
-                            {/* Dua crop image o day */}
+                        <Divider/>
+                        <Grid item xs={12} sm={6}>
+                          <Typography variant="h5" color="inherit" gutterBottom>
+                            Ảnh gốc
+                          </Typography>
                             <ReactCrop
                                 src={upImg}
                                 onImageLoaded={onLoad}
@@ -185,6 +196,11 @@ const UploadCropSingleImage = props => {
                                 onChange={(c) => setCrop(c)}
                                 onComplete={(c) => setCompletedCrop(c)}
                             />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <Typography variant="h5" color="inherit" gutterBottom>
+                            Ảnh đã crop
+                          </Typography>
                             <div>
                                 <canvas
                                 ref={previewCanvasRef}
@@ -206,7 +222,9 @@ const UploadCropSingleImage = props => {
 }
 
 UploadCropSingleImage.propTypes = {
-    openDialog : PropTypes.bool.isRequired
+    openDialog : PropTypes.bool.isRequired,
+    imageInit : PropTypes.string.isRequired,
+    dataNewImg : PropTypes.func.isRequired
 }
 
 export default UploadCropSingleImage;
