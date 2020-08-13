@@ -10,12 +10,6 @@ import {
     Button,
     Grid,
     Card,
-    CardHeader,
-    Divider,
-    Table,
-    TableBody,
-    TableRow,
-    TableCell,
     Box,
     CardContent,
     createMuiTheme,
@@ -23,6 +17,8 @@ import {
     Switch
 } from '@material-ui/core';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import { UploadCropSingleImage } from 'components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,6 +34,9 @@ const useStyles = makeStyles(theme => ({
             marginBottom: theme.spacing(1.5),
         }
     }
+  },
+  buttonUpload: {
+    marginTop: theme.spacing(1.5),
   }
 }));
 
@@ -58,6 +57,8 @@ const UserEditor = props => {
     checkEmailVerify: false,
     checkOption: false,
   });
+
+  const [ openUploader, setOpenUploader ] = useState(false);
 
   const handleChangeSwitch = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
@@ -119,6 +120,15 @@ const UserEditor = props => {
                                     type="text"
                                     variant="outlined"
                                 />
+                                <Button
+                                    variant="contained"
+                                    color="default"
+                                    className={classes.buttonUpload}
+                                    startIcon={<CloudUploadIcon />}
+                                    onClick={ () => setOpenUploader(!openUploader) }
+                                >
+                                    Upload ảnh avatar 
+                                </Button>
                             </Grid>
                             <Grid 
                                 item 
@@ -222,6 +232,7 @@ const UserEditor = props => {
             </Card>
         </Box>
       </div>
+      <UploadCropSingleImage openDialog={openUploader} />
     </div>
   );
 };
