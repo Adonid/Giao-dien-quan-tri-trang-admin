@@ -167,7 +167,7 @@ const UserEditor = props => {
                                     Xác nhận email
                                 </Typography>
                                 <Typography variant="body1" color="textSecondary">
-                                    Nếu tắt hệ thống sẽ tự gửi email yêu cầu người dùng xác thực lại
+                                    Nếu tắt hệ thống sẽ tự động gửi email yêu cầu người dùng xác thực lại
                                 </Typography>
                                 <ThemeProvider theme={themeButtonUpdate}>
                                     <Switch
