@@ -17,6 +17,7 @@ import {
     Switch,
     Avatar
 } from '@material-ui/core';
+import { deepOrange } from '@material-ui/core/colors';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PublishOutlinedIcon from '@material-ui/icons/PublishOutlined';
 import { UploadCropSingleImage } from 'components';
@@ -44,7 +45,9 @@ const useStyles = makeStyles(theme => ({
   largeAvatar: {
     width: theme.spacing(8),
     height: theme.spacing(8),
-  }
+    color: theme.palette.getContrastText(deepOrange[500]),
+    backgroundColor: deepOrange[500],
+  },
 }));
 
 const themeButtonUpdate = createMuiTheme({
@@ -67,7 +70,7 @@ const UserEditor = props => {
 
   const [ openUploader, setOpenUploader ] = useState(false);
 
-  const [ dataImage, setDataImage ] = useState('/images/products/product_1.png');
+  const [ dataImage, setDataImage ] = useState('/images/products/product_1.d');
 
   const [ dataNewImage, setDataNewImage ] = useState('');
 
@@ -148,7 +151,7 @@ const UserEditor = props => {
                                     </Button>
                                     <Avatar 
                                         alt="Remy Sharp" 
-                                        src={ dataImage } 
+                                        src={ dataImage??null } 
                                         className={classes.largeAvatar} 
                                     />
                                 </Box>
