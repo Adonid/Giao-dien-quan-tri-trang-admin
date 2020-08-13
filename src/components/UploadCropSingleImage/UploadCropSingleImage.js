@@ -1,4 +1,5 @@
 import React, { useLayoutEffect, useRef, useState, forwardRef} from 'react';
+import ReactCrop from "react-image-crop";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
@@ -17,6 +18,7 @@ import {
  import CloseIcon from '@material-ui/icons/Close';
  import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
+ import "react-image-crop/dist/ReactCrop.css";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -43,6 +45,19 @@ const UploadCropSingleImage = props => {
 
   const [open, setOpen] = useState(false);
 
+  const [dataImage, setDataImage] = useState('https://images.unsplash.com/photo-1591880856710-a812170a5795?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60');
+
+  const [state, setState] = useState({
+    crop: {
+        unit: 'px',
+        x: 20,
+        y: 20,
+        width: 50,
+        height: 35,
+        aspect: 4/3,
+      }
+  });
+
   const firstUpdate = useRef(true);
     useLayoutEffect(() => {
       if (firstUpdate.current) {
@@ -53,6 +68,14 @@ const UploadCropSingleImage = props => {
     },[openDialog])
 
   const handleClose = () => setOpen(false);
+
+    const onSelectFile = e => {
+        if (e.target.files && e.target.files.length > 0) {
+            const reader = new FileReader();
+            reader.addEventListener('load', () => setDataImage(reader.result));
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    };
 
   return (
     <div>
@@ -80,6 +103,7 @@ const UploadCropSingleImage = props => {
                                     accept="image/*"
                                     className={classes.input}
                                     type="file"
+                                    onChange={ onSelectFile }
                                 />
                                 <label htmlFor="icon-button-file">
                                     <Button variant="contained" color="secondary" component="span" startIcon={<CloudUploadIcon />}>
@@ -88,7 +112,15 @@ const UploadCropSingleImage = props => {
                                 </label>
                         </Grid>
                         <Grid item xs={12}>
-                            
+                            {/* Dua crop image o day */}
+                            {/* <ReactCrop
+                                src={'this.state.src'}
+                                crop={state.crop}
+                                ruleOfThirds
+                                onImageLoaded={this.onImageLoaded}
+                                onComplete={this.onCropComplete}
+                                onChange={this.onCropChange}
+                            /> */}
                         </Grid>
                     </Grid>
                 </CardContent>
