@@ -106,6 +106,12 @@ const UserEditor = props => {
     touched: {},
     errors: {}
   });
+  const [formOptions, setFormOptions] = useState({
+    province: 0,
+    district: 0,
+    commune: 0,
+    street: ""
+  });
 
   const [ emailVerify, setEmailVerify ] = useState(false);
 
@@ -113,15 +119,15 @@ const UserEditor = props => {
 
   const [ dataImage, setDataImage ] = useState('/images/products/product_1.png');
 
-  const [ dataNewImage, setDataNewImage ] = useState('');
+  const [ dataNewImage, setDataNewImage ] = useState(null);
 
   const [ listProvince, setListProvince ] = useState([{value: 0, label: "Tỉnh/thành phố"}]);
   const [ listDistrict, setListDistrict ] = useState([{value: 0, label: "Quận/huyện"}]);
   const [ listCommune, setListCommune ] = useState([{value: 0, label: "Phường/xã"}]);
 
-  const [ disableDistrict, setDisableDistrict ] = useState(true);
-  const [ disableCommune, setDisableCommune ] = useState(true);
-  const [ disableStreet, setDisableStreet ] = useState(true);
+  const [ disableDistrict, setDisableDistrict ] = useState(false);
+  const [ disableCommune, setDisableCommune ] = useState(false);
+  const [ disableStreet, setDisableStreet ] = useState(false);
 
   useEffect(() => {
     const errors = validate(formState.values, schema);
@@ -160,19 +166,20 @@ const UserEditor = props => {
     // Thuc hien den day coi nhu da thay doi avatar
   };
 
-  const getProvince = val => {
-      console.log(val);
-  }
-  const getDistrict = val => {
-    console.log(val);
-  }
-  const getCommune = val => {
-    console.log(val);    
-  }
+  const getProvince = val => setFormOptions( formOptions => ({...formOptions, province: val}));
+  const getDistrict = val => setFormOptions( formOptions => ({...formOptions, district: val}));
+  const getCommune = val => setFormOptions( formOptions => ({...formOptions, commune: val}));
+  const handleStreet = event => {
+    event.persist();
+    setFormOptions( formOptions => ({...formOptions, street: event.target.value}));
+    };
 
   const handleSubmit = event => {
-        event.preventDefault();
-      console.log('ok');
+    event.preventDefault();
+    const required = formState.values;
+    const options = formOptions;
+    const img = dataNewImage?dataNewImage.replace(/^data:image\/jpeg;base64,/, ""):null;
+    console.log(required, options, img, emailVerify);
   }
 
   return (
@@ -281,6 +288,7 @@ const UserEditor = props => {
                                     type="text"
                                     variant="outlined"
                                     disabled={disableStreet}
+                                    onChange={ handleStreet }
                                 />
                             </Grid>
                         </Grid>
