@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import validate from 'validate.js';
 import {
     Link as RouterLink
   } from "react-router-dom";
@@ -52,6 +54,39 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const schema = {
+    userName: {
+        presence: { allowEmpty: false, message: '^Tên người dùng không được trống!' },
+        length: {
+            minimum: 3,
+            message: "^Tối thiểu 3 ký tự!",
+          }
+    },
+    email: {
+      presence: { allowEmpty: false, message: 'không để trống!' },
+      email: {
+        is: true,
+        message: "không đúng!",
+      },
+      length: {
+        maximum: 64,
+        message: "tối đa 64 ký tự!",
+      }
+    },
+    phone: {
+        presence: { allowEmpty: false, message: '^Số điện thoại không để trống' },
+        length: {
+          is: 10,
+          message: "^Số điện thoại phải đúng 10 số!"
+        },
+        format: {
+          pattern: "^(086|096|097|098|032|033|034|035|036|037|038|039|089|090|093|070|079|078|077|076|094|091|088|085|084|083|082|081|092|058|056).[0-9]+",
+          flags: "i",
+          message: "^Số điện thoại không đúng!"
+        }
+    }
+  };
+
 const themeButtonUpdate = createMuiTheme({
     palette: {
         primary : {
@@ -65,10 +100,14 @@ const UserEditor = props => {
 
   const classes = useStyles();
 
-  const [state, setState] = useState({
-    checkEmailVerify: false,
-    checkOption: false,
+  const [formState, setFormState] = useState({
+    isValid: false,
+    values: {},
+    touched: {},
+    errors: {}
   });
+
+  const [ emailVerify, setEmailVerify ] = useState(false);
 
   const [ openUploader, setOpenUploader ] = useState(false);
 
@@ -84,13 +123,36 @@ const UserEditor = props => {
   const [ disableCommune, setDisableCommune ] = useState(true);
   const [ disableStreet, setDisableStreet ] = useState(true);
 
-  const handleChangeSwitch = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
+  useEffect(() => {
+    const errors = validate(formState.values, schema);
+    setFormState(formState => ({
+      ...formState,
+      isValid: errors ? false : true,
+      errors: errors || {}
+    }));
+  }, [formState.values]);
 
-  const handleChangeInput = event => {
-
+  const handleChange = event => {
+    event.persist();
+    setFormState(formState => ({
+        ...formState,
+        values: {
+          ...formState.values,
+          [event.target.name]:
+            event.target.type === 'checkbox'
+              ? event.target.checked
+              : event.target.value
+        },
+        touched: {
+          ...formState.touched,
+          [event.target.name]: true
+        }
+      }));
   }
+
+  const handleChangeSwitch = event => setEmailVerify(event.target.checked);
+
+  const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
 
   const getDataImage = imgBase64 => {
     setDataNewImage(imgBase64);
@@ -106,6 +168,11 @@ const UserEditor = props => {
   }
   const getCommune = val => {
     console.log(val);    
+  }
+
+  const handleSubmit = event => {
+        event.preventDefault();
+      console.log('ok');
   }
 
   return (
@@ -132,7 +199,9 @@ const UserEditor = props => {
         <Box>
             <Card>
                 <CardContent>
-                    <form>
+                    <form
+                        onSubmit={ handleSubmit }
+                    >
                         <Grid container spacing={5} className={ classes.customspace}>
                             <Grid 
                                 item 
@@ -147,6 +216,11 @@ const UserEditor = props => {
                                     name="userName"
                                     type="text"
                                     variant="outlined"
+                                    onChange={handleChange}
+                                    error={hasError('userName')}
+                                    helperText={
+                                        hasError('userName') ? formState.errors.userName[0] : null
+                                    }
                                 />
                                 <TextField
                                     required 
@@ -155,6 +229,11 @@ const UserEditor = props => {
                                     name="email"
                                     type="email"
                                     variant="outlined"
+                                    onChange={handleChange}
+                                    error={hasError('email')}
+                                    helperText={
+                                        hasError('email') ? formState.errors.email[0] : null
+                                    }
                                 />
                                 <TextField
                                     required 
@@ -163,6 +242,11 @@ const UserEditor = props => {
                                     name="phone"
                                     type="text"
                                     variant="outlined"
+                                    onChange={handleChange}
+                                    error={hasError('phone')}
+                                    helperText={
+                                        hasError('phone') ? formState.errors.phone[0] : null
+                                    }
                                 />
                                 <Box className={classes.upload}>
                                     <Button
@@ -215,10 +299,10 @@ const UserEditor = props => {
                                 </Typography>
                                 <ThemeProvider theme={themeButtonUpdate}>
                                     <Switch
-                                        checked={state.checkEmailVerify}
+                                        checked={emailVerify}
                                         onChange={handleChangeSwitch}
                                         color="primary"
-                                        name="checkEmailVerify"
+                                        name="emailVerify"
                                         inputProps={{ 'aria-label': 'primary checkbox' }}
                                     />
                                 </ThemeProvider>
@@ -233,7 +317,12 @@ const UserEditor = props => {
                             >
                                 
                                 <ThemeProvider theme={themeButtonUpdate}>
-                                    <Button variant="contained" color="primary" disableElevation type="submit">
+                                    <Button 
+                                        variant="contained" 
+                                        color="primary" 
+                                        type="submit"
+                                        disabled={!formState.isValid}
+                                    >
                                         CẬP NHẬT USER
                                     </Button>
                                 </ThemeProvider>
@@ -249,5 +338,8 @@ const UserEditor = props => {
   );
 };
 
+UserEditor.propTypes = {
+
+}
 
 export default UserEditor;
