@@ -1,15 +1,15 @@
 export default {
     require: {
         phone: "0962036140", 
-        email: "xavan912@gmail.com", 
-        userName: "Nguyen Thi"
+        email: "hieuled@gmail.com", 
+        userName: "HieuLeD"
     },
     options: {
         province: 0, 
         district: 0, 
         commune: 0, 
-        street: "Cong vung 5"
+        street: "122 Chuong duong"
     },
-    img:"/images/products/product_1.png",
+    avatar:"/images/products/product_3.png",
     verifyEmail: true
 };
