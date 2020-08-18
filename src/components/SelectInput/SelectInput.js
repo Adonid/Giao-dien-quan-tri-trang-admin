@@ -7,7 +7,7 @@ import {
 
 const SelectInput = props => {
 
-    const { label, list, action, ...rest } = props;
+    const { label, list, action, disable, ...rest } = props;
 
     const [ item, setItem ] = React.useState(list[0].value);
 
@@ -26,6 +26,7 @@ const SelectInput = props => {
             onChange={handleChange}
             // helperText="Thứ tự sắp xếp"
             variant="outlined"
+            disabled={ disable??false}
         >
             {
               list.map( option => (
@@ -41,7 +42,8 @@ const SelectInput = props => {
 SelectInput.propTypes = {
     list : PropTypes.array,
     action: PropTypes.func,
-    label: PropTypes.string
+    label: PropTypes.string,
+    disable: PropTypes.bool
 };
 
 export default SelectInput;
