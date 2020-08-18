@@ -15,16 +15,12 @@ import {
     createMuiTheme,
     TextField,
     Switch,
-    Avatar,
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Select
+    Avatar
 } from '@material-ui/core';
 import { deepOrange } from '@material-ui/core/colors';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PublishOutlinedIcon from '@material-ui/icons/PublishOutlined';
-import { UploadCropSingleImage } from 'components';
+import { UploadCropSingleImage, SelectInput } from 'components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -80,15 +76,37 @@ const UserEditor = props => {
 
   const [ dataNewImage, setDataNewImage ] = useState('');
 
+  const [ listProvince, setListProvince ] = useState([{value: 0, label: "Tỉnh/thành phố"}]);
+  const [ listDistrict, setListDistrict ] = useState([{value: 0, label: "Quận/huyện"}]);
+  const [ listCommune, setListCommune ] = useState([{value: 0, label: "Phường/xã"}]);
+
+  const [ disableDistrict, setDisableDistrict ] = useState(true);
+  const [ disableCommune, setDisableCommune ] = useState(true);
+  const [ disableStreet, setDisableStreet ] = useState(true);
+
   const handleChangeSwitch = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
+
+  const handleChangeInput = event => {
+
+  }
 
   const getDataImage = imgBase64 => {
     setDataNewImage(imgBase64);
     setDataImage(imgBase64);
     // Thuc hien den day coi nhu da thay doi avatar
   };
+
+  const getProvince = val => {
+      console.log(val);
+  }
+  const getDistrict = val => {
+    console.log(val);
+  }
+  const getCommune = val => {
+    console.log(val);    
+  }
 
   return (
     <div className={classes.root}>
@@ -168,67 +186,17 @@ const UserEditor = props => {
                                 sm={6}
                                 spacing={3}
                             >
-                                <FormControl variant="outlined">
-                                    <InputLabel id="select-province">Tỉnh/thành phố</InputLabel>
-                                    <Select
-                                        labelId="select-province"
-                                        id="demo-simple-select-outlined"
-                                        value={0}
-                                        // onChange={handleChange}
-                                        label="Tỉnh/thành phố"
-                                        name="province"
-                                    >
-                                    <MenuItem value={0}>
-                                        <em>Tỉnh/thành phố</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
-                                    </Select>
-                                </FormControl>
-                                <FormControl variant="outlined">
-                                    <InputLabel id="select-province">Quận/huyện</InputLabel>
-                                    <Select
-                                        labelId="select-province"
-                                        id="demo-simple-select-outlined"
-                                        value={0}
-                                        // onChange={handleChange}
-                                        label="Quận/huyện"
-                                        name="district"
-                                    >
-                                    <MenuItem value={0}>
-                                        <em>Quận/huyện</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
-                                    </Select>
-                                </FormControl>
-                                <FormControl variant="outlined">
-                                    <InputLabel id="select-province">Phường/xã</InputLabel>
-                                    <Select
-                                        labelId="select-province"
-                                        id="demo-simple-select-outlined"
-                                        value={0}
-                                        // onChange={handleChange}
-                                        label="Phường/xã"
-                                        name="commune"
-                                    >
-                                    <MenuItem value={0}>
-                                        <em>Phường/xã</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
-                                    </Select>
-                                </FormControl>
+                                <SelectInput list={listProvince} action={ getProvince } label="Tỉnh/thành phố" />
+                                <SelectInput list={listDistrict} action={ getDistrict } disable={disableDistrict} label="Quận/huyện" />
+                                <SelectInput list={listCommune} action={ getCommune } disable={disableCommune} label="Phường/xã" />
+
                                 <TextField
                                     fullWidth
                                     label="Số nhà/đường/thôn/xóm"
                                     name="street"
                                     type="text"
                                     variant="outlined"
-                                    disabled
+                                    disabled={disableStreet}
                                 />
                             </Grid>
                         </Grid>
@@ -247,32 +215,10 @@ const UserEditor = props => {
                                 </Typography>
                                 <ThemeProvider theme={themeButtonUpdate}>
                                     <Switch
-                                        checked={state.spacingcheckEmailVerify}
+                                        checked={state.checkEmailVerify}
                                         onChange={handleChangeSwitch}
                                         color="primary"
                                         name="checkEmailVerify"
-                                        inputProps={{ 'aria-label': 'primary checkbox' }}
-                                    />
-                                </ThemeProvider>
-                            </Grid>
-                            <Grid 
-                                item 
-                                xs={12} 
-                                sm={6}
-                                spacing={3}
-                            >
-                                <Typography variant="h5" color="textSecondary">
-                                    Discounted Prices
-                                </Typography>
-                                <Typography variant="body1" color="textSecondary">
-                                    This will give the user discounted prices for all products
-                                </Typography>
-                                <ThemeProvider theme={themeButtonUpdate}>
-                                    <Switch
-                                        checked={state.checkOption}
-                                        onChange={handleChangeSwitch}
-                                        color="primary"
-                                        name="checkOption"
                                         inputProps={{ 'aria-label': 'primary checkbox' }}
                                     />
                                 </ThemeProvider>
