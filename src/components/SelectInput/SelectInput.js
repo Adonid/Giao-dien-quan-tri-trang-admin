@@ -12,6 +12,7 @@ const SelectInput = props => {
     const [ item, setItem ] = React.useState(list[0].value);
 
     const handleChange = event => {
+      event.persist();
       const val = event.target.value;
       setItem(val);
       action(val);
