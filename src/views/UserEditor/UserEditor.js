@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
+import { connect } from 'react-redux';
 import {
     Link as RouterLink
   } from "react-router-dom";
@@ -23,6 +24,7 @@ import { deepOrange } from '@material-ui/core/colors';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PublishOutlinedIcon from '@material-ui/icons/PublishOutlined';
 import { UploadCropSingleImage, SelectInput } from 'components';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -98,11 +100,13 @@ const themeButtonUpdate = createMuiTheme({
 
 const UserEditor = props => {
 
+    const { mockData, ...rest } = props;
+
   const classes = useStyles();
 
   const [formState, setFormState] = useState({
     isValid: false,
-    values: {},
+    values: {phone: mockData.require.phone , userName: mockData.require.userName , email: mockData.require.email },
     touched: {},
     errors: {}
   });
@@ -113,11 +117,11 @@ const UserEditor = props => {
     street: ""
   });
 
-  const [ emailVerify, setEmailVerify ] = useState(false);
+  const [ emailVerify, setEmailVerify ] = useState(mockData.verifyEmail);
 
   const [ openUploader, setOpenUploader ] = useState(false);
 
-  const [ dataImage, setDataImage ] = useState('/images/products/product_1.png');
+  const [ dataImage, setDataImage ] = useState(mockData.avatar);
 
   const [ dataNewImage, setDataNewImage ] = useState(null);
 
@@ -125,9 +129,9 @@ const UserEditor = props => {
   const [ listDistrict, setListDistrict ] = useState([{value: 0, label: "Quận/huyện"}]);
   const [ listCommune, setListCommune ] = useState([{value: 0, label: "Phường/xã"}]);
 
-  const [ disableDistrict, setDisableDistrict ] = useState(false);
-  const [ disableCommune, setDisableCommune ] = useState(false);
-  const [ disableStreet, setDisableStreet ] = useState(false);
+  const [ disableDistrict, setDisableDistrict ] = useState(true);
+  const [ disableCommune, setDisableCommune ] = useState(true);
+  const [ disableStreet, setDisableStreet ] = useState(true);
 
   useEffect(() => {
     const errors = validate(formState.values, schema);
@@ -169,6 +173,7 @@ const UserEditor = props => {
   const getProvince = val => setFormOptions( formOptions => ({...formOptions, province: val}));
   const getDistrict = val => setFormOptions( formOptions => ({...formOptions, district: val}));
   const getCommune = val => setFormOptions( formOptions => ({...formOptions, commune: val}));
+
   const handleStreet = event => {
     event.persist();
     setFormOptions( formOptions => ({...formOptions, street: event.target.value}));
@@ -178,8 +183,8 @@ const UserEditor = props => {
     event.preventDefault();
     const required = formState.values;
     const options = formOptions;
-    const img = dataNewImage?dataNewImage.replace(/^data:image\/jpeg;base64,/, ""):null;
-    console.log(required, options, img, emailVerify);
+    const avatar = dataNewImage?dataNewImage.replace(/^data:image\/jpeg;base64,/, ""):null;
+    props.updateUser({required, options, avatar, emailVerify})
   }
 
   return (
@@ -223,6 +228,7 @@ const UserEditor = props => {
                                     name="userName"
                                     type="text"
                                     variant="outlined"
+                                    defaultValue={ mockData.require.userName }
                                     onChange={handleChange}
                                     error={hasError('userName')}
                                     helperText={
@@ -236,6 +242,7 @@ const UserEditor = props => {
                                     name="email"
                                     type="email"
                                     variant="outlined"
+                                    defaultValue={ mockData.require.email }
                                     onChange={handleChange}
                                     error={hasError('email')}
                                     helperText={
@@ -249,6 +256,7 @@ const UserEditor = props => {
                                     name="phone"
                                     type="text"
                                     variant="outlined"
+                                    defaultValue={ mockData.require.phone }
                                     onChange={handleChange}
                                     error={hasError('phone')}
                                     helperText={
@@ -347,7 +355,24 @@ const UserEditor = props => {
 };
 
 UserEditor.propTypes = {
-
+    mockData: PropTypes.object
 }
 
-export default UserEditor;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        mockData: state.dataUserEditor.dataUser
+    }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        updateUser: data => {
+            dispatch({
+                type: "UPDATE_USER",
+                data: data
+            })
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserEditor)
