@@ -1,7 +1,8 @@
 import {
     NotifysReducers as Notifys,
     UsersListReducers as UsersList,
-    UserDetailReducer as UsersDetail
+    UserDetailReducer as UsersDetail,
+    UserEditorReducer as UserEditor
 } from './reducers';
 
 const redux = require('redux');
@@ -9,7 +10,7 @@ const redux = require('redux');
 var allReducers = redux.combineReducers({
     dataNotifys: Notifys,
     dataNewUser: UsersList,
-    dataUserDetail: UsersDetail
+    dataUserEditor: UserEditor
 });
 
 const Store = redux.createStore(allReducers);
