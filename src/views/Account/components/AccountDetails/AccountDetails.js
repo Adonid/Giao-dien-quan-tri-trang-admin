@@ -26,7 +26,7 @@ const AccountDetails = props => {
     firstName: 'Shen',
     lastName: 'Zhi',
     email: 'shen.zhi@devias.io',
-    phone: '',
+    phone: '0822737733',
     state: 'Alabama',
     country: 'USA'
   });
@@ -80,9 +80,9 @@ const AccountDetails = props => {
               <TextField
                 fullWidth
                 helperText="Please specify the first name"
-                label="First name"
+                label="Họ tên"
                 margin="dense"
-                name="firstName"
+                name="name"
                 onChange={handleChange}
                 required
                 value={values.firstName}
@@ -96,23 +96,7 @@ const AccountDetails = props => {
             >
               <TextField
                 fullWidth
-                label="Last name"
-                margin="dense"
-                name="lastName"
-                onChange={handleChange}
-                required
-                value={values.lastName}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Email Address"
+                label="Email"
                 margin="dense"
                 name="email"
                 onChange={handleChange}
@@ -128,9 +112,26 @@ const AccountDetails = props => {
             >
               <TextField
                 fullWidth
-                label="Phone Number"
+                label="Số điện thoại"
                 margin="dense"
                 name="phone"
+                onChange={handleChange}
+                type="number"
+                required
+                value={values.email}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                label="Tỉnh/thành phố"
+                margin="dense"
+                name="province"
                 onChange={handleChange}
                 type="number"
                 value={values.phone}
