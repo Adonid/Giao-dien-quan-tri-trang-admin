@@ -11,8 +11,8 @@ import {
   Breadcrumbs,
   Link
  } from '@material-ui/core';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+ import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
+ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
@@ -62,7 +62,7 @@ const UsersToolbar = props => {
           variant="contained"
           onClick={ showModalAddUser }
         >
-          <AddCircleOutlineIcon/> Add user
+          <PersonAddOutlinedIcon/> Thêm mới
         </Button>
       </div>
       <div>
