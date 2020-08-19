@@ -24,6 +24,7 @@ import { deepOrange } from '@material-ui/core/colors';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PublishOutlinedIcon from '@material-ui/icons/PublishOutlined';
 import { UploadCropSingleImage, SelectInput } from 'components';
+import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 
 
 const useStyles = makeStyles(theme => ({
@@ -33,6 +34,13 @@ const useStyles = makeStyles(theme => ({
   content: {
     marginTop: theme.spacing(5)
   },
+  row: {
+    height: '42px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: theme.spacing(0.5)
+    },
   customspace: {
     '& .MuiGrid-root': {
         '& .MuiTextField-root, .MuiFormControl-root': {
@@ -198,12 +206,20 @@ const UserEditor = props => {
                 <Link color="inherit" component={RouterLink} to="/users">
                   Quản lý người dùng
                 </Link>
-                <Typography color="textPrimary">Ng. Van A</Typography>
+                <Typography color="textPrimary">{ mockData.require.userName }</Typography>
             </Breadcrumbs>
+            <Link color="inherit" underline="none" component={RouterLink} to="/users">
+              <Button
+                color="primary"
+                variant="contained"
+              >
+                  <PeopleOutlineIcon/> Danh sách
+              </Button>
+            </Link>
         </div>
         <div>
             <Typography variant="h3" gutterBottom>
-                Ng. Van A
+                { mockData.require.userName }
             </Typography>
         </div>
       </div>
