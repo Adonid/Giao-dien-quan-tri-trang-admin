@@ -12,14 +12,14 @@ import {
   Button,
   TextField
 } from '@material-ui/core';
-import { UploadCropSingleImage, SelectInput } from 'components';
+import { SelectInput } from 'components';
 
 const useStyles = makeStyles(() => ({
   root: {}
 }));
 
 const AccountDetails = props => {
-  const { className, ...rest } = props;
+  const { accountDetail, className, ...rest } = props;
 
   const classes = useStyles();
 
@@ -64,6 +64,10 @@ const AccountDetails = props => {
     console.log(val);
   }
 
+  const handleSubmit = event => {
+    event.preventDefault();
+  }
+
   return (
     <Card
       {...rest}
@@ -71,7 +75,7 @@ const AccountDetails = props => {
     >
       <form
         autoComplete="off"
-        noValidate
+        onSubmit={ handleSubmit }
       >
         <CardHeader
           subheader="Thông tin cơ bản của người dùng"
@@ -129,7 +133,6 @@ const AccountDetails = props => {
                 onChange={handleChange}
                 type="number"
                 required
-                value={values.email}
                 variant="outlined"
               />
             </Grid>
@@ -176,6 +179,7 @@ const AccountDetails = props => {
           <Button
             color="primary"
             variant="contained"
+            type="submit"
           >
             Save details
           </Button>
@@ -186,6 +190,7 @@ const AccountDetails = props => {
 };
 
 AccountDetails.propTypes = {
+  accountDetail: PropTypes.object,
   className: PropTypes.string
 };
 
