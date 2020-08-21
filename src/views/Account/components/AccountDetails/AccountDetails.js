@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import validate from 'validate.js';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -53,22 +54,13 @@ const schema = {
 };
 
 const AccountDetails = props => {
-  const { accountDetail, className, ...rest } = props;
+  const { className, ...rest } = props;
 
   const classes = useStyles();
 
-  const [values, setValues] = useState({
-    firstName: 'Shen',
-    lastName: 'Zhi',
-    email: 'shen.zhi@devias.io',
-    phone: '0822737733',
-    state: 'Alabama',
-    country: 'USA'
-  });
-
   const [formState, setFormState] = useState({
     isValid: false,
-    values: {phone: 'mockData.require.phone' , name: 'mockData.require.userName' , email: 'mockData.require.email' },
+    values: {phone: props.mockDataRequire.phone , name: props.mockDataRequire.userName , email: props.mockDataRequire.email },
     touched: {},
     errors: {}
   });
@@ -147,8 +139,7 @@ const AccountDetails = props => {
     event.preventDefault();
     const required = formState.values;
     const options = formOptions;
-    console.log({required, options});
-    // props.updateUser({required, options});
+    props.updateDetail({required, options});
   }
 
   return (
@@ -183,6 +174,7 @@ const AccountDetails = props => {
                 name="name"
                 required
                 variant="outlined"
+                defaultValue={ props.mockDataRequire.userName }
                 onChange={handleChange}
                 error={hasError('name')}
                 helperText={
@@ -202,6 +194,7 @@ const AccountDetails = props => {
                 name="email"
                 required
                 variant="outlined"
+                defaultValue={ props.mockDataRequire.email }
                 onChange={handleChange}
                 error={hasError('email')}
                 helperText={
@@ -222,6 +215,7 @@ const AccountDetails = props => {
                 type="number"
                 required
                 variant="outlined"
+                defaultValue={ props.mockDataRequire.phone }
                 onChange={handleChange}
                 error={hasError('phone')}
                 helperText={
@@ -284,8 +278,25 @@ const AccountDetails = props => {
 };
 
 AccountDetails.propTypes = {
-  accountDetail: PropTypes.object,
   className: PropTypes.string
 };
 
-export default AccountDetails;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    mockDataRequire: state.dataUserEditor.dataUser.require,
+    mockDataOptions: state.dataUserEditor.dataUser.options,
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    updateDetail: data => {
+      dispatch({
+        type: "UPDATE_PROFILE",
+        data: data
+      })
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountDetails)
