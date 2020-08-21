@@ -12,6 +12,7 @@ import {
   Button,
   TextField
 } from '@material-ui/core';
+import { UploadCropSingleImage, SelectInput } from 'components';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -53,6 +54,16 @@ const AccountDetails = props => {
     }
   ];
 
+  const getProvince = val => {
+    console.log(val);
+  }
+  const getDistrict = val => {
+    console.log(val);
+  }
+  const getCommune = val => {
+    console.log(val);
+  }
+
   return (
     <Card
       {...rest}
@@ -63,8 +74,8 @@ const AccountDetails = props => {
         noValidate
       >
         <CardHeader
-          subheader="The information can be edited"
-          title="Profile"
+          subheader="Thông tin cơ bản của người dùng"
+          title="Hồ sơ"
         />
         <Divider />
         <CardContent>
@@ -127,16 +138,21 @@ const AccountDetails = props => {
               md={6}
               xs={12}
             >
-              <TextField
-                fullWidth
-                label="Tỉnh/thành phố"
-                margin="dense"
-                name="province"
-                onChange={handleChange}
-                type="number"
-                value={values.phone}
-                variant="outlined"
-              />
+              <SelectInput list={states} fullWidth={true} margin="dense" action={ getProvince } label="Tỉnh/thành phố" />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <SelectInput list={states} fullWidth={true} margin="dense" action={ getDistrict } label="Quận/huyện" />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <SelectInput list={states} fullWidth={true} margin="dense" action={ getCommune } label="Phường/xã" />
             </Grid>
             <Grid
               item
@@ -145,39 +161,10 @@ const AccountDetails = props => {
             >
               <TextField
                 fullWidth
-                label="Select State"
+                label="Số nhà/đường/thôn/xóm"
                 margin="dense"
-                name="state"
+                name="street"
                 onChange={handleChange}
-                required
-                select
-                // eslint-disable-next-line react/jsx-sort-props
-                SelectProps={{ native: true }}
-                value={values.state}
-                variant="outlined"
-              >
-                {states.map(option => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Country"
-                margin="dense"
-                name="country"
-                onChange={handleChange}
-                required
                 value={values.country}
                 variant="outlined"
               />
