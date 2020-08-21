@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import moment from 'moment';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 import {
   Card,
@@ -47,29 +48,25 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const AccountProfile = props => {
-  const { profile, className, ...rest } = props;
+  const { className, ...rest } = props;
 
   const classes = useStyles();
 
   const [ openUploader, setOpenUploader ] = useState(false);
 
-  const [ dataImage, setDataImage ] = useState('/images/avatars/avatar_11.png');
-
-  const user = {
-    name: 'Shen Zhi',
-    timezone: 'GTM+07',
-    avatar: '/images/avatars/avatar_11.png'
-  };
+  const [ dataImage, setDataImage ] = useState(props.mockData.avatar);
 
   const getDataImage = imgBase64 => {
     setDataImage(imgBase64);
     const img = imgBase64.replace(/^data:image\/jpeg;base64,/, "");
     // api de thay doi avatar
+    props.uploadAvatar(img);
   };
 
   const handleRemoveAvatar = () => {
     setDataImage(null);
     // api de xoa anh avatar
+    props.uploadAvatar(null);
   }
 
   return (
@@ -84,7 +81,7 @@ const AccountProfile = props => {
               gutterBottom
               variant="h2"
             >
-              { user.name }
+              { props.mockData.require.userName }
             </Typography>
             <Typography
               className={classes.locationText}
@@ -98,7 +95,7 @@ const AccountProfile = props => {
               color="textSecondary"
               variant="body1"
             >
-              {moment().format('hh:mm A')} ({user.timezone})
+              {moment().format('hh:mm A')} (GMT +07)
             </Typography>
           </div>
             {
@@ -109,7 +106,7 @@ const AccountProfile = props => {
                 src={dataImage}
               />
               :
-              <Avatar alt={ user.name } src={dataImage} className={classes.orange}/>
+              <Avatar alt={ props.mockData.require.userName } src={dataImage} className={classes.orange}/>
             }
         </div>
         <div className={classes.progress}>
@@ -143,8 +140,24 @@ const AccountProfile = props => {
 };
 
 AccountProfile.propTypes = {
-  profile: PropTypes.object,
   className: PropTypes.string,
 };
 
-export default AccountProfile;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    mockData: state.dataUserEditor.dataUser
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    uploadAvatar: img => {
+      dispatch({
+        type: 'UPLOAD_AVATAR',
+        img: img
+      })
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountProfile)
