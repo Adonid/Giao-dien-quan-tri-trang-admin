@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import moment from 'moment';
@@ -13,6 +13,9 @@ import {
   Button,
   LinearProgress
 } from '@material-ui/core';
+import { UploadCropSingleImage } from 'components';
+import { deepOrange, deepPurple } from '@material-ui/core/colors';
+
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -31,21 +34,43 @@ const useStyles = makeStyles(theme => ({
   },
   uploadButton: {
     marginRight: theme.spacing(2)
-  }
+  },
+  orange: {
+    color: theme.palette.getContrastText(deepOrange[500]),
+    backgroundColor: deepOrange[500],
+    marginLeft: 'auto',
+    height: 110,
+    width: 100,
+    flexShrink: 0,
+    flexGrow: 0
+  },
 }));
 
 const AccountProfile = props => {
-  const { className, ...rest } = props;
+  const { profile, className, ...rest } = props;
 
   const classes = useStyles();
 
+  const [ openUploader, setOpenUploader ] = useState(false);
+
+  const [ dataImage, setDataImage ] = useState('/images/avatars/avatar_11.png');
+
   const user = {
     name: 'Shen Zhi',
-    city: 'Los Angeles',
-    country: 'USA',
-    timezone: 'GTM-7',
+    timezone: 'GTM+07',
     avatar: '/images/avatars/avatar_11.png'
   };
+
+  const getDataImage = imgBase64 => {
+    setDataImage(imgBase64);
+    const img = imgBase64.replace(/^data:image\/jpeg;base64,/, "");
+    // api de thay doi avatar
+  };
+
+  const handleRemoveAvatar = () => {
+    setDataImage(null);
+    // api de xoa anh avatar
+  }
 
   return (
     <Card
@@ -59,14 +84,14 @@ const AccountProfile = props => {
               gutterBottom
               variant="h2"
             >
-              John Doe
+              { user.name }
             </Typography>
             <Typography
               className={classes.locationText}
               color="textSecondary"
               variant="body1"
             >
-              {user.city}, {user.country}
+              Quản trị website
             </Typography>
             <Typography
               className={classes.dateText}
@@ -76,13 +101,19 @@ const AccountProfile = props => {
               {moment().format('hh:mm A')} ({user.timezone})
             </Typography>
           </div>
-          <Avatar
-            className={classes.avatar}
-            src={user.avatar}
-          />
+            {
+              dataImage
+              ?
+              <Avatar
+                className={classes.avatar}
+                src={dataImage}
+              />
+              :
+              <Avatar alt={ user.name } src={dataImage} className={classes.orange}/>
+            }
         </div>
         <div className={classes.progress}>
-          <Typography variant="body1">Profile Completeness: 70%</Typography>
+          <Typography variant="body1">Hồ sơ hoàn thành: 70%</Typography>
           <LinearProgress
             value={70}
             variant="determinate"
@@ -95,17 +126,25 @@ const AccountProfile = props => {
           className={classes.uploadButton}
           color="primary"
           variant="text"
+          onClick={ () => setOpenUploader(!openUploader) }
         >
-          Upload picture
+          Upload avatar
         </Button>
-        <Button variant="text">Remove picture</Button>
+        <Button 
+        variant="text"
+        onClick={ handleRemoveAvatar }
+        >
+          Xóa avatar
+        </Button>
       </CardActions>
+      <UploadCropSingleImage openDialog={openUploader} imageInit={dataImage} dataNewImg={ getDataImage} />
     </Card>
   );
 };
 
 AccountProfile.propTypes = {
-  className: PropTypes.string
+  profile: PropTypes.object,
+  className: PropTypes.string,
 };
 
 export default AccountProfile;
