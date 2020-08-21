@@ -11,5 +11,6 @@ export default {
         street: "122 Chuong duong"
     },
     avatar:"/images/products/product_3.png",
-    verifyEmail: true
+    verifyEmail: true,
+    level: 2
 };
