@@ -20,6 +20,25 @@ const UserEditorReducer = (state = dataUserEditor, action) => {
             state = { ...state, alert: {...state.alert, type: "success", content: "Cập nhật thông tin thành công!"}}
             return state
         
+        case 'UPDATE_PROFILE':
+            const dataprofile = action.data;
+            console.log(dataprofile);
+            /** api cap nhat profile user */
+                
+            /** end */
+            // sau khi api xong dua ra thong bao. vd:
+            state = { ...state, alert: {...state.alert, type: "success", content: "Cập nhật thông tin thành công!"}}
+            return state
+        
+        case 'UPLOAD_AVATAR':
+            const imgdata = action.img;
+            /** api cap nhat avatar user */
+                // imgdata: string || null
+            /** end */
+            // sau khi api xong dua ra thong bao. vd:
+            // state = { ...state, alert: {...state.alert, type: "info", content: "Cập nhật avatar thành công!"}}
+            return state
+        
         default:
             return state
     }
