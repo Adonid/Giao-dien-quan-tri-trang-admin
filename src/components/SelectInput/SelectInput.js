@@ -7,7 +7,7 @@ import {
 
 const SelectInput = props => {
 
-    const { label, list, action, disable, ...rest } = props;
+    const { label, list, action, disable, margin, fullWidth, ...rest } = props;
 
     const [ item, setItem ] = React.useState(list[0].value);
 
@@ -20,8 +20,10 @@ const SelectInput = props => {
 
     return (
         <TextField
+            fullWidth={fullWidth??false}
             id="outlined-select-item"
             select
+            margin={ margin??"none" }
             label={label??"Sắp xếp"}
             value={item}
             onChange={handleChange}
@@ -44,7 +46,9 @@ SelectInput.propTypes = {
     list : PropTypes.array,
     action: PropTypes.func,
     label: PropTypes.string,
-    disable: PropTypes.bool
+    disable: PropTypes.bool,
+    margin: PropTypes.bool,
+    fullWidth: PropTypes.bool
 };
 
 export default SelectInput;
