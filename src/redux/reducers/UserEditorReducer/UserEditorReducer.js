@@ -52,8 +52,8 @@ const UserEditorReducer = (state = dataUserEditor, action) => {
         case 'UPDATE_PASSWORD':
             const password = action.password;
             console.log(password);
-            /** api ap dung nhan cac thong bao cho user */
-                // data: nhu notifys
+            /** api thay doi mat khau cho user */
+                // password: string
             /** end */
             // sau khi ap dung nhan cac thong bao cho user. vd:
             state = { ...state, alert: {...state.alert, type: "success", content: "Cập nhật mật khẩu thành công!"}}
