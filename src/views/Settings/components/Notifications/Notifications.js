@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
@@ -28,15 +28,36 @@ const Notifications = props => {
 
   const classes = useStyles();
 
+  const [formChecked, setFormChecked] = useState({
+    comment: true,
+    system: false,
+    user: true
+  });
+
+  const handleChange = event => {
+    event.persist();
+
+    setFormChecked(formChecked => ({
+      ...formChecked,
+      [event.target.name]: event.target.checked
+    }));
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    console.log(formChecked);
+    // call api
+  }
+
   return (
     <Card
       {...rest}
       className={clsx(classes.root, className)}
     >
-      <form>
+      <form onSubmit={ handleSubmit }>
         <CardHeader
-          subheader="Manage the notifications"
-          title="Notifications"
+          subheader="Quản lý thông báo"
+          title="Thông báo"
         />
         <Divider />
         <CardContent>
@@ -56,38 +77,39 @@ const Notifications = props => {
                 gutterBottom
                 variant="h6"
               >
-                Notifications
+                Nhận thông báo
               </Typography>
               <FormControlLabel
                 control={
                   <Checkbox
                     color="primary"
                     defaultChecked //
+                    disabled
                   />
                 }
-                label="Email"
+                label="Từ Admin"
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     color="primary"
-                    defaultChecked //
+                    name="comment"
+                    defaultChecked={ formChecked.comment }
+                    onChange={ handleChange }
                   />
                 }
-                label="Push Notifications"
-              />
-              <FormControlLabel
-                control={<Checkbox color="primary" />}
-                label="Text Messages"
+                label="Từ bình luận bài viết"
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     color="primary"
-                    defaultChecked //
+                    name="system"
+                    defaultChecked={ formChecked.system }
+                    onChange={ handleChange }
                   />
                 }
-                label="Phone calls"
+                label="Từ hệ thống"
               />
             </Grid>
             <Grid
@@ -101,29 +123,38 @@ const Notifications = props => {
                 gutterBottom
                 variant="h6"
               >
-                Messages
+                Nhận email
               </Typography>
               <FormControlLabel
                 control={
                   <Checkbox
                     color="primary"
                     defaultChecked //
+                    disabled 
                   />
                 }
-                label="Email"
+                label="Hệ thống"
               />
               <FormControlLabel
-                control={<Checkbox color="primary" />}
-                label="Push Notifications"
+                control={
+                  <Checkbox 
+                    color="primary"
+                    defaultChecked
+                    disabled 
+                  />
+                }
+                label="Từ Admin"
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     color="primary"
-                    defaultChecked //
+                    name="user"
+                    defaultChecked={ formChecked.user }
+                    onChange={ handleChange }
                   />
                 }
-                label="Phone calls"
+                label="Từ người dùng"
               />
             </Grid>
           </Grid>
@@ -133,6 +164,7 @@ const Notifications = props => {
           <Button
             color="primary"
             variant="outlined"
+            type="submit"
           >
             Save
           </Button>
