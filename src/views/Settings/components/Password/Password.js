@@ -107,6 +107,7 @@ const Password = props => {
             label="Mật khẩu"
             name="password"
             type="password"
+            required
             variant="outlined"
             error={hasError('password')}
             helperText={
@@ -120,6 +121,7 @@ const Password = props => {
             name="confirm"
             style={{ marginTop: '1rem' }}
             type="password"
+            required
             variant="outlined"
             error={hasError('confirm')}
             helperText={
