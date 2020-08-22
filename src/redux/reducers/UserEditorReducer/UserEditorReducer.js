@@ -39,6 +39,16 @@ const UserEditorReducer = (state = dataUserEditor, action) => {
             // state = { ...state, alert: {...state.alert, type: "info", content: "Cập nhật avatar thành công!"}}
             return state
         
+        case 'APPLY_NOTIFY':
+            const data = action.data;
+            console.log(data);
+            /** api ap dung nhan cac thong bao cho user */
+                // data: nhu notifys
+            /** end */
+            // sau khi ap dung nhan cac thong bao cho user. vd:
+            state = { ...state, alert: {...state.alert, type: "info", content: "Áp dụng nhận các thông báo thành công!"}}
+            return state
+        
         default:
             return state
     }
