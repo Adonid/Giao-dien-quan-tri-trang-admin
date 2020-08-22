@@ -12,5 +12,10 @@ export default {
     },
     avatar:"/images/products/product_3.png",
     verifyEmail: true,
-    level: 2
+    level: 2,
+    notifys: {
+        comment: true,
+        system: false,
+        user: true
+    }
 };
