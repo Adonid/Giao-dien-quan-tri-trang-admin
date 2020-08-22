@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import clsx from 'clsx';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
@@ -85,8 +86,8 @@ const Password = props => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log(formState.values.password);
-    // call api
+    props.updatePassword(formState.values.password);
+    setFormState(formState => ({...formState, isValid: false}));
   }
 
   return (
@@ -135,7 +136,7 @@ const Password = props => {
             type="submit"
             disabled={!formState.isValid}
           >
-            Update
+            Cập nhật
           </Button>
         </CardActions>
       </form>
@@ -147,4 +148,21 @@ Password.propTypes = {
   className: PropTypes.string
 };
 
-export default Password;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    prop: state.prop
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    updatePassword: pw => {
+      dispatch({
+        type: "UPDATE_PASSWORD",
+        password: pw
+      })
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Password)
