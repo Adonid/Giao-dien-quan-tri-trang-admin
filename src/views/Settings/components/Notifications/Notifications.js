@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -28,11 +29,7 @@ const Notifications = props => {
 
   const classes = useStyles();
 
-  const [formChecked, setFormChecked] = useState({
-    comment: true,
-    system: false,
-    user: true
-  });
+  const [formChecked, setFormChecked] = useState(props.mockDataNotifys);
 
   const handleChange = event => {
     event.persist();
@@ -45,8 +42,7 @@ const Notifications = props => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log(formChecked);
-    // call api
+    props.applyNotify(formChecked)
   }
 
   return (
@@ -94,7 +90,7 @@ const Notifications = props => {
                   <Checkbox
                     color="primary"
                     name="comment"
-                    defaultChecked={ formChecked.comment }
+                    defaultChecked={ props.mockDataNotifys.comment }
                     onChange={ handleChange }
                   />
                 }
@@ -105,7 +101,7 @@ const Notifications = props => {
                   <Checkbox
                     color="primary"
                     name="system"
-                    defaultChecked={ formChecked.system }
+                    defaultChecked={ props.mockDataNotifys.system }
                     onChange={ handleChange }
                   />
                 }
@@ -150,7 +146,7 @@ const Notifications = props => {
                   <Checkbox
                     color="primary"
                     name="user"
-                    defaultChecked={ formChecked.user }
+                    defaultChecked={ props.mockDataNotifys.user }
                     onChange={ handleChange }
                   />
                 }
@@ -165,8 +161,9 @@ const Notifications = props => {
             color="primary"
             variant="outlined"
             type="submit"
+            disabled={ props.mockDataNotifys==formChecked??false}
           >
-            Save
+            Áp dụng
           </Button>
         </CardActions>
       </form>
@@ -178,4 +175,22 @@ Notifications.propTypes = {
   className: PropTypes.string
 };
 
-export default Notifications;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    mockDataNotifys: state.dataUserEditor.dataUser.notifys,
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    applyNotify: data => {
+      dispatch({
+        type: "APPLY_NOTIFY",
+        data: data
+      })
+    }
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications)
