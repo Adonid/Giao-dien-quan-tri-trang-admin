@@ -14,3 +14,21 @@ const useStyles = makeStyles(theme => ({
 
 const Chats = props => {
 
+    const classes = useStyles();
+
+    return (
+        <div className={ classes.root }>
+            <Grid container className={classes.root} spacing={2}>
+                <Grid item>
+
+                </Grid>
+            </Grid>
+        </div>
+    );
+};
+
+Chats.propTypes = {
+    
+};
+
+export default Chats;
