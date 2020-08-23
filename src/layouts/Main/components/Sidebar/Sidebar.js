@@ -3,13 +3,14 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Divider, Drawer } from '@material-ui/core';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import PeopleIcon from '@material-ui/icons/People';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
+import SupervisorAccountOutlinedIcon from '@material-ui/icons/SupervisorAccountOutlined';
+import ArtTrackOutlinedIcon from '@material-ui/icons/ArtTrackOutlined';
 import TextFieldsIcon from '@material-ui/icons/TextFields';
 import ImageIcon from '@material-ui/icons/Image';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
-import SettingsIcon from '@material-ui/icons/Settings';
+import AccountBoxOutlinedIcon from '@material-ui/icons/AccountBoxOutlined';
+import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
@@ -45,22 +46,22 @@ const Sidebar = props => {
 
   const pages = [
     {
-      title: 'Dashboard',
+      title: 'Giao diện chính',
       href: '/dashboard',
-      icon: <DashboardIcon />
+      icon: <DashboardOutlinedIcon />
     },
     {
-      title: 'Users',
+      title: 'Người dùng',
       href: '/users',
-      icon: <PeopleIcon />
+      icon: <SupervisorAccountOutlinedIcon />
     },
     {
-      title: 'Products',
+      title: 'Bài viết',
       href: '/products',
-      icon: <ShoppingBasketIcon />
+      icon: <ArtTrackOutlinedIcon />
     },
     {
-      title: 'Authentication',
+      title: 'Xác thực',
       href: '/sign-in',
       icon: <LockOpenIcon />
     },
@@ -75,14 +76,19 @@ const Sidebar = props => {
       icon: <ImageIcon />
     },
     {
-      title: 'Account',
-      href: '/account',
-      icon: <AccountBoxIcon />
+      title: 'Phòng Chat',
+      href: '/chats-room',
+      icon: <ChatBubbleOutlineIcon />
     },
     {
-      title: 'Settings',
+      title: 'Tài khoản của tôi',
+      href: '/account',
+      icon: <AccountBoxOutlinedIcon />
+    },
+    {
+      title: 'Cài đặt',
       href: '/settings',
-      icon: <SettingsIcon />
+      icon: <SettingsOutlinedIcon />
     }
   ];
 
