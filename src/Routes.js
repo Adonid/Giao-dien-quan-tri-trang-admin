@@ -24,17 +24,8 @@ import {
 
 } from './views'; 
 
-// import { Snackbars } from './alerts';
-// import { BackDrop, Skeletons } from 'elements';
-
 const Routes = () => {
-  return (
-    // <>
-    // {/* //   <Snackbars content='This is a success message number 1!' type='info'/> */}
-    // {/* //   <BackDrop open={true}/> */}
-    // {/* //   <Skeletons qtys={8} /> */}
-    // </>
-    
+  return (    
     <Switch>
       <Redirect
         exact
