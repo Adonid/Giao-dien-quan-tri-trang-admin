@@ -85,6 +85,10 @@ import {
     },
   });
 
+  const handleMessage = event => {
+    console.log(event);
+  }
+
 const ChatsList = props => {
     const { open, variant, onClose, className, ...rest } = props;
 
@@ -153,29 +157,45 @@ const ChatsList = props => {
                 >
                   <ListItemAvatar>
                     <Avatar
-                      className={classes.avatar}
-                      src={'/images/avatars/avatar_1.png'}
-                    />
+                        className={classes.avatar}
+                        src={'/images/avatars/avatar_1.png'}
+                      />
                   </ListItemAvatar>
                   <ListItemText 
                     primary={ <Typography component="h5" variant="h6"> Nguyễn Văn Danh</Typography>} 
-                    secondary={ <Typography component="h5" variant="body2">Cám ơn bạn )) · 2 giờ trước</Typography>}
+                    secondary={ 
+                    <React.Fragment>
+                        <Typography component="h5" variant="body2">Cám ơn bạn ))</Typography>
+                        <Typography component="h5" variant="body2">2 giờ trước</Typography>
+                    </React.Fragment>
+                  }
                   />
                 </ListItem>
                 <ListItem
                   button
                   gutters
-                  className={ clsx(classes.activeItem) }
+                  className={ clsx() }
+                  onClick={ handleMessage }
                 >
                   <ListItemAvatar>
-                    <Avatar
-                      className={classes.avatar}
-                      src={'/images/avatars/avatar_2.png'}
-                    />
+                    <Badge
+                        variant="dot"
+                        color="secondary"
+                    >
+                        <Avatar
+                        className={classes.avatar}
+                        src={'/images/avatars/avatar_2.png'}
+                      />
+                    </Badge>
                   </ListItemAvatar>
                   <ListItemText 
                     primary={ <Typography component="h5" variant="h6"> Dương Viết Lâm</Typography>} 
-                    secondary={ <Typography noWrap component="h5" variant="body2">Bạn: Bạn có thể mua 2 khóa đẻ được giảm giá · 1 giờ trước</Typography>}
+                    secondary={ 
+                    <React.Fragment>
+                        <Typography noWrap component="h5" variant="body2">Bạn: Bạn có thể mua 2 khóa đẻ được giảm giá trong hôm nay</Typography>
+                        <Typography component="h5" variant="body2" color="secondary">1 giờ trước</Typography>
+                    </React.Fragment>
+                  }
                   />
                 </ListItem>
               </List>
