@@ -28,6 +28,11 @@ import {
  import SearchIcon from '@material-ui/icons/Search';
 
  const useStyles = makeStyles(theme => ({
+  scrollList: {
+    height: "333px",
+    display: "flex",
+    flexDirection: "column",
+  },
   boxSeach: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
@@ -60,8 +65,14 @@ import {
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
+    [theme.breakpoints.up('md')]: {
+      width: '25ch',
+      '&:focus': {
+        width: '33ch',
+      },
+    },
+    [theme.breakpoints.down('md')]: {
+      width: '15ch',
       '&:focus': {
         width: '20ch',
       },
@@ -149,56 +160,166 @@ const ChatsList = props => {
             </Box>
             <Divider/>
             <CardContent className={ classes.cardContent }>
-              <List>
-                <ListItem
-                  button
-                  gutters
-                  className={ clsx(classes.activeItem) }
-                >
-                  <ListItemAvatar>
-                    <Avatar
-                        className={classes.avatar}
-                        src={'/images/avatars/avatar_1.png'}
-                      />
-                  </ListItemAvatar>
-                  <ListItemText 
-                    primary={ <Typography component="h5" variant="h6"> Nguyễn Văn Danh</Typography>} 
-                    secondary={ 
-                    <React.Fragment>
-                        <Typography component="h5" variant="body2">Cám ơn bạn ))</Typography>
-                        <Typography component="h5" variant="body2">2 giờ trước</Typography>
-                    </React.Fragment>
-                  }
-                  />
-                </ListItem>
-                <ListItem
-                  button
-                  gutters
-                  className={ clsx() }
-                  onClick={ handleMessage }
-                >
-                  <ListItemAvatar>
-                    <Badge
-                        variant="dot"
-                        color="secondary"
-                    >
-                        <Avatar
-                        className={classes.avatar}
-                        src={'/images/avatars/avatar_2.png'}
-                      />
-                    </Badge>
-                  </ListItemAvatar>
-                  <ListItemText 
-                    primary={ <Typography component="h5" variant="h6"> Dương Viết Lâm</Typography>} 
-                    secondary={ 
-                    <React.Fragment>
-                        <Typography noWrap component="h5" variant="body2">Bạn: Bạn có thể mua 2 khóa đẻ được giảm giá trong hôm nay</Typography>
-                        <Typography component="h5" variant="body2" color="secondary">1 giờ trước</Typography>
-                    </React.Fragment>
-                  }
-                  />
-                </ListItem>
-              </List>
+              <PerfectScrollbar className={ classes.scrollList }>
+                <List>
+                  <ListItem
+                    button
+                    gutters
+                    className={ clsx(classes.activeItem) }
+                  >
+                    <ListItemAvatar>
+                      <Avatar
+                          className={classes.avatar}
+                          src={'/images/avatars/avatar_1.png'}
+                        />
+                    </ListItemAvatar>
+                    <ListItemText 
+                      primary={ <Typography component="h5" variant="h6"> Nguyễn Văn Danh</Typography>} 
+                      secondary={ 
+                      <React.Fragment>
+                          <Typography component="h5" variant="body2">Cám ơn bạn ))</Typography>
+                          <Typography component="h5" variant="body2">2 giờ trước</Typography>
+                      </React.Fragment>
+                    }
+                    />
+                  </ListItem>
+                  <ListItem
+                    button
+                    gutters
+                    className={ clsx() }
+                    onClick={ handleMessage }
+                  >
+                    <ListItemAvatar>
+                      <Badge
+                          variant="dot"
+                          color="secondary"
+                      >
+                          <Avatar
+                          className={classes.avatar}
+                          src={'/images/avatars/avatar_2.png'}
+                        />
+                      </Badge>
+                    </ListItemAvatar>
+                    <ListItemText 
+                      primary={ <Typography component="h5" variant="h6"> Dương Viết Lâm</Typography>} 
+                      secondary={ 
+                      <React.Fragment>
+                          <Typography noWrap component="h5" variant="body2">Bạn: Bạn có thể mua 2 khóa đẻ được giảm giá trong hôm nay</Typography>
+                          <Typography component="h5" variant="body2" color="secondary">1 giờ trước</Typography>
+                      </React.Fragment>
+                    }
+                    />
+                  </ListItem>
+                  <ListItem
+                    button
+                    gutters
+                    className={ clsx() }
+                    onClick={ handleMessage }
+                  >
+                    <ListItemAvatar>
+                      <Badge
+                          variant="dot"
+                          color="secondary"
+                      >
+                          <Avatar
+                          className={classes.avatar}
+                          src={'/images/avatars/avatar_2.png'}
+                        />
+                      </Badge>
+                    </ListItemAvatar>
+                    <ListItemText 
+                      primary={ <Typography component="h5" variant="h6"> Dương Viết Lâm</Typography>} 
+                      secondary={ 
+                      <React.Fragment>
+                          <Typography noWrap component="h5" variant="body2">Bạn: Bạn có thể mua 2 khóa đẻ được giảm giá trong hôm nay</Typography>
+                          <Typography component="h5" variant="body2" color="secondary">1 giờ trước</Typography>
+                      </React.Fragment>
+                    }
+                    />
+                  </ListItem>
+                  <ListItem
+                    button
+                    gutters
+                    className={ clsx() }
+                    onClick={ handleMessage }
+                  >
+                    <ListItemAvatar>
+                      <Badge
+                          variant="dot"
+                          color="secondary"
+                      >
+                          <Avatar
+                          className={classes.avatar}
+                          src={'/images/avatars/avatar_2.png'}
+                        />
+                      </Badge>
+                    </ListItemAvatar>
+                    <ListItemText 
+                      primary={ <Typography component="h5" variant="h6"> Dương Viết Lâm</Typography>} 
+                      secondary={ 
+                      <React.Fragment>
+                          <Typography noWrap component="h5" variant="body2">Bạn: Bạn có thể mua 2 khóa đẻ được giảm giá trong hôm nay</Typography>
+                          <Typography component="h5" variant="body2" color="secondary">1 giờ trước</Typography>
+                      </React.Fragment>
+                    }
+                    />
+                  </ListItem>
+                  <ListItem
+                    button
+                    gutters
+                    className={ clsx() }
+                    onClick={ handleMessage }
+                  >
+                    <ListItemAvatar>
+                      <Badge
+                          variant="dot"
+                          color="secondary"
+                      >
+                          <Avatar
+                          className={classes.avatar}
+                          src={'/images/avatars/avatar_2.png'}
+                        />
+                      </Badge>
+                    </ListItemAvatar>
+                    <ListItemText 
+                      primary={ <Typography component="h5" variant="h6"> Dương Viết Lâm</Typography>} 
+                      secondary={ 
+                      <React.Fragment>
+                          <Typography noWrap component="h5" variant="body2">Bạn: Bạn có thể mua 2 khóa đẻ được giảm giá trong hôm nay</Typography>
+                          <Typography component="h5" variant="body2" color="secondary">1 giờ trước</Typography>
+                      </React.Fragment>
+                    }
+                    />
+                  </ListItem>
+                  <ListItem
+                    button
+                    gutters
+                    className={ clsx() }
+                    onClick={ handleMessage }
+                  >
+                    <ListItemAvatar>
+                      <Badge
+                          variant="dot"
+                          color="secondary"
+                      >
+                          <Avatar
+                          className={classes.avatar}
+                          src={'/images/avatars/avatar_2.png'}
+                        />
+                      </Badge>
+                    </ListItemAvatar>
+                    <ListItemText 
+                      primary={ <Typography component="h5" variant="h6"> Dương Viết Lâm</Typography>} 
+                      secondary={ 
+                      <React.Fragment>
+                          <Typography noWrap component="h5" variant="body2">Bạn: Bạn có thể mua 2 khóa đẻ được giảm giá trong hôm nay</Typography>
+                          <Typography component="h5" variant="body2" color="secondary">1 giờ trước</Typography>
+                      </React.Fragment>
+                    }
+                    />
+                  </ListItem>
+                </List>
+              </PerfectScrollbar>
             </CardContent>
           </Card>
         </Paper>
