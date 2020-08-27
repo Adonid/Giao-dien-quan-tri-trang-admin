@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { createMuiTheme, ThemeProvider, fade } from '@material-ui/core/styles';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import {  
     CardHeader,
     Typography,
@@ -23,38 +23,56 @@ import {
 
 const TopHeaderChat = props => {
 
+    const { handleRecent, handleSingleChat, handleGroupChat, status, ...rest } = props;
+
+    const [ stateClick, setStateClick ] = useState({
+        recentChat: true,
+        singleChat: false,
+        groupChat: false,
+    });
+
+    const clickRecent = () => {
+        setStateClick({...stateClick, recentChat: true, singleChat: false, groupChat: false});
+    }
+    const clickSingle = () => {
+        setStateClick({...stateClick, recentChat: false, singleChat: true, groupChat: false});
+    }
+    const clickGroup = () => {
+        setStateClick({...stateClick, recentChat: false, singleChat: false, groupChat: true});
+    }
+
     return (
         <CardHeader
             action={
                 <React.Fragment>
-                    <IconButton aria-label="settings" >
+                    <IconButton aria-label="recent" color={ stateClick.recentChat ? "secondary" : "default" } onClick={ clickRecent }>
                         <Badge
-                        variant="dot"
-                        color="secondary"
+                            variant="dot"
+                            invisible={!status.recent}
+                            color="secondary"
                         >
-                        <AccessTimeOutlinedIcon />
+                            <AccessTimeOutlinedIcon />
                         </Badge>
                     </IconButton>
-                    <IconButton aria-label="chat" color="secondary">
+                    <IconButton aria-label="chat" color={ stateClick.singleChat ? "secondary" : "default" } onClick={ clickSingle }>
                         <ThemeProvider theme={themeBadgeMessage}>
                             <Badge
-                                badgeContent={10}
+                                badgeContent={status.single}
                                 color="error"
-                                max={9}
+                                max={99}
                             >
                                 <ChatBubbleOutlineOutlinedIcon />
                             </Badge>
                         </ThemeProvider>
                     </IconButton>
-                    <IconButton aria-label="group">
-                        <ThemeProvider theme={themeBadgeMessage}>
-                            <Badge
-                                variant="dot"
-                                color="error"
-                            >
-                                <PeopleAltOutlinedIcon />
-                            </Badge>
-                        </ThemeProvider>
+                    <IconButton aria-label="group" color={ stateClick.groupChat ? "secondary" : "default" } onClick={ clickGroup }>
+                        <Badge
+                            variant="dot"
+                            invisible={!status.group}
+                            color="secondary"
+                        >
+                            <PeopleAltOutlinedIcon />
+                        </Badge>
                     </IconButton>
                 </React.Fragment>
             }
@@ -64,7 +82,10 @@ const TopHeaderChat = props => {
 };
 
 TopHeaderChat.propTypes = {
-    
+    handleRecent : PropTypes.func.isRequired,
+    handleSingleChat : PropTypes.func.isRequired,
+    handleGroupChat : PropTypes.func.isRequired,
+    status : PropTypes.object.isRequired,
 };
 
 export default TopHeaderChat;
