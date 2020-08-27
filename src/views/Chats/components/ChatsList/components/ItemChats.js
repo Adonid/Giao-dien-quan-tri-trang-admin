@@ -19,13 +19,20 @@ import {
 
 const ItemChats = props => {
 
+    const { dataItem, viewConversation, ...rest } = props;
+
     const classes = useStyles();
+
+    const handleViewConversation = () => {
+        console.log('ok');
+    }
     
     return (
         <ListItem
             button
             gutters
-            className={ clsx(classes.root) }
+            className={ clsx(false&&classes.root) }
+            onClick={ handleViewConversation }
         >
             <ListItemAvatar>
                 <Avatar
@@ -47,7 +54,8 @@ const ItemChats = props => {
 };
 
 ItemChats.propTypes = {
-    
+    dataItem: PropTypes.object.isRequired,
+    viewConversation: PropTypes.func.isRequired,
 };
 
 export default ItemChats;
