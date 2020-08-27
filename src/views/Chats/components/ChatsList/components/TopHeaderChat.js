@@ -27,34 +27,35 @@ const TopHeaderChat = props => {
         <CardHeader
             action={
                 <React.Fragment>
-                <IconButton aria-label="settings">
-                    <Badge
-                    variant="dot"
-                    color="secondary"
-                    >
-                    <AccessTimeOutlinedIcon />
-                    </Badge>
-                </IconButton>
-                <IconButton aria-label="chat">
-                    <ThemeProvider theme={themeBadgeMessage}>
-                    <Badge
-                        badgeContent={2}
-                        color="error"
-                    >
-                        <ChatBubbleOutlineOutlinedIcon />
-                    </Badge>
-                    </ThemeProvider>
-                </IconButton>
-                <IconButton aria-label="group">
-                    <ThemeProvider theme={themeBadgeMessage}>
-                    <Badge
+                    <IconButton aria-label="settings" >
+                        <Badge
                         variant="dot"
-                        color="error"
-                    >
-                        <PeopleAltOutlinedIcon />
-                    </Badge>
-                    </ThemeProvider>
-                </IconButton>
+                        color="secondary"
+                        >
+                        <AccessTimeOutlinedIcon />
+                        </Badge>
+                    </IconButton>
+                    <IconButton aria-label="chat" color="secondary">
+                        <ThemeProvider theme={themeBadgeMessage}>
+                        <Badge
+                            badgeContent={10}
+                            color="error"
+                            max={9}
+                        >
+                            <ChatBubbleOutlineOutlinedIcon />
+                        </Badge>
+                        </ThemeProvider>
+                    </IconButton>
+                    <IconButton aria-label="group">
+                        <ThemeProvider theme={themeBadgeMessage}>
+                        <Badge
+                            variant="dot"
+                            color="error"
+                        >
+                            <PeopleAltOutlinedIcon />
+                        </Badge>
+                        </ThemeProvider>
+                    </IconButton>
                 </React.Fragment>
             }
             title={<Typography gutterBottom variant="h3" component="h2">Chats</Typography>}
