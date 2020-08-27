@@ -37,23 +37,23 @@ const TopHeaderChat = props => {
                     </IconButton>
                     <IconButton aria-label="chat" color="secondary">
                         <ThemeProvider theme={themeBadgeMessage}>
-                        <Badge
-                            badgeContent={10}
-                            color="error"
-                            max={9}
-                        >
-                            <ChatBubbleOutlineOutlinedIcon />
-                        </Badge>
+                            <Badge
+                                badgeContent={10}
+                                color="error"
+                                max={9}
+                            >
+                                <ChatBubbleOutlineOutlinedIcon />
+                            </Badge>
                         </ThemeProvider>
                     </IconButton>
                     <IconButton aria-label="group">
                         <ThemeProvider theme={themeBadgeMessage}>
-                        <Badge
-                            variant="dot"
-                            color="error"
-                        >
-                            <PeopleAltOutlinedIcon />
-                        </Badge>
+                            <Badge
+                                variant="dot"
+                                color="error"
+                            >
+                                <PeopleAltOutlinedIcon />
+                            </Badge>
                         </ThemeProvider>
                     </IconButton>
                 </React.Fragment>
