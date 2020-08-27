@@ -38,7 +38,7 @@ const ChatsList = props => {
         <Paper elevation={0}>
           <Card>
 
-            <TopHeaderChat/>
+            <TopHeaderChat status={{recent: true, single: 12, group: true}}/>
 
             <SearchChats/>
             
