@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, createMuiTheme, ThemeProvider, fade } from '@material-ui/core/styles';
 import {  
@@ -25,14 +25,15 @@ import {
   }));
 
 
-  const handleMessage = event => {
-    console.log(event);
-  }
-
 const ChatsList = props => {
     const { open, variant, onClose, className, ...rest } = props;
-
+    
     const classes = useStyles();
+
+    const handleViewConversation = () => {
+      console.log('event');
+    }
+
     return (
       <Grid item sm={3}>
         <Paper elevation={0}>
@@ -47,7 +48,8 @@ const ChatsList = props => {
               <PerfectScrollbar className={ classes.scrollList }>
                 <List>
                   
-                  <ItemChats/>
+                  <ItemChats viewConversation={ handleViewConversation } />
+                  <ItemChats viewConversation={ handleViewConversation } />
                   
                 </List>
               </PerfectScrollbar>
