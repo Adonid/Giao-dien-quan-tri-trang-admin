@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,15 +23,19 @@ const ItemChats = props => {
 
     const classes = useStyles();
 
+    const [ isSelected, setIsSelected ] = useState(false);
+
     const handleViewConversation = () => {
-        console.log('ok');
+        
+        setIsSelected(true);
+        viewConversation();
     }
     
     return (
         <ListItem
             button
             gutters
-            className={ clsx(false&&classes.root) }
+            className={ clsx(isSelected&&classes.root) }
             onClick={ handleViewConversation }
         >
             <ListItemAvatar>
