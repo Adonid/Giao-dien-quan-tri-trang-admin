@@ -40,18 +40,6 @@ import {
       paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
       transition: theme.transitions.create('width'),
       width: '100%',
-      [theme.breakpoints.up('md')]: {
-        width: '25ch',
-        '&:focus': {
-          width: '33ch',
-        },
-      },
-      [theme.breakpoints.down('md')]: {
-        width: '15ch',
-        '&:focus': {
-          width: '20ch',
-        },
-      },
     }
     }));
 
