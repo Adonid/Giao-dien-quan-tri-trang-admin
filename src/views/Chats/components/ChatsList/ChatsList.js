@@ -48,8 +48,8 @@ const ChatsList = props => {
               <PerfectScrollbar className={ classes.scrollList }>
                 <List>
                   
-                  <ItemChats viewConversation={ handleViewConversation } />
-                  <ItemChats viewConversation={ handleViewConversation } />
+                  <ItemChats dataItem={ { isSelected: true, avatar: '/images/avatars/avatar_3.png', name: "Hoàng Trọng Hải", content: "Bạn vui lòng inbox mình nha!", time: "1 phút trước", isReaded: true} } viewConversation={ handleViewConversation } />
+                  <ItemChats dataItem={ { isSelected: false, avatar: '/images/avatars/avatar_1.png', name: "Nguyễn Văn Danh", content: "Cám ơn bạn ))", time: "2 giờ trước", isReaded: false} } viewConversation={ handleViewConversation } />
                   
                 </List>
               </PerfectScrollbar>
