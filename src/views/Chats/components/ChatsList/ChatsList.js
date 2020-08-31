@@ -51,7 +51,7 @@ const ChatsList = props => {
 
     return (
       <Grid item sm={3}>
-        <Paper elevation={0}>
+        <Paper square={true} elevation={0}>
           <Card>
 
             <TopHeaderChat handleRecent={ handleRecent } handleSingleChat={ handleSingleChat } handleGroupChat={ handleGroupChat } status={{recent: true, single: 12, group: true}}/>
