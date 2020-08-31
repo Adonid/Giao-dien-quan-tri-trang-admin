@@ -27,18 +27,22 @@ import {
 
 
 const ChatsList = props => {
-    const { className, chatsList, viewItemChat, ...rest } = props;
+    const { className, chatsList, chatsRecent, chatsSingle, chatsGroup, viewItemChat, ...rest } = props;
     
     const classes = useStyles();
 
     const handleViewConversation = id => viewItemChat(id);
+
+    const handleRecent = () => chatsRecent();
+    const handleSingleChat = () => chatsSingle();
+    const handleGroupChat = () => chatsGroup();
 
     return (
       <Grid item sm={3}>
         <Paper elevation={0}>
           <Card>
 
-            <TopHeaderChat status={{recent: true, single: 12, group: true}}/>
+            <TopHeaderChat handleRecent={ handleRecent } handleSingleChat={ handleSingleChat } handleGroupChat={ handleGroupChat } status={{recent: true, single: 12, group: true}}/>
 
             <SearchChats/>
             
@@ -65,7 +69,10 @@ const ChatsList = props => {
 ChatsList.propTypes = {
     className: PropTypes.string,
     chatsList: PropTypes.array.isRequired,
-    viewItemChat: PropTypes.func.isRequired
+    viewItemChat: PropTypes.func.isRequired,
+    chatsRecent: PropTypes.func.isRequired,
+    chatsSingle: PropTypes.func.isRequired,
+    chatsGroup: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -81,7 +88,22 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         type: "VIEW_ITEM_CHAT",
         id: id
       })
-    }
+    },
+    chatsRecent: id => {
+      dispatch({
+        type: "LIST_CHAT_RECENT",
+      })
+    },
+    chatsSingle: id => {
+      dispatch({
+        type: "LIST_CHAT_SINGLE",
+      })
+    },
+    chatsGroup: id => {
+      dispatch({
+        type: "LIST_CHAT_GROUP",
+      })
+    },
   }
 }
 
