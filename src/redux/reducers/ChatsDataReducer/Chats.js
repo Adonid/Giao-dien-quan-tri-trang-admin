@@ -1,7 +1,9 @@
-import mockDataChat from './data';
+import dataRecentChat   from './data';
+import dataSingleChat   from './dataSingle';
+import dataGroupChat   from './dataGroup';
 
 const ChatsData = {
-    chatsList: mockDataChat,
+    chatsList: dataRecentChat,
 };
 
 
@@ -24,6 +26,29 @@ const Chats = (state = ChatsData, action) => {
             state = { ...state, chatsList: updateChatsList};
             return state
         
+        case 'LIST_CHAT_RECENT':
+            /** api lay ve danh sach chat GAN DAY */
+
+            /** end  */
+            // Sau khi lay danh sach chat ve thi cap nhat lai vao trong state
+                state = { ...state, chatsList: dataRecentChat};
+            return state;
+            
+        case 'LIST_CHAT_SINGLE':
+            /** api lay ve danh sach chat DON */
+            
+            /** end  */
+            // Sau khi lay danh sach chat ve thi cap nhat lai vao trong state
+                state = { ...state, chatsList: dataSingleChat};
+            return state;
+        case 'LIST_CHAT_GROUP':
+            /** api lay ve danh sach chat NHOM */
+            
+            /** end  */
+            // Sau khi lay danh sach chat ve thi cap nhat lai vao trong state
+                state = { ...state, chatsList: dataGroupChat};
+            return state;
+
         default:
             return state
     }
