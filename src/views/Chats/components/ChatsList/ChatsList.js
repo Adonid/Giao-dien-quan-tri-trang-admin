@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { makeStyles, createMuiTheme, ThemeProvider, fade } from '@material-ui/core/styles';
 import {  
     Divider,
@@ -26,13 +27,11 @@ import {
 
 
 const ChatsList = props => {
-    const { open, variant, onClose, className, ...rest } = props;
+    const { className, chatsList, viewItemChat, ...rest } = props;
     
     const classes = useStyles();
 
-    const handleViewConversation = () => {
-      console.log('event');
-    }
+    const handleViewConversation = id => viewItemChat(id);
 
     return (
       <Grid item sm={3}>
@@ -47,9 +46,12 @@ const ChatsList = props => {
             <CardContent className={ classes.root }>
               <PerfectScrollbar className={ classes.scrollList }>
                 <List>
-                  
-                  <ItemChats dataItem={ { isSelected: true, avatar: '/images/avatars/avatar_3.png', name: "Hoàng Trọng Hải", content: "Bạn vui lòng inbox mình nha!", time: "1 phút trước", isReaded: true} } viewConversation={ handleViewConversation } />
-                  <ItemChats dataItem={ { isSelected: false, avatar: '/images/avatars/avatar_1.png', name: "Nguyễn Văn Danh", content: "Cám ơn bạn ))", time: "2 giờ trước", isReaded: false} } viewConversation={ handleViewConversation } />
+                  {
+                    chatsList.map( itemChat => 
+                        <ItemChats key={itemChat.key} dataItem={ itemChat } viewConversation={ handleViewConversation } />
+                    )
+                  }
+                    
                   
                 </List>
               </PerfectScrollbar>
@@ -62,9 +64,25 @@ const ChatsList = props => {
 
 ChatsList.propTypes = {
     className: PropTypes.string,
-    onClose: PropTypes.func,
-    open: PropTypes.bool.isRequired,
-    variant: PropTypes.string.isRequired
+    chatsList: PropTypes.array.isRequired,
+    viewItemChat: PropTypes.func.isRequired
 };
 
-export default ChatsList;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    chatsList: state.ChatsData.chatsList
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    viewItemChat: id => {
+      dispatch({
+        type: "VIEW_ITEM_CHAT",
+        id: id
+      })
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatsList)
