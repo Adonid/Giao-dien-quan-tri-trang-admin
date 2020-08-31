@@ -89,17 +89,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         id: id
       })
     },
-    chatsRecent: id => {
+    chatsRecent: () => {
       dispatch({
         type: "LIST_CHAT_RECENT",
       })
     },
-    chatsSingle: id => {
+    chatsSingle: () => {
       dispatch({
         type: "LIST_CHAT_SINGLE",
       })
     },
-    chatsGroup: id => {
+    chatsGroup: () => {
       dispatch({
         type: "LIST_CHAT_GROUP",
       })
