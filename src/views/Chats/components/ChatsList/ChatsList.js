@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { makeStyles, createMuiTheme, ThemeProvider, fade } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {  
     Divider,
     Grid,
@@ -25,17 +25,29 @@ import {
   }
   }));
 
-
 const ChatsList = props => {
     const { className, chatsList, chatsRecent, chatsSingle, chatsGroup, viewItemChat, ...rest } = props;
     
     const classes = useStyles();
+
+    const [ chatsListState, setChatsListState ] = useState([]);
+    const [ chatsListOrigin, setChatsListOrigin ] = useState(chatsList);
+
+    useEffect(() => {
+      setChatsListState(chatsList);
+      setChatsListOrigin(chatsList);
+    }, [chatsList]);
 
     const handleViewConversation = id => viewItemChat(id);
 
     const handleRecent = () => chatsRecent();
     const handleSingleChat = () => chatsSingle();
     const handleGroupChat = () => chatsGroup();
+
+    const handleSearch = val => {
+      let index = [...chatsListOrigin].map( item => (item.name.indexOf(val) !== -1) ? item : null).filter( item => item!=null)
+      setChatsListState( index );
+    }
 
     return (
       <Grid item sm={3}>
@@ -44,14 +56,14 @@ const ChatsList = props => {
 
             <TopHeaderChat handleRecent={ handleRecent } handleSingleChat={ handleSingleChat } handleGroupChat={ handleGroupChat } status={{recent: true, single: 12, group: true}}/>
 
-            <SearchChats/>
+            <SearchChats search={ handleSearch } />
             
             <Divider/>
             <CardContent className={ classes.root }>
               <PerfectScrollbar className={ classes.scrollList }>
                 <List>
                   {
-                    chatsList.map( itemChat => 
+                    chatsListState.map( itemChat => 
                         <ItemChats key={itemChat.key} dataItem={ itemChat } viewConversation={ handleViewConversation } />
                     )
                   }
