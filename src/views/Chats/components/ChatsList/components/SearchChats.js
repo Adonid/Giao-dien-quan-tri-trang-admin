@@ -57,7 +57,11 @@ import {
 
 const SearchChats = props => {
 
+    const { search, ...rest } = props;
+
     const classes = useStyles();
+
+    const handleSearch = val => search(val.target.value);
 
     return (
         <Box className={ classes.root}>
@@ -66,12 +70,14 @@ const SearchChats = props => {
                 <SearchIcon />
                 </div>
                 <InputBase
-                placeholder="Search…"
+                placeholder="Tìm…"
                 classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput,
                 }}
                 inputProps={{ 'aria-label': 'search' }}
+                type="search"
+                onChange={ handleSearch }
                 />
             </div>
         </Box>
@@ -79,7 +85,7 @@ const SearchChats = props => {
 };
 
 SearchChats.propTypes = {
-    
+  search: PropTypes.func.isRequired
 };
 
 export default SearchChats;
