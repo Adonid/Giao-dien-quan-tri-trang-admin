@@ -3,7 +3,7 @@ export default [
     { 
         id: 87,
         isSelected: false, 
-        avatar: '/images/avatars/avatar_4.png', 
+        avatar: '', 
         name: "Vân Dung", 
         content: "Bạn vui lòng inbox mình nha!", 
         time: "15 phút trước", 
@@ -28,7 +28,7 @@ export default [
         isReaded: true
     },
     { 
-        id: 87,
+        id: 10,
         isSelected: false, 
         avatar: '/images/avatars/avatar_4.png', 
         name: "Vân Dung", 
@@ -37,16 +37,16 @@ export default [
         isReaded: true
     },
     { 
-        id: 14,
+        id: 11,
         isSelected: false, 
-        avatar: '/images/avatars/avatar_5.png', 
+        avatar: '', 
         name: "Nguyễn Trọng Hoàng", 
         content: "Ship hàng trong bao nhiêu lâu ạ?", 
         time: "30 phút trước", 
         isReaded: false
     },
     { 
-        id: 78,
+        id: 19,
         isSelected: false, 
         avatar: '/images/avatars/avatar_6.png', 
         name: "Trinh Uyên", 
