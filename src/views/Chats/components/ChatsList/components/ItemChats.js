@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
+import { red } from '@material-ui/core/colors';
 import {  
     Typography,
     ListItem,
@@ -11,11 +12,16 @@ import {
     Badge,
 
  } from '@material-ui/core';
+ 
  const useStyles = makeStyles(theme => ({
     root: {
       boxShadow: 'inset 4px 0px 0px #5850EC',
       backgroundColor: 'rgba(0, 0, 0, 0.08)',
-    }
+    },
+    avatar: {
+        backgroundColor: red[500],
+        textTransform: 'uppercase'
+      },
     }));
 
 const ItemChats = props => {
@@ -38,10 +44,20 @@ const ItemChats = props => {
                     variant={ dataItem.isReaded ? "default" : "dot" }
                     color="secondary"
                 >
-                    <Avatar
-                        className={classes.avatar}
-                        src={ dataItem.avatar }
-                    />
+                    {
+                        dataItem.avatar
+                        ?
+                        <Avatar
+                            src={ dataItem.avatar }
+                        />
+                        :
+                        <Avatar
+                            className={classes.avatar}
+                            aria-label="recipe"
+                        >
+                            { dataItem.name.substring(0, 1) }
+                        </Avatar>
+                    }
                 </Badge>
                 
             </ListItemAvatar>
