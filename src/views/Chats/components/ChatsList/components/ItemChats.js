@@ -8,6 +8,7 @@ import {
     Avatar,
     ListItemAvatar,
     ListItemText,
+    Badge,
 
  } from '@material-ui/core';
  const useStyles = makeStyles(theme => ({
@@ -23,11 +24,7 @@ const ItemChats = props => {
 
     const classes = useStyles();
 
-    const [ isSelected, setIsSelected ] = useState(false);
-
-    const handleViewConversation = () => {
-        
-        setIsSelected(true);
+    const handleViewConversation = () => {        
         viewConversation();
     }
     
@@ -35,21 +32,27 @@ const ItemChats = props => {
         <ListItem
             button
             gutters
-            className={ clsx(isSelected&&classes.root) }
+            className={ clsx(dataItem.isSelected&&classes.root) }
             onClick={ handleViewConversation }
         >
             <ListItemAvatar>
-                <Avatar
-                    className={classes.avatar}
-                    src={'/images/avatars/avatar_1.png'}
-                />
+                <Badge
+                    variant={ dataItem.isReaded ? "default" : "dot" }
+                    color="secondary"
+                >
+                    <Avatar
+                        className={classes.avatar}
+                        src={ dataItem.avatar }
+                    />
+                </Badge>
+                
             </ListItemAvatar>
             <ListItemText 
-                primary={ <Typography component="h5" variant="h6"> Nguyễn Văn Danh</Typography>} 
+                primary={ <Typography component="h5" variant="h6">{ dataItem.name }</Typography>} 
                 secondary={ 
                 <React.Fragment>
-                    <Typography component="h5" variant="body2">Cám ơn bạn ))</Typography>
-                    <Typography component="h5" variant="body2">2 giờ trước</Typography>
+                    <Typography component="h5" variant="body2"> { dataItem.content } </Typography>
+                    <Typography component="h5" variant="body2" color={ dataItem.isReaded ? "default" : "secondary" } > { dataItem.time } </Typography>
                 </React.Fragment>
             }
             />
