@@ -50,7 +50,7 @@ const ChatsList = props => {
     }
 
     return (
-      <Grid item sm={3}>
+      <Grid item sm={4} md={3}>
         <Paper square={true} elevation={0}>
           <Card>
 
