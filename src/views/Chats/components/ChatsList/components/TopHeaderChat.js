@@ -33,12 +33,15 @@ const TopHeaderChat = props => {
 
     const clickRecent = () => {
         setStateClick({...stateClick, recentChat: true, singleChat: false, groupChat: false});
+        handleRecent();
     }
     const clickSingle = () => {
         setStateClick({...stateClick, recentChat: false, singleChat: true, groupChat: false});
+        handleSingleChat();
     }
     const clickGroup = () => {
         setStateClick({...stateClick, recentChat: false, singleChat: false, groupChat: true});
+        handleGroupChat();
     }
 
     return (
