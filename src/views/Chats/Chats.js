@@ -39,7 +39,7 @@ const Chats = props => {
               <Hidden smUp>
                 <Paper className={classes.paper}>NOI DUNG DANH CHO MAN HINH IPAD MINI TRO XUONG </Paper>
               </Hidden>
-            <Grid item xs={9}>
+            <Grid item xs={12} sm={8} md={9}>
               <main>
                 <ConversationsChat/>
               </main>
