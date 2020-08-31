@@ -24,9 +24,7 @@ const ItemChats = props => {
 
     const classes = useStyles();
 
-    const handleViewConversation = () => {        
-        viewConversation();
-    }
+    const handleViewConversation = () => viewConversation(dataItem.id);
     
     return (
         <ListItem
