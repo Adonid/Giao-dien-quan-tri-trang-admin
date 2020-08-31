@@ -70,14 +70,14 @@ const SearchChats = props => {
                 <SearchIcon />
                 </div>
                 <InputBase
-                placeholder="Tìm…"
-                classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-                type="search"
-                onChange={ handleSearch }
+                  placeholder="Tìm…"
+                  classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                  }}
+                  inputProps={{ 'aria-label': 'search' }}
+                  type="search"
+                  onChange={ handleSearch }
                 />
             </div>
         </Box>
