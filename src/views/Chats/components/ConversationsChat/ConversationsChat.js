@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
@@ -12,10 +12,13 @@ import {
     Avatar,
     CardContent,
     CardActions,
-    TextField
+    TextField,
+    Tooltip
  } from '@material-ui/core';
  import IconButton from '@material-ui/core/IconButton';
  import MoreVertIcon from '@material-ui/icons/MoreVert';
+ import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
+ import AddPhotoAlternateOutlinedIcon from '@material-ui/icons/AddPhotoAlternateOutlined';
 
  const useStyles = makeStyles(theme => ({
     root: {
@@ -37,13 +40,42 @@ import {
 
     },
     areaContent: {
-
+        [theme.breakpoints.down('xs')]: {
+            width: theme.spacing(30)
+        },
+        [theme.breakpoints.up('sm')]: {
+            width: theme.spacing(40)
+        },
+        [theme.breakpoints.up('md')]: {
+            width: theme.spacing(75)
+        },
     },
+    divider: {
+        display: 'inline-block',
+        width: 1,
+        height: theme.spacing(3),
+        position: 'relative',
+        top: theme.spacing(1),
+        backgroundColor: '#0000001f'
+    },
+    rotate45deg: {
+        transform: 'rotateZ(-40deg)'
+    }
     }));
 
 const ConversationsChat = props => {
 
+    const [ messange, setMessange ] = useState('');
+
     const classes = useStyles();
+
+    const handleChange = val => setMessange(val.target.value);
+
+    const handleSubmit = event => {
+        event.preventDefault();
+        document.getElementById('form-send').reset();
+        setMessange('');
+    }
     return (
         <Box>
             <Paper variant="outlined" square={true}>
@@ -99,7 +131,9 @@ const ConversationsChat = props => {
                             }
                             action={
                                 <form
+                                    onSubmit={ handleSubmit }
                                     className={ classes.formMessange }
+                                    id="form-send"
                                 >
                                     <TextField
                                         id="leave-messange"
@@ -108,10 +142,24 @@ const ConversationsChat = props => {
                                         rows={1}
                                         variant="outlined"
                                         className={ classes.areaContent }
+                                        type="text"
+                                        onChange={ handleChange }
                                     />
-                                    <IconButton aria-label="settings">
-                                        <MoreVertIcon />
-                                    </IconButton>
+                                    <Tooltip title="Gửi">
+                                        <IconButton 
+                                            aria-label="send"
+                                            type="submit"
+                                            
+                                        >
+                                            <SendOutlinedIcon className={ classes.rotate45deg } color="primary" />
+                                        </IconButton>
+                                    </Tooltip>
+                                    <Divider orientation="vertical" flexItem className={ classes.divider } />
+                                    <Tooltip title="Đính kèm ảnh">
+                                        <IconButton aria-label="attack image">
+                                            <AddPhotoAlternateOutlinedIcon color="primary" />
+                                        </IconButton>
+                                    </Tooltip>
                                 </form>
                             }
                         />
