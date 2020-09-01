@@ -72,11 +72,22 @@ import {
         transform: 'rotateZ(-40deg)'
     },
     contentCard: {
-        maxHeight: 490-147,
+        [theme.breakpoints.down('xs')]: {
+            maxHeight: 812-252,
+          },
+          [theme.breakpoints.up('sm')]: {
+            maxHeight: 1024-252,
+          },
+          [theme.breakpoints.up('md')]: {
+            maxHeight: 1150-252,
+          },
         backgroundColor: '#f4f6f8'
     },
     itemSay: {
         position: 'relative',
+        paddingLeft: 0,
+        paddingRight: 0,
+
         '& .MuiCardHeader-avatar': {
             marginRight: theme.spacing(1)
         },
@@ -91,18 +102,24 @@ import {
             fontSize: '.9375rem',
             lineHeight: 1.3333,
             [theme.breakpoints.down('xs')]: {
-                maxWidth: theme.spacing(30)
+                maxWidth: theme.spacing(27)
             },
             [theme.breakpoints.up('sm')]: {
-                maxWidth: theme.spacing(40)
+                maxWidth: theme.spacing(37)
             },
             [theme.breakpoints.up('md')]: {
-                maxWidth: theme.spacing(55)
+                maxWidth: theme.spacing(53)
             },
             [theme.breakpoints.up('lg')]: {
                 maxWidth: theme.spacing(63)
             },
         },
+    },
+    iSay: {
+        float: 'right'
+    },
+    subContentISay: {
+        right: 9
     },
     subContent: {
         bottom: -2,
@@ -210,7 +227,7 @@ const ConversationsChat = props => {
                                         </Tooltip>
                                     }
                                     subheader={ 
-                                        <Box className={ classes.subContent }>
+                                        <Box className={ clsx(classes.subContent, classes.subContentISay) }>
                                             <DoneAllOutlinedIcon color="secondary"/>
                                             &nbsp;
                                             <Typography variant="caption">Đã xem</Typography>
