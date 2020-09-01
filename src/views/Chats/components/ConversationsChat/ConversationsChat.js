@@ -81,7 +81,7 @@ import {
           [theme.breakpoints.up('md')]: {
             maxHeight: 1150-252,
           },
-        backgroundColor: '#f4f6f8'
+        backgroundColor: '#f4f6f8',
     },
     itemSay: {
         position: 'relative',
@@ -93,11 +93,11 @@ import {
         },
         
         '& .MuiCardHeader-content': {
-            padding: '7px 12px 8px 12px',
+            padding: '9px 15px',
             wordBreak: 'break-word',
             overflowX: 'hidden',
             overflowY: 'hidden',
-            borderRadius: '18px',
+            borderRadius: '20px',
             backgroundColor: '#e4e6eb',
             fontSize: '.9375rem',
             lineHeight: 1.3333,
