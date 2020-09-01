@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import { 
     Paper, 
     Card, 
@@ -115,7 +116,9 @@ const ConversationsChat = props => {
                     />
                     <Divider/>
                     <CardContent className={ classes.contentCard }>
+                        <PerfectScrollbar>
 
+                        </PerfectScrollbar>
                     </CardContent>
                     <Divider/>
                     <CardActions>
@@ -145,7 +148,7 @@ const ConversationsChat = props => {
                                 >
                                     <TextField
                                         id="leave-messange"
-                                        label="Messange"
+                                        placeholder="Aa"
                                         multiline
                                         rows={1}
                                         variant="outlined"
