@@ -224,6 +224,30 @@ const ConversationsChat = props => {
                                 <CardHeader
                                     className={ clsx(classes.itemSay, classes.iSay) }
                                     title={ 
+                                        <Tooltip title="Last 3 minutes ago">
+                                            <Typography 
+                                                variant="body1"
+                                                color="inherit"
+                                            >
+                                                Hey, nice projects!
+                                            </Typography>
+                                        </Tooltip>
+                                    }
+                                    subheader={ 
+                                        <Box className={ clsx(classes.subContent, classes.subContentISay) }>
+                                            <DoneAllOutlinedIcon color="secondary"/>
+                                            &nbsp;
+                                            <Typography variant="caption">Đã xem</Typography>
+                                        </Box>
+                                    }                                    
+                                />
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <CardHeader
+                                    className={ clsx(classes.itemSay, classes.iSay) }
+                                    title={ 
                                         <Tooltip title="Just now">
                                             <Typography 
                                                 variant="body1"
@@ -241,6 +265,66 @@ const ConversationsChat = props => {
                                         </Box>
                                     }                                    
                                 />
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <CardHeader
+                                    className={ classes.itemSay }
+                                    avatar={
+                                        // dataItem.avatar
+                                        false
+                                        ?
+                                        <Avatar
+                                            src={ dataItem.avatar }
+                                            className={ classes.avatarSmall }
+                                        />
+                                        :
+                                        <Avatar
+                                            className={ clsx(classes.avatar, classes.avatarSmall)}
+                                            aria-label="recipe"
+                                        >
+                                            {/* { dataItem.name.substring(0, 1) } */}
+                                            M
+                                        </Avatar>
+                                    }
+                                    title={ 
+                                        <Tooltip title="Just now">
+                                            <Typography 
+                                                variant="body1"
+                                            >
+                                                Hey, nice projects! I really liked the one in react. What's your quote on kinda similar project?
+                                            </Typography>
+                                        </Tooltip>
+                                    }
+                                    subheader={ 
+                                        <Box className={ classes.subContent }>
+                                            <Typography variant="caption">Vừa mới truy cập</Typography>
+                                        </Box>
+                                    }                                    
+                                />
+                                <CardHeader
+                                    className={ clsx(classes.itemSay, classes.iSay) }
+                                    title={ 
+                                        <Tooltip title="Just now">
+                                            <Typography 
+                                                variant="body1"
+                                                color="inherit"
+                                            >
+                                                Hey, nice projects!
+                                            </Typography>
+                                        </Tooltip>
+                                    }
+                                    subheader={ 
+                                        <Box className={ clsx(classes.subContent, classes.subContentISay) }>
+                                            <DoneAllOutlinedIcon color="secondary"/>
+                                            &nbsp;
+                                            <Typography variant="caption">Đã xem</Typography>
+                                        </Box>
+                                    }                                    
+                                />
+                                <br/>
+                                
                             </PerfectScrollbar>
                         </Box>
                     </CardContent>
