@@ -76,6 +76,7 @@ import {
         backgroundColor: '#f4f6f8'
     },
     itemSay: {
+        position: 'relative',
         '& .MuiCardHeader-avatar': {
             marginRight: theme.spacing(1)
         },
@@ -164,6 +165,7 @@ const ConversationsChat = props => {
                         <Box>
                             <PerfectScrollbar>
                                 <CardHeader
+                                    className={ classes.itemSay }
                                     avatar={
                                         // dataItem.avatar
                                         false
@@ -182,11 +184,13 @@ const ConversationsChat = props => {
                                         </Avatar>
                                     }
                                     title={ 
-                                        <Typography 
-                                            variant="body1"
-                                        >
-                                            Hey, nice projects! I really liked the one in react. What's your quote on kinda similar project?
-                                        </Typography>
+                                        <Tooltip title="Just now">
+                                            <Typography 
+                                                variant="body1"
+                                            >
+                                                Hey, nice projects! I really liked the one in react. What's your quote on kinda similar project?
+                                            </Typography>
+                                        </Tooltip>
                                     }
                                     subheader={ 
                                         <Box className={ classes.subContent }>
@@ -200,9 +204,7 @@ const ConversationsChat = props => {
                                             &nbsp;
                                             <Typography variant="caption">Đã xem</Typography>
                                         </Box>
-                                     }
-                                    className={ classes.itemSay }
-                                    
+                                    }                                    
                                 />
                             </PerfectScrollbar>
                         </Box>
