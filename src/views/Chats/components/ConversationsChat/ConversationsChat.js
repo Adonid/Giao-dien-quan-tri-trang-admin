@@ -22,6 +22,7 @@ import {
  import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
  import AddPhotoAlternateOutlinedIcon from '@material-ui/icons/AddPhotoAlternateOutlined';
  import DoneAllOutlinedIcon from '@material-ui/icons/DoneAllOutlined';
+import { UploadCropSingleImage } from 'components';
 
  const useStyles = makeStyles(theme => ({
     root: {
@@ -143,6 +144,8 @@ const ConversationsChat = props => {
 
     const [ messange, setMessange ] = useState('');
 
+    const [ openUploadImg, setOpenUploadImg ] = useState(false);
+
     const classes = useStyles();
 
     const handleChange = val => setMessange(val.target.value);
@@ -152,6 +155,11 @@ const ConversationsChat = props => {
         document.getElementById('form-send').reset();
         setMessange('');
     }
+    
+    const handleGetImgCroped = base64 => {
+        console.log(base64);
+    }
+
     return (
         <Box>
             <Paper variant="outlined" square={true}>
@@ -376,7 +384,10 @@ const ConversationsChat = props => {
                                     </Tooltip>
                                     <Divider orientation="vertical" flexItem className={ classes.divider } />
                                     <Tooltip title="Đính kèm ảnh">
-                                        <IconButton aria-label="attack image">
+                                        <IconButton 
+                                            aria-label="attack image"
+                                            onClick={ () => setOpenUploadImg(true) }
+                                        >
                                             <AddPhotoAlternateOutlinedIcon color="secondary" />
                                         </IconButton>
                                     </Tooltip>
@@ -386,6 +397,7 @@ const ConversationsChat = props => {
                     </CardActions>
                 </Card>
             </Paper>
+            <UploadCropSingleImage openDialog={openUploadImg} imageInit="" dataNewImg={ handleGetImgCroped } />
         </Box>
     );
 };
