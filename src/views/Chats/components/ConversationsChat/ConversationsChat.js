@@ -229,7 +229,7 @@ const ConversationsChat = props => {
                                                 variant="body1"
                                                 color="inherit"
                                             >
-                                                Hey, nice projects! I really liked the one in react.
+                                                Hey, nice projects!
                                             </Typography>
                                         </Tooltip>
                                     }
