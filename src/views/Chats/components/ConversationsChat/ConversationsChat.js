@@ -195,11 +195,22 @@ const ConversationsChat = props => {
                                     subheader={ 
                                         <Box className={ classes.subContent }>
                                             <Typography variant="caption">Vừa mới truy cập</Typography>
-                                            &nbsp;
-                                            &nbsp;
-                                            •
-                                            &nbsp;
-                                            &nbsp;
+                                        </Box>
+                                    }                                    
+                                />
+                                <CardHeader
+                                    className={ clsx(classes.itemSay, classes.iSay) }
+                                    title={ 
+                                        <Tooltip title="Just now">
+                                            <Typography 
+                                                variant="body1"
+                                            >
+                                                Hey, nice projects! I really liked the one in react. What's your quote on kinda similar project?
+                                            </Typography>
+                                        </Tooltip>
+                                    }
+                                    subheader={ 
+                                        <Box className={ classes.subContent }>
                                             <DoneAllOutlinedIcon color="secondary"/>
                                             &nbsp;
                                             <Typography variant="caption">Đã xem</Typography>
