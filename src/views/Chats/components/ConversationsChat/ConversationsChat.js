@@ -196,9 +196,9 @@ const ConversationsChat = props => {
                                             •
                                             &nbsp;
                                             &nbsp;
-                                            <DoneAllOutlinedIcon color="primary"/>
+                                            <DoneAllOutlinedIcon color="secondary"/>
                                             &nbsp;
-                                            <Typography variant="caption">Đã nhận</Typography>
+                                            <Typography variant="caption">Đã xem</Typography>
                                         </Box>
                                      }
                                     className={ classes.itemSay }
@@ -249,13 +249,13 @@ const ConversationsChat = props => {
                                             type="submit"
                                             
                                         >
-                                            <SendOutlinedIcon className={ classes.rotate45deg } color="primary" />
+                                            <SendOutlinedIcon className={ classes.rotate45deg } color="secondary" />
                                         </IconButton>
                                     </Tooltip>
                                     <Divider orientation="vertical" flexItem className={ classes.divider } />
                                     <Tooltip title="Đính kèm ảnh">
                                         <IconButton aria-label="attack image">
-                                            <AddPhotoAlternateOutlinedIcon color="primary" />
+                                            <AddPhotoAlternateOutlinedIcon color="secondary" />
                                         </IconButton>
                                     </Tooltip>
                                 </form>
