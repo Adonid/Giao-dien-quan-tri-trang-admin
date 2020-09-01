@@ -19,7 +19,15 @@ import {
     padding: 0
   },
   scrollList: {
-    height: "333px",
+    [theme.breakpoints.down('xs')]: {
+      maxHeight: 812-235,
+    },
+    [theme.breakpoints.up('sm')]: {
+      maxHeight: 1024-235,
+    },
+    [theme.breakpoints.up('md')]: {
+      maxHeight: 1150-235,
+    },
     display: "flex",
     flexDirection: "column",
   }
