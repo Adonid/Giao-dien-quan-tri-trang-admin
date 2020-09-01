@@ -136,9 +136,6 @@ import {
             width: theme.spacing(2.3),
             height: theme.spacing(2.3),
         }
-    },
-    inputFile: {
-        display: 'none'
     }
     }));
 
@@ -378,17 +375,10 @@ const ConversationsChat = props => {
                                         </IconButton>
                                     </Tooltip>
                                     <Divider orientation="vertical" flexItem className={ classes.divider } />
-                                    <input accept="image/*" className={ classes.inputFile } id="icon-button-file" type="file" />
                                     <Tooltip title="Đính kèm ảnh">
-                                        <label htmlFor="icon-button-file">
-                                            <IconButton 
-                                                aria-label="attack image" 
-                                                component="span"
-                                                
-                                            >
-                                                <AddPhotoAlternateOutlinedIcon color="secondary" />
-                                            </IconButton>
-                                        </label>
+                                        <IconButton aria-label="attack image">
+                                            <AddPhotoAlternateOutlinedIcon color="secondary" />
+                                        </IconButton>
                                     </Tooltip>
                                 </form>
                             }
