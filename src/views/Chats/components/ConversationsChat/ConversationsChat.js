@@ -116,7 +116,13 @@ import {
         },
     },
     iSay: {
-        float: 'right'
+        float: 'right',
+        '& .MuiCardHeader-content': {
+            backgroundColor: '#0084ff',
+            '& .MuiCardHeader-title': {
+                color: '#f5f5f5'
+            }
+        }
     },
     subContentISay: {
         right: 9
@@ -221,8 +227,9 @@ const ConversationsChat = props => {
                                         <Tooltip title="Just now">
                                             <Typography 
                                                 variant="body1"
+                                                color="inherit"
                                             >
-                                                Hey, nice projects! I really liked the one in react. What's your quote on kinda similar project?
+                                                Hey, nice projects! I really liked the one in react.
                                             </Typography>
                                         </Tooltip>
                                     }
