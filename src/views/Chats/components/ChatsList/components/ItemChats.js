@@ -65,7 +65,7 @@ const ItemChats = props => {
                 primary={ <Typography component="h5" variant="h6">{ dataItem.name }</Typography>} 
                 secondary={ 
                 <React.Fragment>
-                    <Typography component="h5" variant="body2"> { dataItem.content } </Typography>
+                    <Typography component="h5" variant="body2" noWrap={true}> { dataItem.content } </Typography>
                     <Typography component="h5" variant="body2" color={ dataItem.isReaded ? "default" : "secondary" } > { dataItem.time } </Typography>
                 </React.Fragment>
             }
