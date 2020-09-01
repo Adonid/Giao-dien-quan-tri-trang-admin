@@ -104,5 +104,5 @@ material-react-dashboard
 
 ## Contact Us
 
-- Email Us: contact@devias.io
+- Email Us: xavan912@gmail.com
 - [Follow us on Instagram](https://www.instagram.com/deviasio/)
