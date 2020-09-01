@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -29,6 +30,10 @@ import {
         backgroundColor: red[500],
         textTransform: 'uppercase'
       },
+    avatarSmall: {
+        width: theme.spacing(4),
+        height: theme.spacing(4),
+    },
     actions: {
         padding: theme.spacing(1),
         width: '100%',
@@ -48,10 +53,10 @@ import {
             width: theme.spacing(39)
         },
         [theme.breakpoints.up('md')]: {
-            width: theme.spacing(73)
+            width: theme.spacing(71)
         },
         [theme.breakpoints.up('lg')]: {
-            width: theme.spacing(83)
+            width: theme.spacing(81)
         },
     },
     divider: {
@@ -66,7 +71,38 @@ import {
         transform: 'rotateZ(-40deg)'
     },
     contentCard: {
-        maxHeight: 490-147
+        maxHeight: 490-147,
+        backgroundColor: '#f4f6f8'
+    },
+    itemSay: {
+        '& .MuiCardHeader-avatar': {
+            marginRight: theme.spacing(1)
+        },
+        
+        '& .MuiCardHeader-content': {
+            padding: '7px 12px 8px 12px',
+            wordBreak: 'break-word',
+            overflowX: 'hidden',
+            overflowY: 'hidden',
+            borderRadius: '18px',
+            backgroundColor: '#e4e6eb',
+            fontSize: '.9375rem',
+            lineHeight: 1.3333,
+            position: 'relative',
+            [theme.breakpoints.down('xs')]: {
+                maxWidth: theme.spacing(30)
+            },
+            [theme.breakpoints.up('sm')]: {
+                maxWidth: theme.spacing(40)
+            },
+            [theme.breakpoints.up('md')]: {
+                maxWidth: theme.spacing(55)
+            },
+            [theme.breakpoints.up('lg')]: {
+                maxWidth: theme.spacing(63)
+            },
+        },
+
     }
     }));
 
@@ -116,9 +152,38 @@ const ConversationsChat = props => {
                     />
                     <Divider/>
                     <CardContent className={ classes.contentCard }>
-                        <PerfectScrollbar>
-
-                        </PerfectScrollbar>
+                        <Box>
+                            <PerfectScrollbar>
+                                <CardHeader
+                                    avatar={
+                                        // dataItem.avatar
+                                        false
+                                        ?
+                                        <Avatar
+                                            src={ dataItem.avatar }
+                                            className={ classes.avatarSmall }
+                                        />
+                                        :
+                                        <Avatar
+                                            className={ clsx(classes.avatar, classes.avatarSmall)}
+                                            aria-label="recipe"
+                                        >
+                                            {/* { dataItem.name.substring(0, 1) } */}
+                                            M
+                                        </Avatar>
+                                    }
+                                    title={ 
+                                        <Typography 
+                                            variant="body1"
+                                        >
+                                            Hey, nice projects! I really liked the one in react. What's your quote on kinda similar project?
+                                        </Typography>
+                                    }
+                                    subheader={ <Typography variant="caption">Vừa mới truy cập</Typography>}
+                                    className={ classes.itemSay }
+                                />
+                            </PerfectScrollbar>
+                        </Box>
                     </CardContent>
                     <Divider/>
                     <CardActions>
