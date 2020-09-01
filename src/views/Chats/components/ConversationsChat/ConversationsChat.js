@@ -21,6 +21,7 @@ import {
  import MoreVertIcon from '@material-ui/icons/MoreVert';
  import SendOutlinedIcon from '@material-ui/icons/SendOutlined';
  import AddPhotoAlternateOutlinedIcon from '@material-ui/icons/AddPhotoAlternateOutlined';
+ import DoneAllOutlinedIcon from '@material-ui/icons/DoneAllOutlined';
 
  const useStyles = makeStyles(theme => ({
     root: {
@@ -88,7 +89,6 @@ import {
             backgroundColor: '#e4e6eb',
             fontSize: '.9375rem',
             lineHeight: 1.3333,
-            position: 'relative',
             [theme.breakpoints.down('xs')]: {
                 maxWidth: theme.spacing(30)
             },
@@ -102,7 +102,16 @@ import {
                 maxWidth: theme.spacing(63)
             },
         },
-
+    },
+    subContent: {
+        bottom: -2,
+        position: 'absolute',
+        alignItems: 'center',
+        display: 'flex',
+        '& .MuiSvgIcon-root': {
+            width: theme.spacing(2.3),
+            height: theme.spacing(2.3),
+        }
     }
     }));
 
@@ -179,8 +188,21 @@ const ConversationsChat = props => {
                                             Hey, nice projects! I really liked the one in react. What's your quote on kinda similar project?
                                         </Typography>
                                     }
-                                    subheader={ <Typography variant="caption">Vừa mới truy cập</Typography>}
+                                    subheader={ 
+                                        <Box className={ classes.subContent }>
+                                            <Typography variant="caption">Vừa mới truy cập</Typography>
+                                            &nbsp;
+                                            &nbsp;
+                                            •
+                                            &nbsp;
+                                            &nbsp;
+                                            <DoneAllOutlinedIcon color="primary"/>
+                                            &nbsp;
+                                            <Typography variant="caption">Đã nhận</Typography>
+                                        </Box>
+                                     }
                                     className={ classes.itemSay }
+                                    
                                 />
                             </PerfectScrollbar>
                         </Box>
