@@ -41,13 +41,16 @@ import {
     },
     areaContent: {
         [theme.breakpoints.down('xs')]: {
-            width: theme.spacing(30)
+            width: theme.spacing(29)
         },
         [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(40)
+            width: theme.spacing(39)
         },
         [theme.breakpoints.up('md')]: {
-            width: theme.spacing(75)
+            width: theme.spacing(73)
+        },
+        [theme.breakpoints.up('lg')]: {
+            width: theme.spacing(83)
         },
     },
     divider: {
@@ -60,6 +63,9 @@ import {
     },
     rotate45deg: {
         transform: 'rotateZ(-40deg)'
+    },
+    contentCard: {
+        maxHeight: 490-147
     }
     }));
 
@@ -98,15 +104,17 @@ const ConversationsChat = props => {
                             </Avatar>
                         }
                         action={
-                            <IconButton aria-label="settings">
-                                <MoreVertIcon />
-                            </IconButton>
+                            <Tooltip title="Hành động">
+                                <IconButton aria-label="settings">
+                                    <MoreVertIcon />
+                                </IconButton>
+                            </Tooltip>
                         }
                         title={ <Typography variant="h5">Nguyễn Đăng Dung</Typography>}
                         subheader={ <Typography variant="caption">Vừa mới truy cập</Typography>}
                     />
                     <Divider/>
-                    <CardContent>
+                    <CardContent className={ classes.contentCard }>
 
                     </CardContent>
                     <Divider/>
