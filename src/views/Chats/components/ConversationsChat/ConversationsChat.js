@@ -144,18 +144,23 @@ const ConversationsChat = props => {
 
     const [ messange, setMessange ] = useState('');
 
+    const [ enableSend, setEnableSend ] = useState(false);
+
     const [ openUploadImg, setOpenUploadImg ] = useState(false);
 
     const classes = useStyles();
 
-    const handleChange = val => setMessange(val.target.value);
+    const handleChange = val => {
+        val.target.value ? setEnableSend(true) : setEnableSend(false);
+        setMessange(val.target.value);
+    }
 
     const handleSubmit = event => {
         event.preventDefault();
         document.getElementById('form-send').reset();
         setMessange('');
     }
-    
+
     const handleGetImgCroped = base64 => {
         console.log(base64);
     }
@@ -377,16 +382,16 @@ const ConversationsChat = props => {
                                         <IconButton 
                                             aria-label="send"
                                             type="submit"
-                                            
+                                            disabled={!enableSend}
                                         >
-                                            <SendOutlinedIcon className={ classes.rotate45deg } color="secondary" />
+                                            <SendOutlinedIcon className={ classes.rotate45deg } color={enableSend?"secondary":"default"} />
                                         </IconButton>
                                     </Tooltip>
                                     <Divider orientation="vertical" flexItem className={ classes.divider } />
                                     <Tooltip title="Đính kèm ảnh">
                                         <IconButton 
                                             aria-label="attack image"
-                                            onClick={ () => setOpenUploadImg(true) }
+                                            onClick={ () => setOpenUploadImg(!openUploadImg) }
                                         >
                                             <AddPhotoAlternateOutlinedIcon color="secondary" />
                                         </IconButton>
