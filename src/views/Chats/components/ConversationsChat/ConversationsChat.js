@@ -159,10 +159,13 @@ const ConversationsChat = props => {
         event.preventDefault();
         document.getElementById('form-send').reset();
         setMessange('');
+        setEnableSend(false);
+        // leave message
     }
 
     const handleGetImgCroped = base64 => {
         console.log(base64);
+        // leave image
     }
 
     return (
