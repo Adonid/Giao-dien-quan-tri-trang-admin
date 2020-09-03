@@ -402,7 +402,7 @@ const ConversationsChat = props => {
                     </CardActions>
                 </Card>
             </Paper>
-            <UploadCropSingleImage openDialog={openUploadImg} imageInit="" dataNewImg={ handleGetImgCroped } />
+            <UploadCropSingleImage openDialog={openUploadImg} imageInit="" dataNewImg={ handleGetImgCroped } titleName="Upload ảnh đính kèm" />
         </Box>
     );
 };
