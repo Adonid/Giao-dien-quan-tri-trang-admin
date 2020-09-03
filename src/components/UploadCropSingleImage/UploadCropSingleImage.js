@@ -43,7 +43,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const UploadCropSingleImage = props => {
 
-    const { openDialog, imageInit, dataNewImg, ...rest } = props;
+    const { openDialog, imageInit, dataNewImg, titleName, ...rest } = props;
 
   const classes = useStyles();
 
@@ -162,7 +162,7 @@ const UploadCropSingleImage = props => {
                 Trình upload ảnh
             </Typography>
             <Button autoFocus color="inherit" onClick={ sendImageBase64 }>
-                Lưu lại
+                Dùng ảnh này
             </Button>
           </Toolbar>
         </AppBar>
@@ -180,7 +180,7 @@ const UploadCropSingleImage = props => {
                                 />
                                 <label htmlFor="icon-button-file">
                                     <Button variant="contained" color="secondary" component="span" startIcon={<CloudUploadIcon />}>
-                                        Tải lên ảnh avatar
+                                        { titleName??"Tải lên ảnh avatar" }
                                     </Button>
                                 </label>
                         </Grid>
@@ -224,7 +224,8 @@ const UploadCropSingleImage = props => {
 UploadCropSingleImage.propTypes = {
     openDialog : PropTypes.bool.isRequired,
     imageInit : PropTypes.string.isRequired,
-    dataNewImg : PropTypes.func.isRequired
+    dataNewImg : PropTypes.func.isRequired,
+    titleName : PropTypes.string
 }
 
 export default UploadCropSingleImage;
