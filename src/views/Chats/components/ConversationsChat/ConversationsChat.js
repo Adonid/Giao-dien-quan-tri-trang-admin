@@ -220,7 +220,7 @@ const ConversationsChat = props => {
                                         </Avatar>
                                     }
                                     title={ 
-                                        <Tooltip title="Just now">
+                                        <Tooltip placement="right-end" title="Just now">
                                             <Typography 
                                                 variant="body1"
                                             >
@@ -237,7 +237,7 @@ const ConversationsChat = props => {
                                 <CardHeader
                                     className={ clsx(classes.itemSay, classes.iSay) }
                                     title={ 
-                                        <Tooltip title="Last 3 minutes ago">
+                                        <Tooltip placement="left-end" title="Last 3 minutes ago">
                                             <Typography 
                                                 variant="body1"
                                                 color="inherit"
@@ -248,33 +248,9 @@ const ConversationsChat = props => {
                                     }
                                     subheader={ 
                                         <Box className={ clsx(classes.subContent, classes.subContentISay) }>
-                                            <DoneAllOutlinedIcon color="secondary"/>
+                                            <DoneAllOutlinedIcon color="default"/>
                                             &nbsp;
-                                            <Typography variant="caption">Đã xem</Typography>
-                                        </Box>
-                                    }                                    
-                                />
-                                <br/>
-                                <br/>
-                                <br/>
-                                <br/>
-                                <CardHeader
-                                    className={ clsx(classes.itemSay, classes.iSay) }
-                                    title={ 
-                                        <Tooltip title="Just now">
-                                            <Typography 
-                                                variant="body1"
-                                                color="inherit"
-                                            >
-                                                Hey, nice projects!
-                                            </Typography>
-                                        </Tooltip>
-                                    }
-                                    subheader={ 
-                                        <Box className={ clsx(classes.subContent, classes.subContentISay) }>
-                                            <DoneAllOutlinedIcon color="secondary"/>
-                                            &nbsp;
-                                            <Typography variant="caption">Đã xem</Typography>
+                                            <Typography variant="caption">Đã nhận</Typography>
                                         </Box>
                                     }                                    
                                 />
@@ -302,7 +278,7 @@ const ConversationsChat = props => {
                                         </Avatar>
                                     }
                                     title={ 
-                                        <Tooltip title="Just now">
+                                        <Tooltip placement="right-end" title="Just now">
                                             <Typography 
                                                 variant="body1"
                                             >
@@ -319,7 +295,7 @@ const ConversationsChat = props => {
                                 <CardHeader
                                     className={ clsx(classes.itemSay, classes.iSay) }
                                     title={ 
-                                        <Tooltip title="Just now">
+                                        <Tooltip placement="left-end" title="Last 3 minutes ago">
                                             <Typography 
                                                 variant="body1"
                                                 color="inherit"
@@ -330,12 +306,15 @@ const ConversationsChat = props => {
                                     }
                                     subheader={ 
                                         <Box className={ clsx(classes.subContent, classes.subContentISay) }>
-                                            <DoneAllOutlinedIcon color="secondary"/>
+                                            <DoneAllOutlinedIcon color="default"/>
                                             &nbsp;
-                                            <Typography variant="caption">Đã xem</Typography>
+                                            <Typography variant="caption">Đã nhận</Typography>
                                         </Box>
                                     }                                    
                                 />
+                                <br/>
+                                <br/>
+                                <br/>
                                 <br/>
                                 
                             </PerfectScrollbar>
