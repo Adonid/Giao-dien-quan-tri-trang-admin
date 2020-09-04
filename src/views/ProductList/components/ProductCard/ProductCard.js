@@ -477,7 +477,7 @@ const ProductCard = props => {
         </CardActions>
       
       </Card>
-      <ConfirmDialog action={ deleteUsers } openDialog={ openDialog } content={{type:'block', title:`Đóng ${selectedUsers.length>1 ? selectedUsers.length : ''} tài khoản đã chọn`, note:`Vô hiệu hóa ${selectedUsers.length>1 ? selectedUsers.length : ''} người này dùng khỏi hệ thống. Bạn có chắc?`}} />
+      <ConfirmDialog action={ deleteUsers } openDialog={ openDialog } content={{type:'denied', title:`Dừng đăng ${selectedUsers.length>1 ? selectedUsers.length : ''} bài viết đã chọn`, note:`Ẩn ${selectedUsers.length>1 ? selectedUsers.length : ''} bài viết này khỏi hệ thống cho tới khi được duyệt lại. Bạn có chắc?`}} />
     </React.Fragment>
   );
 };
