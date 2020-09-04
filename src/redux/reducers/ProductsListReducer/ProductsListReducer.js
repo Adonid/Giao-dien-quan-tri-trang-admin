@@ -7,6 +7,8 @@ const dataProductsList = {
 const ProductsListReducer = (state = dataProductsList, action) => {
     switch (action.type) {
         case 'DENIED':
+            const productsTick = action.productsTick;
+            console.log(productsTick);
             return state;
 
         default:
