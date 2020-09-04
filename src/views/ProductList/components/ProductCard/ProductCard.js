@@ -110,19 +110,19 @@ const useStyles = makeStyles(theme => ({
 const lists = [
   {
     value: '1',
-    label: 'Tên bài viết A-Z',
-  },
-  {
-    value: '2',
-    label: 'Tên bài viết Z-A',
-  },
-  {
-    value: '3',
     label: 'Bài mới nhất',
   },
   {
-    value: '4',
+    value: '2',
     label: 'Bài cũ nhất',
+  },
+  {
+    value: '3',
+    label: 'Tên bài viết A-Z',
+  },
+  {
+    value: '4',
+    label: 'Tên bài viết Z-A',
   },
   {
     value: '5',
@@ -136,23 +136,19 @@ const lists = [
 const categorys = [
   {
     value: '0',
-    label: 'Bốn mùa mưa nắng',
+    label: 'Các danh mục bài viết',
   },
   {
     value: '1',
-    label: 'Mùa thu',
+    label: 'Sức khỏe',
   },
   {
     value: '2',
-    label: 'Mùa hạ',
+    label: 'Du lịch',
   },
   {
     value: '3',
-    label: 'Mùa đông',
-  },
-  {
-    value: '4',
-    label: 'Mùa xuân',
+    label: 'Khoa học',
   },
 ];
 
@@ -174,7 +170,7 @@ const to_slug = str => {
     str = str.replace(/([^0-9a-z-\s])/g, '');
  
     // Xóa khoảng trắng thay bằng ký tự -
-    str = str.replace(/(\s+)/g, '-');
+    // str = str.replace(/(\s+)/g, '-');
  
     // xóa phần dự - ở đầu
     str = str.replace(/^-+/g, '');
@@ -298,7 +294,21 @@ const ProductCard = props => {
         setUsers(usersBy);
         // end
         break;
-      
+
+      case 5:
+        // Theo danh gia cao nhat
+        usersBy.sort( (a, b) =>  a.rating - b.rating).reverse();
+        setUsers(usersBy);
+        // end
+        break;
+
+      case 6:
+        // Theo danh gia thap nhat
+        usersBy.sort( (a, b) =>  a.rating - b.rating);
+        setUsers(usersBy);
+        // end
+        break;
+
       default:
         break;
     }
@@ -307,6 +317,12 @@ const ProductCard = props => {
   const handleSearch = val => {
     const index = [...originUsers].map( item => (item.name.indexOf(val) !== -1) ? item : null).filter( item => item!=null);
     setUsers( index );
+  }
+
+  const handleCategory = val => {
+    console.log(val);
+    let usersBy = [...users];
+    
   }
 
   return (
@@ -328,7 +344,7 @@ const ProductCard = props => {
               <SelectInput list={ list } action={ val => sortBy(val) } />
             </div>
             <div className={ classes.subSort }>
-              <SelectInput list={ categorys } label="Danh mục" action={ val => sortBy(val) } />
+              <SelectInput list={ categorys } label="Danh mục" action={ handleCategory } />
               <FormControlLabel
                 control={
                   <Checkbox
@@ -391,7 +407,7 @@ const ProductCard = props => {
                           </Tooltip>
                           <div>
                             <Typography variant="h6">{user.name}</Typography>
-                            <Typography className={ classes.textCategory } variant="body2" color="inherit">{ user.category }</Typography>
+                            <Typography className={ classes.textCategory } variant="body2" color="inherit">{ user.category.label }</Typography>
                             &nbsp;
                             · 
                             &nbsp;
