@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import {
   Link as RouterLink
 } from "react-router-dom";
+import { connect } from 'react-redux';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { makeStyles } from '@material-ui/styles';
+import { ConfirmDialog } from 'alerts';
 import {
   Card,
   CardActions,
@@ -32,8 +34,8 @@ import { getInitials } from 'helpers';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import EditAttributesIcon from '@material-ui/icons/EditAttributes';
 import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
-import { ConfirmDialog } from 'alerts';
-import { connect } from 'react-redux';
+import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -398,7 +400,13 @@ const ProductCard = props => {
                         </Box>
                       </TableCell>
                       <TableCell>
-                        {moment(user.createdAt).format('DD/MM/YYYY | HH:MM')}
+                        <Box className={ classes.inARow }>
+                          <FavoriteBorderOutlinedIcon fontSize="small"/>
+                          { user.like }
+                          &nbsp;
+                          <VisibilityOutlinedIcon fontSize="small"/>
+                          { user.viewer }
+                        </Box>
                       </TableCell>
                       <TableCell>
                         <Box className={ classes.inARow }>
