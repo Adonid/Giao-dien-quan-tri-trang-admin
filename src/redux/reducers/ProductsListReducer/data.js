@@ -1,8 +1,8 @@
-import uuid from 'uuid/v1';
+import { v4 as uuidv4 } from 'uuid';
 
 export default [
   {
-    id: uuid(),
+    id: uuidv4(),
     name: '3 loại cây bạn nên đặt trong phòng ngủ',
     author: {
         avatar: '/images/avatars/avatar_1.png',
@@ -16,7 +16,7 @@ export default [
     createdAt: 1555014400000
   },
   {
-    id: uuid(),
+    id: uuidv4(),
     name: 'Những loại cây giúp xua muỗi đuổi chuột',
     author: {
         avatar: '/images/avatars/avatar_2.png',
@@ -30,7 +30,7 @@ export default [
     createdAt: 1555096400000
   },
   {
-    id: uuid(),
+    id: uuidv4(),
     name: '5 cách tự nhiên để đuổi muỗi trong nhà',
     author: {
         avatar: '/images/avatars/avatar_3.png',
@@ -44,7 +44,7 @@ export default [
     createdAt: 1555017400000
   },
   {
-    id: uuid(),
+    id: uuidv4(),
     name: 'Cách chăm sóc trẻ bị sốt',
     author: {
         avatar: '/images/avatars/avatar_4.png',
@@ -58,7 +58,7 @@ export default [
     createdAt: 1554990000000
   },
   {
-    id: uuid(),
+    id: uuidv4(),
     name: 'Vì sao cá nóc vừa độc vừa đắt lại hút khách?',
     author: {
         avatar: '/images/avatars/avatar_5.png',
@@ -72,7 +72,7 @@ export default [
     createdAt: 1554707200000
   },
   {
-    id: uuid(),
+    id: uuidv4(),
     name: 'Thắng cảnh trên cao nguyên Di Linh',
     author: {
         avatar: '/images/avatars/avatar_6.png',
@@ -86,7 +86,7 @@ export default [
     createdAt: 1554671800000
   },
   {
-    id: uuid(),
+    id: uuidv4(),
     name: 'Ghềnh Bàng hoang sơ giữa bán đảo Sơn Trà',
     author: {
         avatar: '',
@@ -100,7 +100,7 @@ export default [
     createdAt: 1554323200000
   },
   {
-    id: uuid(),
+    id: uuidv4(),
     name: 'Phát hiện loài chim có tiếng hót cao nhất',
     author: {
         avatar: '/images/avatars/avatar_8.png',
@@ -114,7 +114,7 @@ export default [
     createdAt: 1523048600000
   },
   {
-    id: uuid(),
+    id: uuidv4(),
     name: 'Mạch nước phun trào cao hơn 30 mét',
     author: {
         avatar: '/images/avatars/avatar_9.png',
@@ -128,7 +128,7 @@ export default [
     createdAt: 1522702400000
   },
   {
-    id: uuid(),
+    id: uuidv4(),
     name: 'Cặp cá voi lưng gù thi nhau nhảy lên mặt nước',
     author: {
         avatar: '',
