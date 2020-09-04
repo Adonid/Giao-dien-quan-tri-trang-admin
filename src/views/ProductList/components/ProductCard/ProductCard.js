@@ -472,7 +472,7 @@ const ProductCard = props => {
             onChangeRowsPerPage={handleRowsPerPageChange}
             page={page}
             rowsPerPage={rowsPerPage}
-            rowsPerPageOptions={[10, 25, 50, 80, +100]}
+            rowsPerPageOptions={[5, 25, 50, 80, +100]}
           />
         </CardActions>
       
