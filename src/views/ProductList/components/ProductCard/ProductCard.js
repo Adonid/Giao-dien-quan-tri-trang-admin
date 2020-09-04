@@ -11,7 +11,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  Avatar,
   Checkbox,
   Table,
   TableBody,
@@ -24,13 +23,15 @@ import {
   Box,
   Link,
   IconButton,
-  FormControlLabel
+  FormControlLabel,
+  Avatar,
+  Tooltip
 } from '@material-ui/core';
 import { SearchInput, SelectInput } from 'components';
 import { getInitials } from 'helpers';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import EditAttributesIcon from '@material-ui/icons/EditAttributes';
-
+import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
 import { ConfirmDialog } from 'alerts';
 import { connect } from 'react-redux';
 
@@ -72,6 +73,35 @@ const useStyles = makeStyles(theme => ({
   },
   gutterLeft: {
     marginLeft: theme.spacing(4)
+  },
+  textHighLightVerify: {
+    color: '#4caf50',
+    backgroundColor: '#4caf5014',
+    fontWeight: 500,
+    fontSize: 11,
+    padding: '4px 8px',
+    borderRadius: 3,
+  },
+  textHighLightNoVerify:{
+    color: '#ffab40',
+    backgroundColor: '#ffefc2',
+    fontWeight: 500,
+    fontSize: 11,
+    padding: '4px 8px',
+    borderRadius: 3,
+  },
+  textCategory: {
+    display: 'inline',
+    color: '#909399',
+    backgroundColor: '#f0ebf7',
+    fontSize: 11,
+    padding: '4px 8px',
+    borderRadius: 3,
+  },
+  inARow: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'start',
   }
 }));
 
@@ -155,14 +185,14 @@ const to_slug = str => {
 }
 
 const ProductCard = props => {
-  const { className, ...rest } = props;
+  const { className, mockData, ...rest } = props;
 
   const classes = useStyles();
 
   const list =  lists;
 
-  const [ originUsers ] = useState(props.mockData);
-  const [ users, setUsers] = useState(props.mockData);
+  const [ originUsers ] = useState(mockData);
+  const [ users, setUsers] = useState(mockData);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -349,30 +379,46 @@ const ProductCard = props => {
                       </TableCell>
                       <TableCell>
                         <Box className={classes.nameContainer}>
-                          <Avatar
-                            className={classes.avatar}
-                            src={user.avatarUrl}
-                          >
-                            {getInitials(user.name)}
-                          </Avatar>
+                          <Tooltip placement="top" title={ `Tác giả ${user.author.name}`}>
+                            <Avatar
+                              className={classes.avatar}
+                              src={ user.author.avatar }
+                            >
+                              {getInitials( user.author.name )}
+                            </Avatar>
+                          </Tooltip>
                           <div>
                             <Typography variant="h6">{user.name}</Typography>
-                            <Link href={'mailto:'+user.email} variant="body2" color="inherit">
-                              {user.email}
-                            </Link>
+                            <Typography className={ classes.textCategory } variant="body2" color="inherit">{ user.category }</Typography>
+                            &nbsp;
+                            · 
+                            &nbsp;
+                            <Typography className={ classes.textCategory } variant="body2" color="inherit">{moment(user.createdAt).format('DD/MM/YYYY | HH:MM')}</Typography>
                           </div>
                         </Box>
                       </TableCell>
                       <TableCell>
-                        <Link href={'tel:'+user.phone} color="inherit">
-                            {user.phone}
-                        </Link>
+                        {moment(user.createdAt).format('DD/MM/YYYY | HH:MM')}
                       </TableCell>
                       <TableCell>
-                        {user.address.city}, {user.address.state},{' '}
-                        {user.address.country}
+                        <Box className={ classes.inARow }>
+                          <StarBorderOutlinedIcon fontSize="small"/>
+                          <Typography variant="h6"> { user.rating} </Typography>
+                        </Box>
                       </TableCell>
-                      <TableCell>{moment(user.createdAt).format('DD/MM/YYYY | HH:MM')}</TableCell>
+                      <TableCell>
+                        {
+                            user.active
+                            ?
+                              <Typography variant="span" className={ classes.textHighLightVerify }>
+                                  ĐÃ DUYỆT
+                              </Typography>
+                            :
+                              <Typography variant="span" className={ classes.textHighLightNoVerify }>
+                                  CHƯA DUYỆT
+                              </Typography>
+                          }
+                      </TableCell>
                       <TableCell align="right">
                         <Link component={RouterLink} to="/user-editor">
                           <IconButton><EditAttributesIcon /></IconButton>
@@ -418,7 +464,7 @@ const ProductCard = props => {
             onChangeRowsPerPage={handleRowsPerPageChange}
             page={page}
             rowsPerPage={rowsPerPage}
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[10, 25, 50, 80, +100]}
           />
         </CardActions>
       
@@ -429,12 +475,13 @@ const ProductCard = props => {
 };
 
 ProductCard.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  mockData: PropTypes.array.isRequired
 };
 
   const mapStateToProps = (state, ownProps) => {
     return {
-      mockData: state.dataNewUser.users
+      mockData: state.dataProductsList.productsList
     }
   }
 
@@ -442,7 +489,7 @@ ProductCard.propTypes = {
     return {
       selectedUsers: usersTick => {
         dispatch({
-          type: 'DELETE_SELECT_USERS',
+          type: 'DENIED',
           selectedUsers: usersTick
         })
       }
