@@ -24,9 +24,9 @@ export default [
     },
     category: 'Sức khỏe',
     rating: 3.7,
-    like: 219,
-    viewer: 1027,
-    active: true, 
+    like: 234,
+    viewer: 4655,
+    active: false, 
     createdAt: 1555096400000
   },
   {
@@ -38,9 +38,9 @@ export default [
     },
     category: 'Sức khỏe',
     rating: 4.1,
-    like: 219,
-    viewer: 1027,
-    active: true, 
+    like: 112,
+    viewer: 4543,
+    active: false, 
     createdAt: 1555017400000
   },
   {
@@ -52,8 +52,8 @@ export default [
     },
     category: 'Sức khỏe',
     rating: 3.8,
-    like: 219,
-    viewer: 1027,
+    like: 454,
+    viewer: 5423,
     active: true, 
     createdAt: 1554990000000
   },
@@ -66,9 +66,9 @@ export default [
     },
     category: 'Du lịch',
     rating: 3.9,
-    like: 219,
-    viewer: 1027,
-    active: true, 
+    like: 23,
+    viewer: 676,
+    active: false, 
     createdAt: 1554707200000
   },
   {
@@ -80,8 +80,8 @@ export default [
     },
     category: 'Du lịch',
     rating: 3.2,
-    like: 219,
-    viewer: 1027,
+    like: 45,
+    viewer: 544,
     active: true, 
     createdAt: 1554671800000
   },
@@ -94,8 +94,8 @@ export default [
     },
     category: 'Du lịch',
     rating: 3.9,
-    like: 219,
-    viewer: 1027,
+    like: 233,
+    viewer: 7642,
     active: true, 
     createdAt: 1554323200000
   },
@@ -108,8 +108,8 @@ export default [
     },
     category: 'Khoa học',
     rating: 3.9,
-    like: 219,
-    viewer: 1027,
+    like: 43,
+    viewer: 89,
     active: true, 
     createdAt: 1523048600000
   },
@@ -122,8 +122,8 @@ export default [
     },
     category: 'Khoa học',
     rating: 4.4,
-    like: 219,
-    viewer: 1027,
+    like: 324,
+    viewer: 5444,
     active: true,
     createdAt: 1522702400000
   },
@@ -136,8 +136,8 @@ export default [
     },
     category: 'Khoa học',
     rating: 3.1,
-    like: 219,
-    viewer: 1027,
+    like: 23,
+    viewer: 234,
     active: true,
     createdAt: 1522702100000
   }
