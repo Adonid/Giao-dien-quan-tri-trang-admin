@@ -136,7 +136,7 @@ const lists = [
 const categorys = [
   {
     value: '0',
-    label: 'Các danh mục bài viết',
+    label: 'Tất cả danh mục',
   },
   {
     value: '1',
@@ -320,9 +320,8 @@ const ProductCard = props => {
   }
 
   const handleCategory = val => {
-    console.log(val);
-    let usersBy = [...users];
-    
+    let index = [...users];
+    Number(val) ? setUsers(index.map( item => (item.category.id === Number(val)) ? item : null).filter( item => item!=null)) : setUsers( index );
   }
 
   return (
