@@ -23,7 +23,8 @@ import {
   Button,
   Box,
   Link,
-  IconButton
+  IconButton,
+  FormControlLabel
 } from '@material-ui/core';
 import { SearchInput, SelectInput } from 'components';
 import { getInitials } from 'helpers';
@@ -60,6 +61,15 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  subSort: {
+    padding: theme.spacing(2),
+    paddingBottom: theme.spacing(3),
+    display: 'flex',
+    alignItems: 'center',
+    '& .MuiFormControlLabel-root': {
+      marginLeft: theme.spacing(2)
+    }
+  },
   gutterLeft: {
     marginLeft: theme.spacing(4)
   }
@@ -68,19 +78,49 @@ const useStyles = makeStyles(theme => ({
 const lists = [
   {
     value: '1',
-    label: 'Người dùng mới nhất',
+    label: 'Tên bài viết A-Z',
   },
   {
     value: '2',
-    label: 'Người dùng cũ nhất',
+    label: 'Tên bài viết Z-A',
   },
   {
     value: '3',
-    label: 'Theo tên A-Z',
+    label: 'Bài mới nhất',
   },
   {
     value: '4',
-    label: 'Theo tên Z-A',
+    label: 'Bài cũ nhất',
+  },
+  {
+    value: '5',
+    label: 'Đánh giá cao nhất',
+  },
+  {
+    value: '6',
+    label: 'Đánh giá thấp nhất',
+  },
+];
+const categorys = [
+  {
+    value: '0',
+    label: 'Bốn mùa mưa nắng',
+  },
+  {
+    value: '1',
+    label: 'Mùa thu',
+  },
+  {
+    value: '2',
+    label: 'Mùa hạ',
+  },
+  {
+    value: '3',
+    label: 'Mùa đông',
+  },
+  {
+    value: '4',
+    label: 'Mùa xuân',
   },
 ];
 
@@ -255,6 +295,27 @@ const ProductCard = props => {
               />
               <SelectInput list={ list } action={ val => sortBy(val) } />
             </div>
+            <div className={ classes.subSort }>
+              <SelectInput list={ categorys } label="Danh mục" action={ val => sortBy(val) } />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    // onChange={}
+                    color="primary"
+                  />
+                }
+                label={ <Typography variant="body1">Đang ĐĂNG</Typography>}
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    // onChange={}
+                    color="primary"
+                  />
+                }
+                label={ <Typography variant="body1">Bài tôi viết</Typography>}
+              />
+            </div>
 
             <div className={classes.inner}>
               <Table>
@@ -262,10 +323,10 @@ const ProductCard = props => {
                 <TableHead>
                   <TableRow>
                     <TableCell>Chọn</TableCell>
-                    <TableCell>Người dùng</TableCell>
-                    <TableCell>Số điện thoại</TableCell>
                     <TableCell>Bài viết</TableCell>
-                    <TableCell>Ngày đăng kí</TableCell>
+                    <TableCell>Ngày đăng</TableCell>
+                    <TableCell>Đánh giá</TableCell>
+                    <TableCell>Tình trạng</TableCell>
                     <TableCell align="center">Actions</TableCell>
                   </TableRow>
                 </TableHead>
@@ -346,7 +407,7 @@ const ProductCard = props => {
             className={ classes.gutterLeft} 
             onClick={() => {setOpenDialog(!openDialog)}}
           >
-            ĐÓNG TK{ selectedUsers.length ? `(${selectedUsers.length})` : ''}
+            DỪNG ĐĂNG{ selectedUsers.length ? `(${selectedUsers.length})` : ''}
           </Button>
           </div>
           
