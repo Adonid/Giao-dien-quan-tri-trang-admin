@@ -161,16 +161,29 @@ const ConfirmDialog = props => {
                                       </Button>
                                     </ThemeProvider>
                                     :
-                                    <ThemeProvider theme={themeButtonOpen}>
-                                      <Button 
-                                          variant="contained" 
-                                          color="primary"
-                                          onClick={ handleConfirm }
-                                          startIcon={<LockOpenIcon />}
-                                      >
-                                          ok, Mở tài khoản
-                                      </Button>
-                                    </ThemeProvider>
+                                      content.type==='denied'
+                                      ?
+                                      <ThemeProvider theme={themeButtonBlock}>
+                                        <Button 
+                                            variant="contained" 
+                                            onClick={ handleConfirm }
+                                            startIcon={<NotInterestedIcon />}
+                                        >
+                                            ok, Dừng đăng
+                                        </Button>
+                                      </ThemeProvider>
+                                      :
+                                      <ThemeProvider theme={themeButtonOpen}>
+                                        <Button 
+                                            variant="contained" 
+                                            color="primary"
+                                            onClick={ handleConfirm }
+                                            startIcon={<LockOpenIcon />}
+                                        >
+                                            ok, Mở tài khoản
+                                        </Button>
+                                      </ThemeProvider>
+
                                 }
                                 <ThemeProvider theme={themeButtonClose}>
                                     <Button color="primary" className={classes.margin}  onClick={ handleClose } >
