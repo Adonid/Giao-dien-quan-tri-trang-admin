@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
+import { getInitials } from 'helpers';
 import {  
     Typography,
     ListItem,
@@ -44,20 +45,12 @@ const ItemChats = props => {
                     variant={ dataItem.isReaded ? "default" : "dot" }
                     color="secondary"
                 >
-                    {
-                        dataItem.avatar
-                        ?
-                        <Avatar
-                            src={ dataItem.avatar }
-                        />
-                        :
-                        <Avatar
-                            className={classes.avatar}
-                            aria-label="recipe"
+                    <Avatar
+                        className={classes.avatar}
+                        src={ dataItem.avatar }
                         >
-                            { dataItem.name.substring(0, 1) }
-                        </Avatar>
-                    }
+                        {getInitials( dataItem.name )}
+                    </Avatar>
                 </Badge>
                 
             </ListItemAvatar>
