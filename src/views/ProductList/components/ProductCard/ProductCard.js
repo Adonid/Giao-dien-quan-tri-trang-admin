@@ -187,7 +187,7 @@ const to_slug = str => {
 }
 
 const ProductCard = props => {
-  const { className, mockData, ...rest } = props;
+  const { className, mockData, deniedProduct, ...rest } = props;
 
   const classes = useStyles();
 
@@ -242,8 +242,8 @@ const ProductCard = props => {
     setPage(0);
   };
 
-  const deleteUsers = () => {
-    props.selectedUsers(selectedUsers);
+  const handleDenied = () => {
+    deniedProduct(selectedUsers);
   }
 
   const sortBy = val => {
@@ -477,14 +477,15 @@ const ProductCard = props => {
         </CardActions>
       
       </Card>
-      <ConfirmDialog action={ deleteUsers } openDialog={ openDialog } content={{type:'denied', title:`Dừng đăng ${selectedUsers.length>1 ? selectedUsers.length : ''} bài viết đã chọn`, note:`Ẩn ${selectedUsers.length>1 ? selectedUsers.length : ''} bài viết này khỏi hệ thống cho tới khi được duyệt lại. Bạn có chắc?`}} />
+      <ConfirmDialog action={ handleDenied } openDialog={ openDialog } content={{type:'denied', title:`Dừng đăng ${selectedUsers.length>1 ? selectedUsers.length : ''} bài viết đã chọn`, note:`Ẩn ${selectedUsers.length>1 ? selectedUsers.length : ''} bài viết này khỏi hệ thống cho tới khi được duyệt lại. Bạn có chắc?`}} />
     </React.Fragment>
   );
 };
 
 ProductCard.propTypes = {
   className: PropTypes.string,
-  mockData: PropTypes.array.isRequired
+  mockData: PropTypes.array.isRequired,
+  deniedProduct: PropTypes.func.isRequired,
 };
 
   const mapStateToProps = (state, ownProps) => {
@@ -495,10 +496,10 @@ ProductCard.propTypes = {
 
   const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-      selectedUsers: usersTick => {
+      deniedProduct: productsTick => {
         dispatch({
           type: 'DENIED',
-          selectedUsers: usersTick
+          productsTick: productsTick
         })
       }
     }
