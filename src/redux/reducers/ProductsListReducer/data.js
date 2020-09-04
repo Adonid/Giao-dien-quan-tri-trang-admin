@@ -8,7 +8,10 @@ export default [
         avatar: '/images/avatars/avatar_1.png',
         name: "Bùi Trọng Hoàng"
     },
-    category: 'Sức khỏe',
+    category: {
+      id: 1,
+      label: 'Sức khỏe',
+    },
     rating: 3.9,
     like: 219,
     viewer: 1027,
@@ -22,7 +25,10 @@ export default [
         avatar: '/images/avatars/avatar_2.png',
         name: "Vân Dung"
     },
-    category: 'Sức khỏe',
+    category: {
+      id: 1,
+      label: 'Sức khỏe',
+    },
     rating: 3.7,
     like: 234,
     viewer: 4655,
@@ -36,7 +42,10 @@ export default [
         avatar: '/images/avatars/avatar_3.png',
         name: "Thúy Nga"
     },
-    category: 'Sức khỏe',
+    category: {
+      id: 1,
+      label: 'Sức khỏe',
+    },
     rating: 4.1,
     like: 112,
     viewer: 4543,
@@ -50,7 +59,10 @@ export default [
         avatar: '/images/avatars/avatar_4.png',
         name: "Lê Kim Dũng"
     },
-    category: 'Sức khỏe',
+    category: {
+      id: 1,
+      label: 'Sức khỏe',
+    },
     rating: 3.8,
     like: 454,
     viewer: 5423,
@@ -64,7 +76,10 @@ export default [
         avatar: '/images/avatars/avatar_5.png',
         name: "Nguyễn Khai Quang"
     },
-    category: 'Du lịch',
+    category: {
+      id: 2,
+      label: 'Du lịch',
+    },
     rating: 3.9,
     like: 23,
     viewer: 676,
@@ -78,7 +93,10 @@ export default [
         avatar: '/images/avatars/avatar_6.png',
         name: "Bách Dụ"
     },
-    category: 'Du lịch',
+    category: {
+      id: 2,
+      label: 'Du lịch',
+    },
     rating: 3.2,
     like: 45,
     viewer: 544,
@@ -92,7 +110,10 @@ export default [
         avatar: '',
         name: "Kim Trung"
     },
-    category: 'Du lịch',
+    category: {
+      id: 2,
+      label: 'Du lịch',
+    },
     rating: 3.9,
     like: 233,
     viewer: 7642,
@@ -106,7 +127,10 @@ export default [
         avatar: '/images/avatars/avatar_8.png',
         name: "Cao Kiến Huy"
     },
-    category: 'Khoa học',
+    category: {
+      id: 3,
+      label: 'Khoa học',
+    },
     rating: 3.9,
     like: 43,
     viewer: 89,
@@ -120,7 +144,10 @@ export default [
         avatar: '/images/avatars/avatar_9.png',
         name: "Minh Hoàng"
     },
-    category: 'Khoa học',
+    category: {
+      id: 3,
+      label: 'Khoa học',
+    },
     rating: 4.4,
     like: 324,
     viewer: 5444,
@@ -134,7 +161,10 @@ export default [
         avatar: '',
         name: "Vi Xuân Dụ"
     },
-    category: 'Khoa học',
+    category: {
+      id: 3,
+      label: 'Khoa học',
+    },
     rating: 3.1,
     like: 23,
     viewer: 234,
