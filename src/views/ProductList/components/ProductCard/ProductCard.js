@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Link as RouterLink
 } from "react-router-dom";
@@ -198,13 +198,17 @@ const ProductCard = props => {
 
   const [ openDialog, setOpenDialog ] = useState(false);
 
-  const [ searchText, setSearchText ] = useState({
+  const [ pramFilter, setPramFilter ] = useState({
     sort: 1,
     searchText: '',
     searchCategory: 0,
     isApproved: false,
     isMyPost: false,
   });
+
+  useEffect( () => {
+    console.log(filterPost(originUsers, pramFilter));
+  }, [pramFilter]);
 
   const handleSelectAll = event => {
     let selectedUsers;
@@ -251,6 +255,7 @@ const ProductCard = props => {
   }
 
   const sortBy = val => {
+    setPramFilter( pramFilter => ({...pramFilter, sort : Number(val)}) );
     let usersBy = [...users];
     switch (Number(val)) {
       case 1:
@@ -323,15 +328,19 @@ const ProductCard = props => {
   }
 
   const handleCheck = val => {
-    console.log(val.target.name, val.target.checked);
+    const nameCheck = val.target.name;
+    const valCheck = val.target.checked;
+    setPramFilter( pramFilter => ({...pramFilter, [nameCheck] : valCheck }) );
   }
 
   const handleSearch = val => {
+    setPramFilter( pramFilter => ({...pramFilter, searchText : val}) );
     const index = [...originUsers].map( item => (item.name.indexOf(val) !== -1) ? item : null).filter( item => item!=null);
     setUsers( index );
   }
 
   const handleCategory = val => {
+    setPramFilter( pramFilter => ({...pramFilter, searchCategory : Number(val)}) );
     let index = [...users];
     Number(val) ? setUsers(index.map( item => (item.category.id === Number(val)) ? item : null).filter( item => item!=null)) : setUsers( index );
   }
