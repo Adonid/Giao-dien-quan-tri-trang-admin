@@ -65,6 +65,21 @@ export default (posts=Array, pramFilter=Object) => {
       default:
         break;
     }
-    // 
+    // Tim theo category
+    const category = pramFilter.searchCategory;
+    if( category ){
+        postBy = [...postBy].map( item => ( item.category.id === category ) ? item : null).filter( item => item!=null);
+    }
+    // Tim theo da duoc phe duyet
+    if( pramFilter.isApproved ){
+        postBy = [...postBy].filter( item => item.active === true );
+    }
+    // Tim theo la bai cua toi
+    // if( pramFilter.isMyPost ){
+    //     postBy = [...postBy].map( item => ( item.category.id === category ) ? item : null).filter( item => item!=null);
+    // }
+    
+    // Tim theo search
+    postBy = [...postBy].map( item => (item.name.indexOf(pramFilter.searchText) !== -1) ? item : null).filter( item => item!=null);
     return postBy;
 }
