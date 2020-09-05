@@ -152,35 +152,6 @@ const categorys = [
   },
 ];
 
-const to_slug = str => {
-
-    // Chuyển hết sang chữ thường
-    str = str.toLowerCase();     
- 
-    // xóa dấu
-    str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, 'a');
-    str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, 'e');
-    str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, 'i');
-    str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, 'o');
-    str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, 'u');
-    str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, 'y');
-    str = str.replace(/(đ)/g, 'd');
- 
-    // Xóa ký tự đặc biệt
-    str = str.replace(/([^0-9a-z-\s])/g, '');
- 
-    // Xóa khoảng trắng thay bằng ký tự -
-    // str = str.replace(/(\s+)/g, '-');
- 
-    // xóa phần dự - ở đầu
-    str = str.replace(/^-+/g, '');
- 
-    // xóa phần dư - ở cuối
-    str = str.replace(/-+$/g, '');
- 
-    // return
-    return str;
-}
 
 const ProductCard = props => {
   const { className, mockData, deniedProduct, ...rest } = props;
@@ -207,7 +178,8 @@ const ProductCard = props => {
   });
 
   useEffect( () => {
-    console.log(filterPost(originUsers, pramFilter));
+    const postSort = filterPost(originUsers, pramFilter);
+    setUsers(postSort);
   }, [pramFilter]);
 
   const handleSelectAll = event => {
@@ -256,75 +228,7 @@ const ProductCard = props => {
 
   const sortBy = val => {
     setPramFilter( pramFilter => ({...pramFilter, sort : Number(val)}) );
-    let usersBy = [...users];
-    switch (Number(val)) {
-      case 1:
-        // Theo moi nhat
-        usersBy.sort( (a, b) =>  a.createdAt - b.createdAt).reverse();
-        setUsers(usersBy);
-        // end
-        break;
-      
-      case 2:
-        // Theo cu nhat 
-        usersBy.sort( (a, b) =>  a.createdAt - b.createdAt);
-        setUsers(usersBy);
-        // end
-        break;
-      
-      case 3:
-        // Theo ten A-Z
-        usersBy.sort( (a, b) => {
-          let x = to_slug(a.name);
-          let y = to_slug(b.name);
-          if(x < y) {
-           return -1;
-         }
-         if(x > y) {
-             return 1;
-         }
-         // name same same
-         return 0;
-        });
-        setUsers(usersBy);
-        // end
-        break;
-      
-      case 4:
-        // Theo ten Z-A
-        usersBy.sort( (a, b) => {
-          let x = to_slug(a.name);
-          let y = to_slug(b.name);
-          if(x < y) {
-           return -1;
-         }
-         if(x > y) {
-             return 1;
-         }
-         // name same same
-         return 0;
-        }).reverse();
-        setUsers(usersBy);
-        // end
-        break;
 
-      case 5:
-        // Theo danh gia cao nhat
-        usersBy.sort( (a, b) =>  a.rating - b.rating).reverse();
-        setUsers(usersBy);
-        // end
-        break;
-
-      case 6:
-        // Theo danh gia thap nhat
-        usersBy.sort( (a, b) =>  a.rating - b.rating);
-        setUsers(usersBy);
-        // end
-        break;
-
-      default:
-        break;
-    }
   }
 
   const handleCheck = val => {
