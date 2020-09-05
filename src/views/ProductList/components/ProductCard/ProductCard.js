@@ -371,7 +371,7 @@ const ProductCard = props => {
                   <TableRow>
                     <TableCell>Chọn</TableCell>
                     <TableCell>Bài viết</TableCell>
-                    <TableCell>Ngày đăng</TableCell>
+                    <TableCell>Like/Viewer</TableCell>
                     <TableCell>Đánh giá</TableCell>
                     <TableCell>Tình trạng</TableCell>
                     <TableCell align="center">Actions</TableCell>
