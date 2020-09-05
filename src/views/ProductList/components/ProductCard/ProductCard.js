@@ -30,7 +30,7 @@ import {
   Tooltip
 } from '@material-ui/core';
 import { SearchInput, SelectInput } from 'components';
-import { getInitials } from 'helpers';
+import { getInitials, filterPost } from 'helpers';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import EditAttributesIcon from '@material-ui/icons/EditAttributes';
 import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined';
@@ -198,6 +198,14 @@ const ProductCard = props => {
 
   const [ openDialog, setOpenDialog ] = useState(false);
 
+  const [ searchText, setSearchText ] = useState({
+    sort: 1,
+    searchText: '',
+    searchCategory: 0,
+    isApproved: false,
+    isMyPost: false,
+  });
+
   const handleSelectAll = event => {
     let selectedUsers;
 
@@ -314,6 +322,10 @@ const ProductCard = props => {
     }
   }
 
+  const handleCheck = val => {
+    console.log(val.target.name, val.target.checked);
+  }
+
   const handleSearch = val => {
     const index = [...originUsers].map( item => (item.name.indexOf(val) !== -1) ? item : null).filter( item => item!=null);
     setUsers( index );
@@ -347,7 +359,8 @@ const ProductCard = props => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    // onChange={}
+                    name="isApproved"
+                    onChange={ handleCheck }
                     color="primary"
                   />
                 }
@@ -356,7 +369,8 @@ const ProductCard = props => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    // onChange={}
+                    name="isMyPost"
+                    onChange={ handleCheck }
                     color="primary"
                   />
                 }
