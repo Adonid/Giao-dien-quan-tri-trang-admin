@@ -228,7 +228,6 @@ const ProductCard = props => {
 
   const sortBy = val => {
     setPramFilter( pramFilter => ({...pramFilter, sort : Number(val)}) );
-
   }
 
   const handleCheck = val => {
@@ -239,14 +238,10 @@ const ProductCard = props => {
 
   const handleSearch = val => {
     setPramFilter( pramFilter => ({...pramFilter, searchText : val}) );
-    const index = [...originUsers].map( item => (item.name.indexOf(val) !== -1) ? item : null).filter( item => item!=null);
-    setUsers( index );
   }
 
   const handleCategory = val => {
     setPramFilter( pramFilter => ({...pramFilter, searchCategory : Number(val)}) );
-    let index = [...users];
-    Number(val) ? setUsers(index.map( item => (item.category.id === Number(val)) ? item : null).filter( item => item!=null)) : setUsers( index );
   }
 
   return (
