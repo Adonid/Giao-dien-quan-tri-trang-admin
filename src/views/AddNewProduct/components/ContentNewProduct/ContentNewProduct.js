@@ -12,11 +12,15 @@ import {
     CardMedia,
     Button,
     CardHeader,
-    Divider
+    Divider,
+    CardActions,
+    Typography
     
  } from '@material-ui/core';
  import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined';
-import { UploadCropSingleImage } from 'components';
+ import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
+ import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
+import { UploadCropSingleImage, TinyMCE } from 'components';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -50,11 +54,25 @@ const ContentNewProduct = props => {
     const [ dataNewImage, setDataNewImage ] = useState(null);
     const [ openUploadImage, setOpenUploadImage ] = useState(false);
 
+    const [ openTinyMCE, setOpenTinyMCE ] = useState(false);
+
+    const [ contentPost, setContentPost ] = useState(false);
+
     const getDataImage = imgBase64 => {
         setDataNewImage(imgBase64);
         setDataImage(imgBase64);
         // Thuc hien den day coi nhu da them anh bai viet
     };
+
+    const handleContentPost = val => {
+        console.log(val);
+        setContentPost(val);
+    }
+
+    const deleteContent = () => {
+        console.log('delete');
+        
+    }
 
     return (
         <React.Fragment>
@@ -120,13 +138,39 @@ const ContentNewProduct = props => {
                         <CardHeader title="Viết nội dung" />
                         <Divider/>
                         <CardContent>
-                            
+                            {
+                                contentPost? <Box>{contentPost}</Box> :<Typography variant="caption">Nội dung bài cần được hoàn thiện, nội dung sẽ được lưu vào bản nháp khi nhấn lưu lại.</Typography>
+                            }
                         </CardContent>
+                        <Divider/>
+                        <CardActions>
+                            <ThemeProvider theme={buttonAddPhoto}>
+                                <Button 
+                                    startIcon={<BorderColorOutlinedIcon />}
+                                    variant="contained" 
+                                    color="primary" 
+                                    onClick={ () => setOpenTinyMCE(!openTinyMCE) }
+                                >
+                                    Viết bài
+                                </Button>
+                            </ThemeProvider>
+                            <ThemeProvider theme={buttonAddPhoto}>
+                                <Button 
+                                    startIcon={<DeleteOutlineOutlinedIcon />}
+                                    variant="contained" 
+                                    color="default" 
+                                    onClick={ deleteContent }
+                                >
+                                    Xóa nội dung
+                                </Button>
+                            </ThemeProvider>
+                        </CardActions>
                     </Card>
                 </Grid>
 
             </Grid>
             <UploadCropSingleImage openDialog={openUploadImage} imageInit={dataImage} dataNewImg={ getDataImage} titleName="Tải lên ảnh cho bài viết" />
+            <TinyMCE contentInit={ contentPost } openDialog={openTinyMCE} handleContent={ handleContentPost } />
         </React.Fragment>
     );
 };
