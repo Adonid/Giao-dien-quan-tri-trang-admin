@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { ProductsToolbar } from './components';
+import { ProductsToolbar, ContentNewProduct } from './components';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -19,7 +19,7 @@ const AddNewProduct = props => {
         <div className={classes.root}>
             <ProductsToolbar />
             <div className={classes.content}>
-                {/* <ProductCard /> */}
+                <ContentNewProduct />
             </div>
         </div>
     );
