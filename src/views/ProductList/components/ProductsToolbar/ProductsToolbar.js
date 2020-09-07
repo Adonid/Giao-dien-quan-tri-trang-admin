@@ -13,7 +13,6 @@ import {
  } from '@material-ui/core';
  import PostAddOutlinedIcon from '@material-ui/icons/PostAddOutlined';
   import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -41,10 +40,6 @@ const ProductsToolbar = props => {
 
   const classes = useStyles();
 
-  const showModalAddUser = () => {
-    props.showModalAddNewUser();
-}
-
   return (
     <div
       {...rest}
@@ -57,13 +52,14 @@ const ProductsToolbar = props => {
           </Link>
           <Typography color="textPrimary">Quản lý bài viết</Typography>
         </Breadcrumbs>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={ showModalAddUser }
-        >
-          <PostAddOutlinedIcon/> Thêm mới
-        </Button>
+        <Link color="inherit" component={RouterLink} to="/add-new-product">
+          <Button
+            color="primary"
+            variant="contained"
+          >
+            <PostAddOutlinedIcon/> Thêm mới
+          </Button>
+        </Link>
       </div>
       <div>
         <Typography variant="h3" gutterBottom>
@@ -94,4 +90,4 @@ ProductsToolbar.propTypes = {
     }
   }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductsToolbar)
+export default ProductsToolbar;
