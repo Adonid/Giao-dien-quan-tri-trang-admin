@@ -108,6 +108,11 @@ const ContentNewProduct = props => {
                             </FormControl>
                         </CardContent>
                     </Card>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                </Grid>
+                
+                <Grid item xs={12}>
                     <br/>
                     <Card
                         {...rest}
@@ -119,8 +124,7 @@ const ContentNewProduct = props => {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} sm={4}>
-                </Grid>
+
             </Grid>
             <UploadCropSingleImage openDialog={openUploadImage} imageInit={dataImage} dataNewImg={ getDataImage} titleName="Tải lên ảnh cho bài viết" />
         </React.Fragment>
