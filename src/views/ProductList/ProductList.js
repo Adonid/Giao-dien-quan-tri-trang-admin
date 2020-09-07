@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { ProductsToolbar, ProductCard } from './components';
-import mockData from './data';
 
 const useStyles = makeStyles(theme => ({
   root: {
