@@ -21,7 +21,8 @@ import {
   ResetPasswordSuccess as ResetPasswordSuccessView,
   CreateAccountSuccess as CreateAccountSuccessView,
   NotFound as NotFoundView,
-  Chats as ChatsView
+  Chats as ChatsView,
+  AddNewProduct as AddNewProductView,
 
 } from './views'; 
 
@@ -92,6 +93,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/chats-room"
+      />
+      <RouteWithLayout
+        component={AddNewProductView}
+        exact
+        layout={MainLayout}
+        path="/add-new-product"
       />
       <RouteWithLayout
         component={SignUpView}
