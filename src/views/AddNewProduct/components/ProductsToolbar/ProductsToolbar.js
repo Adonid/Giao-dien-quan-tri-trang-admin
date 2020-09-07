@@ -11,7 +11,7 @@ import {
   Breadcrumbs,
   Link
  } from '@material-ui/core';
-import PostAddOutlinedIcon from '@material-ui/icons/PostAddOutlined';
+ import BallotOutlinedIcon from '@material-ui/icons/BallotOutlined';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 const useStyles = makeStyles(theme => ({
@@ -50,20 +50,23 @@ const ProductsToolbar = props => {
           <Link color="inherit" component={RouterLink} to="/dashboard">
               Dashboard
           </Link>
-          <Typography color="textPrimary">Quản lý bài viết</Typography>
+          <Link color="inherit" component={RouterLink} to="/products">
+              Quản lý bài viết
+          </Link>
+          <Typography color="textPrimary">Thêm mới bài viết</Typography>
         </Breadcrumbs>
         <Link color="inherit" component={RouterLink} to="/products">
           <Button
             color="primary"
             variant="contained"
           >
-            <PostAddOutlinedIcon/> Danh sách
+            <BallotOutlinedIcon/> Danh sách
           </Button>
         </Link>
       </div>
       <div>
         <Typography variant="h3" gutterBottom>
-          Quản lý bài viết
+          Viết bài mới
         </Typography>
       </div>
     </div>
