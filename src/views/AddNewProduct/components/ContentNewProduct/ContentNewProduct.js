@@ -56,7 +56,7 @@ const ContentNewProduct = props => {
 
     const [ openTinyMCE, setOpenTinyMCE ] = useState(false);
 
-    const [ contentPost, setContentPost ] = useState(false);
+    const [ contentPost, setContentPost ] = useState('');
 
     const getDataImage = imgBase64 => {
         setDataNewImage(imgBase64);
