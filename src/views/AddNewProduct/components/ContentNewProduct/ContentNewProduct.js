@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { Editor } from '@tinymce/tinymce-react';
 import { 
     Card, 
     CardContent,
@@ -13,15 +14,11 @@ import {
     Button,
     CardHeader,
     Divider,
-    CardActions,
-    Typography
     
  } from '@material-ui/core';
  import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined';
- import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
- import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
-import { UploadCropSingleImage } from 'components';
-import { Editor } from '@tinymce/tinymce-react';
+ import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
+ import { UploadCropSingleImage } from 'components';
 
 
 const useStyles = makeStyles(theme => ({
@@ -42,6 +39,14 @@ const buttonAddPhoto = createMuiTheme({
         primary : {
             contrastText: '#fff',
             main: '#9c27b0'
+        },
+    },
+  });
+const buttonStore = createMuiTheme({
+    palette: {
+        primary : {
+            contrastText: '#fff',
+            main: '#7cb342'
         },
     },
   });
@@ -150,17 +155,15 @@ const ContentNewProduct = props => {
                                     height: 500,
                                     menubar: true,
                                     plugins: [
-                                        'print preview paste importcss searchreplace autolink autosave save',
-                                        'directionality code visualblocks visualchars fullscreen image link media',
-                                        'template codesample table charmap hr pagebreak nonbreaking anchor toc',
-                                        'insertdatetime advlist lists wordcount imagetools textpattern noneditable',
-                                        'help charmap quickbars emoticons responsivefilemanager',
+                                        "advlist autolink lists link image charmap print preview anchor",
+                                        "searchreplace visualblocks code fullscreen image code",
+                                        "insertdatetime media table paste code help wordcount responsivefilemanager",
                                     ],
-                                    toolbar: 'undo redo | bold italic underline strikethrough | ' +
-                                            'fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | ' +
-                                            'outdent indent |  numlist bullist | forecolor backcolor removeformat | ' +
-                                            'pagebreak | charmap emoticons | fullscreen preview print | ' +
-                                            'insertfile image media template link anchor codesample | ltr rtl',
+                                    toolbar:
+                                        // eslint-disable-next-line no-multi-str
+                                        "undo redo | formatselect | bold italic backcolor | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry |  \
+                                        alignleft aligncenter alignright alignjustify | \
+                                        bullist numlist media table outdent indent image code | help",
                                     autosave_ask_before_unload: true,
                                     autosave_interval: "30s",
                                     autosave_retention: "2m",
@@ -168,7 +171,7 @@ const ContentNewProduct = props => {
                                     image_caption: true,
                                     image_advtab: true,
 
-                                    // file_picker_types: 'image',  // file image only media
+                                    // file_picker_types: 'image',  // only image file 
                                     external_filemanager_path: "responsive_filemanager/",
                                     filemanager_title: "Trình quản lý upload",
                                     external_plugins: {
@@ -180,35 +183,36 @@ const ContentNewProduct = props => {
                                 onEditorChange={ (content, editor) => { setContentPost(content) } }
                             />
                         </CardContent>
-                        <Divider/>
-                        <CardActions>
-                            <ThemeProvider theme={buttonAddPhoto}>
-                                <Button 
-                                    startIcon={<BorderColorOutlinedIcon />}
-                                    variant="contained" 
-                                    color="primary" 
-                                    onClick={ () => setOpenTinyMCE(!openTinyMCE) }
-                                >
-                                    Viết bài
-                                </Button>
-                            </ThemeProvider>
-                            <ThemeProvider theme={buttonAddPhoto}>
-                                <Button 
-                                    startIcon={<DeleteOutlineOutlinedIcon />}
-                                    variant="contained" 
-                                    color="default" 
-                                    onClick={ deleteContent }
-                                >
-                                    Xóa nội dung
-                                </Button>
-                            </ThemeProvider>
-                        </CardActions>
                     </Card>
+                </Grid>
+                &nbsp;
+                <Grid item xs={12}>
+                    <ThemeProvider theme={buttonStore}>
+                        <Button 
+                            startIcon={<AssignmentTurnedInOutlinedIcon />}
+                            variant="contained" 
+                            color="primary" 
+                            onClick={ () => setOpenTinyMCE(!openTinyMCE) }
+                        >
+                            Lưu, chờ duyệt
+                        </Button>
+                    </ThemeProvider>
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
+                    <ThemeProvider theme={buttonAddPhoto}>
+                        <Button 
+                            variant="contained" 
+                            color="default" 
+                            onClick={ deleteContent }
+                        >
+                            Bỏ qua
+                        </Button>
+                    </ThemeProvider>
                 </Grid>
 
             </Grid>
             <UploadCropSingleImage openDialog={openUploadImage} imageInit={dataImage} dataNewImg={ getDataImage} titleName="Tải lên ảnh cho bài viết" />
-            {/* <TinyMCE contentInit={ contentPost } openDialog={openTinyMCE} handleContent={ handleContentPost } /> */}
         </React.Fragment>
     );
 };
