@@ -71,9 +71,8 @@ const ContentNewProduct = props => {
         // Thuc hien den day coi nhu da them anh bai viet
     };
 
-    const handleContentPost = val => {
-        console.log(val);
-        setContentPost(val);
+    const handlePost = () => {
+        console.log(contentPost);
     }
 
     const deleteContent = () => {
@@ -195,7 +194,7 @@ const ContentNewProduct = props => {
                                             /* Call AXIOS -> API HERE */
                                             
                                             /* call the callback and populate the Title field with the file name */
-                                                callback('url_image_from_API', { title: file.name });
+                                                callback('link_img_sau_khi_api_tra_ve', { title: file.name });
                                             };
                                             reader.readAsDataURL(file);
                                         };
@@ -221,7 +220,7 @@ const ContentNewProduct = props => {
                             startIcon={<AssignmentTurnedInOutlinedIcon />}
                             variant="contained" 
                             color="primary" 
-                            onClick={ () => setOpenTinyMCE(!openTinyMCE) }
+                            onClick={ handlePost }
                         >
                             Lưu, chờ duyệt
                         </Button>
