@@ -18,8 +18,7 @@ import {
  } from '@material-ui/core';
  import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined';
  import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
- import { UploadCropSingleImage } from 'components';
-
+ import { UploadCropSingleImage, SelectInput } from 'components';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -46,10 +45,25 @@ const buttonStore = createMuiTheme({
     palette: {
         primary : {
             contrastText: '#fff',
-            main: '#7cb342'
+            main: '#5850EC'
         },
     },
   });
+
+  const lists = [
+    {
+      value: '1',
+      label: 'Sức khỏe',
+    },
+    {
+      value: '2',
+      label: 'Du lịch',
+    },
+    {
+      value: '3',
+      label: 'Khoa học',
+    },
+  ];
 
 const ContentNewProduct = props => {
 
@@ -61,7 +75,7 @@ const ContentNewProduct = props => {
     const [ dataNewImage, setDataNewImage ] = useState(null);
     const [ openUploadImage, setOpenUploadImage ] = useState(false);
 
-    const [ openTinyMCE, setOpenTinyMCE ] = useState(false);
+    const [ categorys, setCategorys ] = useState(false);
 
     const [ contentPost, setContentPost ] = useState('');
 
@@ -79,6 +93,12 @@ const ContentNewProduct = props => {
         console.log('delete');
         
     }
+    
+    const handleCategory = val => {
+        console.log(val);
+        
+    }
+    
 
     return (
         <React.Fragment>
@@ -94,6 +114,8 @@ const ContentNewProduct = props => {
                         {...rest}
                         className={clsx(classes.root, className)}
                     >
+                        <CardHeader title="Giới thiệu bài viết" />
+                        <Divider/>
                         <CardContent>
                             <FormControl fullWidth margin="dense">
                                 <TextField id="name-post" label="Tên bài viết" type="search" variant="outlined" />
@@ -134,6 +156,16 @@ const ContentNewProduct = props => {
                     </Card>
                 </Grid>
                 <Grid item xs={12} sm={4}>
+                    <Card
+                        {...rest}
+                        className={clsx(classes.root, className)}
+                    >
+                        <CardHeader title="Tổ chức bài viết" />
+                        <Divider/>
+                        <CardContent>
+                            <SelectInput fullWidth={true} list={ lists } label="Danh mục" action={ handleCategory } />
+                        </CardContent>
+                    </Card>
                 </Grid>
                 
                 <Grid item xs={12}>
@@ -144,9 +176,6 @@ const ContentNewProduct = props => {
                         <CardHeader title="Viết nội dung" />
                         <Divider/>
                         <CardContent>
-                            {/* {
-                                contentPost? <Box>{contentPost}</Box> :<Typography variant="caption">Nội dung bài cần được hoàn thiện, nội dung sẽ được lưu vào bản nháp khi nhấn lưu lại.</Typography>
-                            } */}
                             <Editor
                                 apiKey="g6j5aqzhhcuqyw9tlkubpsl1x1hd0l0ze7exfz3id0xqxs97"
                                 initialValue={ contentPost }
@@ -167,14 +196,11 @@ const ContentNewProduct = props => {
                                         outdent indent | \
                                         image media table link codesample | \
                                         fullscreen preview | \
-                                        tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry | help",
-                                    autosave_ask_before_unload: true,
-                                    autosave_interval: "30s",
-                                    autosave_retention: "2m",
+                                        | help",
+                                        // Them vao cho cong thuc toan va hoa : tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry
                                     a11y_advanced_options: true,
                                     image_caption: true,
                                     image_advtab: true,
-
                                     // file_picker_types: 'image',  // only image file 
                                     file_picker_types: 'file image media audio',
                                     file_picker_callback: function (callback, value, meta) {
@@ -205,7 +231,7 @@ const ContentNewProduct = props => {
                                     external_plugins: {
                                         // "responsivefilemanager": "/responsive_filemanager/tinymce/plugins/responsivefilemanager/plugin.min.js",
                                         // "filemanager": "/responsive_filemanager/filemanager/plugin.min.js"
-                                        'tiny_mce_wiris': 'https://www.wiris.net/demo/plugins/tiny_mce/plugin.js'
+                                        // 'tiny_mce_wiris': 'https://www.wiris.net/demo/plugins/tiny_mce/plugin.js'
                                     },
                                 }}
                                 onEditorChange={ (content, editor) => { setContentPost(content) } }
