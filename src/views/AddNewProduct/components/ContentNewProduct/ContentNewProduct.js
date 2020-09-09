@@ -154,16 +154,21 @@ const ContentNewProduct = props => {
                                 init={{
                                     height: 500,
                                     menubar: true,
+                                    placeholder: "Aa...",
                                     plugins: [
-                                        "advlist autolink lists link image charmap print preview anchor",
-                                        "searchreplace visualblocks code fullscreen image code",
-                                        "insertdatetime media table paste code help wordcount responsivefilemanager",
+                                        "advlist autolink lists link image charmap print preview anchor fullscreen preview ",
+                                        "searchreplace  code fullscreen image code codesample ",
+                                        "insertdatetime media table paste code help wordcount",
                                     ],
                                     toolbar:
                                         // eslint-disable-next-line no-multi-str
-                                        "undo redo | formatselect | bold italic backcolor | tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry |  \
+                                        "undo redo | formatselect | bold italic backcolor | \
                                         alignleft aligncenter alignright alignjustify | \
-                                        bullist numlist media table outdent indent image code | help",
+                                        bullist numlist | \
+                                        outdent indent | \
+                                        image media table link codesample | \
+                                        fullscreen preview | \
+                                        tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry | help",
                                     autosave_ask_before_unload: true,
                                     autosave_interval: "30s",
                                     autosave_retention: "2m",
@@ -172,13 +177,37 @@ const ContentNewProduct = props => {
                                     image_advtab: true,
 
                                     // file_picker_types: 'image',  // only image file 
-                                    external_filemanager_path: "responsive_filemanager/",
+                                    file_picker_types: 'file image media audio',
+                                    file_picker_callback: function (callback, value, meta) {
+                                        var input = document.createElement('input');
+                                        input.setAttribute('type', 'file');
+                                        input.setAttribute('accept', 'audio/*,video/*,image/*');
+                                        input.onchange = function () {
+                                            var file = input.files[0];
+                                            var reader = new FileReader();
+                                            reader.onload = function (e) {
+                                                const ext = file.name.substring(file.name.lastIndexOf('.') + 1);
+                                                console.log(ext);
+                                                
+                                                const imgbase64 = reader.result.split(',')[1];
+                                                console.log(imgbase64);
+
+                                            /* Call AXIOS -> API HERE */
+                                            
+                                            /* call the callback and populate the Title field with the file name */
+                                                callback('url_image_from_API', { title: file.name });
+                                            };
+                                            reader.readAsDataURL(file);
+                                        };
+                                        input.click();
+                                    },
+                                    // external_filemanager_path: "responsive_filemanager/",
                                     filemanager_title: "Trình quản lý upload",
                                     external_plugins: {
-                                        "responsivefilemanager": "/responsive_filemanager/tinymce/plugins/responsivefilemanager/plugin.min.js",
-                                        "filemanager": "/responsive_filemanager/filemanager/plugin.min.js"
+                                        // "responsivefilemanager": "/responsive_filemanager/tinymce/plugins/responsivefilemanager/plugin.min.js",
+                                        // "filemanager": "/responsive_filemanager/filemanager/plugin.min.js"
+                                        'tiny_mce_wiris': 'https://www.wiris.net/demo/plugins/tiny_mce/plugin.js'
                                     },
-                                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
                                 }}
                                 onEditorChange={ (content, editor) => { setContentPost(content) } }
                             />
