@@ -20,7 +20,9 @@ import {
  import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined';
  import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
  import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
-import { UploadCropSingleImage, TinyMCE } from 'components';
+import { UploadCropSingleImage } from 'components';
+import { Editor } from '@tinymce/tinymce-react';
+
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -138,9 +140,45 @@ const ContentNewProduct = props => {
                         <CardHeader title="Viết nội dung" />
                         <Divider/>
                         <CardContent>
-                            {
+                            {/* {
                                 contentPost? <Box>{contentPost}</Box> :<Typography variant="caption">Nội dung bài cần được hoàn thiện, nội dung sẽ được lưu vào bản nháp khi nhấn lưu lại.</Typography>
-                            }
+                            } */}
+                            <Editor
+                                apiKey="g6j5aqzhhcuqyw9tlkubpsl1x1hd0l0ze7exfz3id0xqxs97"
+                                initialValue={ contentPost }
+                                init={{
+                                    height: 500,
+                                    menubar: true,
+                                    plugins: [
+                                        'print preview paste importcss searchreplace autolink autosave save',
+                                        'directionality code visualblocks visualchars fullscreen image link media',
+                                        'template codesample table charmap hr pagebreak nonbreaking anchor toc',
+                                        'insertdatetime advlist lists wordcount imagetools textpattern noneditable',
+                                        'help charmap quickbars emoticons responsivefilemanager',
+                                    ],
+                                    toolbar: 'undo redo | bold italic underline strikethrough | ' +
+                                            'fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | ' +
+                                            'outdent indent |  numlist bullist | forecolor backcolor removeformat | ' +
+                                            'pagebreak | charmap emoticons | fullscreen preview print | ' +
+                                            'insertfile image media template link anchor codesample | ltr rtl',
+                                    autosave_ask_before_unload: true,
+                                    autosave_interval: "30s",
+                                    autosave_retention: "2m",
+                                    a11y_advanced_options: true,
+                                    image_caption: true,
+                                    image_advtab: true,
+
+                                    // file_picker_types: 'image',  // file image only media
+                                    external_filemanager_path: "responsive_filemanager/",
+                                    filemanager_title: "Trình quản lý upload",
+                                    external_plugins: {
+                                        "responsivefilemanager": "/responsive_filemanager/tinymce/plugins/responsivefilemanager/plugin.min.js",
+                                        "filemanager": "/responsive_filemanager/filemanager/plugin.min.js"
+                                    },
+                                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                                }}
+                                onEditorChange={ (content, editor) => { setContentPost(content) } }
+                            />
                         </CardContent>
                         <Divider/>
                         <CardActions>
@@ -170,7 +208,7 @@ const ContentNewProduct = props => {
 
             </Grid>
             <UploadCropSingleImage openDialog={openUploadImage} imageInit={dataImage} dataNewImg={ getDataImage} titleName="Tải lên ảnh cho bài viết" />
-            <TinyMCE contentInit={ contentPost } openDialog={openTinyMCE} handleContent={ handleContentPost } />
+            {/* <TinyMCE contentInit={ contentPost } openDialog={openTinyMCE} handleContent={ handleContentPost } /> */}
         </React.Fragment>
     );
 };
