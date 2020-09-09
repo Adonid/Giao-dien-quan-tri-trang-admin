@@ -110,7 +110,7 @@ const TinyMCE = props => {
                                     },
                                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
                                 }}
-                                onChange={e => setContentPost(e.target.getContent())}
+                                onEditorChange={ (content, editor) => { setContentPost(content) } }
                             />
                         </CardContent>
                     </Card>
