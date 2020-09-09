@@ -101,9 +101,10 @@ const TinyMCE = props => {
                                     a11y_advanced_options: true,
                                     image_caption: true,
                                     image_advtab: true,
+
                                     // file_picker_types: 'image',  // file image only media
                                     external_filemanager_path: "responsive_filemanager/",
-                                    filemanager_title: "Trình quản lý ảnh upload",
+                                    filemanager_title: "Trình quản lý upload",
                                     external_plugins: {
                                         "responsivefilemanager": "/responsive_filemanager/tinymce/plugins/responsivefilemanager/plugin.min.js",
                                         "filemanager": "/responsive_filemanager/filemanager/plugin.min.js"
