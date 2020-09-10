@@ -11,7 +11,6 @@ import {
   Typography,
   CircularProgress 
 } from '@material-ui/core';
-import { BackDrop } from 'elements';
 
 const schema = {
   email: {
@@ -29,7 +28,9 @@ const schema = {
     presence: { allowEmpty: false, message: '^Mật khẩu không để trống!' },
     length: {
       maximum: 128,
-      message: "^Mật khẩu tối đa 128 ký tự!"
+      message: "^Mật khẩu tối đa 128 ký tự",
+      minimum: 6,
+      message: "^Mật khẩu tối thiểu 6 ký tự",
     }
   }
 };
@@ -139,9 +140,7 @@ const SignIn = props => {
     touched: {},
     errors: {}
   });
-  const [openBackdrop, setOpenBackdrop] = useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [success, setSuccess] = React.useState(false);
   const timer = React.useRef();
   React.useEffect(() => {
     return () => {
@@ -158,10 +157,6 @@ const SignIn = props => {
       errors: errors || {}
     }));
   }, [formState.values]);
-
-  const handleBack = () => {
-    history.goBack();
-  };
 
   const handleChange = event => {
     event.persist();
@@ -184,17 +179,19 @@ const SignIn = props => {
 
   const handleSignIn = event => {
     event.preventDefault();
+    /** API xu ly dang nhap o day */
+
+    /** END */
+
+    // Xoa doan code ex duoi neu lam that
+    console.log(formState.values);
     if (!loading) {
-      setSuccess(false);
       setLoading(true);
-      setOpenBackdrop(true);
       // THOI GIAN XU LY API O DAY!
       timer.current = setTimeout(() => {
-        setSuccess(true);
         setLoading(false);
         // vi du ve chuyen huong qua trang quen mat khau sau khi call api
         history.push('/dashboard');
-        setOpenBackdrop(false);
       }, 2000);
     }    
   };
@@ -310,7 +307,7 @@ const SignIn = props => {
                       color="textSecondary"
                       variant="body1"
                     >
-                      Chưa có tài khoản?{' '}
+                      Chưa có tài khoản? &nbsp;
                       <Link
                         component={RouterLink}
                         to="/sign-up"
@@ -340,8 +337,6 @@ const SignIn = props => {
           </div>
         </Grid>
       </Grid>
-
-      <BackDrop open={openBackdrop} />
     </div>
   );
 };
