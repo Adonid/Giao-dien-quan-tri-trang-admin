@@ -14,6 +14,7 @@ import {
     Button,
     CardHeader,
     Divider,
+    Typography,
     
  } from '@material-ui/core';
  import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined';
@@ -51,6 +52,10 @@ const buttonStore = createMuiTheme({
   });
 
   const lists = [
+    {
+      value: '0',
+      label: 'Chọn danh mục',
+    },
     {
       value: '1',
       label: 'Sức khỏe',
@@ -164,6 +169,9 @@ const ContentNewProduct = props => {
                         <Divider/>
                         <CardContent>
                             <SelectInput fullWidth={true} list={ lists } label="Danh mục" action={ handleCategory } />
+                            &nbsp;
+                            &nbsp;
+                            <Typography className={ classes.titleField } gutterBottom variant="h6" >Gắn thẻ bài viết</Typography>
                         </CardContent>
                     </Card>
                 </Grid>
