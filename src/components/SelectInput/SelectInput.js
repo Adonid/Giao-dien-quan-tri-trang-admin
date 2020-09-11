@@ -7,7 +7,7 @@ import {
 
 const SelectInput = props => {
 
-    const { label, list, action, disable, margin, fullWidth, ...rest } = props;
+    const { label, list, action, disable, margin, fullWidth, required, ...rest } = props;
 
     const [ item, setItem ] = React.useState(list[0].value);
 
@@ -20,6 +20,7 @@ const SelectInput = props => {
 
     return (
         <TextField
+            required={ required??false }
             fullWidth={fullWidth??false}
             id="outlined-select-item"
             select
@@ -48,7 +49,8 @@ SelectInput.propTypes = {
     label: PropTypes.string,
     disable: PropTypes.bool,
     margin: PropTypes.bool,
-    fullWidth: PropTypes.bool
+    fullWidth: PropTypes.bool,
+    required: PropTypes.bool
 };
 
 export default SelectInput;
