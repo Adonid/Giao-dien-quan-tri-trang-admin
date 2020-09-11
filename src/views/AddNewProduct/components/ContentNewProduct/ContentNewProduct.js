@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { createMuiTheme, makeStyles, ThemeProvider, useTheme  } from '@material-ui/core/styles';
 import { Editor } from '@tinymce/tinymce-react';
 import { 
     Card, 
@@ -13,25 +13,21 @@ import {
     CardMedia,
     Button,
     CardHeader,
-    Divider,
-    Typography,
+    Divider
     
  } from '@material-ui/core';
  import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined';
  import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
- import { UploadCropSingleImage, SelectInput } from 'components';
+ import { UploadCropSingleImage, SelectInput, SelectChips } from 'components';
 
 const useStyles = makeStyles(theme => ({
     root: {},
-    titleField: {
-        color: '#546e7a'
-    },
     media: {
         height: 0,
         paddingTop: '56.25%', // 16:9
         boxShadow: '0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12)',
         borderRadius: 4,
-    },
+    }
 }));
 
 const buttonAddPhoto = createMuiTheme({
@@ -70,6 +66,19 @@ const buttonStore = createMuiTheme({
     },
   ];
 
+  const names = [
+    'Oliver Hansen',
+    'Van Henry',
+    'April Tucker',
+    'Ralph Hubbard',
+    'Omar Alexander',
+    'Carlos Abbott',
+    'Miriam Wagner',
+    'Bradley Wilkerson',
+    'Virginia Andrews',
+    'Kelly Snyder',
+  ];
+
 const ContentNewProduct = props => {
 
     const { className, ...rest } = props;
@@ -79,8 +88,6 @@ const ContentNewProduct = props => {
     const [ dataImage, setDataImage ] = useState('/images/products/contemplative-reptile.jpg');
     const [ dataNewImage, setDataNewImage ] = useState(null);
     const [ openUploadImage, setOpenUploadImage ] = useState(false);
-
-    const [ categorys, setCategorys ] = useState(false);
 
     const [ contentPost, setContentPost ] = useState('');
 
@@ -103,7 +110,6 @@ const ContentNewProduct = props => {
         console.log(val);
         
     }
-    
 
     return (
         <React.Fragment>
@@ -123,10 +129,17 @@ const ContentNewProduct = props => {
                         <Divider/>
                         <CardContent>
                             <FormControl fullWidth margin="dense">
-                                <TextField id="name-post" label="Tên bài viết" type="search" variant="outlined" />
+                                <TextField 
+                                    required 
+                                    id="name-post" 
+                                    label="Tên bài viết" 
+                                    type="search" 
+                                    variant="outlined" 
+                                />
                             </FormControl>
                             <FormControl fullWidth margin="dense">
                                 <TextField
+                                    required
                                     id="description-post"
                                     label="Trích dẫn"
                                     multiline
@@ -168,10 +181,8 @@ const ContentNewProduct = props => {
                         <CardHeader title="Tổ chức bài viết" />
                         <Divider/>
                         <CardContent>
-                            <SelectInput fullWidth={true} list={ lists } label="Danh mục" action={ handleCategory } />
-                            &nbsp;
-                            &nbsp;
-                            <Typography className={ classes.titleField } gutterBottom variant="h6" >Gắn thẻ bài viết</Typography>
+                            <SelectInput required={true} fullWidth={true} list={ lists } label="Danh mục" action={ handleCategory } />
+                            <SelectChips fullWidth={ true } list={ names } />                  
                         </CardContent>
                     </Card>
                 </Grid>
