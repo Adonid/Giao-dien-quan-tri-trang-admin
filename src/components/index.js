@@ -5,3 +5,4 @@ export { default as SelectInput } from './SelectInput';
 export { default as FormAddUser } from './FormAddUser';
 export { default as UploadCropSingleImage } from './UploadCropSingleImage';
 export { default as TinyMCE } from './TinyMCE';
+export { default as SelectChips } from './SelectChips';
