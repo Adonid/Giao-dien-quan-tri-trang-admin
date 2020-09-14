@@ -1,11 +1,19 @@
 
 const dataManipulationPost = {
-
+    createPost : {
+        isLoading: false,
+        alert: {
+            type    : "info",
+            content : "Hello Word"
+        },
+    }
 }
 
 const ManipulationPostReducer = (state = dataManipulationPost, action) => {
     switch (action.type) {
-        case 'ACTION_TYPE_1':
+        case 'CREATE_NEW_POST':
+            const dataNewPost = action.data;
+            state = { ...state, createPost: { ...state.createPost, isLoading: !{...state.createPost}.isLoading} }
             return state;
 
         default:
