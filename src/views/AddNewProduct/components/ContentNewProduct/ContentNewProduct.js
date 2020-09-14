@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import validate from 'validate.js';
 import { createMuiTheme, makeStyles, ThemeProvider  } from '@material-ui/core/styles';
 import { Editor } from '@tinymce/tinymce-react';
+import { connect } from 'react-redux';
 import { 
     Card, 
     CardContent,
@@ -114,7 +115,7 @@ const buttonStore = createMuiTheme({
 
 const ContentNewProduct = props => {
 
-    const { className, ...rest } = props;
+    const { className, createPost, isLoading, ...rest } = props;
 
     const classes = useStyles();
 
@@ -124,8 +125,6 @@ const ContentNewProduct = props => {
         touched: {},
         errors: {}
       });
-
-      const [loading, setLoading] = React.useState(false);
 
       useEffect(() => {
         const errors = validate(formState.values, schema);
@@ -137,13 +136,10 @@ const ContentNewProduct = props => {
         }));
       }, [formState.values]);
 
-      const timer = React.useRef();
-        useEffect(() => {
-            return () => {
-                clearTimeout(timer.current);
-            };
-        }, []);
-    
+      useEffect(() => {
+        setLoading(isLoading);
+        }, [isLoading]);
+
       const handleChange = event => {
         event.persist();
     
@@ -164,6 +160,8 @@ const ContentNewProduct = props => {
       };
     
     const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
+
+    const [ loading, setLoading ] = useState( false );
 
     const [ dataImage, setDataImage ] = useState('/images/products/contemplative-reptile.jpg');
     const [ dataNewImage, setDataNewImage ] = useState(null);
@@ -192,18 +190,18 @@ const ContentNewProduct = props => {
         /** API xu ly dang nhap o day */
 
         /** END */
+        setLoading( true );
+        var dataPost = {}; 
+        dataPost.name = formState.values.name;
+        dataPost.description = formState.values.description;
+        dataPost.image = dataNewImage??dataImage;
+        dataPost.category = idCategory;
+        dataPost.tags = idTags;
+        dataPost.content = contentPost;
 
-        // Xoa doan code ex duoi neu lam that
-        if (!loading) {
-        setLoading(true);
-        // THOI GIAN XU LY API O DAY!
-        timer.current = setTimeout(() => {
-            setLoading(false);
-            console.log(dataNewImage??dataImage, idCategory, idTags, contentPost);
-            console.log(formState.values.name, formState.values.description);
-        }, 2000);
-        }   
+        createPost(dataPost);
         // console.log(contentPost);
+        // createPost(data)
     }
 
     return (
@@ -403,7 +401,25 @@ const ContentNewProduct = props => {
 };
 
 ContentNewProduct.propTypes = {
-    
+    isLoading: PropTypes.bool.isRequired,
+    createPost: PropTypes.func.isRequired
 };
 
-export default ContentNewProduct;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        isLoading: state.dataManipulationPost.createPost.isLoading,
+    }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        createPost: dataPost => {
+            dispatch({
+                type: "CREATE_NEW_POST",
+                data: dataPost
+            })
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContentNewProduct)
