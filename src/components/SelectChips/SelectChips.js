@@ -37,10 +37,10 @@ import {
     },
   };
 
-  const getStyles = (name, personName, theme) => {
+  const getStyles = (name, valueChip, theme) => {
     return {
       fontWeight:
-        personName.indexOf(name) === -1
+        valueChip.indexOf(name) === -1
           ? theme.typography.fontWeightRegular
           : theme.typography.fontWeightMedium,
     };
@@ -54,10 +54,11 @@ const SelectChips = props => {
 
     const theme = useTheme();
 
-    const [personName, setPersonName] = useState([]);
+    const [valueChip, setValueChip] = useState([]);
 
     const handleChangeTags = (event) => {
-        setPersonName(event.target.value);
+        console.log(event.target.value);
+        setValueChip(event.target.value);
       };
 
     return (
@@ -67,20 +68,20 @@ const SelectChips = props => {
                 labelId="mutiple-chip-label"
                 id="mutiple-chip"
                 multiple
-                value={ personName }
+                value={ valueChip }
                 onChange={ handleChangeTags }
                 input={<Input id="select-multiple-chip" />}
                 renderValue={ itemSelected => (
                     <div className={classes.chips}>
-                        {itemSelected.map((value) => (
-                            <Chip key={value} label={value} className={classes.chip} />
+                        {itemSelected.map( item => (
+                            <Chip key={ item.label } label={ item.label } className={classes.chip} />
                         ))}
                     </div>
                 )}
                 MenuProps={MenuProps}
             >
                 {list.map( item => (
-                    <MenuItem key={item.id} value={item.label} style={getStyles(item.label, personName, theme)}>
+                    <MenuItem key={item.id} value={item} style={getStyles(item.label, valueChip, theme)}>
                         {item.label}
                     </MenuItem>
                 ))}
@@ -91,7 +92,7 @@ const SelectChips = props => {
 
 SelectChips.propTypes = {
     fullWidth : PropTypes.bool,
-    list : PropTypes.array,
+    list : PropTypes.array.isRequired,
 };
 
 export default SelectChips;
