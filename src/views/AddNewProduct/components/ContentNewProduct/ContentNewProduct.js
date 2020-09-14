@@ -137,7 +137,7 @@ const ContentNewProduct = props => {
       }, [formState.values]);
 
       useEffect(() => {
-        setLoading(isLoading);
+        setLoading(false);
         }, [isLoading]);
 
       const handleChange = event => {
