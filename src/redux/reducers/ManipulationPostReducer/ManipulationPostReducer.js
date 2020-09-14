@@ -1,3 +1,5 @@
+import mockCategorys from './dataCategorys';
+import mockTags from './dataTags';
 
 const dataManipulationPost = {
     createPost : {
@@ -6,7 +8,9 @@ const dataManipulationPost = {
             type    : "info",
             content : "Hello Word"
         },
-    }
+    },
+    categorys: mockCategorys,
+    tags: mockTags,
 }
 
 const ManipulationPostReducer = (state = dataManipulationPost, action) => {
