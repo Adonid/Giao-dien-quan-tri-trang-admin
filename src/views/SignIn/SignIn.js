@@ -296,7 +296,7 @@ const SignIn = props => {
                   type="submit"
                   variant="contained"
                 >
-                  {loading && <CircularProgress size={24} className={classes.buttonProgress} />} Đăng nhập ngay
+                  {loading && <CircularProgress size={24} />} Đăng nhập ngay
                 </Button>
                 <Grid container
                     direction="row"
