@@ -178,7 +178,6 @@ const ContentNewProduct = props => {
 
     const deleteContent = () => {
         console.log('delete');
-        
     }
     
     const handleCategory = val => setIdCategory(val);
@@ -200,8 +199,6 @@ const ContentNewProduct = props => {
         dataPost.content = contentPost;
 
         createPost(dataPost);
-        // console.log(contentPost);
-        // createPost(data)
     }
 
     return (
