@@ -41,6 +41,7 @@ const buttonAddPhoto = createMuiTheme({
         },
     },
   });
+
 const buttonStore = createMuiTheme({
     palette: {
         primary : {
@@ -49,48 +50,6 @@ const buttonStore = createMuiTheme({
         },
     },
   });
-
-  const lists = [
-    {
-      value: '0',
-      label: 'Chọn danh mục',
-    },
-    {
-      value: '1',
-      label: 'Sức khỏe',
-    },
-    {
-      value: '2',
-      label: 'Du lịch',
-    },
-    {
-      value: '3',
-      label: 'Khoa học',
-    },
-  ];
-
-  const names = [
-    {
-        id: 1,
-        label: "Sinh nhật"
-    },
-    {
-        id: 2,
-        label: "Trung Thu"
-    },
-    {
-        id: 3,
-        label: "Tết cổ truyền"
-    },
-    {
-        id: 4,
-        label: "Múa rối nước"
-    },
-    {
-        id: 5,
-        label: "Đua xe F1"
-    },
-  ];
 
   const schema = {
     name: {
@@ -115,7 +74,7 @@ const buttonStore = createMuiTheme({
 
 const ContentNewProduct = props => {
 
-    const { className, createPost, isLoading, ...rest } = props;
+    const { className, createPost, isLoading, categorys, tags, ...rest } = props;
 
     const classes = useStyles();
 
@@ -286,8 +245,8 @@ const ContentNewProduct = props => {
                             <CardHeader title="Tổ chức bài viết" />
                             <Divider/>
                             <CardContent>
-                                <SelectInput required={true} fullWidth={true} list={ lists } label="Danh mục" action={ handleCategory } />
-                                <SelectChips fullWidth={ true } list={ names } handleIdTags={ handleTags } />                  
+                                <SelectInput required={true} fullWidth={true} list={ categorys } label="Danh mục" action={ handleCategory } />
+                                <SelectChips fullWidth={ true } list={ tags } handleIdTags={ handleTags } />                  
                             </CardContent>
                         </Card>
                     </Grid>
@@ -399,12 +358,17 @@ const ContentNewProduct = props => {
 
 ContentNewProduct.propTypes = {
     isLoading: PropTypes.bool.isRequired,
-    createPost: PropTypes.func.isRequired
+    createPost: PropTypes.func.isRequired,
+    categorys: PropTypes.array.isRequired,
+    tags: PropTypes.array.isRequired,
+    
 };
 
 const mapStateToProps = (state, ownProps) => {
     return {
         isLoading: state.dataManipulationPost.createPost.isLoading,
+        categorys: state.dataManipulationPost.categorys,
+        tags: state.dataManipulationPost.tags,
     }
 }
 
