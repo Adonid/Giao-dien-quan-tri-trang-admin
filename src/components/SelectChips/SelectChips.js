@@ -70,18 +70,18 @@ const SelectChips = props => {
                 value={ personName }
                 onChange={ handleChangeTags }
                 input={<Input id="select-multiple-chip" />}
-                renderValue={(selected) => (
+                renderValue={ itemSelected => (
                     <div className={classes.chips}>
-                        {selected.map((value) => (
+                        {itemSelected.map((value) => (
                             <Chip key={value} label={value} className={classes.chip} />
                         ))}
                     </div>
                 )}
                 MenuProps={MenuProps}
             >
-                {list.map((name) => (
-                    <MenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
-                        {name}
+                {list.map( item => (
+                    <MenuItem key={item.id} value={item.label} style={getStyles(item.label, personName, theme)}>
+                        {item.label}
                     </MenuItem>
                 ))}
             </Select>
