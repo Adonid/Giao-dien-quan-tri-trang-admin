@@ -40,7 +40,7 @@ import {
   const getStyles = (name, valueChip, theme) => {
     return {
       fontWeight:
-        valueChip.map( item => item.label ).indexOf(name) === -1
+        valueChip.indexOf(name) === -1
           ? theme.typography.fontWeightRegular
           : theme.typography.fontWeightMedium,
     };
@@ -48,7 +48,7 @@ import {
 
 const SelectChips = props => {
 
-    const { fullWidth, list, handleIdTags, ...rest } = props;
+    const { fullWidth, list, ...rest } = props;
 
     const classes = useStyles();
 
@@ -57,10 +57,8 @@ const SelectChips = props => {
     const [valueChip, setValueChip] = useState([]);
 
     const handleChangeTags = (event) => {
-        let chipSelected = event.target.value;
-        setValueChip(chipSelected);
-        const idChip = chipSelected.map( item => item.id);
-        handleIdTags(idChip);
+        console.log(event.target.value);
+        setValueChip(event.target.value);
       };
 
     return (
@@ -76,7 +74,7 @@ const SelectChips = props => {
                 renderValue={ itemSelected => (
                     <div className={classes.chips}>
                         {itemSelected.map( item => (
-                            <Chip key={ item.label } label={ item.label } />
+                            <Chip key={ item.label } label={ item.label } className={classes.chip} />
                         ))}
                     </div>
                 )}
@@ -95,7 +93,6 @@ const SelectChips = props => {
 SelectChips.propTypes = {
     fullWidth : PropTypes.bool,
     list : PropTypes.array.isRequired,
-    handleIdTags : PropTypes.func.isRequired,
 };
 
 export default SelectChips;
