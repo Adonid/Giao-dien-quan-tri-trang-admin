@@ -55,7 +55,7 @@ const ProductsToolbar = props => {
           </Link>
           <Typography color="textPrimary">Thêm mới bài viết</Typography>
         </Breadcrumbs>
-        <Link color="inherit" component={RouterLink} to="/products">
+        <Link color="inherit" underline="none" component={RouterLink} to="/products">
           <Button
             color="primary"
             variant="contained"
