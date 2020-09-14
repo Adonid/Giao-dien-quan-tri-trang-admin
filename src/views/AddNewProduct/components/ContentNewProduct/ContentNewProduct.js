@@ -121,6 +121,11 @@ const ContentNewProduct = props => {
         
     }
 
+    const handleTags = tags => {
+        // tags is array
+        console.log(tags);
+    }
+
     return (
         <React.Fragment>
             <Card
@@ -192,7 +197,7 @@ const ContentNewProduct = props => {
                         <Divider/>
                         <CardContent>
                             <SelectInput required={true} fullWidth={true} list={ lists } label="Danh mục" action={ handleCategory } />
-                            <SelectChips fullWidth={ true } list={ names } />                  
+                            <SelectChips fullWidth={ true } list={ names } handleIdTags={ handleTags } />                  
                         </CardContent>
                     </Card>
                 </Grid>
