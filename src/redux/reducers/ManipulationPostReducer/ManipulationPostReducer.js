@@ -13,7 +13,12 @@ const ManipulationPostReducer = (state = dataManipulationPost, action) => {
     switch (action.type) {
         case 'CREATE_NEW_POST':
             const dataNewPost = action.data;
-            state = { ...state, createPost: { ...state.createPost, isLoading: !{...state.createPost}.isLoading} }
+            console.log(dataNewPost);
+            /** API them bai viet */
+
+            /** end */
+            // Tra ve trang thai 
+            state = { ...state, createPost: { ...state.createPost, isLoading: !{...state.createPost}.isLoading, alert: { ...state.createPost.alert, type: "success", content: "Tạo bài viết thành công!"}} }
             return state;
 
         default:
