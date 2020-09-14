@@ -5,6 +5,7 @@ import {
     UserEditorReducer as UserEditor,
     ChatsDataReducer as ChatsData,
     ProductsListReducer as ProductsList,
+    ManipulationPostReducer as ManipulationPost,
 
 } from './reducers';
 
@@ -17,6 +18,7 @@ var allReducers = redux.combineReducers({
     dataUserEditor: UserEditor,
     ChatsData: ChatsData,
     dataProductsList: ProductsList,
+    dataManipulationPost: ManipulationPost,
 });
 
 const Store = redux.createStore(allReducers);
