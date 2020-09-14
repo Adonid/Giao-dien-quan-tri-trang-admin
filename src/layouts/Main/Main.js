@@ -70,6 +70,7 @@ const Main = props => {
       <Snackbars data={ props.dataAlertAddUser } />
       <Snackbars data={ props.dataAlertUserDetail } />
       <Snackbars data={ props.dataAlertUserEditor } />
+      <Snackbars data={ props.dataAlertCreateNewPost } />
       <FormAddUser openCall={props.openAddUser} />
     </div>
   );
@@ -85,6 +86,7 @@ Main.propTypes = {
       dataAlertAddUser: state.dataNewUser.alert,
       dataAlertUserDetail: state.dataUserDetail.alert,
       dataAlertUserEditor: state.dataUserEditor.alert,
+      dataAlertCreateNewPost: state.dataManipulationPost.createPost.alert,
       openAddUser: state.dataNewUser.show,
     }
   }
