@@ -19,7 +19,7 @@ const CommentProduct = props => {
             <Card
                 {...rest}
             >
-                <CardHeader title="Giới thiệu bài viết" />
+                <CardHeader title="Comment & danh gia" />
                 <Divider/>
                 <CardContent>
 
