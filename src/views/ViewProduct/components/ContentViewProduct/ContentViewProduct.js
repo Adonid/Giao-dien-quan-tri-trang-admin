@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { createMuiTheme, makeStyles, ThemeProvider  } from '@material-ui/core/styles';
+import { createMuiTheme, makeStyles  } from '@material-ui/core/styles';
 import { 
     Card, 
-    CardContent,
     Grid,
-    CardHeader,
-    Divider
     
  } from '@material-ui/core';
+import { CommentProduct, FixedContent, SlideBar } from './components';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -46,45 +44,17 @@ const ContentViewProduct = props => {
                 className={clsx(classes.root, className)}
             >
             </Card>
-            <Grid container spacing={1}>
-                <Grid item xs={12} sm={8}>
-                    
-                    <Card
-                        {...rest}
-                        className={clsx(classes.root, className)}
-                    >
-                        <CardHeader title="Giới thiệu bài viết" />
-                        <Divider/>
-                        <CardContent>
 
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={4}>
-                    <Card
-                        {...rest}
-                        className={clsx(classes.root, className)}
-                    >
-                        <CardHeader title="Slide Bar" />
-                        <Divider/>
-                        <CardContent>
+            <Grid container spacing={3}>
+                <FixedContent/>
+            </Grid>
 
-                        </CardContent>
-                    </Card>
-                </Grid>
+            <Grid container spacing={3}>
                 
-                <Grid item xs={12}>
-                    <br/>
-                    <Card
-                        {...rest}
-                    >
-                        <CardHeader title="Viết nội dung" />
-                        <Divider/>
-                        <CardContent>
-                            
-                        </CardContent>
-                    </Card>
-                </Grid>
+                <CommentProduct/>
+
+                <SlideBar/>
+                
             </Grid>
         </React.Fragment>
     );
