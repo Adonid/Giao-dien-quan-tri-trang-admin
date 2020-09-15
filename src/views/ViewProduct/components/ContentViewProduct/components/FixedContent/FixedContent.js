@@ -32,13 +32,14 @@ import {
     },
     avatar: {
         backgroundColor: '#FF5722',
+        boxShadow: '0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)'
       },
     paddingContent: {
         paddingLeft: theme.spacing(4), 
         paddingRight: theme.spacing(4), 
       },
     paddingTags: {
-        paddingTop: theme.spacing(17),
+        paddingTop: theme.spacing(8),
         paddingBottom: theme.spacing(2.3),
         fontFamily: '"Roboto","Helvetica","Arial",sans-serif',
         fontSize: 17
@@ -69,12 +70,13 @@ import {
         marginTop: '.625rem',
         minHeight: 'auto',
         fontWeight: 700,
+        fontSize: 17,
         marginBottom: '0.75rem',
         textDecoration: 'none',
     },
     subtitleBig: {
         color: '#999',
-        fontSize: '1rem',
+        fontSize: 15,
     }
 }));
 
@@ -143,28 +145,8 @@ const FixedContent = props => {
                 <CardContent>
 
                     <Box>
-                        <div class="MuiGrid-root jss131  MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 MuiGrid-grid-md-8">
-                            <h3 class="jss133">The Castle Looks Different at Night...</h3>
-                            <p>This is the paragraph where you can write more details about your product. Keep you user engaged by providing meaningful information. Remember that by this time, the user is curious, otherwise he wouldn't scroll to get here. Add a button if you want the user to see more. We are here to make life better.<br /><br />And now I look and look around and there&rsquo;s so many Kanyes I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound... and thank you for turning my personal jean jacket into a couture piece.</p>
-                            <blockquote class="jss145 jss147">
-                            <p class="jss148 jss135">&ldquo;And thank you for turning my personal jean jacket into a couture piece.&rdquo;</p>
-                            <small class="jss149">Kanye West, Producer.</small></blockquote>
-                            </div>
-                            <div class="MuiGrid-root jss131 jss134 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-10 MuiGrid-grid-md-10">
-                            <div class="MuiGrid-root jss130  MuiGrid-container">
-                            <div class="MuiGrid-root jss131  MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-md-4"><img class="jss139 jss137 jss136" src="https://demos.creative-tim.com/material-kit-pro-react/static/media/blog4.5de2130f.jpg" alt="..." /></div>
-                            <div class="MuiGrid-root jss131  MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-md-4"><img class="jss139 jss137 jss136" src="https://demos.creative-tim.com/material-kit-pro-react/static/media/blog3.a4ee46b8.jpg" alt="..." /></div>
-                            <div class="MuiGrid-root jss131  MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-md-4"><img class="jss139 jss137 jss136" src="https://demos.creative-tim.com/material-kit-pro-react/static/media/blog1.9313c5c1.jpg" alt="..." /></div>
-                            </div>
-                            </div>
-                            <div class="MuiGrid-root jss131  MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 MuiGrid-grid-md-8">
-                            <h3 class="jss133">Rest of the Story:</h3>
-                            <p>We are here to make life better. And now I look and look around and there&rsquo;s so many Kanyes I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound... and thank you for turning my personal jean jacket into a couture piece.<br />I speak yell scream directly at the old guard on behalf of the future. daytime All respect prayers and love to Phife&rsquo;s family Thank you for so much inspiration.</p>
-                            <p>Thank you Anna for the invite thank you to the whole Vogue team And I love you like Kanye loves Kanye Pand Pand Panda I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...The Pablo pop up was almost a pop up of influence. All respect prayers and love to Phife&rsquo;s family Thank you for so much inspiration daytime I love this new Ferg album! The Life of Pablo is now available for purchase I have a dream. Thank you to everybody who made The Life of Pablo the number 1 album in the world! I'm so proud of the nr #1 song in the country. Panda! Good music 2016!</p>
-                            <p>I love this new Ferg album! The Life of Pablo is now available for purchase I have a dream. Thank you to everybody who made The Life of Pablo the number 1 album in the world! I'm so proud of the nr #1 song in the country. Panda! Good music 2016!</p>
-                        </div>
+                        {/* Content */}
                     </Box>
-                    {/* Content */}
 
                     <Box className={ classes.paddingTags}>
                         <Typography variant="span" >Gắn tags: </Typography>
@@ -179,12 +161,12 @@ const FixedContent = props => {
                                 <Avatar
                                     aria-label="author" 
                                     className={ clsx(classes.avatarBig,classes.avatar )}
-                                    src={ '' }
+                                    src={ 'https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile4-square.1a164917.jpg' }
                                 >
                                     {getInitials('Lê Dũng' )}
                                 </Avatar>
                             }
-                            title={ <Typography className={ classes.titleBig } variant="h4">Alec Thompson</Typography>}
+                            title={ <Typography className={ classes.titleBig } variant="h4">Alec Thompson</Typography> }
                             subheader={ <Typography className={ classes.subtitleBig } variant="body1">I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...I like good music from Youtube.</Typography>}
                         />
                     </Box>
