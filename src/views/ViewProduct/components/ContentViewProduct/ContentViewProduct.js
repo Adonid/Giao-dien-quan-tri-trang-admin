@@ -39,12 +39,7 @@ const ContentViewProduct = props => {
 
     return (
         <React.Fragment>
-            <Card
-                {...rest}
-                className={clsx(classes.root, className)}
-            >
-            </Card>
-
+            
             <Grid container spacing={3}>
                 <FixedContent/>
             </Grid>
