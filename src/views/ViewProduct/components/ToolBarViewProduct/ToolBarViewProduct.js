@@ -11,8 +11,8 @@ import {
   Breadcrumbs,
   Link
  } from '@material-ui/core';
- import BallotOutlinedIcon from '@material-ui/icons/BallotOutlined';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+ import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
+  import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -61,7 +61,7 @@ const ToolBarViewProduct = props => {
             color="primary"
             variant="contained"
           >
-            <BallotOutlinedIcon/> Sửa bài
+            <BorderColorOutlinedIcon/> Sửa bài
           </Button>
         </Link>
       </div>
