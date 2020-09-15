@@ -1,25 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import validate from 'validate.js';
 import { createMuiTheme, makeStyles, ThemeProvider  } from '@material-ui/core/styles';
 import { 
     Card, 
     CardContent,
     Grid,
-    TextField,
-    FormControl,
-    Box,
-    CardMedia,
-    Button,
     CardHeader,
-    Divider,
-    CircularProgress
+    Divider
     
  } from '@material-ui/core';
- import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined';
- import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
- import { UploadCropSingleImage, SelectInput, SelectChips } from 'components';
 
 const useStyles = makeStyles(theme => ({
     root: {},
