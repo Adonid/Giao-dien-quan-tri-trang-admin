@@ -23,6 +23,7 @@ import {
   NotFound as NotFoundView,
   Chats as ChatsView,
   AddNewProduct as AddNewProductView,
+  ViewProduct as ViewProductView,
 
 } from './views'; 
 
@@ -63,6 +64,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/products"
+      />
+      <RouteWithLayout
+        component={ViewProductView}
+        exact
+        layout={MainLayout}
+        path="/product-detail"
       />
       <RouteWithLayout
         component={TypographyView}
