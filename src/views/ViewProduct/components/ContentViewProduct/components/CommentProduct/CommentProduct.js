@@ -39,6 +39,9 @@ const buttonComment = createMuiTheme({
             paddingBottom: theme.spacing(1.8)
         }
     },
+    displyReplyForm: {
+        display: "none",
+    },
     avatar: {
         maxWidth: theme.spacing(7),
         maxHeight: theme.spacing(7),
@@ -53,6 +56,12 @@ const buttonComment = createMuiTheme({
         textDecoration: 'none',
         // backgroundColor: '#FF5722',
         boxShadow: '0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)'
+    },
+    avatarReply: {
+        maxWidth: theme.spacing(5),
+        maxHeight: theme.spacing(5),
+        width: theme.spacing(5),
+        height: theme.spacing(5),
     },
     subtitleBig: {
         color: '#999',
@@ -221,6 +230,7 @@ const CommentProduct = props => {
                                     </React.Fragment>
                                 }
                             />
+                            {/* Neu comment co comment duoc reply thi show ra nhu CardHeader duoi day */}
                             <CardHeader
                                 className={ clsx( classes.replyComment )}
                                 avatar={
@@ -253,6 +263,31 @@ const CommentProduct = props => {
                                                 </Tooltip>
                                             </CardActions>
                                         </Box>
+                                    </React.Fragment>
+                                }
+                            />
+                            {/* Het moi comment thi cho ra 1 form de nhap reply comment nhu duoi day */}
+                            <CardHeader
+                                className={ clsx( classes.replyComment, false&&classes.displyReplyForm )}
+                                avatar={
+                                    <Avatar
+                                        aria-label="author" 
+                                        className={ clsx(classes.avatar, classes.avatarReply)}
+                                        src={ 'https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile4-square.1a164917.jpg' }
+                                    >
+                                        {getInitials('Lê Dũng' )}
+                                    </Avatar>
+                                }
+                                title={
+                                    <React.Fragment>
+                                        <form>
+                                            <TextField
+                                                placeholder="Aa..."
+                                                type="text"
+                                                fullWidth
+                                                // onChange={handleChange}
+                                            />
+                                        </form>
                                     </React.Fragment>
                                 }
                             />
