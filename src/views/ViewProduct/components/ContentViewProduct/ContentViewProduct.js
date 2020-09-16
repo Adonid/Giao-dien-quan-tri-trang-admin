@@ -7,7 +7,7 @@ import {
     Grid,
     
  } from '@material-ui/core';
-import { CommentProduct, FixedContent, SlideBar } from './components';
+import { CommentProduct, FixedContent, ProductRelative } from './components';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -48,7 +48,7 @@ const ContentViewProduct = props => {
                 
                 <CommentProduct/>
 
-                <SlideBar/>
+                <ProductRelative/>
                 
             </Grid>
         </React.Fragment>
