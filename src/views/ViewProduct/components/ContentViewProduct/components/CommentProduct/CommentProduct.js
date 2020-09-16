@@ -33,6 +33,7 @@ const buttonComment = createMuiTheme({
     },
   });
 
+
  const useStyles = makeStyles(theme => ({
     root: {
         '& .MuiCardHeader-root': {
@@ -133,6 +134,14 @@ const CommentProduct = props => {
 
     const { className, ...rest } = props;
 
+    const handleFavourite = idComment => {
+        console.log(idComment);
+    }
+
+    const handleReply = idComment => {
+        console.log(idComment);
+    }
+
     return (
         <Grid item xs={12} sm={8}>
                     
@@ -168,7 +177,11 @@ const CommentProduct = props => {
                                         <Box className={ classes.floatRight }>
                                             <CardActions disableSpacing>
                                                 <Tooltip placement="top" title="Yêu thích">
-                                                    <IconButton className={ classes.fontSmall } aria-label="add to favorites">
+                                                    <IconButton 
+                                                        className={ classes.fontSmall } 
+                                                        aria-label="add to favorites"
+                                                        onClick={ () => handleFavourite(1) }
+                                                    >
                                                         <FavoriteIcon />
                                                         <Typography variant="h5">
                                                             7
@@ -176,7 +189,11 @@ const CommentProduct = props => {
                                                     </IconButton>
                                                 </Tooltip>
                                                 <Tooltip placement="top" title="Phản hồi comment">
-                                                    <IconButton className={ classes.fontSmall } aria-label="add to favorites">
+                                                    <IconButton 
+                                                        className={ classes.fontSmall } 
+                                                        aria-label="add to favorites"
+                                                        onClick={ () => handleReply(1) }
+                                                    >
                                                         <ReplyIcon />
                                                         <Typography variant="h5">
                                                             Reply
@@ -210,7 +227,11 @@ const CommentProduct = props => {
                                         <Box className={ classes.floatRight }>
                                             <CardActions disableSpacing>
                                                 <Tooltip placement="top" title="Yêu thích">
-                                                    <IconButton className={ classes.fontSmall } aria-label="add to favorites">
+                                                    <IconButton 
+                                                        className={ classes.fontSmall } 
+                                                        aria-label="add to favorites"
+                                                        onClick={ () => handleFavourite(2) }
+                                                    >
                                                         <FavoriteIcon />
                                                         <Typography variant="h5">
                                                             7
@@ -218,7 +239,11 @@ const CommentProduct = props => {
                                                     </IconButton>
                                                 </Tooltip>
                                                 <Tooltip placement="top" title="Phản hồi comment">
-                                                    <IconButton className={ classes.fontSmall } aria-label="add to favorites">
+                                                    <IconButton 
+                                                        className={ classes.fontSmall } 
+                                                        aria-label="add to favorites"
+                                                        onClick={ () => handleReply(2) }
+                                                    >
                                                         <ReplyIcon />
                                                         <Typography variant="h5">
                                                             Reply
@@ -254,7 +279,11 @@ const CommentProduct = props => {
                                         <Box className={ classes.floatRight }>
                                             <CardActions disableSpacing>
                                                 <Tooltip placement="top" title="Yêu thích">
-                                                    <IconButton className={ classes.fontSmall } aria-label="add to favorites">
+                                                    <IconButton 
+                                                    className={ classes.fontSmall } 
+                                                    aria-label="add to favorites"
+                                                    onClick={ () => handleFavourite(2) }
+                                                    >
                                                         <FavoriteIcon />
                                                         <Typography variant="h5">
                                                             7
@@ -262,7 +291,11 @@ const CommentProduct = props => {
                                                     </IconButton>
                                                 </Tooltip>
                                                 <Tooltip placement="top" title="Phản hồi comment">
-                                                    <IconButton className={ classes.fontSmall } aria-label="add to favorites">
+                                                    <IconButton 
+                                                        className={ classes.fontSmall } 
+                                                        aria-label="add to favorites"
+                                                        onClick={ () => handleReply(2) }
+                                                    >
                                                         <ReplyIcon />
                                                         <Typography variant="h5">
                                                             Reply
