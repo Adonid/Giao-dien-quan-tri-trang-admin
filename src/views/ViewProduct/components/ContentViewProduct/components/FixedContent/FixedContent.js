@@ -19,7 +19,6 @@ import {
  import FavoriteBorderOutlinedIcon from '@material-ui/icons/FavoriteBorderOutlined';
  import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
  import ShareOutlinedIcon from '@material-ui/icons/ShareOutlined';
- import GradeOutlinedIcon from '@material-ui/icons/GradeOutlined';
  import { getInitials } from 'helpers';
 
  const useStyles = makeStyles(theme => ({
@@ -94,14 +93,6 @@ const FixedContent = props => {
             >
                 <Box className={ classes.inlineFlex }>
                     <CardActions disableSpacing>
-                        <Tooltip placement="bottom" title="Lượt đánh giá">
-                            <IconButton aria-label="add to favorites">
-                                <GradeOutlinedIcon />
-                                <Typography variant="h5">
-                                    7
-                                </Typography>
-                            </IconButton>
-                        </Tooltip>
                         <Tooltip placement="bottom" title="Lượt yêu thích">
                             <IconButton aria-label="add to favorites">
                                 <FavoriteBorderOutlinedIcon />
