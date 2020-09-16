@@ -35,7 +35,7 @@ const buttonComment = createMuiTheme({
  const useStyles = makeStyles(theme => ({
     root: {
         '& .MuiCardHeader-root': {
-            paddingBottom: theme.spacing(3.2)
+            paddingBottom: theme.spacing(1.8)
         }
     },
     avatar: {
