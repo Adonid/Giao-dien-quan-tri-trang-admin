@@ -134,12 +134,12 @@ const CommentProduct = props => {
 
     const { className, ...rest } = props;
 
-    const handleFavourite = idComment => {
-        console.log(idComment);
+    const handleFavourite = comment => {
+        console.log(comment); // Subcomment
     }
 
-    const handleReply = idComment => {
-        console.log(idComment);
+    const handleReply = comment => {
+        console.log(comment);
     }
 
     return (
