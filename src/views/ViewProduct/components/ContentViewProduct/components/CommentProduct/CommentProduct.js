@@ -253,6 +253,14 @@ const CommentProduct = props => {
                                         <Typography className={ classes.subtitleBig } variant="body1">I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...I like good music from Youtube.</Typography>
                                         <Box className={ classes.floatRight }>
                                             <CardActions disableSpacing>
+                                                <Tooltip placement="top" title="Yêu thích">
+                                                    <IconButton className={ classes.fontSmall } aria-label="add to favorites">
+                                                        <FavoriteIcon />
+                                                        <Typography variant="h5">
+                                                            7
+                                                        </Typography>
+                                                    </IconButton>
+                                                </Tooltip>
                                                 <Tooltip placement="top" title="Phản hồi comment">
                                                     <IconButton className={ classes.fontSmall } aria-label="add to favorites">
                                                         <ReplyIcon />
