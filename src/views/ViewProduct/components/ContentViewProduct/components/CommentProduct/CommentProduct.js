@@ -18,6 +18,7 @@ import {
     IconButton
     
  } from '@material-ui/core';
+ import PerfectScrollbar from 'react-perfect-scrollbar';
  import FavoriteIcon from '@material-ui/icons/Favorite';
  import ReplyIcon from '@material-ui/icons/Reply';
  import { getInitials } from 'helpers';
@@ -111,7 +112,10 @@ const buttonComment = createMuiTheme({
             fontSize: 13,
             paddingLeft: 3
         }
-    }
+    },
+    maxHeightPerfectScrollbar: {
+        maxHeight: theme.spacing(63)
+      },
 }));
 
 const CommentProduct = props => {
@@ -126,131 +130,133 @@ const CommentProduct = props => {
             <Card
                 {...rest}
             >
-                <CardHeader title="Comment & danh gia" />
+                <CardHeader title="Bình luận & yêu thích" />
                 
                 <Divider/>
 
                 <CardContent>
                     <Box className={ classes.root }>
-                        <CardHeader
-                            avatar={
-                                <Avatar
-                                    aria-label="author" 
-                                    className={ clsx(classes.avatar)}
-                                    src={ 'https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile1-square.3122abf4.jpg' }
-                                >
-                                    {getInitials('Lê Dũng' )}
-                                </Avatar>
-                            }
-                            title={
-                                <React.Fragment>
-                                    <Typography className={ clsx(classes.titleBig, classes.dsInline) } variant="h4">Alec Thompson</Typography>
-                                    <Typography className={ clsx(classes.titleTime, classes.dsInline) } variant="body2"> &nbsp;· 7 minutes ago</Typography>
-                                </React.Fragment>
-                            }
-                            subheader={ 
-                                <React.Fragment>
-                                    <Typography className={ classes.subtitleBig } variant="body1">I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...I like good music from Youtube.</Typography>
-                                    <Box className={ classes.floatRight }>
-                                        <CardActions disableSpacing>
-                                            <Tooltip placement="top" title="Yêu thích">
-                                                <IconButton className={ classes.fontSmall } aria-label="add to favorites">
-                                                    <FavoriteIcon />
-                                                    <Typography variant="h5">
-                                                        7
-                                                    </Typography>
-                                                </IconButton>
-                                            </Tooltip>
-                                            <Tooltip placement="top" title="Phản hồi comment">
-                                                <IconButton className={ classes.fontSmall } aria-label="add to favorites">
-                                                    <ReplyIcon />
-                                                    <Typography variant="h5">
-                                                        Reply
-                                                    </Typography>
-                                                </IconButton>
-                                            </Tooltip>
-                                        </CardActions>
-                                    </Box>
-                                </React.Fragment>
-                            }
-                        />
-                        <CardHeader
-                            avatar={
-                                <Avatar
-                                    aria-label="author" 
-                                    className={ clsx(classes.avatar)}
-                                    src={ 'https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile6-square.1f1f4900.jpg' }
-                                >
-                                    {getInitials('Lê Dũng' )}
-                                </Avatar>
-                            }
-                            title={
-                                <React.Fragment>
-                                    <Typography className={ clsx(classes.titleBig, classes.dsInline) } variant="h4">Alec Thompson</Typography>
-                                    <Typography className={ clsx(classes.titleTime, classes.dsInline) } variant="body2"> &nbsp;· 7 minutes ago</Typography>
-                                </React.Fragment>
-                            }
-                            subheader={ 
-                                <React.Fragment>
-                                    <Typography className={ classes.subtitleBig } variant="body1">I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...I like good music from Youtube.</Typography>
-                                    <Box className={ classes.floatRight }>
-                                        <CardActions disableSpacing>
-                                            <Tooltip placement="top" title="Yêu thích">
-                                                <IconButton className={ classes.fontSmall } aria-label="add to favorites">
-                                                    <FavoriteIcon />
-                                                    <Typography variant="h5">
-                                                        7
-                                                    </Typography>
-                                                </IconButton>
-                                            </Tooltip>
-                                            <Tooltip placement="top" title="Phản hồi comment">
-                                                <IconButton className={ classes.fontSmall } aria-label="add to favorites">
-                                                    <ReplyIcon />
-                                                    <Typography variant="h5">
-                                                        Reply
-                                                    </Typography>
-                                                </IconButton>
-                                            </Tooltip>
-                                        </CardActions>
-                                    </Box>
-                                </React.Fragment>
-                             }
-                        />
-                        <CardHeader
-                            className={ clsx( classes.replyComment )}
-                            avatar={
-                                <Avatar
-                                    aria-label="author" 
-                                    className={ clsx(classes.avatar)}
-                                    src={ 'https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile4-square.1a164917.jpg' }
-                                >
-                                    {getInitials('Lê Dũng' )}
-                                </Avatar>
-                            }
-                            title={
-                                <React.Fragment>
-                                    <Typography className={ clsx(classes.titleBig, classes.dsInline) } variant="h4">Alec Thompson</Typography>
-                                    <Typography className={ clsx(classes.titleTime, classes.dsInline) } variant="body2"> &nbsp;· 7 minutes ago</Typography>
-                                </React.Fragment>
-                            }
-                            subheader={ 
-                                <React.Fragment>
-                                    <Typography className={ classes.subtitleBig } variant="body1">I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...I like good music from Youtube.</Typography>
-                                    <Box className={ classes.floatRight }>
-                                        <CardActions disableSpacing>
-                                            <Tooltip placement="top" title="Phản hồi comment">
-                                                <IconButton className={ classes.fontSmall } aria-label="add to favorites">
-                                                    <ReplyIcon />
-                                                    <Typography variant="h5">
-                                                        Reply
-                                                    </Typography>
-                                                </IconButton>
-                                            </Tooltip>
-                                        </CardActions>
-                                    </Box>
-                                </React.Fragment>
-                             }
-                        />
+                        <PerfectScrollbar className={ classes.maxHeightPerfectScrollbar }>
+                            <CardHeader
+                                avatar={
+                                    <Avatar
+                                        aria-label="author" 
+                                        className={ clsx(classes.avatar)}
+                                        src={ 'https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile1-square.3122abf4.jpg' }
+                                    >
+                                        {getInitials('Lê Dũng' )}
+                                    </Avatar>
+                                }
+                                title={
+                                    <React.Fragment>
+                                        <Typography className={ clsx(classes.titleBig, classes.dsInline) } variant="h4">Alec Thompson</Typography>
+                                        <Typography className={ clsx(classes.titleTime, classes.dsInline) } variant="body2"> &nbsp;· 7 minutes ago</Typography>
+                                    </React.Fragment>
+                                }
+                                subheader={ 
+                                    <React.Fragment>
+                                        <Typography className={ classes.subtitleBig } variant="body1">I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...I like good music from Youtube.</Typography>
+                                        <Box className={ classes.floatRight }>
+                                            <CardActions disableSpacing>
+                                                <Tooltip placement="top" title="Yêu thích">
+                                                    <IconButton className={ classes.fontSmall } aria-label="add to favorites">
+                                                        <FavoriteIcon />
+                                                        <Typography variant="h5">
+                                                            7
+                                                        </Typography>
+                                                    </IconButton>
+                                                </Tooltip>
+                                                <Tooltip placement="top" title="Phản hồi comment">
+                                                    <IconButton className={ classes.fontSmall } aria-label="add to favorites">
+                                                        <ReplyIcon />
+                                                        <Typography variant="h5">
+                                                            Reply
+                                                        </Typography>
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </CardActions>
+                                        </Box>
+                                    </React.Fragment>
+                                }
+                            />
+                            <CardHeader
+                                avatar={
+                                    <Avatar
+                                        aria-label="author" 
+                                        className={ clsx(classes.avatar)}
+                                        src={ 'https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile6-square.1f1f4900.jpg' }
+                                    >
+                                        {getInitials('Lê Dũng' )}
+                                    </Avatar>
+                                }
+                                title={
+                                    <React.Fragment>
+                                        <Typography className={ clsx(classes.titleBig, classes.dsInline) } variant="h4">Alec Thompson</Typography>
+                                        <Typography className={ clsx(classes.titleTime, classes.dsInline) } variant="body2"> &nbsp;· 7 minutes ago</Typography>
+                                    </React.Fragment>
+                                }
+                                subheader={ 
+                                    <React.Fragment>
+                                        <Typography className={ classes.subtitleBig } variant="body1">I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...I like good music from Youtube.</Typography>
+                                        <Box className={ classes.floatRight }>
+                                            <CardActions disableSpacing>
+                                                <Tooltip placement="top" title="Yêu thích">
+                                                    <IconButton className={ classes.fontSmall } aria-label="add to favorites">
+                                                        <FavoriteIcon />
+                                                        <Typography variant="h5">
+                                                            7
+                                                        </Typography>
+                                                    </IconButton>
+                                                </Tooltip>
+                                                <Tooltip placement="top" title="Phản hồi comment">
+                                                    <IconButton className={ classes.fontSmall } aria-label="add to favorites">
+                                                        <ReplyIcon />
+                                                        <Typography variant="h5">
+                                                            Reply
+                                                        </Typography>
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </CardActions>
+                                        </Box>
+                                    </React.Fragment>
+                                }
+                            />
+                            <CardHeader
+                                className={ clsx( classes.replyComment )}
+                                avatar={
+                                    <Avatar
+                                        aria-label="author" 
+                                        className={ clsx(classes.avatar)}
+                                        src={ 'https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile4-square.1a164917.jpg' }
+                                    >
+                                        {getInitials('Lê Dũng' )}
+                                    </Avatar>
+                                }
+                                title={
+                                    <React.Fragment>
+                                        <Typography className={ clsx(classes.titleBig, classes.dsInline) } variant="h4">Alec Thompson</Typography>
+                                        <Typography className={ clsx(classes.titleTime, classes.dsInline) } variant="body2"> &nbsp;· 7 minutes ago</Typography>
+                                    </React.Fragment>
+                                }
+                                subheader={ 
+                                    <React.Fragment>
+                                        <Typography className={ classes.subtitleBig } variant="body1">I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...I like good music from Youtube.</Typography>
+                                        <Box className={ classes.floatRight }>
+                                            <CardActions disableSpacing>
+                                                <Tooltip placement="top" title="Phản hồi comment">
+                                                    <IconButton className={ classes.fontSmall } aria-label="add to favorites">
+                                                        <ReplyIcon />
+                                                        <Typography variant="h5">
+                                                            Reply
+                                                        </Typography>
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </CardActions>
+                                        </Box>
+                                    </React.Fragment>
+                                }
+                            />
+                        </PerfectScrollbar>
                     </Box>
                     <Typography className={ classes.titleBig, classes.titleContent } variant="h4">Viết comment của bạn</Typography>
                     <Box>
