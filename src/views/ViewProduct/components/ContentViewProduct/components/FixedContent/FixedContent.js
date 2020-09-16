@@ -154,7 +154,7 @@ const FixedContent = props => {
                         <Typography className={ classes.tag } variant="span" >Tags 2</Typography>
                         <Typography className={ classes.tag } variant="span" >Tags 3</Typography>
                     </Box>
-                    <Divider/>
+                    <Divider variant="middle" />
                     <Box>
                         <CardHeader
                             avatar={
