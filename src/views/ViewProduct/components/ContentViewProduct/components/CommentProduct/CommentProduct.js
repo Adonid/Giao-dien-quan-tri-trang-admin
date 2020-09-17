@@ -247,9 +247,9 @@ const CommentProduct = props => {
                                                 </React.Fragment>
                                             }
                                         />
-                                        { comment.replyComments.length !== 0
+                                        { comment.replyComments.length
                                             ?
-                                            comment.replyComments.map( reply => {
+                                            comment.replyComments.map( reply => (
                                                 <CardHeader
                                                     className={ clsx( classes.replyComment )}
                                                     avatar={
@@ -301,12 +301,12 @@ const CommentProduct = props => {
                                                         </React.Fragment>
                                                     }
                                                 />
-                                            })
+                                            ))
                                             :
                                             null
                                         }
                                         <CardHeader
-                                            className={ clsx( classes.replyComment, comment.openReply && classes.displyReplyForm )}
+                                            className={ clsx( classes.replyComment, !comment.openReply && classes.displyReplyForm )}
                                             avatar={
                                                 <Avatar
                                                     aria-label="author" 
