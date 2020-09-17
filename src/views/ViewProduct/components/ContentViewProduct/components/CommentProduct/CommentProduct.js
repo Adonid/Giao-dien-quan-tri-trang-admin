@@ -193,7 +193,10 @@ const CommentProduct = props => {
     const handleReplyComment = (event, commentId) => {
         event.preventDefault();
         if( valComment ){
-            console.log(commentId);
+
+            // gui comment len Store
+            // id: Number(commentId), content: valComment
+            
             setValComment('');
         }
     }
