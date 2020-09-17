@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { createMuiTheme, makeStyles, ThemeProvider  } from '@material-ui/core/styles';
@@ -33,6 +33,37 @@ const buttonComment = createMuiTheme({
     },
   });
 
+const mockComments = [
+    {
+        id: 1,
+        name: "Alec Thompson",
+        time: "7 minutes ago",
+        avatar: "https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile1-square.3122abf4.jpg",
+        content: "I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...I like good music from Youtube.",
+        favourite: 5,
+        replyComments: [],
+        openReply: false,
+    },
+    {
+        id: 2,
+        name: "Tina Andrew",
+        time: "19 minutes ago",
+        avatar: "https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile4-square.1a164917.jpg",
+        content: "Hello guys, nice to have you on the platform! There will be a lot of great stuff coming soon. We will keep you posted for the latest news. Don't forget, You're Awesome!",
+        favourite: 17,
+        replyComments: [
+            {
+                id: 5,
+                name: "Tina Andrew",
+                time: "10 minutes ago",
+                avatar: "https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile6-square.1f1f4900.jpg",
+                content: "Chance too good. God level bars. I'm so proud of @LifeOfDesiigner #1 song in the country. Panda! Don't be scared of the truth because we need to restart the human foundation in truth I stand with the most humility. We are so blessed!",
+                favourite: 5,
+            }
+        ],
+        openReply: false,
+    }
+]
 
  const useStyles = makeStyles(theme => ({
     root: {
@@ -134,6 +165,8 @@ const CommentProduct = props => {
 
     const { className, ...rest } = props;
 
+    const [ commentsData, setCommentsData ] = useState(mockComments);
+
     const handleFavourite = comment => {
         console.log(comment); // Subcomment
     }
@@ -155,183 +188,146 @@ const CommentProduct = props => {
                 <CardContent>
                     <Box className={ classes.root }>
                         <PerfectScrollbar className={ classes.maxHeightPerfectScrollbar }>
-                            <CardHeader
-                                avatar={
-                                    <Avatar
-                                        aria-label="author" 
-                                        className={ clsx(classes.avatar)}
-                                        src={ 'https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile1-square.3122abf4.jpg' }
-                                    >
-                                        {getInitials('Lê Dũng' )}
-                                    </Avatar>
-                                }
-                                title={
-                                    <React.Fragment>
-                                        <Typography className={ clsx(classes.titleBig, classes.dsInline) } variant="h4">Alec Thompson</Typography>
-                                        <Typography className={ clsx(classes.titleTime, classes.dsInline) } variant="body2"> &nbsp;· 7 minutes ago</Typography>
+
+                            {
+                                commentsData.map( comment => (
+                                    <React.Fragment key={ comment.id }>
+                                        <CardHeader
+                                            avatar={
+                                                <Avatar
+                                                    aria-label={ comment.name } 
+                                                    className={ clsx(classes.avatar)}
+                                                    src={ comment.avatar }
+                                                >
+                                                    { getInitials( comment.name ) }
+                                                </Avatar>
+                                            }
+                                            title={
+                                                <React.Fragment>
+                                                    <Typography className={ clsx(classes.titleBig, classes.dsInline) } variant="h4">{ comment.name }</Typography>
+                                                    <Typography className={ clsx(classes.titleTime, classes.dsInline) } variant="body2"> &nbsp;· { comment.time }</Typography>
+                                                </React.Fragment>
+                                            }
+                                            subheader={ 
+                                                <React.Fragment>
+                                                    <Typography className={ classes.subtitleBig } variant="body1">{ comment.content }</Typography>
+                                                    <Box className={ classes.floatRight }>
+                                                        <CardActions disableSpacing>
+                                                            <Tooltip placement="top" title="Yêu thích">
+                                                                <IconButton 
+                                                                    className={ classes.fontSmall } 
+                                                                    aria-label="add to favorites"
+                                                                    onClick={ () => handleFavourite( comment.id ) }
+                                                                >
+                                                                    <FavoriteIcon />
+                                                                    <Typography variant="h5">
+                                                                        { comment.favourite }
+                                                                    </Typography>
+                                                                </IconButton>
+                                                            </Tooltip>
+                                                            <Tooltip placement="top" title="Phản hồi comment">
+                                                                <IconButton 
+                                                                    className={ classes.fontSmall } 
+                                                                    aria-label="add to favorites"
+                                                                    onClick={ () => handleReply( comment.id ) }
+                                                                >
+                                                                    <ReplyIcon />
+                                                                    <Typography variant="h5">
+                                                                        Reply
+                                                                    </Typography>
+                                                                </IconButton>
+                                                            </Tooltip>
+                                                        </CardActions>
+                                                    </Box>
+                                                </React.Fragment>
+                                            }
+                                        />
+                                        { comment.replyComments.length !== 0
+                                            ?
+                                            comment.replyComments.map( reply => {
+                                                <CardHeader
+                                                    className={ clsx( classes.replyComment )}
+                                                    avatar={
+                                                        <Avatar
+                                                            aria-label={ reply.name } 
+                                                            className={ clsx(classes.avatar)}
+                                                            src={ reply.avatar }
+                                                        >
+                                                            {getInitials( reply.name )}
+                                                        </Avatar>
+                                                    }
+                                                    title={
+                                                        <React.Fragment>
+                                                            <Typography className={ clsx(classes.titleBig, classes.dsInline) } variant="h4"> { reply.name } </Typography>
+                                                            <Typography className={ clsx(classes.titleTime, classes.dsInline) } variant="body2"> &nbsp;· { reply.time } </Typography>
+                                                        </React.Fragment>
+                                                    }
+                                                    subheader={ 
+                                                        <React.Fragment>
+                                                            <Typography className={ classes.subtitleBig } variant="body1"> { reply.content } </Typography>
+                                                            <Box className={ classes.floatRight }>
+                                                                <CardActions disableSpacing>
+                                                                    <Tooltip placement="top" title="Yêu thích">
+                                                                        <IconButton 
+                                                                        className={ classes.fontSmall } 
+                                                                        aria-label="add to favorites"
+                                                                        onClick={ () => handleFavourite( comment.id ) }
+                                                                        >
+                                                                            <FavoriteIcon />
+                                                                            <Typography variant="h5">
+                                                                                { reply.favourite }
+                                                                            </Typography>
+                                                                        </IconButton>
+                                                                    </Tooltip>
+                                                                    <Tooltip placement="top" title="Phản hồi comment">
+                                                                        <IconButton 
+                                                                            className={ classes.fontSmall } 
+                                                                            aria-label="add to favorites"
+                                                                            onClick={ () => handleReply( comment.id ) }
+                                                                        >
+                                                                            <ReplyIcon />
+                                                                            <Typography variant="h5">
+                                                                                Reply
+                                                                            </Typography>
+                                                                        </IconButton>
+                                                                    </Tooltip>
+                                                                </CardActions>
+                                                            </Box>
+                                                        </React.Fragment>
+                                                    }
+                                                />
+                                            })
+                                            :
+                                            null
+                                        }
+                                        <CardHeader
+                                            className={ clsx( classes.replyComment, comment.openReply && classes.displyReplyForm )}
+                                            avatar={
+                                                <Avatar
+                                                    aria-label="author" 
+                                                    className={ clsx(classes.avatar, classes.avatarReply)}
+                                                    src={ 'https://demos.creative-tim.com/material-kit-pro-react/static/media/christian.b23f7205.jpg' }
+                                                >
+                                                    {getInitials('Christian Louboutin' )}
+                                                </Avatar>
+                                            }
+                                            title={
+                                                <React.Fragment>
+                                                    <form>
+                                                        <TextField
+                                                            placeholder={ "Reply to " + comment.name + "..."}
+                                                            type="text"
+                                                            fullWidth
+                                                            // onChange={handleChange}
+                                                        />
+                                                    </form>
+                                                </React.Fragment>
+                                            }
+                                        />
                                     </React.Fragment>
-                                }
-                                subheader={ 
-                                    <React.Fragment>
-                                        <Typography className={ classes.subtitleBig } variant="body1">I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...I like good music from Youtube.</Typography>
-                                        <Box className={ classes.floatRight }>
-                                            <CardActions disableSpacing>
-                                                <Tooltip placement="top" title="Yêu thích">
-                                                    <IconButton 
-                                                        className={ classes.fontSmall } 
-                                                        aria-label="add to favorites"
-                                                        onClick={ () => handleFavourite(1) }
-                                                    >
-                                                        <FavoriteIcon />
-                                                        <Typography variant="h5">
-                                                            7
-                                                        </Typography>
-                                                    </IconButton>
-                                                </Tooltip>
-                                                <Tooltip placement="top" title="Phản hồi comment">
-                                                    <IconButton 
-                                                        className={ classes.fontSmall } 
-                                                        aria-label="add to favorites"
-                                                        onClick={ () => handleReply(1) }
-                                                    >
-                                                        <ReplyIcon />
-                                                        <Typography variant="h5">
-                                                            Reply
-                                                        </Typography>
-                                                    </IconButton>
-                                                </Tooltip>
-                                            </CardActions>
-                                        </Box>
-                                    </React.Fragment>
-                                }
-                            />
-                            <CardHeader
-                                avatar={
-                                    <Avatar
-                                        aria-label="author" 
-                                        className={ clsx(classes.avatar)}
-                                        src={ 'https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile6-square.1f1f4900.jpg' }
-                                    >
-                                        {getInitials('Lê Dũng' )}
-                                    </Avatar>
-                                }
-                                title={
-                                    <React.Fragment>
-                                        <Typography className={ clsx(classes.titleBig, classes.dsInline) } variant="h4">Alec Thompson</Typography>
-                                        <Typography className={ clsx(classes.titleTime, classes.dsInline) } variant="body2"> &nbsp;· 7 minutes ago</Typography>
-                                    </React.Fragment>
-                                }
-                                subheader={ 
-                                    <React.Fragment>
-                                        <Typography className={ classes.subtitleBig } variant="body1">I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...I like good music from Youtube.</Typography>
-                                        <Box className={ classes.floatRight }>
-                                            <CardActions disableSpacing>
-                                                <Tooltip placement="top" title="Yêu thích">
-                                                    <IconButton 
-                                                        className={ classes.fontSmall } 
-                                                        aria-label="add to favorites"
-                                                        onClick={ () => handleFavourite(2) }
-                                                    >
-                                                        <FavoriteIcon />
-                                                        <Typography variant="h5">
-                                                            7
-                                                        </Typography>
-                                                    </IconButton>
-                                                </Tooltip>
-                                                <Tooltip placement="top" title="Phản hồi comment">
-                                                    <IconButton 
-                                                        className={ classes.fontSmall } 
-                                                        aria-label="add to favorites"
-                                                        onClick={ () => handleReply(2) }
-                                                    >
-                                                        <ReplyIcon />
-                                                        <Typography variant="h5">
-                                                            Reply
-                                                        </Typography>
-                                                    </IconButton>
-                                                </Tooltip>
-                                            </CardActions>
-                                        </Box>
-                                    </React.Fragment>
-                                }
-                            />
-                            {/* Neu comment co comment duoc reply thi show ra nhu CardHeader duoi day */}
-                            <CardHeader
-                                className={ clsx( classes.replyComment )}
-                                avatar={
-                                    <Avatar
-                                        aria-label="author" 
-                                        className={ clsx(classes.avatar)}
-                                        src={ 'https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile4-square.1a164917.jpg' }
-                                    >
-                                        {getInitials('Lê Dũng' )}
-                                    </Avatar>
-                                }
-                                title={
-                                    <React.Fragment>
-                                        <Typography className={ clsx(classes.titleBig, classes.dsInline) } variant="h4">Alec Thompson</Typography>
-                                        <Typography className={ clsx(classes.titleTime, classes.dsInline) } variant="body2"> &nbsp;· 7 minutes ago</Typography>
-                                    </React.Fragment>
-                                }
-                                subheader={ 
-                                    <React.Fragment>
-                                        <Typography className={ classes.subtitleBig } variant="body1">I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...I like good music from Youtube.</Typography>
-                                        <Box className={ classes.floatRight }>
-                                            <CardActions disableSpacing>
-                                                <Tooltip placement="top" title="Yêu thích">
-                                                    <IconButton 
-                                                    className={ classes.fontSmall } 
-                                                    aria-label="add to favorites"
-                                                    onClick={ () => handleFavourite(2) }
-                                                    >
-                                                        <FavoriteIcon />
-                                                        <Typography variant="h5">
-                                                            7
-                                                        </Typography>
-                                                    </IconButton>
-                                                </Tooltip>
-                                                <Tooltip placement="top" title="Phản hồi comment">
-                                                    <IconButton 
-                                                        className={ classes.fontSmall } 
-                                                        aria-label="add to favorites"
-                                                        onClick={ () => handleReply(2) }
-                                                    >
-                                                        <ReplyIcon />
-                                                        <Typography variant="h5">
-                                                            Reply
-                                                        </Typography>
-                                                    </IconButton>
-                                                </Tooltip>
-                                            </CardActions>
-                                        </Box>
-                                    </React.Fragment>
-                                }
-                            />
-                            {/* Het moi comment thi cho ra 1 form de nhap reply comment nhu duoi day */}
-                            <CardHeader
-                                className={ clsx( classes.replyComment, false&&classes.displyReplyForm )}
-                                avatar={
-                                    <Avatar
-                                        aria-label="author" 
-                                        className={ clsx(classes.avatar, classes.avatarReply)}
-                                        src={ 'https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile4-square.1a164917.jpg' }
-                                    >
-                                        {getInitials('Lê Dũng' )}
-                                    </Avatar>
-                                }
-                                title={
-                                    <React.Fragment>
-                                        <form>
-                                            <TextField
-                                                placeholder="Aa..."
-                                                type="text"
-                                                fullWidth
-                                                // onChange={handleChange}
-                                            />
-                                        </form>
-                                    </React.Fragment>
-                                }
-                            />
+                                ))
+                            }
+                            
                         </PerfectScrollbar>
                     </Box>
                     <Typography className={ classes.titleBig, classes.titleContent } variant="h4">Viết comment của bạn</Typography>
