@@ -177,20 +177,25 @@ const CommentProduct = props => {
 
     const [ commentsData, setCommentsData ] = useState(mockComments);
 
+    const [ valComment, setValComment ] = useState('');
+
     const handleFavourite = comment => {
         
     }
 
     const handleReply = commentId => {
-        const commentChange = [...commentsData].map( comment => comment.id===Number(commentId) ? {...comment, openReply: ! {...comment}.openReply} : comment);
+        const commentChange = [...commentsData].map( comment => comment.id===Number(commentId) ? {...comment, openReply: true} : {...comment, openReply: false});
         setCommentsData(commentChange);
     }
 
+    const handleChange = event => setValComment(event.target.value);
     
     const handleReplyComment = (event, commentId) => {
         event.preventDefault();
-        console.log(commentId);
-        console.log(event);
+        if( valComment ){
+            console.log(commentId);
+            setValComment('');
+        }
     }
 
 
@@ -339,6 +344,8 @@ const CommentProduct = props => {
                                                             type="text"
                                                             fullWidth
                                                             autoFocus={ comment.openReply }
+                                                            onChange={ handleChange }
+                                                            value={ valComment }
                                                         />
                                                     </form>
                                                 </React.Fragment>
