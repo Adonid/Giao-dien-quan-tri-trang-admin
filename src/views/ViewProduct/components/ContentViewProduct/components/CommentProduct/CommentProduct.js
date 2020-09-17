@@ -74,7 +74,7 @@ const mockComments = [
     },
     displyReplyForm: {
         display: "none",
-        alignItems: 'center'
+        alignItems: 'start'
     },
     avatar: {
         maxWidth: theme.spacing(7),
@@ -114,8 +114,13 @@ const mockComments = [
     dsInline: {
         display: 'inline'
     },
+    replyComments: {
+        paddingLeft: theme.spacing(11),
+        alignItems: 'end'
+    },
     replyComment: {
-        paddingLeft: theme.spacing(11)
+        paddingLeft: theme.spacing(11),
+        alignItems: 'center!important'
     },
     buttonComment: {
         float: 'right',
@@ -173,12 +178,22 @@ const CommentProduct = props => {
     const [ commentsData, setCommentsData ] = useState(mockComments);
 
     const handleFavourite = comment => {
-        console.log(comment); // Subcomment
+        
     }
 
-    const handleReply = comment => {
-        console.log(comment);
+    const handleReply = commentId => {
+        const commentChange = [...commentsData].map( comment => comment.id===Number(commentId) ? {...comment, openReply: ! {...comment}.openReply} : comment);
+        setCommentsData(commentChange);
     }
+
+    
+    const handleReplyComment = (event, commentId) => {
+        event.preventDefault();
+        console.log(commentId);
+        console.log(event);
+    }
+
+
 
     return (
         <Grid item xs={12} sm={8}>
@@ -251,7 +266,7 @@ const CommentProduct = props => {
                                             ?
                                             comment.replyComments.map( reply => (
                                                 <CardHeader
-                                                    className={ clsx( classes.replyComment )}
+                                                    className={ clsx( classes.replyComments )}
                                                     avatar={
                                                         <Avatar
                                                             aria-label={ reply.name } 
@@ -318,12 +333,12 @@ const CommentProduct = props => {
                                             }
                                             title={
                                                 <React.Fragment>
-                                                    <form>
+                                                    <form onSubmit={ () => handleReplyComment(event, comment.id) }>
                                                         <TextField
                                                             placeholder={ "Reply to " + comment.name + "..."}
                                                             type="text"
                                                             fullWidth
-                                                            // onChange={handleChange}
+                                                            autoFocus={ comment.openReply }
                                                         />
                                                     </form>
                                                 </React.Fragment>
@@ -350,8 +365,8 @@ const CommentProduct = props => {
                             }
                             title={
                                 <TextField
-                                    id="standard-multiline-static"
-                                    label="Bình luận tiếp cho ai đó..."
+                                    id="comment-this-post"
+                                    label="Bình luận bài viết..."
                                     multiline
                                     fullWidth
                                     rows={3}
