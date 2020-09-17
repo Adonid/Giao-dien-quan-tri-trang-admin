@@ -68,11 +68,13 @@ const mockComments = [
  const useStyles = makeStyles(theme => ({
     root: {
         '& .MuiCardHeader-root': {
-            paddingBottom: theme.spacing(1.8)
+            paddingBottom: theme.spacing(1.8),
+            alignItems: 'end'
         }
     },
     displyReplyForm: {
         display: "none",
+        alignItems: 'center'
     },
     avatar: {
         maxWidth: theme.spacing(7),
@@ -157,6 +159,9 @@ const mockComments = [
     maxHeightPerfectScrollbar: {
         maxHeight: theme.spacing(63)
       },
+    newCommentForm: {
+        alignItems: 'end'
+    }
 }));
 
 const CommentProduct = props => {
@@ -333,7 +338,7 @@ const CommentProduct = props => {
                     <Typography className={ classes.titleBig, classes.titleContent } variant="h4">Viết comment của bạn</Typography>
                     <Box>
                         <CardHeader
-                            // className={ clsx( classes.replyComment )}
+                            className={ clsx( classes.newCommentForm )}
                             avatar={
                                 <Avatar
                                     aria-label="author" 
