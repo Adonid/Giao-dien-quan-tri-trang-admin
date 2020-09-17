@@ -109,10 +109,10 @@ const LimitProduct = props => {
 };
 
 LimitProduct.propTypes = {
-    isStop: PropTypes.bool.isRequired,
-    closePost: PropTypes.func.isRequired,
-    openPost: PropTypes.func.isRequired,
-    distroyPost: PropTypes.func.isRequired,
+    isStop: PropTypes.bool,
+    closePost: PropTypes.func,
+    openPost: PropTypes.func,
+    distroyPost: PropTypes.func,
 };
 
 export default LimitProduct;
