@@ -162,7 +162,7 @@ const mockComments = [
         }
     },
     maxHeightPerfectScrollbar: {
-        maxHeight: theme.spacing(63)
+        maxHeight: theme.spacing(64.5)
       },
     newCommentForm: {
         alignItems: 'end'
@@ -376,7 +376,7 @@ const CommentProduct = props => {
                             title={
                                 <TextField
                                     id="comment-this-post"
-                                    label="Bình luận bài viết..."
+                                    placeholder="Bình luận bài viết..."
                                     multiline
                                     fullWidth
                                     rows={3}
