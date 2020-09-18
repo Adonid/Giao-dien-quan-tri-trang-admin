@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { createMuiTheme, makeStyles, ThemeProvider  } from '@material-ui/core/styles';
@@ -150,6 +150,10 @@ const CommentProduct = props => {
 
     const [ commentText, setCommentText ] = useState('');
 
+    useEffect( () => {
+        setCommentsData(mockComments);
+    }, [mockComments])
+
     const handleReply = commentId => {
         const commentChange = [...commentsData].map( comment => comment.id===Number(commentId) ? {...comment, openReply: true} : {...comment, openReply: false});
         setCommentsData(commentChange);
@@ -180,8 +184,9 @@ const CommentProduct = props => {
     }
 
     const handleFavourite = commentId => {
-
-        favouriteComment(commentId);
+        let id = Number(commentId);
+        let isVote = [ ...commentsData ].filter( comment => comment.id===id)[0].meVote;
+        favouriteComment(id, isVote);
     };
 
     const handleFavouriteReply = (commentId, replyId) => {
@@ -407,10 +412,11 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        favouriteComment: commentId => {
+        favouriteComment: (id, vote) => {
             dispatch({
                 type: "FAVOURITE_COMMENT",
-                commentId: commentId,
+                id: id,
+                vote: vote,
             })
         },
         favouriteCommentReply: () => {
