@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { createMuiTheme, makeStyles, ThemeProvider  } from '@material-ui/core/styles';
+import { orange } from '@material-ui/core/colors';
 import { 
     Card, 
     CardContent,
@@ -40,9 +41,27 @@ const mockComments = [
         time: "7 minutes ago",
         avatar: "https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile1-square.3122abf4.jpg",
         content: "I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...I like good music from Youtube.",
-        favourite: 5,
+        favourite: [
+            {
+                id: 2,
+                name: "Thành Trung",
+            },
+            {
+                id: 5,
+                name: "Cẩm Ly",
+            },
+            {
+                id: 8,
+                name: "Quang Trung",
+            },
+            {
+                id: 19,
+                name: "Sơn Ca",
+            },
+        ],
         replyComments: [],
         openReply: false,
+        meVote: false,
     },
     {
         id: 2,
@@ -50,7 +69,20 @@ const mockComments = [
         time: "19 minutes ago",
         avatar: "https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile4-square.1a164917.jpg",
         content: "Hello guys, nice to have you on the platform! There will be a lot of great stuff coming soon. We will keep you posted for the latest news. Don't forget, You're Awesome!",
-        favourite: 17,
+        favourite: [
+            {
+                id: 6,
+                name: "Văn Quang",
+            },
+            {
+                id: 9,
+                name: "Lê Đình Chiến",
+            },
+            {
+                id: 1,
+                name: "Phạm Bách",
+            },
+        ],
         replyComments: [
             {
                 id: 5,
@@ -58,10 +90,25 @@ const mockComments = [
                 time: "10 minutes ago",
                 avatar: "https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile6-square.1f1f4900.jpg",
                 content: "Chance too good. God level bars. I'm so proud of @LifeOfDesiigner #1 song in the country. Panda! Don't be scared of the truth because we need to restart the human foundation in truth I stand with the most humility. We are so blessed!",
-                favourite: 5,
-            }
+                favourite: [
+                    {
+                        id: 3,
+                        name: "Phan Giang",
+                    },
+                    {
+                        id: 11,
+                        name: "Đại Tửu",
+                    },
+                    {
+                        id: 15,
+                        name: "Vương Hồng",
+                    },
+                ],
+                meVote: false,
+            },
         ],
         openReply: false,
+        meVote: true,
     }
 ]
 
@@ -173,15 +220,13 @@ const CommentProduct = props => {
 
     const classes = useStyles();
 
-    const { className, ...rest } = props;
+    const { className, favourites, replys, comments, stopPost, toPost, deleteForever, ...rest } = props;
 
     const [ commentsData, setCommentsData ] = useState(mockComments);
 
     const [ valComment, setValComment ] = useState('');
 
-    const handleFavourite = comment => {
-        
-    }
+    const [ commentText, setCommentText ] = useState('');
 
     const handleReply = commentId => {
         const commentChange = [...commentsData].map( comment => comment.id===Number(commentId) ? {...comment, openReply: true} : {...comment, openReply: false});
@@ -189,6 +234,8 @@ const CommentProduct = props => {
     }
 
     const handleChange = event => setValComment(event.target.value);
+
+    const handleChangeComment = event => setCommentText(event.target.value);
     
     const handleReplyComment = (event, commentId) => {
         event.preventDefault();
@@ -199,6 +246,23 @@ const CommentProduct = props => {
             
             setValComment('');
         }
+    }
+
+    const commentPost = () => {
+        if( commentText ){
+            console.log(commentText);
+            // Binh luan voi noi dung commentText
+
+            setCommentText('');
+        }
+    }
+
+    const handleFavourite = commentId => {
+        console.log(commentId);
+    }
+
+    const handleFavouriteReply = (commentId, replyId) => {
+        console.log(commentId, replyId);
     }
 
 
@@ -241,15 +305,18 @@ const CommentProduct = props => {
                                                     <Typography className={ classes.subtitleBig } variant="body1">{ comment.content }</Typography>
                                                     <Box className={ classes.floatRight }>
                                                         <CardActions disableSpacing>
-                                                            <Tooltip placement="top" title="Yêu thích">
+                                                            <Tooltip 
+                                                                placement="bottom" 
+                                                                title={ comment.favourite.map( u => u.name + ', ') }
+                                                            >
                                                                 <IconButton 
                                                                     className={ classes.fontSmall } 
                                                                     aria-label="add to favorites"
                                                                     onClick={ () => handleFavourite( comment.id ) }
                                                                 >
-                                                                    <FavoriteIcon />
+                                                                    <FavoriteIcon style={{ color: comment.meVote ? '#f44336' : '#999'}} />
                                                                     <Typography variant="h5">
-                                                                        { comment.favourite }
+                                                                        { comment.favourite.length }
                                                                     </Typography>
                                                                 </IconButton>
                                                             </Tooltip>
@@ -259,8 +326,8 @@ const CommentProduct = props => {
                                                                     aria-label="add to favorites"
                                                                     onClick={ () => handleReply( comment.id ) }
                                                                 >
-                                                                    <ReplyIcon />
-                                                                    <Typography variant="h5">
+                                                                    <ReplyIcon style={{ color:"#9c27b0" }} />
+                                                                    <Typography variant="overline">
                                                                         Reply
                                                                     </Typography>
                                                                 </IconButton>
@@ -295,15 +362,18 @@ const CommentProduct = props => {
                                                             <Typography className={ classes.subtitleBig } variant="body1"> { reply.content } </Typography>
                                                             <Box className={ classes.floatRight }>
                                                                 <CardActions disableSpacing>
-                                                                    <Tooltip placement="top" title="Yêu thích">
+                                                                    <Tooltip 
+                                                                        placement="bottom" 
+                                                                        title={ reply.favourite.map( u => u.name + ', ') }
+                                                                    >
                                                                         <IconButton 
-                                                                        className={ classes.fontSmall } 
-                                                                        aria-label="add to favorites"
-                                                                        onClick={ () => handleFavourite( comment.id ) }
+                                                                            className={ classes.fontSmall } 
+                                                                            aria-label="add to favorites"
+                                                                            onClick={ () => handleFavouriteReply( comment.id, reply.id ) }
                                                                         >
-                                                                            <FavoriteIcon />
+                                                                            <FavoriteIcon style={{ color: reply.meVote ? '#f44336' : '#999'}} />
                                                                             <Typography variant="h5">
-                                                                                { reply.favourite }
+                                                                                { reply.favourite.length }
                                                                             </Typography>
                                                                         </IconButton>
                                                                     </Tooltip>
@@ -313,8 +383,8 @@ const CommentProduct = props => {
                                                                             aria-label="add to favorites"
                                                                             onClick={ () => handleReply( comment.id ) }
                                                                         >
-                                                                            <ReplyIcon />
-                                                                            <Typography variant="h5">
+                                                                            <ReplyIcon style={{ color:"#9c27b0" }} />
+                                                                            <Typography variant="overline">
                                                                                 Reply
                                                                             </Typography>
                                                                         </IconButton>
@@ -380,11 +450,20 @@ const CommentProduct = props => {
                                     multiline
                                     fullWidth
                                     rows={3}
+                                    value={ commentText }
+                                    onChange={ handleChangeComment }
                                 />
                             }
                             subheader={
                                 <ThemeProvider theme={buttonComment}>
-                                    <Button className={ classes.buttonComment } variant="contained" color="primary" disableElevation>
+                                    <Button 
+                                        className={ classes.buttonComment } 
+                                        variant="contained" 
+                                        color="primary" 
+                                        disableElevation
+                                        disabled= { !commentText ? true : false }
+                                        onClick={ commentPost }
+                                    >
                                         POST COMMENT
                                     </Button>
                                 </ThemeProvider>
@@ -398,7 +477,12 @@ const CommentProduct = props => {
 };
 
 CommentProduct.propTypes = {
-    
+    favourites: PropTypes.func,
+    replys: PropTypes.func,
+    comments: PropTypes.func,
+    stopPost: PropTypes.func,
+    toPost: PropTypes.func,
+    deleteForeve: PropTypes.func,
 };
 
 export default CommentProduct;
