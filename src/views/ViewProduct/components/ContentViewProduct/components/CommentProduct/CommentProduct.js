@@ -230,7 +230,7 @@ const CommentProduct = props => {
                                                         <CardActions disableSpacing>
                                                             <Tooltip 
                                                                 placement="bottom" 
-                                                                title={ comment.favourite.map( u => u.name + ', ') }
+                                                                title={ comment.favourite.length ? comment.favourite.map( u => <React.Fragment><span>{ u.name }</span> <br/></React.Fragment>) : <React.Fragment><span>Yêu thích</span> <br/></React.Fragment> }
                                                             >
                                                                 <IconButton 
                                                                     className={ classes.fontSmall } 
@@ -243,7 +243,7 @@ const CommentProduct = props => {
                                                                     </Typography>
                                                                 </IconButton>
                                                             </Tooltip>
-                                                            <Tooltip placement="top" title="Phản hồi comment">
+                                                            <Tooltip placement="bottom" title="Phản hồi comment">
                                                                 <IconButton 
                                                                     className={ classes.fontSmall } 
                                                                     aria-label="add to favorites"
@@ -287,7 +287,7 @@ const CommentProduct = props => {
                                                                 <CardActions disableSpacing>
                                                                     <Tooltip 
                                                                         placement="bottom" 
-                                                                        title={ reply.favourite.map( u => u.name + ', ') }
+                                                                        title={ reply.favourite.length ? reply.favourite.map( u => <React.Fragment><span>{ u.name }</span> <br/></React.Fragment>) : <React.Fragment><span>Yêu thích</span> <br/></React.Fragment> }
                                                                     >
                                                                         <IconButton 
                                                                             className={ classes.fontSmall } 
@@ -300,7 +300,7 @@ const CommentProduct = props => {
                                                                             </Typography>
                                                                         </IconButton>
                                                                     </Tooltip>
-                                                                    <Tooltip placement="top" title="Phản hồi comment">
+                                                                    <Tooltip placement="bottom" title="Phản hồi comment">
                                                                         <IconButton 
                                                                             className={ classes.fontSmall } 
                                                                             aria-label="add to favorites"
