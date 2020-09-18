@@ -220,7 +220,7 @@ const CommentProduct = props => {
 
     const classes = useStyles();
 
-    const { className, favourites, replys, comments, stopPost, toPost, deleteForever, ...rest } = props;
+    const { className, favourites, favouritesReply, replys, comments, ...rest } = props;
 
     const [ commentsData, setCommentsData ] = useState(mockComments);
 
@@ -478,11 +478,9 @@ const CommentProduct = props => {
 
 CommentProduct.propTypes = {
     favourites: PropTypes.func,
+    favouritesReply: PropTypes.func,
     replys: PropTypes.func,
     comments: PropTypes.func,
-    stopPost: PropTypes.func,
-    toPost: PropTypes.func,
-    deleteForeve: PropTypes.func,
 };
 
 export default CommentProduct;
