@@ -72,6 +72,6 @@ export default [
             },
         ],
         openReply: false,
-        meVote: true,
+        meVote: false,
     }
 ];
