@@ -66,9 +66,10 @@ const buttonComment = createMuiTheme({
         height: theme.spacing(5),
     },
     subtitleBig: {
-        color: '#999',
-        fontSize: 15,
-        paddingTop: theme.spacing(1.5)
+        color: '#666',
+        fontSize: '1.28em',
+        paddingTop: theme.spacing(1.5),
+        lineHeight: '1.6em'
     },
     titleBig: {
         color: '#3C4858',
@@ -178,7 +179,10 @@ const CommentProduct = props => {
         }
     }
 
-    const handleFavourite = commentId => favouriteComment(commentId);
+    const handleFavourite = commentId => {
+
+        favouriteComment(commentId);
+    };
 
     const handleFavouriteReply = (commentId, replyId) => {
         // console.log(commentId, replyId);
