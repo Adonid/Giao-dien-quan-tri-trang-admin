@@ -171,19 +171,17 @@ const CommentProduct = props => {
 
     const commentPost = () => {
         if( commentText ){
-            console.log(commentText);
+            // console.log(commentText);
             // Binh luan voi noi dung commentText
 
             setCommentText('');
         }
     }
 
-    const handleFavourite = commentId => {
-        console.log(commentId);
-    }
+    const handleFavourite = commentId => favouriteComment(commentId);
 
     const handleFavouriteReply = (commentId, replyId) => {
-        console.log(commentId, replyId);
+        // console.log(commentId, replyId);
     }
 
 
@@ -405,9 +403,10 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        favouriteComment: () => {
+        favouriteComment: commentId => {
             dispatch({
-
+                type: "FAVOURITE_COMMENT",
+                commentId: commentId,
             })
         },
         favouriteCommentReply: () => {
