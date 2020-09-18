@@ -33,19 +33,33 @@ const dataPostDetail = {
 
     limitInfo: {
 
+    },
+    userView: {
+        id: 14,
+        name: "Trương Định"
     }
 }
 
 const PostDetailReducer = (state = dataPostDetail, action) => {
     switch (action.type) {
         case 'FAVOURITE_COMMENT':
-            const idComment = action.commentId;
-            /** api them yeu thich o day. Mac dinh BAI VIET va NGUOI DUNG da duoc biet truoc */
+            let id = action.id; // id cua comment: int
+            let vote = action.vote; // trang thai co vote hay khong: bool
+            /** api xu ly yeu thich comment o day. Mac dinh BAI VIET va NGUOI DUNG da duoc biet truoc */
 
             /** end */
 
             // day la 1 vi du tra ve
-            console.log(idComment);
+            let newComment = [ ...state.dataComments ];
+            if(!vote){
+                // Them vote
+                newComment = newComment.map( comment => comment.id === id ? { ...comment, meVote: !vote, favourite: [ ...comment.favourite, { ...state.userView} ] } : comment );
+            }
+            else{
+                // Bo vote
+                newComment = newComment.map( comment => comment.id === id ? { ...comment, meVote: !vote, favourite: [ ...comment.favourite ].filter( item => item.id !== {...state.userView}.id) } : comment );
+            }
+            state = { ...state, dataComments: newComment };
             return state;
 
         default:
