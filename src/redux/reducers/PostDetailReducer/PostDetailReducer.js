@@ -52,14 +52,30 @@ const PostDetailReducer = (state = dataPostDetail, action) => {
             // day la 1 vi du tra ve
             let newComment = [ ...state.dataComments ];
             if(!vote){
-                // Them vote
+                // Them vote cho comment
                 newComment = newComment.map( comment => comment.id === id ? { ...comment, meVote: !vote, favourite: [ ...comment.favourite, { ...state.userView} ] } : comment );
             }
             else{
-                // Bo vote
+                // Bo vote o comment
                 newComment = newComment.map( comment => comment.id === id ? { ...comment, meVote: !vote, favourite: [ ...comment.favourite ].filter( item => item.id !== {...state.userView}.id) } : comment );
             }
             state = { ...state, dataComments: newComment };
+            return state;
+            
+        case 'FAVOURITE_COMMENT_REPLY':
+            let idReply = action.id; // id cua commentReply: int
+            let voteReply = action.vote; // trang thai co vote hay khong: bool
+            let newCommentReply = [ ...state.dataComments ];
+            // NGAY MAI BAT DAU LAM TU DAY
+            if(!vote){
+                // Them vote cho comment reply
+                newCommentReply = newCommentReply.map( comment => comment.id === id ? { ...comment, meVote: !vote, favourite: [ ...comment.favourite, { ...state.userView} ] } : comment );
+            }
+            else{
+                // Bo vote o comment reply
+                newCommentReply = newCommentReply.map( comment => comment.id === id ? { ...comment, meVote: !vote, favourite: [ ...comment.favourite ].filter( item => item.id !== {...state.userView}.id) } : comment );
+            }
+            state = { ...state, dataComments: newCommentReply };
             return state;
 
         default:
