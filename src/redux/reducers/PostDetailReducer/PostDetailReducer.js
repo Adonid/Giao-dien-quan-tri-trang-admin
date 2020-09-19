@@ -63,23 +63,27 @@ const PostDetailReducer = (state = dataPostDetail, action) => {
             return state;
             
         case 'FAVOURITE_COMMENT_REPLY':
-            let idReply = action.id; // id cua commentReply: int
-            let voteReply = action.vote; // trang thai co vote hay khong: bool
-            let newCommentReply = [ ...state.dataComments ];
-            // NGAY MAI BAT DAU LAM TU DAY
-            if(!vote){
+            let tempComReply = action.tempComReply;
+            // {idComment: int, idReply: int, isVote: bool}
+            /** api xu ly yeu thich comment reply */
+
+            /** end */
+
+            // VD sau khi goi api xong
+            let newCommentReply = [ ...state.dataComments ].filter( comment => comment.id===tempComReply.idComment)[0];
+            if (!tempComReply.isVote) {
                 // Them vote cho comment reply
-                newCommentReply = newCommentReply.map( comment => comment.id === id ? { ...comment, meVote: !vote, favourite: [ ...comment.favourite, { ...state.userView} ] } : comment );
-            }
-            else{
+                newCommentReply = { ...newCommentReply, replyComments: [ ...newCommentReply.replyComments ].map( comment => comment.id === tempComReply.idReply ? { ...comment,  meVote: !tempComReply.isVote, favourite: [ ...comment.favourite, { ...state.userView} ] } : comment)};
+            } else {
                 // Bo vote o comment reply
-                newCommentReply = newCommentReply.map( comment => comment.id === id ? { ...comment, meVote: !vote, favourite: [ ...comment.favourite ].filter( item => item.id !== {...state.userView}.id) } : comment );
+                newCommentReply = { ...newCommentReply, replyComments: [ ...newCommentReply.replyComments ].map( comment => comment.id === tempComReply.idReply ? { ...comment,  meVote: !tempComReply.isVote, favourite: [ ...comment.favourite ].filter( item => item.id !== {...state.userView}.id) } : comment)};
             }
-            state = { ...state, dataComments: newCommentReply };
+            let commentsNew = [ ...state.dataComments ].map( comment => comment.id===tempComReply.idComment ? newCommentReply : comment );
+            state = { ...state, dataComments: commentsNew };
             return state;
 
         default:
-            return state
+            return state;
     }
 }
 
