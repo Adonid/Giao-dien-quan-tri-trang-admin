@@ -193,7 +193,8 @@ const CommentProduct = props => {
         let ComId = Number(commentId);
         let id = Number(replyId);
         let isVote = [ ...commentsData ].filter( comment => comment.id===ComId)[0].replyComments.filter( replyComment => replyComment.id===id)[0].meVote;
-        favouriteCommentReply(id, isVote);
+        let tempComReply = { idComment: ComId, idReply: id, isVote: isVote }
+        favouriteCommentReply( tempComReply );
     }
 
 
@@ -422,11 +423,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                 vote: vote,
             })
         },
-        favouriteCommentReply: () => {
+        favouriteCommentReply: tempComReply => {
             dispatch({
                 type: "FAVOURITE_COMMENT_REPLY",
-                id: id,
-                vote: vote,
+                tempComReply: tempComReply
             })
         },
         replys: () => {
