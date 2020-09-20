@@ -26,7 +26,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Main = props => {
-  const { children } = props;
+  const { 
+    children, 
+    dataAlertNotify, 
+    dataAlertUserDetail, 
+    dataAlertAddUser, 
+    dataAlertUserEditor, 
+    dataAlertCreateNewPost, 
+    dataAlertDetailNewPost, 
+    openAddNewUser, 
+    ...rest  
+  } = props;
 
   const classes = useStyles();
   const theme = useTheme();
@@ -66,12 +76,13 @@ const Main = props => {
         <Footer />
       </main>
 
-      <Snackbars data={ props.dataAlertNotify } />
-      <Snackbars data={ props.dataAlertAddUser } />
-      <Snackbars data={ props.dataAlertUserDetail } />
-      <Snackbars data={ props.dataAlertUserEditor } />
-      <Snackbars data={ props.dataAlertCreateNewPost } />
-      <FormAddUser openCall={props.openAddUser} />
+      <Snackbars data={ dataAlertNotify } />
+      <Snackbars data={ dataAlertAddUser } />
+      <Snackbars data={ dataAlertUserDetail } />
+      <Snackbars data={ dataAlertUserEditor } />
+      <Snackbars data={ dataAlertCreateNewPost } />
+      <Snackbars data={ dataAlertDetailNewPost } />
+      <FormAddUser openCall={openAddNewUser} />
     </div>
   );
 };
@@ -87,7 +98,8 @@ Main.propTypes = {
       dataAlertUserDetail: state.dataUserDetail.alert,
       dataAlertUserEditor: state.dataUserEditor.alert,
       dataAlertCreateNewPost: state.dataManipulationPost.createPost.alert,
-      openAddUser: state.dataNewUser.show,
+      dataAlertDetailNewPost: state.dataPostDetail.limitInfo.alert,
+      openAddNewUser: state.dataNewUser.show,
     }
   }
 
@@ -97,6 +109,16 @@ Main.propTypes = {
         dispatch(actionCreator)
       }
     }
+  }
+
+  Main.propTypes = {
+    dataAlertNotify: PropTypes.object.isRequired,
+    dataAlertAddUser: PropTypes.object.isRequired,
+    dataAlertUserDetail: PropTypes.object.isRequired,
+    dataAlertUserEditor: PropTypes.object.isRequired,
+    dataAlertCreateNewPost: PropTypes.object.isRequired,
+    dataAlertDetailNewPost: PropTypes.object.isRequired,
+    openAddUser: PropTypes.bool.isRequired,
   }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
