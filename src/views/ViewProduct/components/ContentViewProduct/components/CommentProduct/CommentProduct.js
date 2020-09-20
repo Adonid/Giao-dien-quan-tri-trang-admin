@@ -166,9 +166,9 @@ const CommentProduct = props => {
     const handleReplyComment = (event, commentId) => {
         event.preventDefault();
         if( valComment ){
-
-            // gui comment len Store
-            // id: Number(commentId), content: valComment
+            const commentReply = { commentId: Number(commentId), content: valComment };
+            
+            replys(commentReply);
             
             setValComment('');
         }
@@ -429,9 +429,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                 tempComReply: tempComReply
             })
         },
-        replys: () => {
+        replys: commentReply => {
             dispatch({
-
+                type: "REPLY_COMMENT",
+                comment: commentReply
             })
         },
         comments: () => {
