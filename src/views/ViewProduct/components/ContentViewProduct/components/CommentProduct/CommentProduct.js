@@ -176,9 +176,7 @@ const CommentProduct = props => {
 
     const commentPost = () => {
         if( commentText ){
-            // console.log(commentText);
-            // Binh luan voi noi dung commentText
-
+            comments(commentText);
             setCommentText('');
         }
     }
@@ -435,9 +433,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                 comment: commentReply
             })
         },
-        comments: () => {
+        comments: commentText => {
             dispatch({
-
+                type: "COMMENT",
+                comment: commentText
             })
         },
     }
