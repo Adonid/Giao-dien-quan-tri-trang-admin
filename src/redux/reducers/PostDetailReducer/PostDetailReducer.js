@@ -32,12 +32,16 @@ const dataPostDetail = {
     dataComments: mockComments,
 
     limitInfo: {
-
+        isStop: true,
+        alert: {
+            type    : "info",
+            content : "Hello Word"
+        },
     },
     userView: {
         id: 14,
         name: "Trương Định"
-    }
+    },
 }
 
 const PostDetailReducer = (state = dataPostDetail, action) => {
@@ -100,6 +104,30 @@ const PostDetailReducer = (state = dataPostDetail, action) => {
             /** end */
             console.log(commentText);
             
+            return state;
+
+        case 'CLOSE_POST':
+            /** api dung dang bai - dung phe duyet */
+
+            /** end */
+            // vi du sau khi api tra ve
+            state = { ...state, limitInfo: { ...state.limitInfo, isStop: true, alert: { type: "warning", content: "Đã dừng đăng bài viết!" }}};
+            return state;
+
+        case 'OPEN_POST':
+            /** api dang bai lai - phe duyet */
+
+            /** end */
+            // vi du sau khi api tra ve
+            state = { ...state, limitInfo: { ...state.limitInfo, isStop: false, alert: { type: "info", content: "Bài viết đã được đăng lại!" }}};
+            return state;
+
+        case 'DESTROY_POST':
+            /** api xoa du lieu bai viet */
+
+            /** end */
+            // vi du sau khi api tra ve
+            state = { ...state, limitInfo: { ...state.limitInfo, alert: { type: "error", content: "Bài viết đã bị xóa!" }}};
             return state;
 
         default:
