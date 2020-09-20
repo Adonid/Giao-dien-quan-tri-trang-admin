@@ -88,9 +88,20 @@ const PostDetailReducer = (state = dataPostDetail, action) => {
             /** api reply vao comment */
                 // --> Yeu cau cap nhat lai mockComments
             /** end */
+            console.log(commentReply);
             
             return state;
             
+        case 'COMMENT':
+            let commentText = action.comment;
+            // commentText: string, voi id post, id user da co trong state
+            /** api them comment vao bai viet */
+                // --> Yeu cau cap nhat lai mockComments
+            /** end */
+            console.log(commentText);
+            
+            return state;
+
         default:
             return state;
     }
