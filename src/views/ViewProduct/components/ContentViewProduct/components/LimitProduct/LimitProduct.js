@@ -17,6 +17,7 @@ import { ConfirmDialog } from 'alerts';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -49,9 +50,9 @@ const LimitProduct = props => {
     const [ openOpen, setOpenOpen ] = useState(false);
     const [ openDistroy, setOpenDistroy ] = useState(false);
 
-    const handleBlocking = () => closePost({id: props.userinfo, name: props.userinfo.name});
-    const handleOpening = () => openPost({id: props.userinfo, name: props.userinfo.name});
-    const handleDistroyPost = () => distroyPost({id: props.userinfo, name: props.userinfo.name});
+    const handleBlocking = () => closePost();
+    const handleOpening = () => openPost();
+    const handleDistroyPost = () => distroyPost();
 
     return (
         <React.Fragment>
@@ -66,7 +67,7 @@ const LimitProduct = props => {
                     <CardContent>
                         <Box>
                             {
-                            false
+                            isStop
                             ?
                             <Button 
                                 startIcon={ <LockOpenIcon fontSize="small" />}
@@ -115,4 +116,30 @@ LimitProduct.propTypes = {
     distroyPost: PropTypes.func,
 };
 
-export default LimitProduct;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        isStop: state.dataPostDetail.limitInfo.isStop
+    }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        closePost: () => {
+            dispatch({
+                type: "CLOSE_POST",
+            })
+        },
+        openPost: () => {
+            dispatch({
+                type: "OPEN_POST",
+            })
+        },
+        distroyPost: () => {
+            dispatch({
+                type: "DESTROY_POST",
+            })
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LimitProduct)
