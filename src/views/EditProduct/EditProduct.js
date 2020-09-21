@@ -19,7 +19,7 @@ const EditProduct = props => {
         <div className={classes.root}>
             <ProductsToolbar />
             <div className={classes.content}>
-                <ContentNewProduct />
+                <ContentEditProduct />
             </div>
         </div>
     );
