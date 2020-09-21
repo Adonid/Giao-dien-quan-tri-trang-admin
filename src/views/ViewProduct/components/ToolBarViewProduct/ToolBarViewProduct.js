@@ -13,6 +13,7 @@ import {
  } from '@material-ui/core';
  import BorderColorOutlinedIcon from '@material-ui/icons/BorderColorOutlined';
   import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -37,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 
 const ToolBarViewProduct = props => {
 
-  const { className, ...rest } = props;
+  const { className, namePost, ...rest } = props;
 
   const classes = useStyles();
 
@@ -54,7 +55,7 @@ const ToolBarViewProduct = props => {
           <Link color="inherit" component={RouterLink} to="/products">
               Quản lý bài viết
           </Link>
-          <Typography color="textPrimary">Một sô phương pháp phòng chống ho cho bé</Typography>
+          <Typography color="textPrimary"> { namePost } </Typography>
         </Breadcrumbs>
         <Link color="inherit" underline="none" component={RouterLink} to="/products">
           <Button
@@ -67,7 +68,7 @@ const ToolBarViewProduct = props => {
       </div>
       <div>
         <Typography variant="h3" gutterBottom>
-          Một sô phương pháp phòng chống ho cho bé
+           { namePost } 
         </Typography>
       </div>
     </div>
@@ -75,7 +76,14 @@ const ToolBarViewProduct = props => {
 };
 
 ToolBarViewProduct.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  namePost: PropTypes.string.isRequired,
 };
 
-export default ToolBarViewProduct;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    namePost: state.dataPostDetail.postInfo.title,
+  }
+}
+
+export default connect(mapStateToProps)(ToolBarViewProduct)
