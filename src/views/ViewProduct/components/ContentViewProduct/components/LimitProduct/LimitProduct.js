@@ -102,8 +102,8 @@ const LimitProduct = props => {
                     </CardContent>
                 </Card>
             </Grid>
-            <ConfirmDialog action={ handleBlocking } openDialog={openBlock} content={{type:'block', title:'Dừng đăng bài', note:`Bài viết sẽ mất quyền phê duyệt? Bạn có thể cấp lại quyền phê duyệt để đăng bài trở lại.`}} />
-            <ConfirmDialog action={ handleOpening } openDialog={openOpen} content={{type:'open', title:'Đăng bài trở lại', note:`Bài viết sẽ được cấp lại quyền phê duyệt và tự động được đăng?`}} />
+            <ConfirmDialog action={ handleBlocking } openDialog={openBlock} content={{type:'denied', title:'Dừng đăng bài', note:`Bài viết sẽ mất quyền phê duyệt? Bạn có thể cấp lại quyền phê duyệt để được đăng bài trở lại.`}} />
+            <ConfirmDialog action={ handleOpening } openDialog={openOpen} content={{type:'approve', title:'Đăng bài trở lại', note:`Bài viết sẽ được cấp lại quyền phê duyệt và tự động được đăng?`}} />
             <ConfirmDialog action={ handleDistroyPost } openDialog={openDistroy} content={{type:'delete', title:'Xóa dữ liệu bài viết', note:`Bài viết sẽ bị xóa hoàn toàn trên hệ thống, thực thi sẽ không khôi phục được. Bạn có chắc?`}}/>
         </React.Fragment>
     );
