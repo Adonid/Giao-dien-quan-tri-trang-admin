@@ -1,6 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { 
     Card, 
     CardContent,
@@ -83,7 +84,7 @@ const FixedContent = props => {
 
     const classes = useStyles();
 
-    const { className, ...rest } = props;
+    const { className, post, ...rest } = props;
 
     return (
         <Grid item xs={12}>
@@ -97,7 +98,7 @@ const FixedContent = props => {
                             <IconButton aria-label="add to favorites">
                                 <FavoriteBorderOutlinedIcon />
                                 <Typography variant="h5">
-                                    12
+                                    { post.favorites }
                                 </Typography>
                             </IconButton>
                         </Tooltip>
@@ -105,7 +106,7 @@ const FixedContent = props => {
                             <IconButton aria-label="Reader">
                                 <VisibilityOutlinedIcon />
                                 <Typography variant="h5">
-                                    127
+                                    { post.viewer }
                                 </Typography>
                             </IconButton>
                         </Tooltip>
@@ -113,7 +114,7 @@ const FixedContent = props => {
                             <IconButton aria-label="share">
                                 <ShareOutlinedIcon />
                                 <Typography variant="h5">
-                                    9
+                                    { post.sharer }
                                 </Typography>
                             </IconButton>
                         </Tooltip>
@@ -121,29 +122,27 @@ const FixedContent = props => {
                     <CardHeader
                         avatar={
                             <Avatar
-                                aria-label="author" 
+                                aria-label="category" 
                                 className={classes.avatar}
-                                src={ '' }
+                                src={ post.category.image }
                             >
-                                {getInitials('Lê Dũng' )}
+                                {getInitials( post.category.name )}
                             </Avatar>
                         }
-                        title={ <Typography variant="h6">Lê Dũng</Typography>}
+                        title={ <Typography variant="h6"> { post.category.name } </Typography>}
                     />
                 </Box>
                 <Divider/>
 
                 <CardContent>
 
-                    <Box>
-                        {/* Content */}
-                    </Box>
+                    <Box dangerouslySetInnerHTML= {{__html: post.content}} />
 
                     <Box className={ classes.paddingTags}>
                         <Typography variant="span" >Gắn tags: </Typography>
-                        <Typography className={ classes.tag } variant="span" >Tags 1</Typography>
-                        <Typography className={ classes.tag } variant="span" >Tags 2</Typography>
-                        <Typography className={ classes.tag } variant="span" >Tags 3</Typography>
+                            {
+                                post.tags.map( tag => <Typography key={tag.id} className={ classes.tag } variant="span" >{ tag.name }</Typography> )
+                            }
                     </Box>
                     <Divider variant="middle" />
                     <Box>
@@ -152,13 +151,13 @@ const FixedContent = props => {
                                 <Avatar
                                     aria-label="author" 
                                     className={ clsx(classes.avatarBig,classes.avatar )}
-                                    src={ 'https://demos.creative-tim.com/material-kit-pro-react/static/media/card-profile4-square.1a164917.jpg' }
+                                    src={ post.author.avatar }
                                 >
-                                    {getInitials('Lê Dũng' )}
+                                    {getInitials( post.author.name )}
                                 </Avatar>
                             }
-                            title={ <Typography className={ classes.titleBig } variant="h4">Alec Thompson</Typography> }
-                            subheader={ <Typography className={ classes.subtitleBig } variant="body1">I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...I like good music from Youtube.</Typography>}
+                            title={ <Typography className={ classes.titleBig } variant="h4"> { post.author.name } </Typography> }
+                            subheader={ <Typography className={ classes.subtitleBig } variant="body1"> { post.author.quote } </Typography>}
                         />
                     </Box>
                 </CardContent>
@@ -168,7 +167,21 @@ const FixedContent = props => {
 };
 
 FixedContent.propTypes = {
-    
+    post: PropTypes.object.isRequired
 };
 
-export default FixedContent;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        post: state.dataPostDetail.postInfo
+    }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        dispatch1: () => {
+            dispatch(actionCreator)
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FixedContent)
