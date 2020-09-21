@@ -16,6 +16,8 @@ const ProductEditReducer = (state = dataPostEdit, action) => {
         case 'UPDATE_POST':
             const newDataPost = action.newDataPost;
             console.log(newDataPost);
+            // setTimeout( () => {state = { ...state, editPostStatus: { ...state.editPostStatus, isLoading: ! { ...state.editPostStatus }.isLoading} }; console.log(newDataPost);}, 2000 );
+            state = { ...state, editPostStatus: { ...state.editPostStatus, isLoading: ! { ...state.editPostStatus }.isLoading}};
             return state;
 
         default:
