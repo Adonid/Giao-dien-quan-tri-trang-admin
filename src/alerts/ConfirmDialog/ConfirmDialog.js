@@ -173,17 +173,29 @@ const ConfirmDialog = props => {
                                         </Button>
                                       </ThemeProvider>
                                       :
-                                      <ThemeProvider theme={themeButtonOpen}>
-                                        <Button 
-                                            variant="contained" 
-                                            color="primary"
-                                            onClick={ handleConfirm }
-                                            startIcon={<LockOpenIcon />}
-                                        >
-                                            ok, Mở tài khoản
-                                        </Button>
-                                      </ThemeProvider>
-
+                                        content.type==='approve'
+                                        ?
+                                          <ThemeProvider theme={themeButtonOpen}>
+                                            <Button 
+                                                variant="contained" 
+                                                color="primary"
+                                                onClick={ handleConfirm }
+                                                startIcon={<LockOpenIcon />}
+                                            >
+                                                ok, Đăng lại
+                                            </Button>
+                                          </ThemeProvider>
+                                        :
+                                          <ThemeProvider theme={themeButtonOpen}>
+                                            <Button 
+                                                variant="contained" 
+                                                color="primary"
+                                                onClick={ handleConfirm }
+                                                startIcon={<LockOpenIcon />}
+                                            >
+                                                ok, Mở tài khoản
+                                            </Button>
+                                          </ThemeProvider>
                                 }
                                 <ThemeProvider theme={themeButtonClose}>
                                     <Button color="primary" className={classes.margin}  onClick={ handleClose } >
