@@ -57,7 +57,7 @@ const ToolBarViewProduct = props => {
           </Link>
           <Typography color="textPrimary"> { namePost } </Typography>
         </Breadcrumbs>
-        <Link color="inherit" underline="none" component={RouterLink} to="/products">
+        <Link color="inherit" underline="none" component={RouterLink} to="/product-edit">
           <Button
             color="primary"
             variant="contained"
