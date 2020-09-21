@@ -74,13 +74,16 @@ const buttonStore = createMuiTheme({
 
 const ContentEditProduct = props => {
 
-    const { className, createPost, isLoading, categorys, tags, ...rest } = props;
-
+    const { className, editPost, isLoading, postInfo, ...rest } = props;
+    
     const classes = useStyles();
 
     const [formState, setFormState] = useState({
         isValid: false,
-        values: {},
+        values: {
+            name: postInfo.title,
+            description: postInfo.description,
+        },
         touched: {},
         errors: {}
       });
@@ -93,6 +96,7 @@ const ContentEditProduct = props => {
           isValid: errors ? false : true,
           errors: errors || {}
         }));
+        console.log(formState.values);
       }, [formState.values]);
 
       useEffect(() => {
@@ -122,13 +126,13 @@ const ContentEditProduct = props => {
 
     const [ loading, setLoading ] = useState( false );
 
-    const [ dataImage, setDataImage ] = useState('/images/products/contemplative-reptile.jpg');
+    const [ dataImage, setDataImage ] = useState( postInfo.image );
     const [ dataNewImage, setDataNewImage ] = useState(null);
     const [ openUploadImage, setOpenUploadImage ] = useState(false);
 
-    const [ contentPost, setContentPost ] = useState('');
-    const [ idCategory, setIdCategory ] = useState(0);
-    const [ idTags, setIdTags ] = useState([]);
+    const [ contentPost, setContentPost ] = useState( postInfo.content );
+    const [ idCategory, setIdCategory ] = useState( postInfo.categorys.filter( item => item.select===true )[0].id );
+    const [ idTags, setIdTags ] = useState( postInfo.tags.filter( item => item.select===true ));
 
     const getDataImage = imgBase64 => {
         setDataNewImage(imgBase64);
@@ -157,7 +161,7 @@ const ContentEditProduct = props => {
         dataPost.tags = idTags;
         dataPost.content = contentPost;
 
-        createPost(dataPost);
+        editPost(dataPost);
     }
 
     return (
@@ -184,7 +188,7 @@ const ContentEditProduct = props => {
                                         id="name-post"
                                         name="name"
                                         label="Tên bài viết" 
-                                        type="search" 
+                                        type="text" 
                                         variant="outlined"
                                         error={hasError('name')}
                                         helperText={
@@ -199,6 +203,7 @@ const ContentEditProduct = props => {
                                         required
                                         id="description-post"
                                         label="Trích dẫn"
+                                        type="text" 
                                         name="description"
                                         multiline
                                         rows={2}
@@ -230,7 +235,7 @@ const ContentEditProduct = props => {
                                         <CardMedia
                                             className={classes.media}
                                             image={ dataImage }
-                                            title="Contemplative Reptile"
+                                            title={ postInfo.title }
                                         />
                                     </Box>
                                 </FormControl>
@@ -245,8 +250,8 @@ const ContentEditProduct = props => {
                             <CardHeader title="Tổ chức bài viết" />
                             <Divider/>
                             <CardContent>
-                                <SelectInput required={true} fullWidth={true} list={ categorys } label="Danh mục" action={ handleCategory } />
-                                <SelectChips fullWidth={ true } list={ tags } handleIdTags={ handleTags } />                  
+                                <SelectInput required={true} fullWidth={true} list={ postInfo.categorys } label="Danh mục" action={ handleCategory } />
+                                <SelectChips fullWidth={ true } list={ postInfo.tags } handleIdTags={ handleTags } />                  
                             </CardContent>
                         </Card>
                     </Grid>
@@ -357,27 +362,24 @@ const ContentEditProduct = props => {
 };
 
 ContentEditProduct.propTypes = {
+    editPost: PropTypes.func.isRequired,    
     isLoading: PropTypes.bool.isRequired,
-    createPost: PropTypes.func.isRequired,
-    categorys: PropTypes.array.isRequired,
-    tags: PropTypes.array.isRequired,
-    
+    postInfo: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        isLoading: state.dataManipulationPost.createPost.isLoading,
-        categorys: state.dataManipulationPost.categorys,
-        tags: state.dataManipulationPost.tags,
+        postInfo: state.dataPostEdit.postInfo,
+        isLoading: state.dataPostEdit.editPostStatus.isLoading,
     }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        createPost: dataPost => {
+        editPost: dataPost => {
             dispatch({
                 type: "CREATE_NEW_POST",
-                data: dataPost
+                newDataPost: dataPost
             })
         }
     }
