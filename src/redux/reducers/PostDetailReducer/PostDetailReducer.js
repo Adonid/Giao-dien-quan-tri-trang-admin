@@ -3,29 +3,60 @@ import mockComments from './dataComment';
 const dataPostDetail = {
     postInfo: {
         id: 1,
+        category: {
+            name: "Du lịch",
+            image: "https://images.unsplash.com/photo-1597814419713-99e2923951b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+        },
         title: "Những gam màu của Mù Cang Chải",
         image: "https://i1-vnexpress.vnecdn.net/2020/09/14/DJI-0033.jpg?w=680&h=408&q=100&dpr=1&fit=crop&s=xRRrCnXkCgZ6Gz7xdCsUgw",
-        author: "Giang Huy",
+        tags: [
+            {
+                id: 1,
+                name: "Đời sống"
+            },
+            {
+                id: 2,
+                name: "Châu Âu"
+            },
+            {
+                id: 3,
+                name: "Đại dương"
+            },
+            {
+                id: 4,
+                name: "Châu Á"
+            },
+        ],
+        favorites: 109,
+        viewer: 289,
+        sharer: 12,
+        author: {
+            name: "Vân Trinh",
+            avatar: "https://images.unsplash.com/photo-1599698000828-2cf0562f2bf4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+            quote: "I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...I like good music from Youtube."
+        },
         time: "Thứ sáu, 18/9/2020, 02:08 (GMT+7)",
         content: `
-        Những gam màu của Mù Cang Chải
-        Những thửa ruộng bậc thang trên Mù Cang Chải đã bắt đầu ngập sắc vàng của lúa chín.
-        https://i1-vnexpress.vnecdn.net/2020/09/14/DJI-0033.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=FrJm6Nz1URvv1nvh7r9FvQ        
-        Mùa lúa chín ở Mù Cang Chải đẹp nhất thường diễn ra từ khoảng 15/9 đến 20/10 hàng năm, đây cũng là thời điểm thu hút đông khách du lịch nhất.
-        https://i1-vnexpress.vnecdn.net/2020/09/14/HUY-8525-1600079970.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=UG__t93UETgrL6Ftdr-u6Q
-        Ruộng bậc thang Mù Cang Chải vào mùa lúa chín gây ấn tượng mạnh với du khách phương xa bởi những gam màu rất riêng của vùi núi đồi Tây Bắc. Những biển lúa vàng ươm trải dài ngút tầm mắt, xen giữa màu xanh lá của cây rừng tạo nên vẻ đẹp độc đáo và hiếm có.
-        https://i1-vnexpress.vnecdn.net/2020/09/14/HUY-8622.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=k6m68lOc_IJsxd4tgJhycQ
-        Đồng bào người Mông khéo léo khai khẩn, đắp bờ, chia nước, biến từng vạt đồi thành những thửa ruộng bậc thang. Người Mông sẻ nước từ các khe suối vào các thửa ruộng quanh một quả đồi, tuy nhiên không nối liền mạch nhằm hạn chế tối đa độ màu của đất bị rửa trôi khi có mưa lũ hoặc dòng chảy mạnh. Những chỗ gồ ghề sẽ được cào bằng thêm, chỗ cao sẽ được san bớt đi.
-        https://i1-vnexpress.vnecdn.net/2020/09/14/HUY-8776-1600079985.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=Lh4Wq9d8tqd04eKQaps-fw
-        Tại một số nơi người dân đã bắt đầu thu hoạch lúa.
-        https://i1-vnexpress.vnecdn.net/2020/09/14/HUY-8966-1600079998.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=H2xcI4jekXsMKQMyqrlm6g
-        Việc đồng áng của đồng bào người Mông không chỉ cung cấp lương thực cho gia đình, mà còn góp phần giữ gìn vẻ đẹp danh thắng biểu tượng của quê hương.
-        https://i1-vnexpress.vnecdn.net/2020/09/14/HUY-7696-1600079962.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=kPieUJvMot5RXGPTmwyrJw
-        Công việc đồng áng ngày mùa vất vả, kéo dài từ sáng sớm tới tối muộn nên đồng bào thường ăn trưa và nghỉ ngơi ngay trên những thửa ruộng bậc thang.
-        https://i1-vnexpress.vnecdn.net/2020/09/14/HUY-8243-1600079966.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=YM2qBJjRnpMutQEF3zEU3A
-        Ruộng bậc thang Mù Cang Chải là di sản văn hóa độc đáo và rất riêng của người dân bản địa qua nhiều thế hệ.
-        https://i1-vnexpress.vnecdn.net/2020/09/14/HUY-7853-1600079964.jpg?w=1200&h=0&q=100&dpr=1&fit=crop&s=AoyNq9b6_WDfFct08bLdzg
-        Học sinh trường tiểu học La Pán Tẩn tan học về trong bộ đồ dân tộc Mông truyền thống.
+            <div class="MuiGrid-root jss159  MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 MuiGrid-grid-md-8">
+            <h3 class="jss347">The Castle Looks Different at Night...</h3>
+            <p>This is the paragraph where you can write more details about your product. Keep you user engaged by providing meaningful information. Remember that by this time, the user is curious, otherwise he wouldn't scroll to get here. Add a button if you want the user to see more. We are here to make life better.<br /><br />And now I look and look around and there&rsquo;s so many Kanyes I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound... and thank you for turning my personal jean jacket into a couture piece.</p>
+            <blockquote class="jss359 jss361">
+            <p class="jss362 jss349">&ldquo;And thank you for turning my personal jean jacket into a couture piece.&rdquo;</p>
+            <small class="jss363">Kanye West, Producer.</small></blockquote>
+            </div>
+            <div class="MuiGrid-root jss159 jss348 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-10 MuiGrid-grid-md-10">
+            <div class="MuiGrid-root jss158  MuiGrid-container">
+            <div class="MuiGrid-root jss159  MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-md-4"><img class="jss353 jss351 jss350" src="https://demos.creative-tim.com/material-kit-pro-react/static/media/blog4.5de2130f.jpg" alt="..." /></div>
+            <div class="MuiGrid-root jss159  MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-md-4"><img class="jss353 jss351 jss350" src="https://demos.creative-tim.com/material-kit-pro-react/static/media/blog3.a4ee46b8.jpg" alt="..." /></div>
+            <div class="MuiGrid-root jss159  MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 MuiGrid-grid-md-4"><img class="jss353 jss351 jss350" src="https://demos.creative-tim.com/material-kit-pro-react/static/media/blog1.9313c5c1.jpg" alt="..." /></div>
+            </div>
+            </div>
+            <div class="MuiGrid-root jss159  MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 MuiGrid-grid-md-8">
+            <h3 class="jss347">Rest of the Story:</h3>
+            <p>We are here to make life better. And now I look and look around and there&rsquo;s so many Kanyes I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound... and thank you for turning my personal jean jacket into a couture piece.<br />I speak yell scream directly at the old guard on behalf of the future. daytime All respect prayers and love to Phife&rsquo;s family Thank you for so much inspiration.</p>
+            <p>Thank you Anna for the invite thank you to the whole Vogue team And I love you like Kanye loves Kanye Pand Pand Panda I've been trying to figure out the bed design for the master bedroom at our Hidden Hills compound...The Pablo pop up was almost a pop up of influence. All respect prayers and love to Phife&rsquo;s family Thank you for so much inspiration daytime I love this new Ferg album! The Life of Pablo is now available for purchase I have a dream. Thank you to everybody who made The Life of Pablo the number 1 album in the world! I'm so proud of the nr #1 song in the country. Panda! Good music 2016!</p>
+            <p>I love this new Ferg album! The Life of Pablo is now available for purchase I have a dream. Thank you to everybody who made The Life of Pablo the number 1 album in the world! I'm so proud of the nr #1 song in the country. Panda! Good music 2016!</p>
+            </div>
         `,
     },
 
