@@ -22,7 +22,7 @@ var allReducers = redux.combineReducers({
     dataProductsList: ProductsList,
     dataManipulationPost: ManipulationPost,
     dataPostDetail: PostDetail,
-    postInfo: ProductEdit,
+    dataPostEdit: ProductEdit,
 });
 
 const Store = redux.createStore(allReducers);
