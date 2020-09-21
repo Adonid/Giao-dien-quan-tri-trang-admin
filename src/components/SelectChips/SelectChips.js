@@ -54,7 +54,7 @@ const SelectChips = props => {
 
     const theme = useTheme();
 
-    const [valueChip, setValueChip] = useState([]);
+    const [ valueChip, setValueChip ] = useState( list.filter( item => item.select === true).length > 0 ? list.filter( item => item.select === true) : []);
 
     const handleChangeTags = (event) => {
         let chipSelected = event.target.value;
