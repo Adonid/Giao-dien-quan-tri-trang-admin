@@ -96,7 +96,6 @@ const ContentEditProduct = props => {
           isValid: errors ? false : true,
           errors: errors || {}
         }));
-        console.log(formState.values);
       }, [formState.values]);
 
       useEffect(() => {
@@ -131,7 +130,7 @@ const ContentEditProduct = props => {
     const [ openUploadImage, setOpenUploadImage ] = useState(false);
 
     const [ contentPost, setContentPost ] = useState( postInfo.content );
-    const [ idCategory, setIdCategory ] = useState( postInfo.categorys.filter( item => item.select===true )[0].id );
+    const [ idCategory, setIdCategory ] = useState( postInfo.categorys.filter( item => item.select===true )[0].value );
     const [ idTags, setIdTags ] = useState( postInfo.tags.filter( item => item.select===true ));
 
     const getDataImage = imgBase64 => {
@@ -356,7 +355,7 @@ const ContentEditProduct = props => {
 
                 </Grid>
             </form>
-            <UploadCropSingleImage openDialog={openUploadImage} imageInit={dataImage} dataNewImg={ getDataImage} titleName="Tải lên ảnh cho bài viết" />
+            <UploadCropSingleImage openDialog={openUploadImage} imageInit={'https://drive.google.com/file/d/1Uq9sbW7M0RmDBVNbpc6s7mazh1K_eYXQ/view'} dataNewImg={ getDataImage} titleName="Tải lên ảnh cho bài viết" />
         </React.Fragment>
     );
 };
@@ -378,7 +377,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         editPost: dataPost => {
             dispatch({
-                type: "CREATE_NEW_POST",
+                type: "UPDATE_POST",
                 newDataPost: dataPost
             })
         }
