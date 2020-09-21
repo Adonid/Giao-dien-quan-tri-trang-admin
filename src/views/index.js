@@ -17,3 +17,4 @@ export { default as UserEditor } from './UserEditor';
 export { default as Chats } from './Chats';
 export { default as AddNewProduct } from './AddNewProduct';
 export { default as ViewProduct } from './ViewProduct';
+export { default as EditProduct } from './EditProduct';
