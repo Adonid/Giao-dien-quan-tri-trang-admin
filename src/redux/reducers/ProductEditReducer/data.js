@@ -2,31 +2,31 @@ export default {
         id: 1,
         categorys: [
             {
-                id: 2,
+                value: 2,
                 label: "Du lịch",
                 image: "https://images.unsplash.com/photo-1589030446232-da1800eb736a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-                select: true
-            },
-            {
-                id: 5,
-                label: "Kinh tế",
-                image: "https://images.unsplash.com/photo-1561414927-6d86591d0c4f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
                 select: false
             },
             {
-                id: 7,
+                value: 5,
+                label: "Kinh tế",
+                image: "https://images.unsplash.com/photo-1561414927-6d86591d0c4f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                select: true
+            },
+            {
+                value: 7,
                 label: "Đời sống",
                 image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
                 select: false
             },
             {
-                id: 3,
+                value: 3,
                 label: "Văn hóa",
                 image: "https://images.unsplash.com/photo-1508598126084-9dfccbb92cd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
                 select: false
             },
             {
-                id: 1,
+                value: 1,
                 label: "Ẩm thực",
                 image: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
                 select: false
