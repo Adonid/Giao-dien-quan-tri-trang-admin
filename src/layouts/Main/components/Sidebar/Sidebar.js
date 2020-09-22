@@ -53,12 +53,23 @@ const Sidebar = props => {
     {
       title: 'Người dùng',
       href: '/users',
-      icon: <SupervisorAccountOutlinedIcon />
+      icon: <SupervisorAccountOutlinedIcon />,
     },
     {
       title: 'Bài viết',
       href: '/products',
-      icon: <ArtTrackOutlinedIcon />
+      icon: <ArtTrackOutlinedIcon />,
+      items: [
+        {
+          title: 'Danh sách bài viết',
+          href: '/products',
+        },
+        {
+          title: 'Bài viết mới',
+          href: '/add-new-product',
+        },
+      ],
+      name: "post"
     },
     {
       title: 'Xác thực',
