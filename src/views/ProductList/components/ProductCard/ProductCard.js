@@ -365,10 +365,10 @@ const ProductCard = props => {
                           }
                       </TableCell>
                       <TableCell align="right">
-                        <Link component={RouterLink} to="/user-editor">
+                        <Link component={RouterLink} to="/product-edit">
                           <IconButton><EditAttributesIcon /></IconButton>
                         </Link>
-                        <Link component={RouterLink} to="/user-detail">
+                        <Link component={RouterLink} to="/product-detail">
                           <IconButton><ArrowForwardIcon fontSize="small" /></IconButton>
                         </Link>
                       </TableCell>
