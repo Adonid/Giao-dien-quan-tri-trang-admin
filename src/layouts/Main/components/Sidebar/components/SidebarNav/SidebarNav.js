@@ -46,7 +46,9 @@ const useStyles = makeStyles(theme => ({
   paddingItemList: {
     paddingLeft: theme.spacing(4)
   },
-  
+  gray: {
+    color: '#9E9E9E'
+  }
 }));
 
 const CustomRouterLink = forwardRef((props, ref) => (
@@ -95,7 +97,7 @@ const SidebarNav = props => {
                   {page.title}
                   
                 </Button>
-                { page.isOpen ? <ExpandLess /> : <ExpandMore /> }
+                { page.isOpen ? <ExpandLess className={ classes.gray } /> : <ExpandMore className={ classes.gray } /> }
               </ListItem>
               <Collapse in={ page.isOpen } timeout="auto" unmountOnExit className={ classes.paddingItemList }>
                 <List component="div" disablePadding>
