@@ -62,14 +62,12 @@ const SidebarNav = props => {
   const { pages, className, ...rest } = props;
 
   const [ menus, setMenus ] = useState(pages);
-  const [open, setOpen] = React.useState(false);
 
-  const handleClick = (event, name) => {
+  const handleClick = (event, id) => {
     event.persist();
-    console.log(name);
-    console.log(dropMenu);
     // Thay doi cach Expand menu bang cach thay doi state menus. Mai lam
-    setOpen(!open);
+    const updateMenus = [ ...menus ].map( menu => menu.id === Number(id) ? { ...menu, isOpen: ! { ...menu }.isOpen } : menu );
+    setMenus( updateMenus );
   };
 
   const classes = useStyles();
@@ -91,15 +89,15 @@ const SidebarNav = props => {
                 <Button
                   className={classes.button}
                   // component={CustomRouterLink}
-                  onClick={ (event) => handleClick( event, page.name ) }
+                  onClick={ (event) => handleClick( event, page.id ) }
                 >
                   <div className={classes.icon}>{page.icon}</div>
                   {page.title}
                   
                 </Button>
-                {open ? <ExpandLess /> : <ExpandMore />}
+                { page.isOpen ? <ExpandLess /> : <ExpandMore /> }
               </ListItem>
-              <Collapse in={open} timeout="auto" unmountOnExit className={ classes.paddingItemList }>
+              <Collapse in={ page.isOpen } timeout="auto" unmountOnExit className={ classes.paddingItemList }>
                 <List component="div" disablePadding>
                   {
                     page.items.map( item => (
