@@ -46,16 +46,19 @@ const Sidebar = props => {
 
   const pages = [
     {
+      id: 1,
       title: 'Giao diện chính',
       href: '/dashboard',
       icon: <DashboardOutlinedIcon />
     },
     {
+      id: 1,
       title: 'Người dùng',
       href: '/users',
       icon: <SupervisorAccountOutlinedIcon />,
     },
     {
+      id: 2,
       title: 'Bài viết',
       href: '/products',
       icon: <ArtTrackOutlinedIcon />,
@@ -69,34 +72,40 @@ const Sidebar = props => {
           href: '/add-new-product',
         },
       ],
-      name: "post"
+      isOpen: false
     },
     {
+      id: 3,
       title: 'Xác thực',
       href: '/sign-in',
       icon: <LockOpenIcon />
     },
     {
+      id: 4,
       title: 'Typography',
       href: '/typography',
       icon: <TextFieldsIcon />
     },
     {
+      id: 5,
       title: 'Icons',
       href: '/icons',
       icon: <ImageIcon />
     },
     {
+      id: 6,
       title: 'Phòng Chat',
       href: '/chats-room',
       icon: <ChatBubbleOutlineIcon />
     },
     {
+      id: 7,
       title: 'Tài khoản của tôi',
       href: '/account',
       icon: <AccountBoxOutlinedIcon />
     },
     {
+      id: 8,
       title: 'Cài đặt',
       href: '/settings',
       icon: <SettingsOutlinedIcon />
