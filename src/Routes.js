@@ -25,6 +25,7 @@ import {
   AddNewProduct as AddNewProductView,
   ViewProduct as ViewProductView,
   EditProduct as EditProductView,
+  CategorysTags as CategorysTagsView,
 
 } from './views'; 
 
@@ -113,6 +114,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/add-new-product"
+      />
+      <RouteWithLayout
+        component={CategorysTagsView}
+        exact
+        layout={MainLayout}
+        path="/category-tag"
       />
       <RouteWithLayout
         component={SignUpView}
