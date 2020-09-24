@@ -15,7 +15,7 @@ import {
     
  } from '@material-ui/core';
  import ViewQuiltOutlinedIcon from '@material-ui/icons/ViewQuiltOutlined';
-import { InputNotBorder } from 'components';
+import { InputNotBorder, UploadCropSingleImage } from 'components';
 import { getInitials } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
@@ -56,18 +56,30 @@ const Categorys = props => {
     const classes = useStyles();
 
     const [chipsCat, setChipsCat] = useState(chipsCategory);
+
+    const [ openUploadImage, setOpenUploadImage ] = useState(false);
+    const [ dataImage, setDataImage ] = useState('/images/products/contemplative-reptile.jpg');
+    const [ dataChip, setDataChip ] = useState(null);
     
       const handleDelete = chipToDelete => () => {
         setChipsCat( (chipsCat) => chipsCat.filter( chip => chip.id !== Number(chipToDelete)) );
       };
 
     const handleAddCategory = category => {
-        setChipsCat ( chipsCat => [ ...chipsCat, { id: Math.floor(Math.random() * (99999 - 99)) + 99, label: category, qtyProducts: 0 } ])
+        setChipsCat( chipsCat => [ ...chipsCat, { id: Math.floor(Math.random() * (99999 - 99)) + 99, label: category, qtyProducts: 0 } ])
     }
     
     const handleClick = chip => {
-        console.info(chip);
+        setOpenUploadImage(!openUploadImage);
+        const updateDataChip = [...chipsCat].filter( item => item.id===Number(chip))[0];
+        setDataChip( { ...updateDataChip, title: "Tên danh mục"}); 
     }
+
+    const getDataImage = dataCat => {
+        // Tat ca thong tin de cat nhat danh muc nam trong : dataCat
+        const updateChipCats = [ ...chipsCat ].map( chip => chip.id===dataCat.id ? dataCat : chip);
+        setChipsCat( updateChipCats );
+    };
 
     return (
         <React.Fragment>
@@ -108,6 +120,7 @@ const Categorys = props => {
                     </Card>
                 </Grid>
             </Grid>
+            <UploadCropSingleImage openDialog={openUploadImage} imageInit={dataImage} dataNewImg={ getDataImage} titleName="Cập nhật ảnh danh mục" dataName={dataChip} />
         </React.Fragment>
     );
 };
