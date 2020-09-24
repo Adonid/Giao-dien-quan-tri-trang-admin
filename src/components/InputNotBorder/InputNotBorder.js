@@ -15,7 +15,13 @@ const CssTextField = withStyles({
       color: 'green',
     },
     '& .MuiInput-underline:after': {
-      borderBottomColor: 'green',
+      borderBottomColor: 'transparent',
+    },
+    '& .MuiInput-underline:before': {
+      borderBottom: 'none',
+    },
+    '& .MuiInput-underline:hover:not(.Mui-disabled):before' : {
+        borderBottom: 'none'
     },
     '& .MuiOutlinedInput-root': {
       '& fieldset': {
@@ -36,9 +42,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
   },
-  margin: {
-    margin: theme.spacing(1),
-  },
+  gray: {
+    color: '#546e7a'
+  }
 }));
 
 const InputNotBorder = props => {
@@ -50,12 +56,11 @@ const InputNotBorder = props => {
   return (
     <form className={classes.root} noValidate>
       <CssTextField 
-        className={classes.margin} 
         placeholder="Thêm danh mục"
         InputProps={
             {
                 startAdornment: (
-                  <InputAdornment position="start">
+                  <InputAdornment position="start" className={ classes.gray }>
                     { icon }
                   </InputAdornment>
                 ),
