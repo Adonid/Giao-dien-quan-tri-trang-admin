@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   withStyles,
@@ -49,12 +49,24 @@ const useStyles = makeStyles((theme) => ({
 
 const InputNotBorder = props => {
 
-    const { placeholder, icon, ...rest } = props;
+    const { callBack, placeholder, icon, ...rest } = props;
+
+    const [ string, setString ] = useState('');
 
   const classes = useStyles();
 
+    const handleChange = event => setString(event.target.value);
+
+    const handleSubmit = event => {
+      event.preventDefault();
+      if(string){
+        callBack(string);
+        setString('');
+      }
+    }
+
   return (
-    <form className={classes.root} noValidate>
+    <form className={classes.root} noValidate onSubmit={ handleSubmit }>
       <CssTextField 
         placeholder="Thêm danh mục"
         InputProps={
@@ -66,6 +78,8 @@ const InputNotBorder = props => {
                 ),
             }
         }
+        onChange= { handleChange }
+        value={ string }
         { ...rest }
       />
     </form>
@@ -75,6 +89,7 @@ const InputNotBorder = props => {
 InputNotBorder.propTypes = {
     placeholder: PropTypes.string.isRequired,
     icon: PropTypes.node.isRequired,
+    callBack: PropTypes.func.isRequired,
 }
 
 export default InputNotBorder;
