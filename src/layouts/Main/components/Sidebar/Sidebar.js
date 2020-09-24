@@ -12,6 +12,7 @@ import AccountBoxOutlinedIcon from '@material-ui/icons/AccountBoxOutlined';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 import { Profile, SidebarNav, UpgradePlan } from './components';
@@ -109,7 +110,13 @@ const Sidebar = props => {
       title: 'Cài đặt',
       href: '/settings',
       icon: <SettingsOutlinedIcon />
-    }
+    },
+    {
+      id: 10,
+      title: 'Danh mục & tag',
+      href: '/category-tag',
+      icon: <LocalOfferOutlinedIcon />
+    },
   ];
 
   return (
