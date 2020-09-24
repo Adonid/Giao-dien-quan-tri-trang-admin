@@ -68,7 +68,7 @@ const InputNotBorder = props => {
   return (
     <form className={classes.root} noValidate onSubmit={ handleSubmit }>
       <CssTextField 
-        placeholder="Thêm danh mục"
+        placeholder={ placeholder }
         InputProps={
             {
                 startAdornment: (
