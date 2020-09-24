@@ -14,7 +14,8 @@ import {
     IconButton,
     Typography,
     Slide,
-    Divider,
+    Divider, 
+    TextField
  } from '@material-ui/core';
  import CloseIcon from '@material-ui/icons/Close';
  import CloudUploadIcon from '@material-ui/icons/CloudUpload';
@@ -43,19 +44,24 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const UploadCropSingleImage = props => {
 
-    const { openDialog, imageInit, dataNewImg, titleName, ...rest } = props;
+  const { openDialog, imageInit, dataNewImg, titleName, dataName, ...rest } = props;
 
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
 
   const [upImg, setUpImg] = useState(imageInit);
-  const imgRef = useRef(null);
+  const imgRef = useRef('');
   const previewCanvasRef = useRef(null);
   const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 4 / 3 });
   const [completedCrop, setCompletedCrop] = useState(null);
 
   const [ dataImage, setDataImage ] = useState('');
+
+  const [ valueInput, setValueInput ] = useState(dataName);
+  useEffect(() => {
+    setValueInput(dataName);
+  },[dataName])
 
   const firstUpdate = useRef(true);
     useLayoutEffect(() => {
@@ -64,41 +70,8 @@ const UploadCropSingleImage = props => {
         return;
       }
       setOpen(true);
+      imgRef.crossOrigin = 'Anonymous';
     },[openDialog]);
-
-    useEffect(() => {
-        if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
-        return;
-        }
-
-        const image = imgRef.current;
-        const canvas = previewCanvasRef.current;
-        const crop = completedCrop;
-
-        const scaleX = image.naturalWidth / image.width;
-        const scaleY = image.naturalHeight / image.height;
-        const ctx = canvas.getContext("2d");
-
-        canvas.width = crop.width * pixelRatio;
-        canvas.height = crop.height * pixelRatio;
-
-        ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-        ctx.imageSmoothingEnabled = false;
-
-        ctx.drawImage(
-        image,
-        crop.x * scaleX,
-        crop.y * scaleY,
-        crop.width * scaleX,
-        crop.height * scaleY,
-        0,
-        0,
-        crop.width,
-        crop.height
-        );
-  }, [completedCrop]);
-
-  const handleClose = () => setOpen(false);
 
     const onSelectFile = e => {
         if (e.target.files && e.target.files.length > 0) {
@@ -118,6 +91,7 @@ const UploadCropSingleImage = props => {
         }
     
         const image = imgRef.current;
+        
         const canvas = previewCanvasRef.current;
         const crop = completedCrop;
     
@@ -130,7 +104,6 @@ const UploadCropSingleImage = props => {
     
         ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
         ctx.imageSmoothingEnabled = true;
-    
         ctx.drawImage(
           image,
           crop.x * scaleX,
@@ -146,10 +119,14 @@ const UploadCropSingleImage = props => {
     }, [completedCrop]);
 
     const sendImageBase64 = () => {
-      dataNewImg(dataImage);
+      dataName ? dataNewImg({ ...valueInput, avatar: dataImage}) : dataNewImg(dataImage);
       setOpen(false);
     }
 
+    const handeChange = val => {
+      const newValueInput = { ...valueInput, label: val.target.value };
+      setValueInput(newValueInput);
+    }
   return (
     <div>
       <Dialog fullScreen open={open} onClose={ () => setOpen(false) } TransitionComponent={Transition}>
@@ -170,7 +147,7 @@ const UploadCropSingleImage = props => {
             <Card>
                 <CardContent>
                     <Grid container spacing={3}>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} sm={ valueInput ? 6 : 12}>
                                 <input
                                     id="icon-button-file"
                                     accept="image/*"
@@ -184,13 +161,31 @@ const UploadCropSingleImage = props => {
                                     </Button>
                                 </label>
                         </Grid>
+                        {
+                          valueInput
+                          ?
+                            <Grid item xs={12} sm={6}>
+                              <TextField
+                                autoFocus
+                                variant="outlined"
+                                label={ valueInput.title }
+                                type="text"
+                                fullWidth
+                                value={ valueInput.label }
+                                onChange={ handeChange }
+                              />
+                            </Grid>
+                          :
+                            null
+                        }
+                          
                         <Divider/>
                         <Grid item xs={12} sm={6}>
                           <Typography variant="h5" color="inherit" gutterBottom>
                             Ảnh gốc
                           </Typography>
                             <ReactCrop
-                                src={upImg}
+                                src={ valueInput ? valueInput.avatar : upImg }
                                 onImageLoaded={onLoad}
                                 crop={crop}
                                 onChange={(c) => setCrop(c)}
@@ -225,7 +220,8 @@ UploadCropSingleImage.propTypes = {
     openDialog : PropTypes.bool.isRequired,
     imageInit : PropTypes.string.isRequired,
     dataNewImg : PropTypes.func.isRequired,
-    titleName : PropTypes.string
+    titleName : PropTypes.string,
+    dataName : PropTypes.object,
 }
 
 export default UploadCropSingleImage;
