@@ -15,6 +15,7 @@ import {
     
  } from '@material-ui/core';
  import ViewQuiltOutlinedIcon from '@material-ui/icons/ViewQuiltOutlined';
+import { InputNotBorder } from 'components';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -71,15 +72,7 @@ const ContentNewProduct = props => {
                         >
                             <CardActions disableSpacing className={classes.padding}>
                                 <FormControl fullWidth >
-                                    <Input
-                                        placeholder="Thêm danh mục"
-                                        id="add-categorys"
-                                        startAdornment={
-                                            <InputAdornment position="start">
-                                            <ViewQuiltOutlinedIcon />
-                                            </InputAdornment>
-                                        }
-                                    />
+                                    <InputNotBorder placeholder="Thêm danh mục" icon={ <ViewQuiltOutlinedIcon /> } fullWidth />
                                 </FormControl>
                             </CardActions>
                             <Divider/>
