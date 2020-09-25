@@ -19,3 +19,4 @@ export { default as AddNewProduct } from './AddNewProduct';
 export { default as ViewProduct } from './ViewProduct';
 export { default as EditProduct } from './EditProduct';
 export { default as CategorysTags } from './CategorysTags';
+export { default as Term } from './Term';
