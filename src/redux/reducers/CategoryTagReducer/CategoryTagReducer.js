@@ -8,7 +8,13 @@ const dataCategoryTag = {
 
 const CategoryTagReducer = (state = dataCategoryTag, action) => {
     switch (action.type) {
-        case 'ACTION_TYPE_1':
+        case 'ADD_NEW_CAT':
+            const nameCat = action.name;
+            /** api them moi 1 category */
+
+            /** end */
+            // demo sau khi api xong
+            state = {...state, categorys: [...state.categorys, { id: Math.floor(Math.random() * (99999 - 99)) + 99, label: nameCat, qtyProducts: 0 }]};
             return state;
 
         default:
