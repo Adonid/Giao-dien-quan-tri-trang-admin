@@ -15,7 +15,6 @@ import {
   CircularProgress
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { BackDrop } from 'elements';
 
 const schema = {
   firstName: {
@@ -172,7 +171,6 @@ const SignUp = props => {
     errors: {}
   });
 
-  const [openBackdrop, setOpenBackdrop] = useState(false);
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const timer = React.useRef();
@@ -220,13 +218,12 @@ const SignUp = props => {
     if (!loading) {
       setSuccess(false);
       setLoading(true);
-      setOpenBackdrop(true);
       // THOI GIAN XU LY API O DAY!
       timer.current = setTimeout(() => {
         setSuccess(true);
         setLoading(false);
         // vi du ve chuyen huong qua trang quen mat khau sau khi call api
-        history.push('/create-account-success');
+        history.push('/sign-in');
       }, 2000);
     }
   };
@@ -414,7 +411,6 @@ const SignUp = props => {
           </div>
         </Grid>
       </Grid>
-      <BackDrop open={openBackdrop} />
     </div>
   );
 };
