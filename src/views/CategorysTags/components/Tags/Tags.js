@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
     Card, 
@@ -15,6 +16,7 @@ import {
  } from '@material-ui/core';
  import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
  import { InputNotBorder } from 'components';
+import { idText } from 'typescript';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -36,28 +38,24 @@ const useStyles = makeStyles(theme => ({
       },
 }));
 
-const chipsTags = [
-    { id: 1, label: 'PYTHON', qtyProducts: 12 },
-    { id: 2, label: 'CSS', qtyProducts: 34 },
-    { id: 3, label: 'HTML', qtyProducts: 77 },
-    { id: 4, label: 'JAVASCRIPT', qtyProducts: 72 },
-    { id: 5, label: 'C#', qtyProducts: 90 },
-  ];
-
 const Tags = props => {
 
-    const { className, ...rest } = props;
+    const { className, tags, addTag, deleteTag, ...rest } = props;
 
     const classes = useStyles();
 
-    const [chipsTag, setChipsTag] = useState(chipsTags);
+    const [chipsTag, setChipsTag] = useState(tags);
+
+    useEffect( () => {
+        setChipsTag(tags);
+    },[tags])
     
       const handleDelete = (chipToDelete) => () => {
-        setChipsTag( (chipsTag) => chipsTag.filter( chip => chip.id !== Number(chipToDelete)) );
+        deleteTag( Number(chipToDelete) );
       };
 
     const handleAddTag = tag => {
-        setChipsTag ( chipsTag => [ ...chipsTag, { id: Math.floor(Math.random() * (99999 - 99)) + 99, label: tag, qtyProducts: 0 } ])
+        addTag( tag );
     }
 
     return (
@@ -95,7 +93,32 @@ const Tags = props => {
 };
 
 Tags.propTypes = {
-    
+    tags: PropTypes.array.isRequired,
+    addTag: PropTypes.func.isRequired,
+    deleteTag: PropTypes.func.isRequired,
 };
 
-export default Tags;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        tags: state.dataCategoryTag.tags
+    }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        addTag: name => {
+            dispatch({
+                type: "ADD_TAG",
+                newTag: name
+            })
+        },
+        deleteTag: id => {
+            dispatch({
+                type: "DELETE_TAG",
+                delTag: id
+            })
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tags)
