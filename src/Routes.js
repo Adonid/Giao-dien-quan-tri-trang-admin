@@ -18,7 +18,6 @@ import {
   SignIn as SignInView,
   ForeverPassword as ForeverPasswordView,
   ResetPassword as ResetPasswordView,
-  ResetPasswordSuccess as ResetPasswordSuccessView,
   CreateAccountSuccess as CreateAccountSuccessView,
   NotFound as NotFoundView,
   Chats as ChatsView,
@@ -151,12 +150,6 @@ const Routes = () => {
         exact
         layout={MinimalLayout}
         path="/reset-password"
-      />
-      <RouteWithLayout
-        component={ResetPasswordSuccessView}
-        exact
-        layout={MinimalLayout}
-        path="/reset-password-success"
       />
       <RouteWithLayout
         component={CreateAccountSuccessView}
