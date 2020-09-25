@@ -13,6 +13,7 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
+import GavelOutlinedIcon from '@material-ui/icons/GavelOutlined';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 import { Profile, SidebarNav, UpgradePlan } from './components';
@@ -116,6 +117,12 @@ const Sidebar = props => {
       title: 'Danh mục & tag',
       href: '/category-tag',
       icon: <LocalOfferOutlinedIcon />
+    },
+    {
+      id: 11,
+      title: 'Điều khoản sử dụng',
+      href: '/terms-used',
+      icon: <GavelOutlinedIcon />
     },
   ];
 
