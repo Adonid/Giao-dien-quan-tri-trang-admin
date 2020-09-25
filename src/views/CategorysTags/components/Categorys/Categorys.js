@@ -59,12 +59,10 @@ const Categorys = props => {
     },[categorys])
     
       const handleDelete = chipToDelete => () => {
-        // setChipsCat( (chipsCat) => chipsCat.filter( chip => chip.id !== Number(chipToDelete)) );
         deleteCategory(Number(chipToDelete));
       };
 
     const handleAddCategory = category => {
-        // setChipsCat( chipsCat => [ ...chipsCat, { id: Math.floor(Math.random() * (99999 - 99)) + 99, label: category, qtyProducts: 0 } ]);
         addCategory(category);
     }
     
