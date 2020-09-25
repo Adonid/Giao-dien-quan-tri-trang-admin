@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
     Card, 
@@ -17,7 +18,6 @@ import {
  import CategoryOutlinedIcon from '@material-ui/icons/CategoryOutlined';
  import { InputNotBorder, UploadCropSingleImage } from 'components';
 import { getInitials } from 'helpers';
-import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 
 const Categorys = props => {
 
-    const { className, categorys, addCategory, deleteCategory, ...rest } = props;
+    const { className, categorys, addCategory, deleteCategory, updateCategory, ...rest } = props;
 
     const classes = useStyles();
 
@@ -72,10 +72,8 @@ const Categorys = props => {
         setDataChip( { ...updateDataChip, title: "Tên danh mục"}); 
     }
 
-    const updateCategory = dataCat => {
-        // Tat ca thong tin de cat nhat danh muc nam trong : dataCat
-        const updateChipCats = [ ...chipsCat ].map( chip => chip.id===dataCat.id ? dataCat : chip);
-        setChipsCat( updateChipCats );
+    const updateCat = dataCat => {
+        updateCategory( dataCat );
     };
 
     return (
@@ -118,7 +116,7 @@ const Categorys = props => {
                     </Card>
                 </Grid>
             </Grid>
-            <UploadCropSingleImage openDialog={openUploadImage} imageInit={dataImage} dataNewImg={ updateCategory} titleName="Cập nhật ảnh danh mục" dataName={dataChip} />
+            <UploadCropSingleImage openDialog={openUploadImage} imageInit={dataImage} dataNewImg={ updateCat} titleName="Cập nhật ảnh danh mục" dataName={dataChip} />
         </React.Fragment>
     );
 };
@@ -127,6 +125,7 @@ Categorys.propTypes = {
     categorys: PropTypes.array.isRequired,
     addCategory: PropTypes.func.isRequired,
     deleteCategory: PropTypes.func.isRequired,
+    updateCategory: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -147,6 +146,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             dispatch({
                 type: "DELETE_CAT",
                 idCat: id,
+            })
+        },
+        updateCategory: dataUpdate => {
+            dispatch({
+                type: "UPDATE_CAT",
+                dataCatUpdate: dataUpdate,
             })
         },
     }
