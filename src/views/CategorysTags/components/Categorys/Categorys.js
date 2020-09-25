@@ -72,7 +72,7 @@ const Categorys = props => {
         setDataChip( { ...updateDataChip, title: "Tên danh mục"}); 
     }
 
-    const getDataImage = dataCat => {
+    const updateCategory = dataCat => {
         // Tat ca thong tin de cat nhat danh muc nam trong : dataCat
         const updateChipCats = [ ...chipsCat ].map( chip => chip.id===dataCat.id ? dataCat : chip);
         setChipsCat( updateChipCats );
@@ -118,7 +118,7 @@ const Categorys = props => {
                     </Card>
                 </Grid>
             </Grid>
-            <UploadCropSingleImage openDialog={openUploadImage} imageInit={dataImage} dataNewImg={ getDataImage} titleName="Cập nhật ảnh danh mục" dataName={dataChip} />
+            <UploadCropSingleImage openDialog={openUploadImage} imageInit={dataImage} dataNewImg={ updateCategory} titleName="Cập nhật ảnh danh mục" dataName={dataChip} />
         </React.Fragment>
     );
 };
