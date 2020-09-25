@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 
 const Categorys = props => {
 
-    const { className, categorys, addCategory, ...rest } = props;
+    const { className, categorys, addCategory, deleteCategory, ...rest } = props;
 
     const classes = useStyles();
 
@@ -59,7 +59,8 @@ const Categorys = props => {
     },[categorys])
     
       const handleDelete = chipToDelete => () => {
-        setChipsCat( (chipsCat) => chipsCat.filter( chip => chip.id !== Number(chipToDelete)) );
+        // setChipsCat( (chipsCat) => chipsCat.filter( chip => chip.id !== Number(chipToDelete)) );
+        deleteCategory(Number(chipToDelete));
       };
 
     const handleAddCategory = category => {
@@ -127,6 +128,7 @@ const Categorys = props => {
 Categorys.propTypes = {
     categorys: PropTypes.array.isRequired,
     addCategory: PropTypes.func.isRequired,
+    deleteCategory: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -142,7 +144,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                 type: "ADD_NEW_CAT",
                 name: name,
             })
-        }
+        },
+        deleteCategory: id => {
+            dispatch({
+                type: "DELETE_CAT",
+                idCat: id,
+            })
+        },
     }
 }
 
