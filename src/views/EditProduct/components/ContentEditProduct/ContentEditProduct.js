@@ -355,7 +355,7 @@ const ContentEditProduct = props => {
 
                 </Grid>
             </form>
-            <UploadCropSingleImage openDialog={openUploadImage} imageInit={'https://drive.google.com/file/d/1Uq9sbW7M0RmDBVNbpc6s7mazh1K_eYXQ/view'} dataNewImg={ getDataImage} titleName="Tải lên ảnh cho bài viết" />
+            <UploadCropSingleImage openDialog={openUploadImage} imageInit={ dataImage } dataNewImg={ getDataImage} titleName="Tải lên ảnh cho bài viết" />
         </React.Fragment>
     );
 };
