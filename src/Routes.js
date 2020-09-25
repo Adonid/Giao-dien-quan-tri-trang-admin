@@ -26,6 +26,7 @@ import {
   ViewProduct as ViewProductView,
   EditProduct as EditProductView,
   CategorysTags as CategorysTagsView,
+  Term as TermView,
 
 } from './views'; 
 
@@ -120,6 +121,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/category-tag"
+      />
+      <RouteWithLayout
+        component={TermView}
+        exact
+        layout={MainLayout}
+        path="/terms-used"
       />
       <RouteWithLayout
         component={SignUpView}
