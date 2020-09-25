@@ -294,7 +294,7 @@ const SignUp = props => {
                   color="textSecondary"
                   gutterBottom
                 >
-                  Sử dụng email & số điện thoại của bạn để tạo mới tài khoản
+                  Sử dụng email & số điện thoại của bạn để lập mới tài khoản
                 </Typography>
                 <TextField
                   className={classes.textField}
