@@ -80,6 +80,12 @@ UsersToolbar.propTypes = {
   showModalAddNewUser: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = (state, ownProps) => {
+  return {
+    prop: state.prop
+  }
+}
+
   const mapDispatchToProps = (dispatch, ownProps) => {
     return {
       showModalAddNewUser: () => {
@@ -90,4 +96,4 @@ UsersToolbar.propTypes = {
     }
   }
 
-export default connect(mapDispatchToProps)(UsersToolbar)
+export default connect(mapStateToProps, mapDispatchToProps)(UsersToolbar)
