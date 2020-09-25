@@ -420,4 +420,4 @@ SignUp.propTypes = {
   history: PropTypes.object
 };
 
-export default withRouter(SignUp);
+export default SignUp;
