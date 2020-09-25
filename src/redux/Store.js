@@ -9,6 +9,7 @@ import {
     PostDetailReducer as PostDetail,
     ProductEditReducer as ProductEdit,
     CategoryTagReducer as CategoryTag,
+    TermReducer as Term,
 
 } from './reducers';
 
@@ -25,6 +26,7 @@ var allReducers = redux.combineReducers({
     dataPostDetail: PostDetail,
     dataPostEdit: ProductEdit,
     dataCategoryTag: CategoryTag,
+    dataTerm: Term,
 });
 
 const Store = redux.createStore(allReducers);
