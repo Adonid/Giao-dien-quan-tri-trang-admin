@@ -70,13 +70,12 @@ const UploadCropSingleImage = props => {
         return;
       }
       setOpen(true);
-      imgRef.crossOrigin = 'Anonymous';
     },[openDialog]);
 
     const onSelectFile = e => {
         if (e.target.files && e.target.files.length > 0) {
             const reader = new FileReader();
-            reader.addEventListener('load', () => setUpImg(reader.result));
+            reader.addEventListener('load', () => { valueInput ? setValueInput( valueInput => ({ ...valueInput, avatar: reader.result }) ) : setUpImg(reader.result)});
             reader.readAsDataURL(e.target.files[0]);
         }
     };
@@ -90,8 +89,8 @@ const UploadCropSingleImage = props => {
           return;
         }
     
-        const image = imgRef.current;
-        
+        let image = imgRef.current;
+        image.crossOrigin = 'Anonymous';
         const canvas = previewCanvasRef.current;
         const crop = completedCrop;
     
