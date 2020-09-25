@@ -152,12 +152,6 @@ const Routes = () => {
         path="/reset-password"
       />
       <RouteWithLayout
-        component={CreateAccountSuccessView}
-        exact
-        layout={MinimalLayout}
-        path="/create-account-success"
-      />
-      <RouteWithLayout
         component={NotFoundView}
         exact
         layout={MinimalLayout}
