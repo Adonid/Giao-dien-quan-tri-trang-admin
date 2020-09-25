@@ -10,6 +10,7 @@ import {
     ProductEditReducer as ProductEdit,
     CategoryTagReducer as CategoryTag,
     TermReducer as Term,
+    AlertMiniPageReducer as AlertMiniPage,
 
 } from './reducers';
 
@@ -27,6 +28,7 @@ var allReducers = redux.combineReducers({
     dataPostEdit: ProductEdit,
     dataCategoryTag: CategoryTag,
     dataTerm: Term,
+    dataAlertMiniPage: AlertMiniPage,
 });
 
 const Store = redux.createStore(allReducers);
