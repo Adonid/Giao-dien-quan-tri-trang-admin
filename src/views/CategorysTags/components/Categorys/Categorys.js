@@ -14,8 +14,8 @@ import {
     Avatar
     
  } from '@material-ui/core';
- import ViewQuiltOutlinedIcon from '@material-ui/icons/ViewQuiltOutlined';
-import { InputNotBorder, UploadCropSingleImage } from 'components';
+ import CategoryOutlinedIcon from '@material-ui/icons/CategoryOutlined';
+ import { InputNotBorder, UploadCropSingleImage } from 'components';
 import { getInitials } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
@@ -91,7 +91,7 @@ const Categorys = props => {
                     >
                         <CardActions disableSpacing className={classes.padding}>
                             <FormControl fullWidth >
-                                <InputNotBorder callBack={ handleAddCategory } placeholder="Thêm danh mục" icon={ <ViewQuiltOutlinedIcon /> } fullWidth autoFocus />
+                                <InputNotBorder callBack={ handleAddCategory } placeholder="Thêm danh mục" icon={ <CategoryOutlinedIcon /> } fullWidth autoFocus />
                             </FormControl>
                         </CardActions>
                         <Divider/>
@@ -103,6 +103,7 @@ const Categorys = props => {
                                             label={chip.label + ` (${chip.qtyProducts})`}
                                             onDelete={ chip.id===1 ? undefined : handleDelete( chip.id ) }
                                             className={classes.chip}
+                                            variant="outlined"
                                             onClick={ event => handleClick(chip.id) }
                                             avatar={
                                                 <Avatar
