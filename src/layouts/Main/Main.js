@@ -34,6 +34,7 @@ const Main = props => {
     dataAlertUserEditor, 
     dataAlertCreateNewPost, 
     dataAlertDetailNewPost, 
+    dataAlertUpdateTerm, 
     openAddNewUser, 
     ...rest  
   } = props;
@@ -45,8 +46,6 @@ const Main = props => {
   });
 
   const [openSidebar, setOpenSidebar] = useState(false);
-
-  const [openAddUser, setOpenAddUser] = useState(false);
 
   const handleSidebarOpen = () => {
     setOpenSidebar(true);
@@ -82,6 +81,7 @@ const Main = props => {
       <Snackbars data={ dataAlertUserEditor } />
       <Snackbars data={ dataAlertCreateNewPost } />
       <Snackbars data={ dataAlertDetailNewPost } />
+      <Snackbars data={ dataAlertUpdateTerm } />
       <FormAddUser openCall={openAddNewUser} />
     </div>
   );
@@ -99,6 +99,7 @@ Main.propTypes = {
       dataAlertUserEditor: state.dataUserEditor.alert,
       dataAlertCreateNewPost: state.dataManipulationPost.createPost.alert,
       dataAlertDetailNewPost: state.dataPostDetail.limitInfo.alert,
+      dataAlertUpdateTerm: state.dataTerm.alert,
       openAddNewUser: state.dataNewUser.show,
     }
   }
@@ -118,6 +119,7 @@ Main.propTypes = {
     dataAlertUserEditor: PropTypes.object.isRequired,
     dataAlertCreateNewPost: PropTypes.object.isRequired,
     dataAlertDetailNewPost: PropTypes.object.isRequired,
+    dataAlertUpdateTerm: PropTypes.object.isRequired,
     openAddUser: PropTypes.bool.isRequired,
   }
 
