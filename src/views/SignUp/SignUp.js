@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -160,7 +161,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignUp = props => {
-  const { history } = props;
+  const { history, alertSignUpCompleted, ...rest } = props;
 
   const classes = useStyles();
 
@@ -215,7 +216,8 @@ const SignUp = props => {
 
   const handleSignUp = event => {
     event.preventDefault();
-    console.log(formState.values);
+    alertSignUpCompleted( formState.values );
+
     if (!loading) {
       setSuccess(false);
       setLoading(true);
@@ -417,7 +419,25 @@ const SignUp = props => {
 };
 
 SignUp.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object,
+  alertSignUpCompleted: PropTypes.func.isRequired,
 };
 
-export default SignUp;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    prop: state.prop
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    alertSignUpCompleted: dataUser => {
+      dispatch({
+        type: "SIGNUP_COMPLETED",
+        data: dataUser,
+      })
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
