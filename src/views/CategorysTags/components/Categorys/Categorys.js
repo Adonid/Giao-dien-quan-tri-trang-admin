@@ -17,6 +17,7 @@ import {
  import CategoryOutlinedIcon from '@material-ui/icons/CategoryOutlined';
  import { InputNotBorder, UploadCropSingleImage } from 'components';
 import { getInitials } from 'helpers';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -41,32 +42,29 @@ const useStyles = makeStyles(theme => ({
       }
 }));
 
-const chipsCategory = [
-    { id: 1, label: 'Angular', qtyProducts: 12, avatar: "https://images.unsplash.com/photo-1600800609386-11ab3105a9e4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" },
-    { id: 2, label: 'jQuery', qtyProducts: 34, avatar: "https://images.unsplash.com/photo-1556691432-33035a3466fe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" },
-    { id: 3, label: 'Polymer', qtyProducts: 77, avatar: "https://images.unsplash.com/photo-1597690310639-272d222023b9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" },
-    { id: 4, label: 'React', qtyProducts: 72, avatar: "https://images.unsplash.com/photo-1551835503-ffa9edbacc75?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" },
-    { id: 5, label: 'Vue.js', qtyProducts: 90, avatar: "https://images.unsplash.com/photo-1517137660927-27542f89984d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" },
-  ];
-
 const Categorys = props => {
 
-    const { className, ...rest } = props;
+    const { className, categorys, addCategory, ...rest } = props;
 
     const classes = useStyles();
 
-    const [chipsCat, setChipsCat] = useState(chipsCategory);
+    const [chipsCat, setChipsCat] = useState(categorys);
 
     const [ openUploadImage, setOpenUploadImage ] = useState(false);
     const [ dataImage, setDataImage ] = useState('/images/products/contemplative-reptile.jpg');
     const [ dataChip, setDataChip ] = useState(null);
+
+    useEffect( () => {
+        setChipsCat(categorys);
+    },[categorys])
     
       const handleDelete = chipToDelete => () => {
         setChipsCat( (chipsCat) => chipsCat.filter( chip => chip.id !== Number(chipToDelete)) );
       };
 
     const handleAddCategory = category => {
-        setChipsCat( chipsCat => [ ...chipsCat, { id: Math.floor(Math.random() * (99999 - 99)) + 99, label: category, qtyProducts: 0 } ])
+        // setChipsCat( chipsCat => [ ...chipsCat, { id: Math.floor(Math.random() * (99999 - 99)) + 99, label: category, qtyProducts: 0 } ]);
+        addCategory(category);
     }
     
     const handleClick = chip => {
@@ -127,7 +125,25 @@ const Categorys = props => {
 };
 
 Categorys.propTypes = {
-    
+    categorys: PropTypes.array.isRequired,
+    addCategory: PropTypes.func.isRequired,
 };
 
-export default Categorys;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        categorys: state.dataCategoryTag.categorys,
+    }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        addCategory: name => {
+            dispatch({
+                type: "ADD_NEW_CAT",
+                name: name,
+            })
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Categorys)
