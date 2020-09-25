@@ -8,3 +8,4 @@ export { default as ManipulationPostReducer  } from './ManipulationPostReducer';
 export { default as PostDetailReducer  } from './PostDetailReducer';
 export { default as ProductEditReducer  } from './ProductEditReducer';
 export { default as CategoryTagReducer  } from './CategoryTagReducer';
+export { default as TermReducer  } from './TermReducer';
