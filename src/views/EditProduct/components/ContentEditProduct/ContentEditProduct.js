@@ -148,9 +148,6 @@ const ContentEditProduct = props => {
 
     const handlePost = event => {
         event.preventDefault();
-        /** API xu ly dang nhap o day */
-
-        /** END */
         setLoading( true );
         var dataPost = {}; 
         dataPost.name = formState.values.name;
