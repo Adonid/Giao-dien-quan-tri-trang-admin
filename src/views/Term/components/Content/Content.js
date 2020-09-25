@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { createMuiTheme, ThemeProvider  } from '@material-ui/core/styles';
 import { Button, Card, CardContent, CircularProgress, Divider, Grid } from '@material-ui/core';
 import { Editor } from '@tinymce/tinymce-react';
@@ -16,7 +17,7 @@ const buttonStore = createMuiTheme({
 
 const Content = props => {
 
-    const { className, isLoading, ...rest } = props;
+    const { className, isLoading, updatedTerm, dataTerm, ...rest } = props;
     
     const [ contentTerm, setContentTerm ] = useState( '' );
     const [ loading, setLoading ] = useState( false );
@@ -31,9 +32,8 @@ const Content = props => {
 
         /** END */
         setLoading( true );
-        console.log(contentTerm);
 
-        // editPost(dataPost);
+        updatedTerm(contentTerm);
     }
     
     return (
@@ -47,7 +47,7 @@ const Content = props => {
                     <CardContent>
                         <Editor
                             apiKey="g6j5aqzhhcuqyw9tlkubpsl1x1hd0l0ze7exfz3id0xqxs97"
-                            initialValue={ contentTerm }
+                            initialValue={ dataTerm }
                             init={{
                                 height: 500,
                                 menubar: true,
@@ -92,7 +92,27 @@ const Content = props => {
 };
 
 Content.propTypes = {
-    
+    isLoading: PropTypes.bool.isRequired,
+    updatedTerm: PropTypes.func.isRequired,
+    dataTerm: PropTypes.string.isRequired,
 };
 
-export default Content;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        isLoading: state.dataTerm.isLoading,
+        dataTerm: state.dataTerm.contentTerm,
+    }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        updatedTerm: data => {
+            dispatch({
+                type: "UPDATE_TERM",
+                data: data,
+            })
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Content)
