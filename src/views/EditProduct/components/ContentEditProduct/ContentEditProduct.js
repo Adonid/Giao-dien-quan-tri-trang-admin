@@ -336,7 +336,7 @@ const ContentEditProduct = props => {
                                 type="submit"
                                 disabled={!formState.isValid||loading}
                             >
-                                {loading && <CircularProgress size={24} className={classes.buttonProgress} />} Lưu, chờ duyệt
+                                {loading && <CircularProgress size={24} />} Lưu, chờ duyệt
                             </Button>
                         </ThemeProvider>
                         &nbsp;
