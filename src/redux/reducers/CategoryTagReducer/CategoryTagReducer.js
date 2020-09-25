@@ -11,7 +11,7 @@ const CategoryTagReducer = (state = dataCategoryTag, action) => {
         case 'ADD_NEW_CAT':
             const nameCat = action.name;
             /** api them moi 1 category */
-
+                // nameCat: string
             /** end */
             // demo sau khi api xong
             state = {...state, categorys: [...state.categorys, { id: Math.floor(Math.random() * (99999 - 99)) + 99, label: nameCat, qtyProducts: 0 }]};
@@ -35,6 +35,26 @@ const CategoryTagReducer = (state = dataCategoryTag, action) => {
             /** end */
             // demo sau khi api xong
             state = {...state, categorys: [...state.categorys].map( cat => cat.id===dataUpdateCat.id ? dataUpdateCat : cat) };
+            return state;
+
+        
+        case 'ADD_TAG':
+            const nameTag = action.newTag;
+            /** api them 1 tag */
+                // nameTag: string
+            /** end */
+            // demo sau khi api xong
+            state = {...state, tags: [...state.tags, { id: Math.floor(Math.random() * (99999 - 99)) + 99, label: nameTag, qtyProducts: 0 } ] };
+            return state;
+
+        
+        case 'DELETE_TAG':
+            const idTagDel = action.delTag;
+            /** api xoa 1 tag */
+                // idTagDel: int
+            /** end */
+            // demo sau khi api xong
+            state = {...state, tags: [...state.tags].filter( tag => tag.id !== Number(idTagDel)) };
             return state;
 
         
