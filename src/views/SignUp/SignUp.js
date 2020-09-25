@@ -215,6 +215,7 @@ const SignUp = props => {
 
   const handleSignUp = event => {
     event.preventDefault();
+    console.log(formState.values);
     if (!loading) {
       setSuccess(false);
       setLoading(true);
@@ -369,7 +370,7 @@ const SignUp = props => {
                     <Link
                       color="primary"
                       component={RouterLink}
-                      to="#"
+                      to="/terms-used"
                       underline="always"
                       variant="h6"
                     >
