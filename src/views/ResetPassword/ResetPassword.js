@@ -8,12 +8,10 @@ import {
   Button,
   IconButton,
   TextField,
-  Link,
   Typography,
   CircularProgress
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { BackDrop } from 'elements';
 
 const schema = {
   password: {
@@ -158,7 +156,6 @@ const ResetPassword = props => {
     errors: {}
   });
 
-  const [openBackdrop, setOpenBackdrop] = useState(false);
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const timer = React.useRef();
@@ -167,18 +164,6 @@ const ResetPassword = props => {
       clearTimeout(timer.current);
     };
   }, []);
-
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handlePopoverOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
 
   useEffect(() => {
     const errors = validate(formState.values, schema);
@@ -219,13 +204,12 @@ const ResetPassword = props => {
     if (!loading) {
       setSuccess(false);
       setLoading(true);
-      setOpenBackdrop(true);
       // THOI GIAN XU LY API O DAY!
       timer.current = setTimeout(() => {
         setSuccess(true);
         setLoading(false);
         // vi du ve chuyen huong qua trang lay mat khau sau khi call api
-        history.push('/reset-password-success');
+        history.push('/sign-in');
       }, 2000);
     }    
   };
@@ -357,14 +341,13 @@ const ResetPassword = props => {
                   type="submit"
                   variant="contained"
                 >
-                  {loading && <CircularProgress size={24} className={classes.buttonProgress} />} Đổi mật khẩu
+                  {loading && <CircularProgress size={24} />} Đổi mật khẩu
                 </Button>
               </form>
             </div>
           </div>
         </Grid>
       </Grid>
-      <BackDrop open={openBackdrop} />
     </div>
   );
 };
