@@ -272,6 +272,7 @@ const SignIn = props => {
                   type="text"
                   value={formState.values.email || ''}
                   variant="outlined"
+                  autoFocus
                 />
                 <TextField
                   className={classes.textField}
