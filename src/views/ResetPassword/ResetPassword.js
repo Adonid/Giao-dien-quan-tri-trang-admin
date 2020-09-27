@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
@@ -12,6 +11,7 @@ import {
   CircularProgress
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { connect } from 'react-redux';
 
 const schema = {
   password: {
@@ -145,7 +145,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ResetPassword = props => {
-  const { history } = props;
+  const { history, resetPw } = props;
 
   const classes = useStyles();
 
@@ -157,7 +157,6 @@ const ResetPassword = props => {
   });
 
   const [loading, setLoading] = React.useState(false);
-  const [success, setSuccess] = React.useState(false);
   const timer = React.useRef();
   React.useEffect(() => {
     return () => {
@@ -200,18 +199,11 @@ const ResetPassword = props => {
 
   const handleSignIn = event => {
     event.preventDefault();
-    // HÃY XỬ LÝ DỮ LIỆU Ở ĐÂY!
-    if (!loading) {
-      setSuccess(false);
-      setLoading(true);
-      // THOI GIAN XU LY API O DAY!
-      timer.current = setTimeout(() => {
-        setSuccess(true);
-        setLoading(false);
-        // vi du ve chuyen huong qua trang lay mat khau sau khi call api
-        history.push('/sign-in');
-      }, 2000);
-    }    
+    setLoading(true);
+
+    resetPw(formState.values, history);
+
+    setLoading(false);
   };
 
   const hasError = field =>
@@ -353,7 +345,26 @@ const ResetPassword = props => {
 };
 
 ResetPassword.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object,
+  resetPw: PropTypes.func.isRequired,
 };
 
-export default withRouter(ResetPassword);
+const mapStateToProps = (state, ownProps) => {
+  return {
+    prop: state.prop
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    resetPw: (dataReset, history) => {
+      dispatch({
+        type: 'RESET_PASSWORD',
+        data: dataReset,
+        history: history,
+      })
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword)
