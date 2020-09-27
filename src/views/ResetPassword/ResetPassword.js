@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { connect } from 'react-redux';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const schema = {
   password: {
@@ -156,13 +157,10 @@ const ResetPassword = props => {
     errors: {}
   });
 
-  const [loading, setLoading] = React.useState(false);
-  const timer = React.useRef();
-  React.useEffect(() => {
-    return () => {
-      clearTimeout(timer.current);
-    };
-  }, []);
+  const [loading, setLoading] = useState(false);
+  const [isRecaptcha, setIsRecaptcha] = useState(false);
+  
+  const recaptchaRef = useRef();
 
   useEffect(() => {
     const errors = validate(formState.values, schema);
@@ -206,8 +204,9 @@ const ResetPassword = props => {
     setLoading(false);
   };
 
-  const hasError = field =>
-    formState.touched[field] && formState.errors[field] ? true : false;
+  const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
+
+  const onChange = val => { val ? setIsRecaptcha( true ) : setIsRecaptcha( false )};
 
   return (
     <div className={classes.root}>
@@ -324,10 +323,18 @@ const ResetPassword = props => {
                 >
                   Mã xác minh gồm 8 ký tự đã được gửi vào email của bạn.
                 </Typography>
+                <ReCAPTCHA
+                    sitekey="6LcB4NAZAAAAAGUIk9kHyeDxqZ84lWKNwOSWpujK"
+                    onChange={ onChange }
+                    locale="vi"
+                    style={{ display: "inline-block", marginTop: "15px" }}
+                    theme="light"
+                    ref={recaptchaRef}
+                />
                 <Button
                   className={classes.signInButton}
                   color="primary"
-                  disabled={!formState.isValid||loading}
+                  disabled={!formState.isValid||loading||!isRecaptcha}
                   fullWidth
                   size="large"
                   type="submit"
