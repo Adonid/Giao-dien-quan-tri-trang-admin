@@ -45,7 +45,16 @@ const AlertMiniPageReducer = (state = dataAlertMiniPage, action) => {
             state = { ...state, resetPasswordCompleted: {type: "success", content: "Thay đổi mật khẩu thành công!"}}
             return state;
 
-        
+        case 'LOGIN':
+            const userLogin = action.user;
+            const historyLogin = action.history;
+            /** api login nguoi dung */
+                // userLogin: object { email: email, password: string }
+            /** end */
+            // vi du sa khi login
+            
+            return state;
+
         default:
             return state
     }
