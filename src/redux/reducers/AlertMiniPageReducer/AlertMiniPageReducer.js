@@ -23,6 +23,15 @@ const AlertMiniPageReducer = (state = dataAlertMiniPage, action) => {
             state = { ...state, signUpCompleted: {type: "success", content: "Đăng ký thành công! Vui lòng xác thực tài khoản qua email đã gửi."}}
             return state;
 
+        case 'ACTION_FORGET_PW':
+            const email = action.email;
+            const historyVerifyResetPw = action.history;
+            /** api tao ma xac thuc va gui email chua code xac thuc */
+                // email: email
+            /** end */
+            // vi du sau khi api
+            historyVerifyResetPw.push('/reset-password');
+            return state;
         default:
             return state
     }
