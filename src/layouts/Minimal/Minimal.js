@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 
 import { Topbar } from './components';
+import { connect } from 'react-redux';
+import { Snackbars } from 'alerts';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -15,7 +17,10 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Minimal = props => {
-  const { children } = props;
+  const { 
+    children,
+    alertSignUpCompleted,
+   } = props;
 
   const classes = useStyles();
 
@@ -23,13 +28,20 @@ const Minimal = props => {
     <div className={classes.root}>
       <Topbar />
       <main className={classes.content}>{children}</main>
+      <Snackbars data={ alertSignUpCompleted } />
     </div>
   );
 };
 
 Minimal.propTypes = {
   children: PropTypes.node,
-  className: PropTypes.string
+  alertSignUpCompleted: PropTypes.object.isRequired,
 };
 
-export default Minimal;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    alertSignUpCompleted: state.dataAlertMiniPage.signUpCompleted,
+  }
+}
+
+export default connect(mapStateToProps)(Minimal)
