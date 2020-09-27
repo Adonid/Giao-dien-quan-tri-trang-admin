@@ -172,8 +172,7 @@ const SignUp = props => {
     errors: {}
   });
 
-  const [loading, setLoading] = React.useState(false);
-  const [success, setSuccess] = React.useState(false);
+  const [loading, setLoading] = useState(false);
   const timer = React.useRef();
   React.useEffect(() => {
     return () => {
@@ -216,19 +215,11 @@ const SignUp = props => {
 
   const handleSignUp = event => {
     event.preventDefault();
-    alertSignUpCompleted( formState.values );
+    setLoading(true);
 
-    if (!loading) {
-      setSuccess(false);
-      setLoading(true);
-      // THOI GIAN XU LY API O DAY!
-      timer.current = setTimeout(() => {
-        setSuccess(true);
-        setLoading(false);
-        // vi du ve chuyen huong qua trang quen mat khau sau khi call api
-        history.push('/sign-in');
-      }, 2000);
-    }
+    alertSignUpCompleted( formState.values, history );
+
+    setLoading(false);
   };
 
   const hasError = field =>
@@ -312,6 +303,7 @@ const SignUp = props => {
                   type="text"
                   value={formState.values.firstName || ''}
                   variant="outlined"
+                  autoFocus
                 />
                 <TextField
                   className={classes.textField}
@@ -431,10 +423,11 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    alertSignUpCompleted: dataUser => {
+    alertSignUpCompleted: (dataUser, history) => {
       dispatch({
         type: "SIGNUP_COMPLETED",
         data: dataUser,
+        history: history
       })
     }
   }
