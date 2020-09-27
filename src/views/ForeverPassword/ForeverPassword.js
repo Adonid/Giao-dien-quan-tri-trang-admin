@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
@@ -8,12 +7,11 @@ import {
   Button,
   IconButton,
   TextField,
-  Link,
   Typography,
   CircularProgress
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { BackDrop } from 'elements';
+import { connect } from 'react-redux';
 
 const schema = {
   email: {
@@ -124,7 +122,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ForeverPassword = props => {
-  const { history } = props;
+  const { history, sendCodeVerifyFogetPw } = props;
 
   const classes = useStyles();
 
@@ -135,9 +133,7 @@ const ForeverPassword = props => {
     errors: {}
   });
 
-  const [openBackdrop, setOpenBackdrop] = useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [success, setSuccess] = React.useState(false);
   const timer = React.useRef();
   React.useEffect(() => {
     return () => {
@@ -180,19 +176,11 @@ const ForeverPassword = props => {
 
   const handleSignIn = event => {
     event.preventDefault();
-    // HÃY XỬ LÝ DỮ LIỆU Ở ĐÂY!
-    if (!loading) {
-      setSuccess(false);
-      setLoading(true);
-      setOpenBackdrop(true);
-      // THOI GIAN XU LY API O DAY!
-      timer.current = setTimeout(() => {
-        setSuccess(true);
-        setLoading(false);
-        // vi du ve chuyen huong qua trang lay mat khau sau khi call api
-        history.push('/reset-password');
-      }, 2000);
-    }    
+    setLoading(true);
+
+    sendCodeVerifyFogetPw(formState.values.email, history);
+
+    setLoading(false); 
   };
 
   const hasError = field =>
@@ -276,6 +264,7 @@ const ForeverPassword = props => {
                   type="text"
                   value={formState.values.email || ''}
                   variant="outlined"
+                  autoFocus
                 />
                 <Button
                   className={classes.signInButton}
@@ -286,20 +275,38 @@ const ForeverPassword = props => {
                   type="submit"
                   variant="contained"
                 >
-                  {loading && <CircularProgress size={24} className={classes.buttonProgress} />} Khôi phục ngay
+                  {loading && <CircularProgress size={24} />} Khôi phục ngay
                 </Button>
               </form>
             </div>
           </div>
         </Grid>
       </Grid>
-      <BackDrop open={openBackdrop} />
     </div>
   );
 };
 
 ForeverPassword.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object,
+  sendCodeVerifyFogetPw: PropTypes.func.isRequired,
 };
 
-export default withRouter(ForeverPassword);
+const mapStateToProps = (state, ownProps) => {
+  return {
+    prop: state.prop
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    sendCodeVerifyFogetPw: (email, history) => {
+      dispatch({
+        type: 'ACTION_FORGET_PW',
+        email: email,
+        history: history
+      })
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ForeverPassword)
