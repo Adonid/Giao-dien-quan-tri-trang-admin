@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link as RouterLink, withRouter } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
@@ -12,6 +12,7 @@ import {
   CircularProgress 
 } from '@material-ui/core';
 import { connect } from 'react-redux';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const schema = {
   email: {
@@ -141,13 +142,10 @@ const SignIn = props => {
     touched: {},
     errors: {}
   });
-  const [loading, setLoading] = React.useState(false);
-  const timer = React.useRef();
-  React.useEffect(() => {
-    return () => {
-      clearTimeout(timer.current);
-    };
-  }, []);
+  const [loading, setLoading] = useState(false);
+  const [isRecaptcha, setIsRecaptcha] = useState(false);
+  
+  const recaptchaRef = useRef();
 
   useEffect(() => {
     const errors = validate(formState.values, schema);
@@ -189,6 +187,8 @@ const SignIn = props => {
 
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
+  
+  const onChange = val => { val ? setIsRecaptcha( true ) : setIsRecaptcha( false )};
 
   return (
     <div className={classes.root}>
@@ -279,10 +279,18 @@ const SignIn = props => {
                   value={formState.values.password || ''}
                   variant="outlined"
                 />
+                <ReCAPTCHA
+                    sitekey="6LcB4NAZAAAAAGUIk9kHyeDxqZ84lWKNwOSWpujK"
+                    onChange={ onChange }
+                    locale="vi"
+                    style={{ display: "inline-block", marginTop: "15px" }}
+                    theme="light"
+                    ref={recaptchaRef}
+                />
                 <Button
                   className={classes.signInButton}
                   color="primary"
-                  disabled={!formState.isValid||loading}
+                  disabled={!formState.isValid||loading||!isRecaptcha}
                   fullWidth
                   size="large"
                   type="submit"
