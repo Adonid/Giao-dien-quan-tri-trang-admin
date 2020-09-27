@@ -20,6 +20,7 @@ const Minimal = props => {
   const { 
     children,
     alertSignUpCompleted,
+    resetPasswordCompleted,
    } = props;
 
   const classes = useStyles();
@@ -29,6 +30,7 @@ const Minimal = props => {
       <Topbar />
       <main className={classes.content}>{children}</main>
       <Snackbars data={ alertSignUpCompleted } />
+      <Snackbars data={ resetPasswordCompleted } />
     </div>
   );
 };
@@ -36,11 +38,13 @@ const Minimal = props => {
 Minimal.propTypes = {
   children: PropTypes.node,
   alertSignUpCompleted: PropTypes.object.isRequired,
+  resetPasswordCompleted: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
     alertSignUpCompleted: state.dataAlertMiniPage.signUpCompleted,
+    resetPasswordCompleted: state.dataAlertMiniPage.resetPasswordCompleted,
   }
 }
 
