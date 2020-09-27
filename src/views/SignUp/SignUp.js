@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link as RouterLink, withRouter } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import validate from 'validate.js';
@@ -16,6 +16,7 @@ import {
   CircularProgress
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const schema = {
   firstName: {
@@ -173,12 +174,9 @@ const SignUp = props => {
   });
 
   const [loading, setLoading] = useState(false);
-  const timer = React.useRef();
-  React.useEffect(() => {
-    return () => {
-      clearTimeout(timer.current);
-    };
-  }, []);
+  const [isRecaptcha, setIsRecaptcha] = useState(false);
+  
+  const recaptchaRef = useRef();
 
   useEffect(() => {
     const errors = validate(formState.values, schema);
@@ -222,8 +220,9 @@ const SignUp = props => {
     setLoading(false);
   };
 
-  const hasError = field =>
-    formState.touched[field] && formState.errors[field] ? true : false;
+  const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
+
+  const onChange = val => { val ? setIsRecaptcha( true ) : setIsRecaptcha( false )};
 
   return (
     <div className={classes.root}>
@@ -377,10 +376,18 @@ const SignUp = props => {
                     {formState.errors.policy[0]}
                   </FormHelperText>
                 )}
+                <ReCAPTCHA
+                    sitekey="6LcB4NAZAAAAAGUIk9kHyeDxqZ84lWKNwOSWpujK"
+                    onChange={ onChange }
+                    locale="vi"
+                    style={{ display: "inline-block", marginTop: "15px" }}
+                    theme="light"
+                    ref={recaptchaRef}
+                />
                 <Button
                   className={classes.signUpButton}
                   color="primary"
-                  disabled={!formState.isValid||loading}
+                  disabled={!formState.isValid||loading||!isRecaptcha}
                   fullWidth
                   size="large"
                   type="submit"
