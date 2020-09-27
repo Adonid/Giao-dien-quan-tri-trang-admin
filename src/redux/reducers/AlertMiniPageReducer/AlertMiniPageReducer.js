@@ -32,6 +32,20 @@ const AlertMiniPageReducer = (state = dataAlertMiniPage, action) => {
             // vi du sau khi api
             historyVerifyResetPw.push('/reset-password');
             return state;
+
+        
+        case 'RESET_PASSWORD':
+            const dataReset = action.data;
+            const historyResetPw = action.history;
+            /** api xac thuc code va thuc thi doi mat khau */
+                // dataReset: object{ password: string, repassword: string, verifycode: string(8)}
+            /** end */
+            // vi du sau khi api
+            historyResetPw.push('/sign-in');
+            state = { ...state, resetPasswordCompleted: {type: "success", content: "Thay đổi mật khẩu thành công!"}}
+            return state;
+
+        
         default:
             return state
     }
