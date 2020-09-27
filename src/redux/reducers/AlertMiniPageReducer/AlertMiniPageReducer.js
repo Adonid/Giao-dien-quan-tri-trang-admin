@@ -52,7 +52,6 @@ const AlertMiniPageReducer = (state = dataAlertMiniPage, action) => {
                 // userLogin: object { email: email, password: string }
             /** end */
             // vi du sa khi login
-            console.log(userLogin);
             return state;
 
         default:
