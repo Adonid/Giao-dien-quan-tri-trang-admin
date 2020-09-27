@@ -11,6 +11,7 @@ import {
   Typography,
   CircularProgress 
 } from '@material-ui/core';
+import { connect } from 'react-redux';
 
 const schema = {
   email: {
@@ -130,7 +131,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignIn = props => {
-  const { history } = props;
+  const { history, login } = props;
 
   const classes = useStyles();
 
@@ -179,21 +180,11 @@ const SignIn = props => {
 
   const handleSignIn = event => {
     event.preventDefault();
-    /** API xu ly dang nhap o day */
+    setLoading(true);
 
-    /** END */
+    login(formState.values, history);
 
-    // Xoa doan code ex duoi neu lam that
-    console.log(formState.values);
-    if (!loading) {
-      setLoading(true);
-      // THOI GIAN XU LY API O DAY!
-      timer.current = setTimeout(() => {
-        setLoading(false);
-        // vi du ve chuyen huong qua trang quen mat khau sau khi call api
-        history.push('/dashboard');
-      }, 2000);
-    }    
+    setLoading(false);
   };
 
   const hasError = field =>
@@ -343,7 +334,26 @@ const SignIn = props => {
 };
 
 SignIn.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object,
+  login: PropTypes.func.isRequired,
 };
 
-export default withRouter(SignIn);
+const mapStateToProps = (state, ownProps) => {
+  return {
+    prop: state.prop
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    login: (user, history) => {
+      dispatch({
+        type: 'LOGIN',
+        user: user,
+        history: history
+      })
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn)
