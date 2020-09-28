@@ -18,7 +18,6 @@ import {
   SignIn as SignInView,
   ForeverPassword as ForeverPasswordView,
   ResetPassword as ResetPasswordView,
-  CreateAccountSuccess as CreateAccountSuccessView,
   NotFound as NotFoundView,
   Chats as ChatsView,
   AddNewProduct as AddNewProductView,
