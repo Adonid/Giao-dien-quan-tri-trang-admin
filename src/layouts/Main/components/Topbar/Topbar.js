@@ -15,6 +15,7 @@ import {
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
+import NotificationsActiveOutlinedIcon from '@material-ui/icons/NotificationsActiveOutlined';
 import InputIcon from '@material-ui/icons/Input';
 import SearchIcon from '@material-ui/icons/Search';
 import { ListNotifys } from './components';
@@ -126,7 +127,11 @@ const Topbar = props => {
               badgeContent={notes ?? null} // So luong notify moi nay lay tu REDUX tra ve
               color="error"
             >
-              <NotificationsIcon />
+              {
+                notes
+                ? <NotificationsActiveOutlinedIcon />  
+                : <NotificationsIcon />
+              }              
             </Badge>
           </IconButton>
           <Menu
