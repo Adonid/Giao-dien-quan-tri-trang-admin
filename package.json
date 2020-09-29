@@ -34,6 +34,7 @@
     "@tinymce/tinymce-react": "^3.6.0",
     "chart.js": "^2.8.0",
     "clsx": "^1.0.4",
+    "firebase": "^7.21.1",
     "history": "^4.9.0",
     "moment": "^2.24.0",
     "node-sass": "^4.12.0",
