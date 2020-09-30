@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useState, useEffect, useRef, useCallback, useContext } from 'react';
+import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
@@ -11,8 +11,11 @@ import {
   Typography,
   CircularProgress 
 } from '@material-ui/core';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import ReCAPTCHA from 'react-google-recaptcha';
+
+import base from "base.js";
+import { AuthContext } from 'auth/Auth';
 
 const schema = {
   email: {
@@ -176,19 +179,41 @@ const SignIn = props => {
     }));
   };
 
-  const handleSignIn = event => {
-    event.preventDefault();
-    setLoading(true);
+  // const handleLogin = event => {
+  //   event.preventDefault();
+  //   setLoading(true);
 
-    login(formState.values, history);
+  //   login(formState.values, history);
 
-    setLoading(false);
-  };
+  //   setLoading(false);
+  // };
 
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
   
   const onChange = val => { val ? setIsRecaptcha( true ) : setIsRecaptcha( false )};
+
+  const handleSignIn = useCallback(
+    async event => {
+      event.preventDefault();
+      const { email, password } = event.target.elements;
+      try {
+        await base
+          .auth()
+          .signInWithEmailAndPassword(email.value, password.value);
+        history.push("/dashboard");
+      } catch (error) {
+        alert(error);
+      }
+    },
+    [history]
+  );
+
+  const { currentUser } = useContext(AuthContext);
+
+  if (currentUser) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className={classes.root}>
@@ -343,25 +368,26 @@ const SignIn = props => {
 
 SignIn.propTypes = {
   history: PropTypes.object,
-  login: PropTypes.func.isRequired,
+  // login: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    prop: state.prop
-  }
-}
+// const mapStateToProps = (state, ownProps) => {
+//   return {
+//     prop: state.prop
+//   }
+// }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    login: (user, history) => {
-      dispatch({
-        type: 'LOGIN',
-        user: user,
-        history: history
-      })
-    }
-  }
-}
+// const mapDispatchToProps = (dispatch, ownProps) => {
+//   return {
+//     login: (user, history) => {
+//       dispatch({
+//         type: 'LOGIN',
+//         user: user,
+//         history: history
+//       })
+//     }
+//   }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn)
+// export default connect(mapStateToProps, mapDispatchToProps)(SignIn)
+export default withRouter(SignIn)
