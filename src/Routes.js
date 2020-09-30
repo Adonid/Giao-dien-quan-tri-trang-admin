@@ -1,3 +1,4 @@
+import PrivateRoute from 'auth/PrivateRoute';
 import React from 'react';
 import { Switch, Redirect } from 'react-router-dom';
 
@@ -36,91 +37,91 @@ const Routes = () => {
         from="/"
         to="/sign-in"
       />
-      <RouteWithLayout
+      <PrivateRoute
         component={DashboardView}
         exact
         layout={MainLayout}
         path="/dashboard"
       />
-      <RouteWithLayout
+      <PrivateRoute
         component={UserListView}
         exact
         layout={MainLayout}
         path="/users"
       />
-      <RouteWithLayout
+      <PrivateRoute
         component={UserDetailView}
         exact
         layout={MainLayout}
         path="/user-detail"
       />
-      <RouteWithLayout
+      <PrivateRoute
         component={UserEditorView}
         exact
         layout={MainLayout}
         path="/user-editor"
       />
-      <RouteWithLayout
+      <PrivateRoute
         component={ProductListView}
         exact
         layout={MainLayout}
         path="/products"
       />
-      <RouteWithLayout
+      <PrivateRoute
         component={ViewProductView}
         exact
         layout={MainLayout}
         path="/product-detail"
       />
-      <RouteWithLayout
+      <PrivateRoute
         component={EditProductView}
         exact
         layout={MainLayout}
         path="/product-edit"
       />
-      <RouteWithLayout
+      <PrivateRoute
         component={TypographyView}
         exact
         layout={MainLayout}
         path="/typography"
       />
-      <RouteWithLayout
+      <PrivateRoute
         component={IconsView}
         exact
         layout={MainLayout}
         path="/icons"
       />
-      <RouteWithLayout
+      <PrivateRoute
         component={AccountView}
         exact
         layout={MainLayout}
         path="/account"
       />
-      <RouteWithLayout
+      <PrivateRoute
         component={SettingsView}
         exact
         layout={MainLayout}
         path="/settings"
       />
-      <RouteWithLayout
+      <PrivateRoute
         component={ChatsView}
         exact
         layout={MainLayout}
         path="/chats-room"
       />
-      <RouteWithLayout
+      <PrivateRoute
         component={AddNewProductView}
         exact
         layout={MainLayout}
         path="/add-new-product"
       />
-      <RouteWithLayout
+      <PrivateRoute
         component={CategorysTagsView}
         exact
         layout={MainLayout}
         path="/category-tag"
       />
-      <RouteWithLayout
+      <PrivateRoute
         component={TermView}
         exact
         layout={MainLayout}
