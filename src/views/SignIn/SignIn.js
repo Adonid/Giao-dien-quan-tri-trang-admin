@@ -139,6 +139,8 @@ const SignIn = props => {
 
   const classes = useStyles();
 
+  const { currentUser } = useContext(AuthContext);
+
   const [formState, setFormState] = useState({
     isValid: false,
     values: {},
@@ -208,8 +210,6 @@ const SignIn = props => {
     },
     [history]
   );
-
-  const { currentUser } = useContext(AuthContext);
 
   if (currentUser) {
     return <Redirect to="/" />;
