@@ -11,7 +11,6 @@ import {
   Typography,
   CircularProgress 
 } from '@material-ui/core';
-// import { connect } from 'react-redux';
 import ReCAPTCHA from 'react-google-recaptcha';
 
 import base from "base.js";
@@ -181,15 +180,6 @@ const SignIn = props => {
     }));
   };
 
-  // const handleLogin = event => {
-  //   event.preventDefault();
-  //   setLoading(true);
-
-  //   login(formState.values, history);
-
-  //   setLoading(false);
-  // };
-
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
   
@@ -198,11 +188,13 @@ const SignIn = props => {
   const handleSignIn = useCallback(
     async event => {
       event.preventDefault();
+      setLoading(true);
       const { email, password } = event.target.elements;
       try {
         await base
           .auth()
           .signInWithEmailAndPassword(email.value, password.value);
+          setLoading(false);
         history.push("/dashboard");
       } catch (error) {
         alert(error);
@@ -368,26 +360,6 @@ const SignIn = props => {
 
 SignIn.propTypes = {
   history: PropTypes.object,
-  // login: PropTypes.func.isRequired,
 };
 
-// const mapStateToProps = (state, ownProps) => {
-//   return {
-//     prop: state.prop
-//   }
-// }
-
-// const mapDispatchToProps = (dispatch, ownProps) => {
-//   return {
-//     login: (user, history) => {
-//       dispatch({
-//         type: 'LOGIN',
-//         user: user,
-//         history: history
-//       })
-//     }
-//   }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(SignIn)
 export default withRouter(SignIn)
