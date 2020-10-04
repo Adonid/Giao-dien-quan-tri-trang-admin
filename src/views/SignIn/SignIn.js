@@ -191,13 +191,12 @@ const SignIn = props => {
       setLoading(true);
       const { email, password } = event.target.elements;
       try {
-        await base
-          .auth()
-          .signInWithEmailAndPassword(email.value, password.value);
+        await base.auth().signInWithEmailAndPassword(email.value, password.value);
           setLoading(false);
-        history.push("/dashboard");
+          history.push("/dashboard");
       } catch (error) {
         alert(error);
+        setLoading(false);
       }
     },
     [history]
