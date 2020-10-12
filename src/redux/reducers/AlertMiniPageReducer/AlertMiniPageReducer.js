@@ -48,7 +48,6 @@ const AlertMiniPageReducer = (state = dataAlertMiniPage, action) => {
 
         case 'LOGIN':
             const userLogin = action.user;
-            const historyLogin = action.history;
             /** api login nguoi dung */
                 // userLogin: object { email: email, password: string }
             Axios({
@@ -58,7 +57,8 @@ const AlertMiniPageReducer = (state = dataAlertMiniPage, action) => {
                 headers: {'X-Requested-With': 'XMLHttpRequest'},
                 data: userLogin
               }).then( res => {
-                console.log(res.data.token);
+                console.log(res.data);
+                action.history.push('/dashboard');
               }).catch( e => {
                 window.alert("Email, mật khẩu không đúng hoặc không tồn tại hoặc đã bị xóa!");
               });
