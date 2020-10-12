@@ -207,8 +207,8 @@ const SignIn = props => {
   const handleSignIn = event => {
     event.preventDefault();
     setLoading(true);
-    const LoginVal = {email: formState.values.email, password: formState.values.password};
-    login(LoginVal, history);
+    const loginVal = {email: formState.values.email, password: formState.values.password};
+    login( loginVal, history );
     setLoading(false);
   }
 
