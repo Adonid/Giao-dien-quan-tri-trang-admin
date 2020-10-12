@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
       setCurrentUser(user);
       setPending(false);
     });
+    // Thuc ra la kiem tra token trong cookie xem co hop le hay khong
   }, []);
 
   if(pending){
