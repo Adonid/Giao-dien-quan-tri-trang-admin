@@ -1,3 +1,4 @@
+import Axios from 'axios';
 
 const dataAlertMiniPage = {
     signUpCompleted: {
@@ -50,6 +51,17 @@ const AlertMiniPageReducer = (state = dataAlertMiniPage, action) => {
             const historyLogin = action.history;
             /** api login nguoi dung */
                 // userLogin: object { email: email, password: string }
+            Axios({
+                method: 'POST',
+                baseURL: 'https://us-central1-nodejs-firebase-cloud-func.cloudfunctions.net/api/',
+                url: '/authentication/login',
+                headers: {'X-Requested-With': 'XMLHttpRequest'},
+                data: userLogin
+              }).then( res => {
+                console.log(res.data.token);
+              }).catch( e => {
+                window.alert("Email, mật khẩu không đúng hoặc không tồn tại hoặc đã bị xóa!");
+              });
             /** end */
             // vi du sa khi login
             return state;
