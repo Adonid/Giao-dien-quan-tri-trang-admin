@@ -32,6 +32,7 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@material-ui/styles": "^4.10.0",
     "@tinymce/tinymce-react": "^3.6.0",
+    "axios": "^0.20.0",
     "chart.js": "^2.8.0",
     "clsx": "^1.0.4",
     "firebase": "^7.21.1",
