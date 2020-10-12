@@ -15,6 +15,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 
 import base from "base.js";
 import { AuthContext } from 'auth/Auth';
+import { connect } from 'react-redux';
 
 const schema = {
   email: {
@@ -185,7 +186,7 @@ const SignIn = props => {
   
   const onChange = val => { val ? setIsRecaptcha( true ) : setIsRecaptcha( false )};
 
-  const handleSignIn = useCallback(
+  const retret = useCallback(
     async event => {
       event.preventDefault();
       setLoading(true);
@@ -200,7 +201,16 @@ const SignIn = props => {
       }
     },
     [history]
+
   );
+
+  const handleSignIn = event => {
+    event.preventDefault();
+    setLoading(true);
+    const LoginVal = {email: formState.values.email, password: formState.values.password};
+    login(LoginVal, history);
+    setLoading(false);
+  }
 
   if (currentUser) {
     return <Redirect to="/dashboard" />;
@@ -359,6 +369,19 @@ const SignIn = props => {
 
 SignIn.propTypes = {
   history: PropTypes.object,
+  login: PropTypes.func.isRequired,
 };
 
-export default withRouter(SignIn)
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    login: (user, history) => {
+      dispatch({
+        type: 'LOGIN',
+        user: user,
+        history: history
+      })
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(SignIn)
