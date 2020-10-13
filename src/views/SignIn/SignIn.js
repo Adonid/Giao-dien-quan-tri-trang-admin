@@ -148,7 +148,7 @@ const SignIn = props => {
     errors: {}
   });
   const [loading, setLoading] = useState(false);
-  const [isRecaptcha, setIsRecaptcha] = useState(false);
+  const [isRecaptcha, setIsRecaptcha] = useState(true);
   
   const recaptchaRef = useRef();
 
@@ -184,7 +184,8 @@ const SignIn = props => {
   const hasError = field =>
     formState.touched[field] && formState.errors[field] ? true : false;
   
-  const onChange = val => { val ? setIsRecaptcha( true ) : setIsRecaptcha( false )};
+  const onChange = val => { };
+  // val ? setIsRecaptcha( true ) : setIsRecaptcha( false )
 
   const retret = useCallback(
     async event => {
@@ -209,6 +210,7 @@ const SignIn = props => {
     setLoading(true);
     const loginVal = {email: formState.values.email, password: formState.values.password};
     login( loginVal, history );
+    history.push('/dashboard');
     setLoading(false);
   }
 
