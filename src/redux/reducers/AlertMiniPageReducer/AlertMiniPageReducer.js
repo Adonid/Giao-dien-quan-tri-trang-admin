@@ -72,7 +72,6 @@ const AlertMiniPageReducer = (state = dataAlertMiniPage, action) => {
               });
             /** end */
             state = { ...state, sigIn: {...state.sigIn, token: false, alert: { type: "success", content: "Đăng nhập thành công!" }}};
-            console.log(state);
             return state;
 
         default:
