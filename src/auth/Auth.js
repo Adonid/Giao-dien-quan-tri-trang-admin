@@ -5,8 +5,8 @@ export const AuthContext = React.createContext();
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [pending, setPending] = useState(true);
-  useEffect(() => {
-    base.auth().onAuthStateChanged((user) => {
+  useEffect( async () => {
+    const user = await base.auth().onAuthStateChanged((user) => {
       setCurrentUser(user);
       setPending(false);
     });
