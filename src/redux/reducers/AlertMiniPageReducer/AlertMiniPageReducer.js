@@ -9,6 +9,13 @@ const dataAlertMiniPage = {
         type    : "info",
         content : "Hello Word"
     },
+    sigIn: {
+        token: null,
+        alert: {
+            type    : "info",
+            content : "Hello Word"
+        },
+    }
 }
 
 const AlertMiniPageReducer = (state = dataAlertMiniPage, action) => {
@@ -57,14 +64,15 @@ const AlertMiniPageReducer = (state = dataAlertMiniPage, action) => {
                 headers: {'X-Requested-With': 'XMLHttpRequest'},
                 data: userLogin
               }).then( res => {
-                console.log(res.data);
+                window.document.cookie = "__Sucure_user=" + res.data.token;
                 action.history.push('/dashboard');
+                state = { ...state, sigIn: res.data.token, alert: { ...state.sigIn.alert, type: "success", content: "Đăng nhập thành công!" }};
+                return state;
               }).catch( e => {
                 window.alert("Email, mật khẩu không đúng hoặc không tồn tại hoặc đã bị xóa!");
+                return state;
               });
             /** end */
-            // vi du sa khi login
-            return state;
 
         default:
             return state
