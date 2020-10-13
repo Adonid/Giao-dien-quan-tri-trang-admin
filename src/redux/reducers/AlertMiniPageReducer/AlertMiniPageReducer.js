@@ -64,19 +64,22 @@ const AlertMiniPageReducer = (state = dataAlertMiniPage, action) => {
                 headers: {'X-Requested-With': 'XMLHttpRequest'},
                 data: userLogin
               }).then( res => {
-                // window.document.cookie = "__Sucure_user=" + res.data.token;
-                action.history.push('/dashboard');
-                state = { ...state, sigIn: res.data.token, alert: { ...state.sigIn.alert, type: "success", content: "Đăng nhập thành công!" }};
-                return state;
+                window.document.cookie = "__Sucure_user=" + res.data.token;
+                // action.history.push('/dashboard');
+                // tokenAdmin = res.data.token;
               }).catch( e => {
                 window.alert("Email, mật khẩu không đúng hoặc không tồn tại hoặc đã bị xóa!");
-                return state;
               });
             /** end */
+            state = { ...state, sigIn: {...state.sigIn, token: false, alert: { type: "success", content: "Đăng nhập thành công!" }}};
+            console.log(state);
+            return state;
 
         default:
             return state
     }
 }
+
+
 
 export default AlertMiniPageReducer;
