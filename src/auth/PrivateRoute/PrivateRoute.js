@@ -1,17 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
-import { AuthContext } from 'auth/Auth';
+import { connect } from 'react-redux';
 
 const PrivateRoute = props => {
-    const { layout: Layout, component: RouteComponent, ...rest } = props;
-    const { currentUser } = useContext( AuthContext );
+    const { layout: Layout, component: RouteComponent, enable, ...rest } = props;
 
     return (
         <Route
         {...rest}
         render={routeProps => (
-            !!currentUser
+            !!enable
             ?
                 <Layout>
                     <RouteComponent {...routeProps} />
@@ -26,7 +25,14 @@ const PrivateRoute = props => {
 PrivateRoute.propTypes = {
     component: PropTypes.any.isRequired,
     layout: PropTypes.any.isRequired,
-    path: PropTypes.string
+    path: PropTypes.string,
+    enable: PropTypes.bool.isRequired,
 };
 
-export default PrivateRoute;
+const mapStateToProps = state => {
+    return {
+      enable: state.dataLogin.enable
+    }
+  }
+
+export default connect(mapStateToProps, null)(PrivateRoute);
