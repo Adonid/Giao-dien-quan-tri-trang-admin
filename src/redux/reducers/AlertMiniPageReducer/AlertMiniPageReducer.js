@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import { LOGIN_ADMIN } from "redux/constans";
 
 const dataAlertMiniPage = {
     signUpCompleted: {
@@ -19,6 +19,7 @@ const dataAlertMiniPage = {
 }
 
 const AlertMiniPageReducer = (state = dataAlertMiniPage, action) => {
+    
     switch (action.type) {
         case 'SIGNUP_COMPLETED':
             const dataUserSignUp = action.data;
@@ -53,7 +54,7 @@ const AlertMiniPageReducer = (state = dataAlertMiniPage, action) => {
             state = { ...state, resetPasswordCompleted: {type: "success", content: "Thay đổi mật khẩu thành công!"}}
             return state;
 
-        case 'LOGIN':
+        case LOGIN_ADMIN:
             const userLogin = action.user;
             /** api login nguoi dung */
                 // userLogin: object { email: email, password: string }
