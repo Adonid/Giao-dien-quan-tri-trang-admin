@@ -188,29 +188,13 @@ const SignIn = props => {
   const onChange = val => { };
   // val ? setIsRecaptcha( true ) : setIsRecaptcha( false )
 
-  const retret = useCallback(
-    async event => {
-      event.preventDefault();
-      setLoading(true);
-      const { email, password } = event.target.elements;
-      try {
-        await base.auth().signInWithEmailAndPassword(email.value, password.value);
-          setLoading(false);
-          history.push("/dashboard");
-      } catch (error) {
-        alert(error);
-        setLoading(false);
-      }
-    },
-    [history]
-
-  );
-
   const handleSignIn = event => {
     event.preventDefault();
     setLoading(true);
     const loginVal = {email: formState.values.email, password: formState.values.password};
+
     login( loginVal );
+    
     history.push('/dashboard');
     setLoading(false);
   }
