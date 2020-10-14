@@ -136,7 +136,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignIn = props => {
-  const { history, Login } = props;
+  const { history } = props;
 
   const classes = useStyles();
 
@@ -210,8 +210,9 @@ const SignIn = props => {
     event.preventDefault();
     setLoading(true);
     const loginVal = {email: formState.values.email, password: formState.values.password};
-    login( loginVal, history );
-    history.push('/dashboard');
+    // console.log(loginVal);
+    Login(loginVal );
+    // history.push('/dashboard');
     setLoading(false);
   }
 
@@ -372,19 +373,12 @@ const SignIn = props => {
 
 SignIn.propTypes = {
   history: PropTypes.object,
-  Login: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapStateToProps = (state) => {
   return {
-    login: (user, history) => {
-      dispatch({
-        type: 'LOGIN',
-        user: user,
-        history: history
-      })
-    }
+    isLogin: state.dataAlertMiniPage.sigIn,
   }
 }
 
-export default connect(null, {Login})(SignIn)
+export default connect(mapStateToProps, {Login})(SignIn)
