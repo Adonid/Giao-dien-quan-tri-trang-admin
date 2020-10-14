@@ -1,3 +1,6 @@
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 import {
     NotifysReducers as Notifys,
     UsersListReducers as UsersList,
@@ -14,9 +17,9 @@ import {
 
 } from './reducers';
 
-const redux = require('redux');
+const middleware = [thunk];
 
-var allReducers = redux.combineReducers({
+var allReducers = combineReducers({
     dataNotifys: Notifys,
     dataNewUser: UsersList,
     dataUserDetail: UsersDetail,
@@ -31,6 +34,6 @@ var allReducers = redux.combineReducers({
     dataAlertMiniPage: AlertMiniPage,
 });
 
-const Store = redux.createStore(allReducers);
+const Store = createStore(allReducers, applyMiddleware(...middleware, logger));
 
 export default Store;
