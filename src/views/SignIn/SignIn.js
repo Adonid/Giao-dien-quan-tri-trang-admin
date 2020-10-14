@@ -16,6 +16,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import base from "base.js";
 import { AuthContext } from 'auth/Auth';
 import { connect } from 'react-redux';
+import { Login } from 'redux/actions';
 
 const schema = {
   email: {
@@ -135,7 +136,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignIn = props => {
-  const { history, login } = props;
+  const { history, Login } = props;
 
   const classes = useStyles();
 
@@ -371,7 +372,7 @@ const SignIn = props => {
 
 SignIn.propTypes = {
   history: PropTypes.object,
-  login: PropTypes.func.isRequired,
+  Login: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -386,4 +387,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(SignIn)
+export default connect(null, {Login})(SignIn)
