@@ -18,8 +18,6 @@ import {
 
 } from './reducers';
 
-const middleware = [thunk];
-
 var allReducers = combineReducers({
     dataNotifys: Notifys,
     dataNewUser: UsersList,
@@ -36,6 +34,6 @@ var allReducers = combineReducers({
     dataLogin: Login,
 });
 
-const Store = createStore(allReducers, applyMiddleware(...middleware, logger));
+const Store = createStore(allReducers, applyMiddleware( thunk, logger));
 
 export default Store;
