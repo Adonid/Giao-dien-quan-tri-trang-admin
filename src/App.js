@@ -28,11 +28,11 @@ export default class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <AuthProvider>
           <Router history={browserHistory}>
-            <Routes />
+            <AuthProvider>
+              <Routes />
+            </AuthProvider>
           </Router>
-        </AuthProvider>
       </ThemeProvider>
     );
   }
