@@ -1,4 +1,4 @@
-import { LOGIN_ADMIN } from "redux/constans";
+import { LOGIN_ADMIN_SUCCESS, LOGIN_ADMIN_ERROR } from "redux/constans";
 
 const dataAlertMiniPage = {
     signUpCompleted: {
@@ -9,13 +9,6 @@ const dataAlertMiniPage = {
         type    : "info",
         content : "Hello Word"
     },
-    sigIn: {
-        token: null,
-        alert: {
-            type    : "info",
-            content : "Hello Word"
-        },
-    }
 }
 
 const AlertMiniPageReducer = (state = dataAlertMiniPage, action) => {
@@ -52,14 +45,7 @@ const AlertMiniPageReducer = (state = dataAlertMiniPage, action) => {
             // vi du sau khi api
             historyResetPw.push('/sign-in');
             state = { ...state, resetPasswordCompleted: {type: "success", content: "Thay đổi mật khẩu thành công!"}}
-            return state;
-
-        case LOGIN_ADMIN:
-            /** Cap nhat trang thai state */
-                // action.payload - la ket qua duoc tra ve tu miiddleware thunk khi lay ket qua tu api
-            /** end */
-            
-            return state;
+            return state
 
         default:
             return state
