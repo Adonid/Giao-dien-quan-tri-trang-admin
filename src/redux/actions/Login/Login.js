@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { LOGIN_ADMIN_SUCCESS, LOGIN_ADMIN_ERROR } from 'redux/constans';
 
-const Login = (userLogin) => async dispatch => {
+const Login = userLogin => async dispatch => {
 
     try{
         const res = await axios({
