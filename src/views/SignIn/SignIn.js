@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback, useContext } from 'react';
-import { Link as RouterLink, withRouter, Redirect } from 'react-router-dom';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { Link as RouterLink, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
@@ -13,7 +13,6 @@ import {
 } from '@material-ui/core';
 import ReCAPTCHA from 'react-google-recaptcha';
 
-import base from "base.js";
 import { AuthContext } from 'auth/Auth';
 import { connect } from 'react-redux';
 import { Login } from 'redux/actions';
@@ -194,7 +193,7 @@ const SignIn = props => {
     const loginVal = {email: formState.values.email, password: formState.values.password};
 
     login( loginVal );
-    
+
     history.push('/dashboard');
     setLoading(false);
   }
