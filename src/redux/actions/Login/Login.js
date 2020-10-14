@@ -1,8 +1,8 @@
-import axios from 'axios'
-import { LOGIN_ADMIN, LOGIN_ADMIN_ERROR } from 'redux/constans'
+import axios from 'axios';
+import { LOGIN_ADMIN_SUCCESS, LOGIN_ADMIN_ERROR } from 'redux/constans';
 
-export const login = () => async dispatch => {
-    
+const Login = (userLogin) => async dispatch => {
+
     try{
         const res = await axios({
             method: 'POST',
@@ -12,15 +12,17 @@ export const login = () => async dispatch => {
             data: userLogin
             });
         dispatch( {
-            type: LOGIN_ADMIN,
+            type: LOGIN_ADMIN_SUCCESS,
             payload: res.data
-        })
+        });
     }
     catch(e){
         dispatch( {
             type: LOGIN_ADMIN_ERROR,
             payload: e,
-        })
+        });
     }
 
 }
+
+export default Login;
