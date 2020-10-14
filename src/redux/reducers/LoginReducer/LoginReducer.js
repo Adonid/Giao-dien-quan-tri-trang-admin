@@ -5,24 +5,17 @@ const loginData = {
     info: {}
 }
 
-const AlertMiniPageReducer = (state = loginData, action) => {
+const LoginReducer = (state = loginData, action) => {
     
     switch (action.type) {
         
-
         case LOGIN_ADMIN_SUCCESS:
-            /** Cap nhat trang thai state */
-                // action.payload - la ket qua duoc tra ve tu miiddleware thunk khi lay ket qua tu api
-            /** end */
-            // console.log(action.payload);
-            return { ...state, info: action.payload };
+            window.document.cookie = "__Sucure_user=" + action.payload.sucure;
+            return { ...state, enable: action.payload.logged };
         
         case LOGIN_ADMIN_ERROR:
-            /** Cap nhat trang thai state */
-                // action.payload - la ket qua duoc tra ve tu miiddleware thunk khi lay ket qua tu api
-            /** end */
-            // console.log(action.payload);
-            return { ...state, info: action.payload };
+            window.document.cookie = "__Sucure_user=";
+            return { ...state, enable: action.payload.logged };
 
         default:
             return state
@@ -31,4 +24,4 @@ const AlertMiniPageReducer = (state = loginData, action) => {
 
 
 
-export default AlertMiniPageReducer;
+export default LoginReducer;
