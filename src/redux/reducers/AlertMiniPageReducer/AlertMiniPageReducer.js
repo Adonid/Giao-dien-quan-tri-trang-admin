@@ -57,21 +57,21 @@ const AlertMiniPageReducer = (state = dataAlertMiniPage, action) => {
             const userLogin = action.user;
             /** api login nguoi dung */
                 // userLogin: object { email: email, password: string }
-            Axios({
-                method: 'POST',
-                baseURL: 'https://us-central1-nodejs-firebase-cloud-func.cloudfunctions.net/api/',
-                url: '/authentication/login',
-                headers: {'X-Requested-With': 'XMLHttpRequest'},
-                data: userLogin
-              }).then( res => {
-                window.document.cookie = "__Sucure_user=" + res.data.token;
-                // action.history.push('/dashboard');
-                // tokenAdmin = res.data.token;
-              }).catch( e => {
-                window.alert("Email, mật khẩu không đúng hoặc không tồn tại hoặc đã bị xóa!");
-              });
+            // Axios({
+            //     method: 'POST',
+            //     baseURL: 'https://us-central1-nodejs-firebase-cloud-func.cloudfunctions.net/api/',
+            //     url: '/authentication/login',
+            //     headers: {'X-Requested-With': 'XMLHttpRequest'},
+            //     data: userLogin
+            //   }).then( res => {
+            //     window.document.cookie = "__Sucure_user=" + res.data.token;
+            //     // action.history.push('/dashboard');
+            //     // tokenAdmin = res.data.token;
+            //   }).catch( e => {
+            //     window.alert("Email, mật khẩu không đúng hoặc không tồn tại hoặc đã bị xóa!");
+            //   });
             /** end */
-            state = { ...state, sigIn: {...state.sigIn, token: false, alert: { type: "success", content: "Đăng nhập thành công!" }}};
+            
             return state;
 
         default:
