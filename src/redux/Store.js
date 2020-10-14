@@ -14,6 +14,7 @@ import {
     CategoryTagReducer as CategoryTag,
     TermReducer as Term,
     AlertMiniPageReducer as AlertMiniPage,
+    LoginReducer as Login,
 
 } from './reducers';
 
@@ -32,6 +33,7 @@ var allReducers = combineReducers({
     dataCategoryTag: CategoryTag,
     dataTerm: Term,
     dataAlertMiniPage: AlertMiniPage,
+    dataLogin: Login,
 });
 
 const Store = createStore(allReducers, applyMiddleware(...middleware, logger));
