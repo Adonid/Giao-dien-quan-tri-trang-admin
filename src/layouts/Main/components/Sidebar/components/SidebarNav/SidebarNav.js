@@ -82,7 +82,7 @@ const SidebarNav = props => {
       {menus.map(page => (
             page.items 
             ?
-            <React.Fragment key={page.key}>
+            <React.Fragment key={page.id}>
               <ListItem
                 className={classes.item}
                 disableGutters
@@ -122,21 +122,22 @@ const SidebarNav = props => {
               </Collapse>
             </React.Fragment>
             :
-            <ListItem
-              className={classes.item}
-              disableGutters
-              key={page.key}
-            >
-              <Button
-                activeClassName={classes.active}
-                className={classes.button}
-                component={CustomRouterLink}
-                to={page.href}
-              >
-                <div className={classes.icon}>{page.icon}</div>
-                {page.title}
-              </Button>
-            </ListItem>
+            <React.Fragment key={page.id}>
+                <ListItem
+                  className={classes.item}
+                  disableGutters
+                >
+                  <Button
+                    activeClassName={classes.active}
+                    className={classes.button}
+                    component={CustomRouterLink}
+                    to={page.href}
+                  >
+                    <div className={classes.icon}>{page.icon}</div>
+                    {page.title}
+                  </Button>
+                </ListItem>
+            </React.Fragment>
       ))}
     </List>
   );
