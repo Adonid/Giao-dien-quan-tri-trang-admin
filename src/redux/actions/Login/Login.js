@@ -1,4 +1,5 @@
-import axios from 'axios';
+import Axios from 'axios';
+import axios from 'common/Axios';
 import { LOGIN_ADMIN_SUCCESS, LOGIN_ADMIN_ERROR, LOGIN_ADMIN } from 'redux/constans';
 
 const Login = userLogin => async dispatch => {
@@ -8,7 +9,6 @@ const Login = userLogin => async dispatch => {
     try{
         const res = await axios({
             method: 'POST',
-            baseURL: 'https://us-central1-nodejs-firebase-cloud-func.cloudfunctions.net/api/',
             url: '/authentication/login',
             headers: {'X-Requested-With': 'XMLHttpRequest'},
             data: userLogin
