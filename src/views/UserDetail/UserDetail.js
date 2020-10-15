@@ -232,7 +232,6 @@ const UserDetail = props => {
                 xs={12} 
                 sm={6}
                 md={4}
-                spacing={3}
               >
                 <Card>
                   <CardHeader title="Thông tin người dùng" />
@@ -252,11 +251,11 @@ const UserDetail = props => {
                           {
                             props.userinfo.email.verify
                             ?
-                              <Typography variant="span" className={ classes.textHighLightVerify }>
+                              <Typography variant="body2" className={ classes.textHighLightVerify }>
                                   EMAIL ĐÃ XÁC NHẬN
                               </Typography>
                             :
-                              <Typography variant="span" className={ classes.textHighLightNoVerify }>
+                              <Typography variant="body2" className={ classes.textHighLightNoVerify }>
                                 EMAIL CHƯA XÁC THỰC
                               </Typography>
                           }
@@ -331,7 +330,6 @@ const UserDetail = props => {
                 xs={12} 
                 sm={6}
                 md={4}
-                spacing={3}
               >
                 <Card>
                   <CardHeader title="Thông tin viết bài" />
@@ -348,7 +346,7 @@ const UserDetail = props => {
                           <Typography variant="body1" color="textSecondary">
                               { props.postinfo.postUser } 
                           </Typography>
-                          <Typography variant="span" className={ classes.textHighLightInfo }>
+                          <Typography variant="body2" className={ classes.textHighLightInfo }>
                             { props.postinfo.postNoApproved }  chưa duyệt
                           </Typography>
                         </TableCell>
@@ -422,7 +420,6 @@ const UserDetail = props => {
                 xs={12} 
                 sm={6}
                 md={4}
-                spacing={3}
               >
                 <Card>
                   <CardHeader title="Gửi email / thông báo" />
@@ -436,7 +433,6 @@ const UserDetail = props => {
                         multiline
                         rowsMax={3}
                         fullWidth={true}
-                        autoComplete
                         value={contextNotify}
                         onChange={ handleTextField }
                       />
@@ -454,28 +450,30 @@ const UserDetail = props => {
                           </Button>
                       </ThemeProvider>
                     </Box>
-                    <Table>
-                      <TableBody>
-                        <PerfectScrollbar className={ classes.maxHeightPerfectScrollbar }>
-                          {
-                            props.listSent.map( item => 
-                              <TableRow key={item.key}>
-                                <TableCell>
-                                  <Typography variant="p">
-                                    {moment(item.dateTime).format('DD/MM/YYYY | HH:MM')}
-                                  </Typography>
-                                </TableCell>
-                                <TableCell>
-                                  <Typography variant="body1" color="textSecondary">
-                                      { item.reason }
-                                  </Typography>
-                                </TableCell>
-                              </TableRow>
-                            )
-                          }
-                        </PerfectScrollbar>
-                      </TableBody>
-                    </Table>
+                    
+                      <PerfectScrollbar className={ classes.maxHeightPerfectScrollbar }>
+                        <Table>
+                          <TableBody>
+                            {
+                              props.listSent.map( item => 
+                                <TableRow key={item.dateTime}>
+                                  <TableCell>
+                                    <Typography variant="body2">
+                                      {moment(item.dateTime).format('DD/MM/YYYY | HH:MM')}
+                                    </Typography>
+                                  </TableCell>
+                                  <TableCell>
+                                    <Typography variant="body1" color="textSecondary">
+                                        { item.reason }
+                                    </Typography>
+                                  </TableCell>
+                                </TableRow>
+                              )
+                            }
+                          </TableBody>
+                        </Table>
+                      </PerfectScrollbar>
+                    
                   </CardContent>
                 </Card>
 
@@ -485,7 +483,6 @@ const UserDetail = props => {
                 xs={12} 
                 sm={6}
                 md={4}
-                spacing={3}
               >
                 <Card>
                   <CardHeader title="Hạn chế người dùng" />
