@@ -11,3 +11,4 @@ export { default as CategoryTagReducer  } from './CategoryTagReducer';
 export { default as TermReducer  } from './TermReducer';
 export { default as AlertMiniPageReducer  } from './AlertMiniPageReducer';
 export { default as LoginReducer  } from './LoginReducer';
+export { default as LogoutReducer  } from './LogoutReducer';
