@@ -69,7 +69,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Topbar = props => {
-  const { className, onSidebarOpen, ...rest } = props;
+  const { className, onSidebarOpen } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -92,7 +92,6 @@ const Topbar = props => {
 
   return (
     <AppBar
-      {...rest}
       className={clsx(classes.boxShadow, className)}
     >
       <Toolbar>
