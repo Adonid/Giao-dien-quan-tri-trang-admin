@@ -235,7 +235,6 @@ const UserEditor = props => {
                                 item 
                                 xs={12} 
                                 sm={6}
-                                spacing={3}
                             >
                                 <TextField
                                     required 
@@ -299,7 +298,6 @@ const UserEditor = props => {
                                 item 
                                 xs={12} 
                                 sm={6}
-                                spacing={3}
                             >
                                 <SelectInput list={listProvince} action={ getProvince } label="Tỉnh/thành phố" />
                                 <SelectInput list={listDistrict} action={ getDistrict } disable={disableDistrict} label="Quận/huyện" />
@@ -321,7 +319,6 @@ const UserEditor = props => {
                                 item 
                                 xs={12} 
                                 sm={6}
-                                spacing={3}
                             >
                                 <Typography variant="h5" color="textSecondary">
                                     Xác nhận email
@@ -345,7 +342,6 @@ const UserEditor = props => {
                                 item 
                                 xs={12} 
                                 sm={6}
-                                spacing={3}
                             >
                                 
                                 <ThemeProvider theme={themeButtonUpdate}>
