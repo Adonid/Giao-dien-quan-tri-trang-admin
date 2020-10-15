@@ -18,7 +18,7 @@ const readCookie = () =>
     return null;
 }
 
-axios.defaults.baseURL = process.env.BASE_URL_API;
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL_API;
 axios.defaults.headers.common['authorization'] = `Bearer ${readCookie()}`;
 
 export default axios;
