@@ -11,7 +11,8 @@ import {
   Hidden, 
   IconButton, 
   Menu,
-  InputBase
+  InputBase,
+  Tooltip
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
@@ -69,7 +70,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Topbar = props => {
-  const { className, onSidebarOpen } = props;
+  const { className, onSidebarOpen, logout } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -122,16 +123,18 @@ const Topbar = props => {
             aria-haspopup="true"
             onClick={handleMenu}
           >
-            <Badge
-              badgeContent={notes ?? null} // So luong notify moi nay lay tu REDUX tra ve
-              color="error"
-            >
-              {
-                notes
-                ? <NotificationsActiveOutlinedIcon />  
-                : <NotificationsIcon />
-              }              
-            </Badge>
+            <Tooltip title="Thông báo" placement="bottom">
+              <Badge
+                badgeContent={notes ?? null} // So luong notify moi nay lay tu REDUX tra ve
+                color="error"
+              >
+                {
+                  notes
+                  ? <NotificationsActiveOutlinedIcon />  
+                  : <NotificationsIcon />
+                }              
+              </Badge>
+            </Tooltip>
           </IconButton>
           <Menu
             id="menu-appbar"
@@ -155,8 +158,9 @@ const Topbar = props => {
           <IconButton
             className={classes.signOutButton}
             color="inherit"
+            onClick={ logout }
           >
-            <InputIcon />
+            <Tooltip title="Đăng xuất" placement="bottom"><InputIcon /></Tooltip>
           </IconButton>
         </Hidden>
         <Hidden lgUp>
@@ -174,13 +178,16 @@ const Topbar = props => {
 
 Topbar.propTypes = {
   className: PropTypes.string,
-  onSidebarOpen: PropTypes.func
+  onSidebarOpen: PropTypes.func,
+  logout: PropTypes.func.isRequired,
 };
 
-  const mapStateToProps = (state, ownProps) => {
-    return {
-      amount: state.dataNotifys.notesNoRead
-    }
-  }
+  const mapStateToProps = state => ({
+    amount: state.dataNotifys.notesNoRead
+  });
 
-export default connect(mapStateToProps)(Topbar)
+  const mapDispatchToProps = dispatch => ({
+    logout: () => dispatch(logout()),
+  });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Topbar)
