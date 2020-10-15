@@ -1,6 +1,8 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import {
     NotifysReducers as Notifys,
     UsersListReducers as UsersList,
@@ -18,7 +20,7 @@ import {
 
 } from './reducers';
 
-var allReducers = combineReducers({
+const allReducers = combineReducers({
     dataNotifys: Notifys,
     dataNewUser: UsersList,
     dataUserDetail: UsersDetail,
@@ -34,6 +36,8 @@ var allReducers = combineReducers({
     dataLogin: Login,
 });
 
-const Store = createStore(allReducers, applyMiddleware( thunk, logger));
+const persistedReducer = persistReducer({key: 'root', storage} , allReducers);
+
+const Store = createStore(persistedReducer, applyMiddleware( thunk, logger));
 
 export default Store;
