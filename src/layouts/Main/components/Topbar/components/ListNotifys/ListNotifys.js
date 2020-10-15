@@ -44,15 +44,13 @@ import AlertNotify from './AlertNotify';
   }));
   
 const ListNotifys = props => {
-    const {closeMenu, className, ...rest} = props;
+    const {closeMenu} = props;
 
     const classes = useStyles();
 
     const [notifys, setNotifys] = useState(props.notifys);
 
     const [alert, setAlert] = useState({type:'',ref:0,id:0,name:'S',avatar:'',topic:'',content:'',time:'',link:'',read:'0'});
-
-    const [element, setElement] = useState(null);
 
     useEffect( () => {
         setNotifys(props.notifys);
@@ -74,9 +72,6 @@ const ListNotifys = props => {
 
         // Dua sang component thong bao
         setAlert(notify);
-        // end
-        // Luu lai doi tuong notify
-        setElement(event.currentTarget);
         // end
 
         /** DISPATH danh dau la da doc */
