@@ -13,7 +13,6 @@ import {
 } from '@material-ui/core';
 import ReCAPTCHA from 'react-google-recaptcha';
 
-import { AuthContext } from 'auth/Auth';
 import { connect } from 'react-redux';
 import { Login } from 'redux/actions';
 
@@ -135,11 +134,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignIn = props => {
-  const { history, login } = props;
+  const { history, login, enable } = props;
 
   const classes = useStyles();
-
-  const { currentUser } = useContext(AuthContext);
 
   const [formState, setFormState] = useState({
     isValid: false,
@@ -194,11 +191,10 @@ const SignIn = props => {
 
     login( loginVal );
 
-    history.push('/dashboard');
     setLoading(false);
   }
 
-  if (currentUser) {
+  if (enable) {
     return <Redirect to="/dashboard" />;
   }
 
@@ -354,12 +350,17 @@ const SignIn = props => {
 };
 
 SignIn.propTypes = {
-  history: PropTypes.object,
+  history: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
+  enable: PropTypes.bool.isRequired,
 };
+
+const mapStateToProps = state => ({
+    enable: state.dataLogin.enable,
+});
 
 const mapDispatchToProps = dispatch => ({
     login: user => dispatch(Login(user)),
 });
 
-export default connect(null, mapDispatchToProps)(SignIn)
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
