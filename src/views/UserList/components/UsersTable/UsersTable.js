@@ -115,14 +115,14 @@ const to_slug = str => {
 }
 
 const UsersTable = props => {
-  const { className, ...rest } = props;
+  const { className, mockData, dispathSelect, ...rest } = props;
 
   const classes = useStyles();
 
   const list =  lists;
 
-  const [ originUsers ] = useState(props.mockData);
-  const [ users, setUsers] = useState(props.mockData);
+  const [ originUsers ] = useState(mockData);
+  const [ users, setUsers] = useState(mockData);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -131,15 +131,15 @@ const UsersTable = props => {
   const [ openDialog, setOpenDialog ] = useState(false);
 
   const handleSelectAll = event => {
-    let selectedUsers;
+    let userSelect;
 
     if (event.target.checked) {
-      selectedUsers = users.map(user => user.id);
+      userSelect = users.map(user => user.id);
     } else {
-      selectedUsers = [];
+      userSelect = [];
     }
 
-    setSelectedUsers(selectedUsers);
+    setSelectedUsers(userSelect);
   };
 
   const handleSelectOne = (event, id) => {
@@ -170,9 +170,7 @@ const UsersTable = props => {
     setPage(0);
   };
 
-  const deleteUsers = () => {
-    props.selectedUsers(selectedUsers);
-  }
+  const deleteUsers = () => dispathSelect(selectedUsers);
 
   const sortBy = val => {
     let usersBy = [...users];
@@ -368,18 +366,18 @@ const UsersTable = props => {
 };
 
 UsersTable.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  mockData: PropTypes.array.isRequired,
+  dispathSelect: PropTypes.func.isRequired,
 };
 
-  const mapStateToProps = (state, ownProps) => {
-    return {
-      mockData: state.dataNewUser.users
-    }
-  }
+  const mapStateToProps = state => ({
+    mockData: state.dataNewUser.users,
+  });
 
-  const mapDispatchToProps = (dispatch, ownProps) => {
+  const mapDispatchToProps = dispatch => {
     return {
-      selectedUsers: usersTick => {
+      dispathSelect: usersTick => {
         dispatch({
           type: 'DELETE_SELECT_USERS',
           selectedUsers: usersTick
