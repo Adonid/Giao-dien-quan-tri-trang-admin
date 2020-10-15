@@ -171,7 +171,7 @@ const ListNotifys = props => {
                                                         <b>{ item.topic }</b>
                                                     </Typography>
                                                     {"— " + item.content}
-                                                    <Typography className={classes.time} variant="caption" color="initial" gutterTop>
+                                                    <Typography className={classes.time} variant="caption" color="initial" >
                                                         { item.time }
                                                     </Typography>
                                                     </Fragment>
