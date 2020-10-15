@@ -18,7 +18,7 @@ const readCookie = () =>
     return null;
 }
 
-axios.defaults.baseURL = 'https://us-central1-nodejs-firebase-cloud-func.cloudfunctions.net/api/';
+axios.defaults.baseURL = process.env.BASE_URL_API;
 axios.defaults.headers.common['authorization'] = `Bearer ${readCookie()}`;
 
 export default axios;
