@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link as RouterLink, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
@@ -134,7 +134,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignIn = props => {
-  const { login, enable } = props;
+  const { login, enable, loading } = props;
 
   const classes = useStyles();
 
@@ -144,7 +144,6 @@ const SignIn = props => {
     touched: {},
     errors: {}
   });
-  const [loading, setLoading] = useState(false);
   const [isRecaptcha, setIsRecaptcha] = useState(true);
   
   const recaptchaRef = useRef();
@@ -158,10 +157,6 @@ const SignIn = props => {
       errors: errors || {}
     }));
   }, [formState.values]);
-
-  useEffect( ()=>{
-    enable ? setLoading(false) : setLoading(false); // Mot khi enable thay doi thi tat trang thai loading
-  }, []);
 
   const handleChange = event => {
     event.persist();
@@ -190,12 +185,9 @@ const SignIn = props => {
 
   const handleSignIn = event => {
     event.preventDefault();
-    setLoading(true);
     const loginVal = {email: formState.values.email, password: formState.values.password};
 
     login( loginVal );
-
-    setLoading(true);
   }
 
   if (enable) {
@@ -354,13 +346,14 @@ const SignIn = props => {
 };
 
 SignIn.propTypes = {
-  history: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
   enable: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
     enable: state.dataLogin.enable,
+    loading: state.dataLogin.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
