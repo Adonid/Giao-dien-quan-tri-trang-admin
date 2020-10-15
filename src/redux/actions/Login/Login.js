@@ -9,7 +9,7 @@ const Login = userLogin => async dispatch => {
     try{
         const res = await axios({
             method: 'POST',
-            url: '/authentication/login',
+            url: 'authentication/login',
             headers: {'X-Requested-With': 'XMLHttpRequest'},
             data: userLogin
             });
