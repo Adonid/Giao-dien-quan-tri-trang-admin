@@ -40,7 +40,7 @@ const SearchInput = props => {
       <TextField 
           {...rest}
           className={classes.input}
-          disableUnderline
+          disableunderline="true"
           onChange={ handleSearch }
           id="outlined-helperText"
           placeholder="Tìm kiếm"
