@@ -54,13 +54,13 @@ const Sidebar = props => {
       icon: <DashboardOutlinedIcon />
     },
     {
-      id: 1,
+      id: 2,
       title: 'Người dùng',
       href: '/users',
       icon: <SupervisorAccountOutlinedIcon />,
     },
     {
-      id: 2,
+      id: 3,
       title: 'Bài viết',
       href: '/products',
       icon: <ArtTrackOutlinedIcon />,
@@ -77,37 +77,37 @@ const Sidebar = props => {
       isOpen: false
     },
     {
-      id: 3,
+      id: 4,
       title: 'Xác thực',
       href: '/sign-in',
       icon: <LockOpenIcon />
     },
     {
-      id: 4,
+      id: 5,
       title: 'Typography',
       href: '/typography',
       icon: <TextFieldsIcon />
     },
     {
-      id: 5,
+      id: 6,
       title: 'Icons',
       href: '/icons',
       icon: <ImageIcon />
     },
     {
-      id: 6,
+      id: 7,
       title: 'Phòng Chat',
       href: '/chats-room',
       icon: <ChatBubbleOutlineIcon />
     },
     {
-      id: 7,
+      id: 8,
       title: 'Tài khoản của tôi',
       href: '/account',
       icon: <AccountBoxOutlinedIcon />
     },
     {
-      id: 8,
+      id: 9,
       title: 'Cài đặt',
       href: '/settings',
       icon: <SettingsOutlinedIcon />
