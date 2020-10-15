@@ -1,7 +1,6 @@
-import PrivateRoute from 'auth/PrivateRoute';
 import React from 'react';
 import { Switch, Redirect } from 'react-router-dom';
-
+import {PrivateRoute} from 'auth';
 import { RouteWithLayout } from './components';
 import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
 
