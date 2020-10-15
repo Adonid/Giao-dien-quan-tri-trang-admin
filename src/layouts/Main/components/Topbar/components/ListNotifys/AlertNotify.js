@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AlertNotify = props => {
 
-    const { notify, apiReMarkNote, apiDeleteNote, apiReply, ...rest } = props;
+    const { notify, apiReMarkNote, apiDeleteNote, apiReply } = props;
 
     const [open, setOpen] = useState(false);
 
