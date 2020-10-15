@@ -36,7 +36,6 @@ const Main = props => {
     dataAlertDetailNewPost, 
     dataAlertUpdateTerm, 
     openAddNewUser, 
-    ...rest  
   } = props;
 
   const classes = useStyles();
