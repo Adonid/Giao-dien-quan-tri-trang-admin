@@ -120,7 +120,7 @@ Main.propTypes = {
     dataAlertCreateNewPost: PropTypes.object.isRequired,
     dataAlertDetailNewPost: PropTypes.object.isRequired,
     dataAlertUpdateTerm: PropTypes.object.isRequired,
-    openAddUser: PropTypes.bool.isRequired,
+    openAddUser: PropTypes.bool,
   }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
