@@ -191,7 +191,7 @@ const SignIn = props => {
 
     login( loginVal );
 
-    setLoading(false);
+    setLoading(!enable);
   }
 
   if (enable) {
