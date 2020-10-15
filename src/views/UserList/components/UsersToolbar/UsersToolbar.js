@@ -61,7 +61,7 @@ const UsersToolbar = props => {
           color="primary"
           variant="contained"
           onClick={ showModalAddUser }
-          disableunderline={true}
+          disableunderline="true"
         >
           <PersonAddOutlinedIcon/> Thêm mới
         </Button>
