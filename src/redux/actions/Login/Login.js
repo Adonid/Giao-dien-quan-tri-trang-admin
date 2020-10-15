@@ -1,4 +1,3 @@
-import Axios from 'axios';
 import axios from 'common/Axios';
 import { LOGIN_ADMIN_SUCCESS, LOGIN_ADMIN_ERROR, LOGIN_ADMIN } from 'redux/constans';
 
