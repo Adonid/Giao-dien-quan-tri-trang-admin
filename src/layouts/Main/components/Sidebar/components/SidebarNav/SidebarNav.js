@@ -82,11 +82,10 @@ const SidebarNav = props => {
       {menus.map(page => (
             page.items 
             ?
-            <React.Fragment>
+            <React.Fragment key={page.key}>
               <ListItem
                 className={classes.item}
                 disableGutters
-                key={page.title}
               >
                 <Button
                   className={classes.button}
@@ -126,7 +125,7 @@ const SidebarNav = props => {
             <ListItem
               className={classes.item}
               disableGutters
-              key={page.title}
+              key={page.key}
             >
               <Button
                 activeClassName={classes.active}
