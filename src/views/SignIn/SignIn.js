@@ -159,6 +159,10 @@ const SignIn = props => {
     }));
   }, [formState.values]);
 
+  useEffect( ()=>{
+    enable ? setLoading(false) : setLoading(false); // Mot khi enable thay doi thi tat trang thai loading
+  }, []);
+
   const handleChange = event => {
     event.persist();
 
@@ -191,7 +195,7 @@ const SignIn = props => {
 
     login( loginVal );
 
-    setLoading(!enable);
+    setLoading(true);
   }
 
   if (enable) {
