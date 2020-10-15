@@ -134,7 +134,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignIn = props => {
-  const { history, login, enable } = props;
+  const { login, enable } = props;
 
   const classes = useStyles();
 
