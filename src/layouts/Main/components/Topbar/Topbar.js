@@ -20,6 +20,7 @@ import NotificationsActiveOutlinedIcon from '@material-ui/icons/NotificationsAct
 import InputIcon from '@material-ui/icons/Input';
 import SearchIcon from '@material-ui/icons/Search';
 import { ListNotifys } from './components';
+import { Logout } from 'redux/actions';
 
 const useStyles = makeStyles(theme => ({  
   root: {
@@ -187,7 +188,7 @@ Topbar.propTypes = {
   });
 
   const mapDispatchToProps = dispatch => ({
-    logout: () => dispatch(logout()),
+    logout: () => dispatch(Logout()),
   });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Topbar)
