@@ -1,4 +1,4 @@
-import { LOGIN_ADMIN_SUCCESS, LOGIN_ADMIN_ERROR, LOGIN_ADMIN } from "redux/constans";
+import { LOGIN_ADMIN_SUCCESS, LOGIN_ADMIN_ERROR, LOGIN_ADMIN, LOGOUT_ADMIN } from "redux/constans";
 
 const loginData = {
     enable: false,
@@ -20,6 +20,10 @@ const LoginReducer = (state = loginData, action) => {
         case LOGIN_ADMIN_ERROR:
             window.document.cookie = "__Sucure_user=";
             return { ...state, enable: action.payload.logged, loading: false };
+
+        case LOGOUT_ADMIN:
+            window.document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+            return { ...state, enable: action.payload.logged, info: action.payload.message, };
 
         default:
             return state
