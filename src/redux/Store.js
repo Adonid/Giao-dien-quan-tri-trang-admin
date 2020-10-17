@@ -15,7 +15,6 @@ import {
     ProductEditReducer as ProductEdit,
     CategoryTagReducer as CategoryTag,
     TermReducer as Term,
-    AlertMiniPageReducer as AlertMiniPage,
     LoginReducer as Login,
     ForgetPwReducer as ForgetPw,
 
@@ -33,7 +32,6 @@ const allReducers = combineReducers({
     dataPostEdit: ProductEdit,
     dataCategoryTag: CategoryTag,
     dataTerm: Term,
-    dataAlertMiniPage: AlertMiniPage,
     
     dataLogin: Login,
     dataResetPassword: ForgetPw,
