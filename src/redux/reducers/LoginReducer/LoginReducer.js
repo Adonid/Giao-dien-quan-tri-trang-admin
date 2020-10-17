@@ -3,7 +3,7 @@ import { LOGIN_ADMIN_SUCCESS, LOGIN_ADMIN_ERROR, LOGIN_ADMIN, LOGOUT_ADMIN } fro
 const loginData = {
     enable: false,
     loading: false,
-    info: {}
+    message: ""
 }
 
 const LoginReducer = (state = loginData, action) => {
@@ -15,11 +15,11 @@ const LoginReducer = (state = loginData, action) => {
 
         case LOGIN_ADMIN_SUCCESS:
             window.document.cookie = "__Sucure_user=" + action.payload.sucure + ";expires=" + new Date( (new Date()).setDate((new Date()).getDate() + 0.5) ).toString();
-            return { ...state, enable: action.payload.logged, loading: false };
+            return { ...state, enable: action.payload.logged, loading: false, message: "" };
         
         case LOGIN_ADMIN_ERROR:
             window.document.cookie = "__Sucure_user=";
-            return { ...state, enable: action.payload.logged, loading: false };
+            return { ...state, enable: action.payload.logged, loading: false, message: action.payload.message };
 
         /** 
          *  Truong hop logout nay dung trong: 
