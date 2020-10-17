@@ -3,6 +3,10 @@ import { FORGET_PASSWORD_SUCCESS, FORGET_PASSWORD_ERROR, FORGET_PASSWORD } from 
 const dataResetPassword = {
     loading: false,
     messege: false,
+    alert: {
+        type: "warning",
+        content: ""
+    }
 }
 
 const LoginReducer = (state = dataResetPassword, action) => {
@@ -13,7 +17,7 @@ const LoginReducer = (state = dataResetPassword, action) => {
             return { ...state, loading: true };
 
         case FORGET_PASSWORD_SUCCESS:
-            return { ...state, message: action.payload.message, loading: false };
+            return { ...state, message: false, loading: false, alert: {type: "info", content: action.payload.message} };
         
         case FORGET_PASSWORD_ERROR:
             return { ...state, message: action.payload.message, loading: false };
