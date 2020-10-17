@@ -123,7 +123,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ForeverPassword = props => {
-  const { history, forgetPassword, loading } = props;
+  const { history, forgetPassword, loading, message } = props;
 
   const classes = useStyles();
 
@@ -134,12 +134,12 @@ const ForeverPassword = props => {
     errors: {}
   });
 
-  const timer = React.useRef();
   useEffect(() => {
-    return () => {
-      clearTimeout(timer.current);
-    };
-  }, []);
+    setFormState(formState => ({
+      ...formState,
+      errors: !loading ? {email: message} : {}
+    }));
+  }, [loading]);
 
   useEffect(() => {
     const errors = validate(formState.values, schema);
@@ -177,7 +177,6 @@ const ForeverPassword = props => {
   const handleForgetPassword = event => {
     event.preventDefault();
     let email = { email: formState.values.email};
-
     forgetPassword(email); 
   };
 
@@ -253,7 +252,7 @@ const ForeverPassword = props => {
                   error={hasError('email')}
                   fullWidth
                   helperText={
-                    hasError('email') ? formState.errors.email[0] : null
+                    hasError('email') ? formState.errors.email : null
                   }
                   label="Địa chỉ email"
                   name="email"
@@ -287,10 +286,12 @@ ForeverPassword.propTypes = {
   history: PropTypes.object.isRequired,
   forgetPassword: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
     loading: state.dataResetPassword.loading,
+    message: state.dataResetPassword.message,
 });
 
 const mapDispatchToProps = dispatch => ({
