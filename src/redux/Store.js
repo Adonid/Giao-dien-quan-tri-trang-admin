@@ -17,6 +17,7 @@ import {
     TermReducer as Term,
     AlertMiniPageReducer as AlertMiniPage,
     LoginReducer as Login,
+    ForgetPwReducer as ForgetPw,
 
 } from './reducers';
 
@@ -33,7 +34,9 @@ const allReducers = combineReducers({
     dataCategoryTag: CategoryTag,
     dataTerm: Term,
     dataAlertMiniPage: AlertMiniPage,
+    
     dataLogin: Login,
+    dataResetPassword: ForgetPw,
 });
 
 const persistedReducer = persistReducer({key: 'root', storage} , allReducers);
