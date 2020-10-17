@@ -24,7 +24,7 @@ const Login = userLogin => async dispatch => {
         dispatch( {
             type: LOGIN_ADMIN_ERROR,
             payload: {
-                message: "Email, mật khẩu không đúng hoặc không tồn tại hoặc đã bị xóa!",
+                message: "Email hoặc mật khẩu không đúng!",
                 logged: false,
             },
         });
