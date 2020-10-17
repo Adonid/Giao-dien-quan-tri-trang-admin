@@ -9,7 +9,8 @@ import {
   TextField,
   Link,
   Typography,
-  CircularProgress 
+  CircularProgress, 
+  Box
 } from '@material-ui/core';
 import ReCAPTCHA from 'react-google-recaptcha';
 
@@ -134,7 +135,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const SignIn = props => {
-  const { login, enable, loading } = props;
+  const { login, enable, loading, message } = props;
 
   const classes = useStyles();
 
@@ -158,6 +159,18 @@ const SignIn = props => {
     }));
   }, [formState.values]);
 
+  var first = React.useRef(true);
+  useEffect( () => {
+    if(first.current){
+      first.current = false;
+      return;
+    }
+    setFormState(formState => ({
+      ...formState,
+      errors: !loading ? {message: message} : {}
+    }));
+  }, [loading]);
+
   const handleChange = event => {
     event.persist();
 
@@ -177,11 +190,10 @@ const SignIn = props => {
     }));
   };
 
-  const hasError = field =>
-    formState.touched[field] && formState.errors[field] ? true : false;
+  const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
+  const hasErrorApi = field => formState.errors[field] ? true : false;
   
-  const onChange = val => { };
-  // val ? setIsRecaptcha( true ) : setIsRecaptcha( false )
+  const onChange = val => { val ? setIsRecaptcha( true ) : setIsRecaptcha( false ) };
 
   const handleSignIn = event => {
     event.preventDefault();
@@ -283,6 +295,17 @@ const SignIn = props => {
                   value={formState.values.password || ''}
                   variant="outlined"
                 />
+                <TextField
+                  className={classes.textField}
+                  error={true}
+                  fullWidth
+                  helperText={
+                    hasErrorApi('message') ? formState.errors.message : null
+                  }
+                  name="message"
+                  type="hidden"
+                  variant="outlined"
+                />
                 <ReCAPTCHA
                     sitekey="6LcB4NAZAAAAAGUIk9kHyeDxqZ84lWKNwOSWpujK"
                     onChange={ onChange }
@@ -349,11 +372,13 @@ SignIn.propTypes = {
   login: PropTypes.func.isRequired,
   enable: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
     enable: state.dataLogin.enable,
     loading: state.dataLogin.loading,
+    message: state.dataLogin.message,
 });
 
 const mapDispatchToProps = dispatch => ({
