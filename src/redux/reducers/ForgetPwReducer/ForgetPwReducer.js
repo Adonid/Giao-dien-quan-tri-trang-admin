@@ -2,7 +2,7 @@ import { FORGET_PASSWORD_SUCCESS, FORGET_PASSWORD_ERROR, FORGET_PASSWORD } from 
 
 const dataResetPassword = {
     loading: false,
-    messege: {}
+    messege: false,
 }
 
 const LoginReducer = (state = dataResetPassword, action) => {
