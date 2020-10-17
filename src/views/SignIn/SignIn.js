@@ -145,7 +145,7 @@ const SignIn = props => {
     touched: {},
     errors: {}
   });
-  const [isRecaptcha, setIsRecaptcha] = useState(true);
+  const [isRecaptcha, setIsRecaptcha] = useState(false);
   
   const recaptchaRef = useRef();
 
