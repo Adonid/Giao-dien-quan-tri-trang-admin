@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { connect } from 'react-redux';
+import { ForgetPassword } from 'redux/actions';
 
 const schema = {
   email: {
@@ -122,7 +123,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ForeverPassword = props => {
-  const { history, sendCodeVerifyFogetPw } = props;
+  const { history, forgetPassword, loading } = props;
 
   const classes = useStyles();
 
@@ -133,9 +134,8 @@ const ForeverPassword = props => {
     errors: {}
   });
 
-  const [loading, setLoading] = React.useState(false);
   const timer = React.useRef();
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       clearTimeout(timer.current);
     };
@@ -174,17 +174,14 @@ const ForeverPassword = props => {
     }));
   };
 
-  const handleSignIn = event => {
+  const handleForgetPassword = event => {
     event.preventDefault();
-    setLoading(true);
+    let email = { email: formState.values.email};
 
-    sendCodeVerifyFogetPw(formState.values.email, history);
-
-    setLoading(false); 
+    forgetPassword(email); 
   };
 
-  const hasError = field =>
-    formState.touched[field] && formState.errors[field] ? true : false;
+  const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
 
   return (
     <div className={classes.root}>
@@ -237,7 +234,7 @@ const ForeverPassword = props => {
             <div className={classes.contentBody}>
               <form
                 className={classes.form}
-                onSubmit={handleSignIn}
+                onSubmit={handleForgetPassword}
               >
                 <Typography
                   className={classes.title}
@@ -287,26 +284,17 @@ const ForeverPassword = props => {
 };
 
 ForeverPassword.propTypes = {
-  history: PropTypes.object,
-  sendCodeVerifyFogetPw: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  forgetPassword: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    prop: state.prop
-  }
-}
+const mapStateToProps = state => ({
+    loading: state.dataResetPassword.loading,
+});
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    sendCodeVerifyFogetPw: (email, history) => {
-      dispatch({
-        type: 'ACTION_FORGET_PW',
-        email: email,
-        history: history
-      })
-    }
-  }
-}
+const mapDispatchToProps = dispatch => ({
+    forgetPassword: email => dispatch(ForgetPassword(email)),
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(ForeverPassword)
+export default connect(mapStateToProps, mapDispatchToProps)(ForeverPassword);
