@@ -134,11 +134,18 @@ const ForeverPassword = props => {
     errors: {}
   });
 
+  var first = React.useRef(true);
   useEffect(() => {
+    if(first.current){
+      first.current = false;
+      return;
+    }
     setFormState(formState => ({
       ...formState,
       errors: !loading ? {email: message} : {}
     }));
+    if( !loading && !message )
+      history.push('/sign-in');
   }, [loading]);
 
   useEffect(() => {
@@ -177,7 +184,7 @@ const ForeverPassword = props => {
   const handleForgetPassword = event => {
     event.preventDefault();
     let email = { email: formState.values.email};
-    forgetPassword(email); 
+    forgetPassword(email, history); 
   };
 
   const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
@@ -295,7 +302,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    forgetPassword: email => dispatch(ForgetPassword(email)),
+    forgetPassword: (e, h) => dispatch(ForgetPassword(e, h)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ForeverPassword);
