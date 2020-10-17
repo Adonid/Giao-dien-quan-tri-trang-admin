@@ -23,7 +23,7 @@ const ForgetPassword = email => async dispatch => {
         dispatch( {
             type: FORGET_PASSWORD_ERROR,
             payload: {
-                message: e.message,
+                message: "Email không tồn tại hoặc chưa đăng ký!",
             },
         });
     }
