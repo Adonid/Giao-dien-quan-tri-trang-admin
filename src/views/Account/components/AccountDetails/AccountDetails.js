@@ -14,10 +14,19 @@ import {
   Button,
   TextField
 } from '@material-ui/core';
+import Skeleton from '@material-ui/lab/Skeleton';
 import { SelectInput } from 'components';
 
 const useStyles = makeStyles(() => ({
-  root: {}
+  root: {},
+  skeletonDetail: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  skeletonText: {
+    position: 'relative',
+    width: '100%',
+  }
 }));
 
 const schema = {
@@ -57,6 +66,8 @@ const AccountDetails = props => {
   const { className, updateDetail, mockDataRequire, mockDataOptions,  ...rest } = props;
 
   const classes = useStyles();
+
+  const [ isData, setIsData ] = useState(true);
 
   const [formState, setFormState] = useState({
     isValid: false,
@@ -140,6 +151,33 @@ const AccountDetails = props => {
     const required = formState.values;
     const options = formOptions;
     props.updateDetail({required, options});
+  }
+
+  if(isData){
+    return (
+      <Card
+        {...rest}
+        className={clsx(classes.root, className)}
+      >
+        <CardHeader
+          title={<Skeleton animation="wave" style={{ marginBottom: 5 }} width="20%" />}
+          subheader={<Skeleton animation="wave" height={10} width="40%" />}
+        />
+        <Divider />
+        <CardContent>
+          <Grid container spacing={5} >
+            <Grid item xs={12} sm={6}>
+              <Skeleton animation="wave" style={{ marginBottom: 15 }} width="100%" />
+              <Skeleton animation="wave" width="100%" />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Skeleton animation="wave" style={{ marginBottom: 15 }} width="100%" />
+              <Skeleton animation="wave" width="100%" />
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+    );
   }
 
   return (
