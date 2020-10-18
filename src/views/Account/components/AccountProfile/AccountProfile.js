@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
@@ -14,6 +14,7 @@ import {
   Button,
   LinearProgress
 } from '@material-ui/core';
+import Skeleton from '@material-ui/lab/Skeleton';
 import { UploadCropSingleImage } from 'components';
 import { deepOrange } from '@material-ui/core/colors';
 
@@ -45,6 +46,14 @@ const useStyles = makeStyles(theme => ({
     flexShrink: 0,
     flexGrow: 0
   },
+  skeletonDetail: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  skeletonText: {
+    position: 'relative',
+    width: '100%',
+  }
 }));
 
 const AccountProfile = props => {
@@ -52,9 +61,23 @@ const AccountProfile = props => {
 
   const classes = useStyles();
 
+  const [ isData, setIsData ] = useState(true);
+
   const [ openUploader, setOpenUploader ] = useState(false);
 
   const [ dataImage, setDataImage ] = useState(mockData.avatar);
+
+  var first = React.useRef(true);
+  useEffect( () => {
+    if(first.current){
+      // Goi api de cap nhat du lieu - chi goi duy nhat 1 lan dau tien khi mounting xong lan dau
+      // Muc dich la de hien thi loading... trong lan dau tien vao component nay
+      first.current=false;
+      setIsData(false);
+    }
+    return;
+    // cac lan sau khi vao component nay thi co du lieu tren store roi se tu dong khong thay trang thai loading... nua ma co du lieu ngay
+  });
 
   const getDataImage = imgBase64 => {
     setDataImage(imgBase64);
@@ -67,6 +90,32 @@ const AccountProfile = props => {
     setDataImage(null);
     // api de xoa anh avatar
     uploadAvatar(null);
+  }
+
+  if(isData){
+    return (
+      <Card
+        {...rest}
+        className={clsx(classes.root, className)}
+      >
+        <CardContent>
+          <div className={classes.skeletonDetail}>
+            <div className={ classes.skeletonText}>
+              <Skeleton animation="wave" style={{ marginBottom: 10 }} width="60%" />
+              <Skeleton animation="wave" style={{ marginBottom: 5 }} height={10} width="80%" />
+              <Skeleton animation="wave" height={10} width="60%" />
+            </div>
+            <div>
+              <Skeleton animation="wave" variant="circle" width={80} height={80} />
+            </div>
+          </div>
+        </CardContent>
+        <Divider />
+        <CardActions>
+            <Skeleton animation="wave" height={10} width="60%"/>
+        </CardActions>
+      </Card>
+    );
   }
 
   return (
