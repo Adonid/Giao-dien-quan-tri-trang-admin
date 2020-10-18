@@ -54,13 +54,13 @@ const schema = {
 };
 
 const AccountDetails = props => {
-  const { className, ...rest } = props;
+  const { className, updateDetail, mockDataRequire, mockDataOptions,  ...rest } = props;
 
   const classes = useStyles();
 
   const [formState, setFormState] = useState({
     isValid: false,
-    values: {phone: props.mockDataRequire.phone , name: props.mockDataRequire.userName , email: props.mockDataRequire.email },
+    values: {phone: mockDataRequire.phone , name: mockDataRequire.userName , email: mockDataRequire.email },
     touched: {},
     errors: {}
   });
@@ -174,7 +174,7 @@ const AccountDetails = props => {
                 name="name"
                 required
                 variant="outlined"
-                defaultValue={ props.mockDataRequire.userName }
+                defaultValue={ mockDataRequire.userName }
                 onChange={handleChange}
                 error={hasError('name')}
                 helperText={
@@ -194,7 +194,7 @@ const AccountDetails = props => {
                 name="email"
                 required
                 variant="outlined"
-                defaultValue={ props.mockDataRequire.email }
+                defaultValue={ mockDataRequire.email }
                 onChange={handleChange}
                 error={hasError('email')}
                 helperText={
@@ -215,7 +215,7 @@ const AccountDetails = props => {
                 type="number"
                 required
                 variant="outlined"
-                defaultValue={ props.mockDataRequire.phone }
+                defaultValue={ mockDataRequire.phone }
                 onChange={handleChange}
                 error={hasError('phone')}
                 helperText={
@@ -278,25 +278,19 @@ const AccountDetails = props => {
 };
 
 AccountDetails.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  updateDetail: PropTypes.func.isRequired,
+  mockDataRequire: PropTypes.object.isRequired,
+  mockDataOptions: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return {
+const mapStateToProps = state => ({
     mockDataRequire: state.dataUserEditor.dataUser.require,
     mockDataOptions: state.dataUserEditor.dataUser.options,
-  }
-}
+});
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    updateDetail: data => {
-      dispatch({
-        type: "UPDATE_PROFILE",
-        data: data
-      })
-    }
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  updateDetail: data => dispatch({type: "UPDATE_PROFILE",data: data}),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountDetails)
