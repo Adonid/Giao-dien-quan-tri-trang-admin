@@ -48,7 +48,7 @@ SelectInput.propTypes = {
     action: PropTypes.func,
     label: PropTypes.string,
     disable: PropTypes.bool,
-    margin: PropTypes.bool,
+    margin: PropTypes.string,
     fullWidth: PropTypes.bool,
     required: PropTypes.bool
 };
