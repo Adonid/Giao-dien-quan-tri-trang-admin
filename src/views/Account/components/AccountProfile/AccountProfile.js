@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -48,25 +48,25 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const AccountProfile = props => {
-  const { className, ...rest } = props;
+  const { className, uploadAvatar, mockData, ...rest } = props;
 
   const classes = useStyles();
 
   const [ openUploader, setOpenUploader ] = useState(false);
 
-  const [ dataImage, setDataImage ] = useState(props.mockData.avatar);
+  const [ dataImage, setDataImage ] = useState(mockData.avatar);
 
   const getDataImage = imgBase64 => {
     setDataImage(imgBase64);
     const img = imgBase64.replace(/^data:image\/jpeg;base64,/, "");
     // api de thay doi avatar
-    props.uploadAvatar(img);
+    uploadAvatar(img);
   };
 
   const handleRemoveAvatar = () => {
     setDataImage(null);
     // api de xoa anh avatar
-    props.uploadAvatar(null);
+    uploadAvatar(null);
   }
 
   return (
@@ -81,12 +81,11 @@ const AccountProfile = props => {
               gutterBottom
               variant="h2"
             >
-              { props.mockData.require.userName }
+              { mockData.require.userName }
             </Typography>
             <Typography
               className={classes.locationText}
-              color="textSecondary"
-              variant="body1"
+              variant="h5"
             >
               Quản trị website
             </Typography>
@@ -95,7 +94,7 @@ const AccountProfile = props => {
               color="textSecondary"
               variant="body1"
             >
-              {moment().format('hh:mm A')} (GMT +07)
+              {dayjs().format('dddd, DD, MMMM, YYYY hh:mm A')}
             </Typography>
           </div>
             {
@@ -106,7 +105,7 @@ const AccountProfile = props => {
                 src={dataImage}
               />
               :
-              <Avatar alt={ props.mockData.require.userName } src={dataImage} className={classes.orange}/>
+              <Avatar alt={ mockData.require.userName } src={dataImage} className={classes.orange}/>
             }
         </div>
         <div className={classes.progress}>
@@ -141,23 +140,16 @@ const AccountProfile = props => {
 
 AccountProfile.propTypes = {
   className: PropTypes.string,
+  uploadAvatar: PropTypes.func.isRequired,
+  mockData: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    mockData: state.dataUserEditor.dataUser
-  }
-}
+const mapStateToProps = state => ({
+  mockData: state.dataUserEditor.dataUser
+});
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    uploadAvatar: img => {
-      dispatch({
-        type: 'UPLOAD_AVATAR',
-        img: img
-      })
-    }
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  uploadAvatar: img => { dispatch({ type: 'UPLOAD_AVATAR',img: img }) }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountProfile)
