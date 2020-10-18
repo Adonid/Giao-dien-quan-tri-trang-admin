@@ -73,7 +73,6 @@ const AccountProfile = props => {
       // Goi api de cap nhat du lieu - chi goi duy nhat 1 lan dau tien khi mounting xong lan dau
       // Muc dich la de hien thi loading... trong lan dau tien vao component nay
       first.current=false;
-      setIsData(false);
     }
     return;
     // cac lan sau khi vao component nay thi co du lieu tren store roi se tu dong khong thay trang thai loading... nua ma co du lieu ngay
