@@ -15,7 +15,7 @@ import {
   LinearProgress
 } from '@material-ui/core';
 import { UploadCropSingleImage } from 'components';
-import { deepOrange, deepPurple } from '@material-ui/core/colors';
+import { deepOrange } from '@material-ui/core/colors';
 
 
 const useStyles = makeStyles(theme => ({
@@ -37,8 +37,8 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2)
   },
   orange: {
-    color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500],
+    color: theme.palette.getContrastText(deepOrange[500]),
+    backgroundColor: deepOrange[500],
     marginLeft: 'auto',
     height: 110,
     width: 100,
