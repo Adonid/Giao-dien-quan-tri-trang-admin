@@ -58,18 +58,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const AccountProfile = props => {
-  const { className, uploadAvatar, mockData, ...rest } = props;
+  const { className, uploadAvatar, mockData, getProfile, ...rest } = props;
 
   const classes = useStyles();
 
   const [ openUploader, setOpenUploader ] = useState(false);
 
-  const [ dataImage, setDataImage ] = useState(mockData.avatar);
+  const [ dataImage, setDataImage ] = useState(Object.keys(mockData).length ? mockData.avatarUrl : '');
 
   useEffect( () => {
-    // Goi api de cap nhat du lieu - chi goi duy nhat 1 lan dau tien khi mounting xong lan dau
-    // Muc dich la de hien thi loading... trong lan dau tien vao component nay
-    // cac lan sau khi vao component nay thi co du lieu tren store roi se tu dong khong thay trang thai loading... nua ma co du lieu ngay
+    getProfile();
   },[]);
 
   const getDataImage = imgBase64 => {
@@ -123,7 +121,7 @@ const AccountProfile = props => {
               gutterBottom
               variant="h2"
             >
-              { mockData.require.userName }
+              { mockData.userName }
             </Typography>
             <Typography
               className={classes.locationText}
@@ -147,7 +145,7 @@ const AccountProfile = props => {
                 src={dataImage}
               />
               :
-              <Avatar alt={ mockData.require.userName } src={dataImage} className={classes.orange}/>
+              <Avatar alt={ mockData.userName } src={dataImage} className={classes.orange}/>
             }
         </div>
         <div className={classes.progress}>
@@ -183,11 +181,12 @@ const AccountProfile = props => {
 AccountProfile.propTypes = {
   className: PropTypes.string,
   uploadAvatar: PropTypes.func.isRequired,
+  getProfile: PropTypes.func.isRequired,
   mockData: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  mockData: state.dataUserEditor.dataUser
+  mockData: state.dataAdminProfile.profile
 });
 
 const mapDispatchToProps = dispatch => ({
