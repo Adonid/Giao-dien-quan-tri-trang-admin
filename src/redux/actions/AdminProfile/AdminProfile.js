@@ -5,14 +5,21 @@ const AdminProfile = () => async dispatch => {
     
     try{
         const res = await axios({
-            method: 'GET',
-            url: 'admin/profile',
-            headers: {'X-Requested-With': 'XMLHttpRequest'},
+            method: 'POST',
+            url: 'admin/',
+            data: {
+                query: `{
+                    adminProfile{
+                        userName
+                        avatarUrl
+                    }
+                }`
+            }
             });
         dispatch( {
             type: ADMIN_PROFILE_SUCCESS,
             payload: {
-                profile: res.data.profile,
+                profile: res.data.adminProfile,
             }
         });
     }
