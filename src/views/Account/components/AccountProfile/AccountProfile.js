@@ -14,9 +14,11 @@ import {
   Button,
   LinearProgress
 } from '@material-ui/core';
+import { red } from '@material-ui/core/colors';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { UploadCropSingleImage } from 'components';
 import { deepOrange } from '@material-ui/core/colors';
+import { getInitials } from 'helpers';
 import {AdminProfile} from 'redux/actions';
 
 
@@ -30,7 +32,9 @@ const useStyles = makeStyles(theme => ({
     height: 110,
     width: 100,
     flexShrink: 0,
-    flexGrow: 0
+    flexGrow: 0,
+    backgroundColor: red[500],
+    textTransform: 'uppercase'
   },
   progress: {
     marginTop: theme.spacing(2)
@@ -64,7 +68,7 @@ const AccountProfile = props => {
 
   const [ openUploader, setOpenUploader ] = useState(false);
 
-  const [ dataImage, setDataImage ] = useState(Object.keys(mockData).length ? mockData.avatarUrl : '');
+  const [ dataImage, setDataImage ] = useState('');
 
   useEffect( () => {
     getProfile();
@@ -137,16 +141,12 @@ const AccountProfile = props => {
               {dayjs().format('dddd, DD, MMMM, YYYY hh:mm A')}
             </Typography>
           </div>
-            {
-              dataImage
-              ?
-              <Avatar
-                className={classes.avatar}
-                src={dataImage}
-              />
-              :
-              <Avatar alt={ mockData.userName } src={dataImage} className={classes.orange}/>
-            }
+          <Avatar
+              className={classes.avatar}
+              src={ mockData.avatarUrl }
+              >
+              {getInitials( mockData.userName )}
+          </Avatar>
         </div>
         <div className={classes.progress}>
           <Typography variant="body1">Hồ sơ hoàn thành: 70%</Typography>
@@ -173,7 +173,7 @@ const AccountProfile = props => {
           Xóa avatar
         </Button>
       </CardActions>
-      <UploadCropSingleImage openDialog={openUploader} imageInit={dataImage} dataNewImg={ getDataImage} />
+      <UploadCropSingleImage openDialog={openUploader} imageInit={ mockData.avatarUrl } dataNewImg={ getDataImage} />
     </Card>
   );
 };
