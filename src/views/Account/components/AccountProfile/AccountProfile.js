@@ -195,4 +195,4 @@ const mapDispatchToProps = dispatch => ({
   uploadAvatar: img => { dispatch({ type: 'UPLOAD_AVATAR',img: img }) },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AccountProfile)
+export default connect(mapStateToProps, mapDispatchToProps)(AccountProfile);
