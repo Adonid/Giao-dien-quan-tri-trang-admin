@@ -13,13 +13,13 @@ const AdminProfile = () => async dispatch => {
                         userName
                         avatarUrl
                     }
-                }`
+                }`,
             }
             });
         dispatch( {
             type: ADMIN_PROFILE_SUCCESS,
             payload: {
-                profile: res.data.adminProfile[0],
+                profile: res.data.data.adminProfile[0],
             }
         });
     }
