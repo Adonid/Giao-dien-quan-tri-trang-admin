@@ -19,7 +19,7 @@ const AdminProfile = () => async dispatch => {
         dispatch( {
             type: ADMIN_PROFILE_SUCCESS,
             payload: {
-                profile: res.data.adminProfile,
+                profile: res.data.adminProfile[0],
             }
         });
     }
