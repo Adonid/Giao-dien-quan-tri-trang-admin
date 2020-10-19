@@ -11,3 +11,4 @@ export { default as CategoryTagReducer  } from './CategoryTagReducer';
 export { default as TermReducer  } from './TermReducer';
 export { default as LoginReducer  } from './LoginReducer';
 export { default as ForgetPwReducer  } from './ForgetPwReducer';
+export { default as AdminProfileReducer  } from './AdminProfileReducer';
