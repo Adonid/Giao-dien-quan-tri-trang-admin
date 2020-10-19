@@ -17,6 +17,7 @@ import {
 import Skeleton from '@material-ui/lab/Skeleton';
 import { UploadCropSingleImage } from 'components';
 import { deepOrange } from '@material-ui/core/colors';
+import {AdminProfile} from 'redux/actions';
 
 
 const useStyles = makeStyles(theme => ({
@@ -61,22 +62,15 @@ const AccountProfile = props => {
 
   const classes = useStyles();
 
-  const [ isData, setIsData ] = useState(true);
-
   const [ openUploader, setOpenUploader ] = useState(false);
 
   const [ dataImage, setDataImage ] = useState(mockData.avatar);
 
-  var first = React.useRef(true);
   useEffect( () => {
-    if(first.current){
-      // Goi api de cap nhat du lieu - chi goi duy nhat 1 lan dau tien khi mounting xong lan dau
-      // Muc dich la de hien thi loading... trong lan dau tien vao component nay
-      first.current=false;
-    }
-    return;
+    // Goi api de cap nhat du lieu - chi goi duy nhat 1 lan dau tien khi mounting xong lan dau
+    // Muc dich la de hien thi loading... trong lan dau tien vao component nay
     // cac lan sau khi vao component nay thi co du lieu tren store roi se tu dong khong thay trang thai loading... nua ma co du lieu ngay
-  });
+  },[]);
 
   const getDataImage = imgBase64 => {
     setDataImage(imgBase64);
@@ -91,7 +85,7 @@ const AccountProfile = props => {
     uploadAvatar(null);
   }
 
-  if(isData){
+  if(!Object.keys(mockData).length){
     return (
       <Card
         {...rest}
@@ -197,7 +191,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  uploadAvatar: img => { dispatch({ type: 'UPLOAD_AVATAR',img: img }) }
+  getProfile: () => { dispatch( AdminProfile() ) },
+  uploadAvatar: img => { dispatch({ type: 'UPLOAD_AVATAR',img: img }) },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountProfile)
