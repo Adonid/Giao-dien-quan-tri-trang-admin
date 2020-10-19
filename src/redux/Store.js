@@ -17,6 +17,7 @@ import {
     TermReducer as Term,
     LoginReducer as Login,
     ForgetPwReducer as ForgetPw,
+    AdminProfileReducer as AdminProfile,
 
 } from './reducers';
 
@@ -35,6 +36,7 @@ const allReducers = combineReducers({
     
     dataLogin: Login,
     dataResetPassword: ForgetPw,
+    dataAdminProfile: AdminProfile,
 });
 
 const persistedReducer = persistReducer({key: 'root', storage} , allReducers);
