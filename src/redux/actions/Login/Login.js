@@ -9,7 +9,6 @@ const Login = userLogin => async dispatch => {
         const res = await axios({
             method: 'POST',
             url: 'authentication-admin/login',
-            headers: {'X-Requested-With': 'XMLHttpRequest'},
             data: userLogin
             });
         dispatch( {
