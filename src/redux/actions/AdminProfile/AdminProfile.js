@@ -1,5 +1,6 @@
 import axios from 'common/Axios';
 import { ADMIN_PROFILE_SUCCESS, ADMIN_PROFILE_ERROR } from 'redux/constans';
+import { ReadCookie } from 'common';
 
 const AdminProfile = () => async dispatch => {
     
@@ -7,6 +8,7 @@ const AdminProfile = () => async dispatch => {
         const res = await axios({
             method: 'POST',
             url: 'admin/',
+            headers: { Authorization: "Bearer " + ReadCookie()},
             data: {
                 query: `{
                     adminProfile{
@@ -14,6 +16,7 @@ const AdminProfile = () => async dispatch => {
                         avatarUrl
                     }
                 }`,
+                variables: {}
             }
             });
         dispatch( {
