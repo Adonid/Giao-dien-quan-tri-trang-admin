@@ -76,9 +76,9 @@ const AccountProfile = props => {
 
   const getDataImage = imgBase64 => {
     setDataImage(imgBase64);
-    const img = imgBase64.replace(/^data:image\/jpeg;base64,/, "");
+    // const img = imgBase64.replace(/^data:image\/jpeg;base64,/, "");
     // api de thay doi avatar
-    uploadAvatar(img);
+    uploadAvatar(imgBase64);
   };
 
   const handleRemoveAvatar = () => {
@@ -191,7 +191,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getProfile: () => { dispatch( AdminProfile() ) },
-  uploadAvatar: img => { dispatch({ type: 'UPLOAD_AVATAR',img: img }) },
+  uploadAvatar: base64url => { dispatch({ type: 'UPLOAD_AVATAR',img: base64url }) },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountProfile);
