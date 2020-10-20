@@ -67,7 +67,7 @@ const AccountDetails = props => {
 
   const classes = useStyles();
 
-  const [ isData, setIsData ] = useState(true);
+  const [ isData, setIsData ] = useState(false);
 
   const [formState, setFormState] = useState({
     isValid: false,
