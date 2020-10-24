@@ -10,7 +10,6 @@ import {
   Link,
   Typography,
   CircularProgress, 
-  Box
 } from '@material-ui/core';
 import ReCAPTCHA from 'react-google-recaptcha';
 
