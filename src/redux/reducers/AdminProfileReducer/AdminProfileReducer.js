@@ -1,7 +1,8 @@
-import { ADMIN_PROFILE_SUCCESS, ADMIN_PROFILE_ERROR } from 'redux/constans';
+import { ADMIN_PROFILE_SUCCESS, ADMIN_PROFILE_ERROR, ADMIN_PROFILE } from 'redux/constans';
 
 const dataAdminProfile = {
     profile: {},
+    loading: true,
     message: ""
 }
 
@@ -9,11 +10,14 @@ const AdminProfileReducer = (state = dataAdminProfile, action) => {
     
     switch (action.type) {
         
+        case ADMIN_PROFILE:
+            return { ...state, loading: true };
+
         case ADMIN_PROFILE_SUCCESS:
-            return { ...state, profile: action.payload.profile };
+            return { ...state, loading: false, profile: action.payload.profile };
 
         case ADMIN_PROFILE_ERROR:
-            return { ...state, profile: {}, message: action.payload.message };
+            return { ...state, loading: true, profile: {}, message: action.payload.message };
 
         default:
             return state
