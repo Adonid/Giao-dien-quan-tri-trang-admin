@@ -12,7 +12,8 @@ import {
   Typography,
   Divider,
   Button,
-  LinearProgress
+  LinearProgress,
+  CircularProgress
 } from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
 import Skeleton from '@material-ui/lab/Skeleton';
@@ -62,7 +63,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const AccountProfile = props => {
-  const { className, uploadAvatar, mockData, getProfile, loading, ...rest } = props;
+  const { className, uploadAvatar, mockData, getProfile, loading, loadingAvatar, ...rest } = props;
 
   const classes = useStyles();
 
@@ -84,7 +85,7 @@ const AccountProfile = props => {
   const handleRemoveAvatar = () => {
     setDataImage(null);
     // api de xoa anh avatar
-    uploadAvatar(null);
+    // uploadAvatar(null);
   }
 
   if(loading){
@@ -163,8 +164,9 @@ const AccountProfile = props => {
           color="primary"
           variant="text"
           onClick={ () => setOpenUploader(!openUploader) }
+          disabled={loadingAvatar}
         >
-          Upload avatar
+          {loadingAvatar && <CircularProgress size={18} />} Upload avatar
         </Button>
         <Button 
         variant="text"
@@ -184,11 +186,13 @@ AccountProfile.propTypes = {
   getProfile: PropTypes.func.isRequired,
   mockData: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
+  loadingAvatar: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   mockData: state.dataAdminProfile.profile,
-  loading: state.dataAdminProfile.loading
+  loading: state.dataAdminProfile.loading,
+  loadingAvatar: state.dataAdminProfile.loadingAvatar
 });
 
 const mapDispatchToProps = dispatch => ({
