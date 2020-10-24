@@ -19,7 +19,7 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import { UploadCropSingleImage } from 'components';
 import { deepOrange } from '@material-ui/core/colors';
 import { getInitials } from 'helpers';
-import {AdminProfile} from 'redux/actions';
+import {AdminProfile, UploadAvatar} from 'redux/actions';
 
 
 const useStyles = makeStyles(theme => ({
@@ -74,11 +74,11 @@ const AccountProfile = props => {
     getProfile();
   },[]);
 
-  const getDataImage = imgBase64 => {
-    setDataImage(imgBase64);
-    // const img = imgBase64.replace(/^data:image\/jpeg;base64,/, "");
+  const getDataImage = base64 => {
+    setDataImage(base64);
+    // const img = base64.replace(/^data:image\/jpeg;base64,/, "");
     // api de thay doi avatar
-    uploadAvatar(imgBase64);
+    uploadAvatar(base64);
   };
 
   const handleRemoveAvatar = () => {
@@ -193,7 +193,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getProfile: () => { dispatch( AdminProfile() ) },
-  uploadAvatar: base64url => { dispatch({ type: 'UPLOAD_AVATAR',img: base64url }) },
+  uploadAvatar: base64 => { dispatch(UploadAvatar(base64)) },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountProfile);
