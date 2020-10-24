@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const AccountProfile = props => {
-  const { className, uploadAvatar, mockData, getProfile, ...rest } = props;
+  const { className, uploadAvatar, mockData, getProfile, loading, ...rest } = props;
 
   const classes = useStyles();
 
@@ -87,7 +87,7 @@ const AccountProfile = props => {
     uploadAvatar(null);
   }
 
-  if(!Object.keys(mockData).length){
+  if(loading){
     return (
       <Card
         {...rest}
@@ -183,10 +183,12 @@ AccountProfile.propTypes = {
   uploadAvatar: PropTypes.func.isRequired,
   getProfile: PropTypes.func.isRequired,
   mockData: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
-  mockData: state.dataAdminProfile.profile
+  mockData: state.dataAdminProfile.profile,
+  loading: state.dataAdminProfile.loading
 });
 
 const mapDispatchToProps = dispatch => ({
