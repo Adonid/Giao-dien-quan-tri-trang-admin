@@ -1,9 +1,13 @@
-import { ADMIN_PROFILE_SUCCESS, ADMIN_PROFILE_ERROR, ADMIN_PROFILE } from 'redux/constans';
+import { 
+    ADMIN_PROFILE_SUCCESS, ADMIN_PROFILE_ERROR, ADMIN_PROFILE,
+    UPLOAD_AVATAR_SUCCESS, UPLOAD_AVATAR_ERROR, UPLOAD_AVATAR,
+ } from 'redux/constans';
 
 const dataAdminProfile = {
     profile: {},
     loading: true,
-    message: ""
+    loadingAvatar: false,
+    message: "",
 }
 
 const AdminProfileReducer = (state = dataAdminProfile, action) => {
@@ -17,7 +21,16 @@ const AdminProfileReducer = (state = dataAdminProfile, action) => {
             return { ...state, loading: false, profile: action.payload.profile };
 
         case ADMIN_PROFILE_ERROR:
-            return { ...state, loading: true, profile: {}, message: action.payload.message };
+            return { ...state, loading: true, message: action.payload.message };
+
+        case UPLOAD_AVATAR:
+            return { ...state, loadingAvatar: true };
+
+        case UPLOAD_AVATAR_SUCCESS:
+            return { ...state, loadingAvatar: false, message: action.payload.message, profile: {...state.profile, avatarUrl: action.payload.avatarUrl } };
+
+        case UPLOAD_AVATAR_ERROR:
+            return { ...state, loadingAvatar: false, message: action.payload.message };
 
         default:
             return state
