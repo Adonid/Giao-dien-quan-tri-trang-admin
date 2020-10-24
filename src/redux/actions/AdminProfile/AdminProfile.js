@@ -1,9 +1,11 @@
 import axios from 'common/Axios';
-import { ADMIN_PROFILE_SUCCESS, ADMIN_PROFILE_ERROR } from 'redux/constans';
+import { ADMIN_PROFILE_SUCCESS, ADMIN_PROFILE_ERROR, ADMIN_PROFILE } from 'redux/constans';
 import { ReadCookie } from 'common';
 
 const AdminProfile = () => async dispatch => {
     
+    dispatch({type: ADMIN_PROFILE});
+
     try{
         const res = await axios({
             method: 'POST',
