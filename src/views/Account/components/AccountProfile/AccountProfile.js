@@ -166,7 +166,7 @@ const AccountProfile = props => {
           onClick={ () => setOpenUploader(!openUploader) }
           disabled={loadingAvatar}
         >
-          {loadingAvatar && <CircularProgress size={18} />} Upload avatar
+          {loadingAvatar && <CircularProgress size={15} />} Upload avatar
         </Button>
         <Button 
         variant="text"
