@@ -67,8 +67,6 @@ const AccountDetails = props => {
 
   const classes = useStyles();
 
-  const [ isData, setIsData ] = useState(false);
-
   const [formState, setFormState] = useState({
     isValid: false,
     values: {phone: mockDataRequire.phone , name: mockDataRequire.userName , email: mockDataRequire.email },
@@ -153,7 +151,7 @@ const AccountDetails = props => {
     props.updateDetail({required, options});
   }
 
-  if(isData){
+  if(true){
     return (
       <Card
         {...rest}
