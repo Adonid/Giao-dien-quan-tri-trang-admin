@@ -15,7 +15,10 @@ const AdminProfile = () => async dispatch => {
                 query: `{
                     adminProfile{
                         userName
-                        avatarUrl
+                        avatar{
+                            url
+                            token
+                        }
                     }
                 }`,
                 variables: {}
@@ -24,7 +27,7 @@ const AdminProfile = () => async dispatch => {
         dispatch( {
             type: ADMIN_PROFILE_SUCCESS,
             payload: {
-                profile: res.data.data.adminProfile[0],
+                profile: res.data.data.adminProfile,
             }
         });
     }
