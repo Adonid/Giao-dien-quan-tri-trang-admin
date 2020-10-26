@@ -4,10 +4,14 @@ import {
  } from 'redux/constans';
 
 const dataAdminProfile = {
-    profile: {},
-    loading: true,
+    loadingProfile: true,
     loadingAvatar: false,
+    avatarUrl: '',
+    tokenAvatar: '',
+    userName: '',
     message: "",
+
+
 }
 
 const AdminProfileReducer = (state = dataAdminProfile, action) => {
@@ -15,19 +19,19 @@ const AdminProfileReducer = (state = dataAdminProfile, action) => {
     switch (action.type) {
         
         case ADMIN_PROFILE:
-            return { ...state, loading: true };
+            return { ...state, loadingProfile: true };
 
         case ADMIN_PROFILE_SUCCESS:
-            return { ...state, loading: false, profile: action.payload.profile };
+            return { ...state, loadingProfile: false, avatarUrl: action.payload.profile.avatar.url, tokenAvatar: action.payload.profile.avatar.token, userName: action.payload.profile.userName };
 
         case ADMIN_PROFILE_ERROR:
-            return { ...state, loading: true, message: action.payload.message };
+            return { ...state, loadingProfile: true, message: action.payload.message };
 
         case UPLOAD_AVATAR:
             return { ...state, loadingAvatar: true };
 
         case UPLOAD_AVATAR_SUCCESS:
-            return { ...state, loadingAvatar: false, message: action.payload.message, profile: {...state.profile, avatarUrl: action.payload.avatarUrl } };
+            return { ...state, loadingAvatar: false, message: action.payload.message, avatarUrl: action.payload.url, tokenAvatar: action.payload.token };
 
         case UPLOAD_AVATAR_ERROR:
             return { ...state, loadingAvatar: false, message: action.payload.message };
