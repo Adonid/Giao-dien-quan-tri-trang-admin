@@ -5,7 +5,7 @@ import { NavLink as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { List, ListItem, Button, colors, Collapse, ListItemIcon, ListItemText } from '@material-ui/core';
+import { List, ListItem, Button, colors, Collapse } from '@material-ui/core';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 
@@ -67,7 +67,6 @@ const SidebarNav = props => {
 
   const handleClick = (event, id) => {
     event.persist();
-    // Thay doi cach Expand menu bang cach thay doi state menus. Mai lam
     const updateMenus = [ ...menus ].map( menu => menu.id === Number(id) ? { ...menu, isOpen: ! { ...menu }.isOpen } : menu );
     setMenus( updateMenus );
   };
