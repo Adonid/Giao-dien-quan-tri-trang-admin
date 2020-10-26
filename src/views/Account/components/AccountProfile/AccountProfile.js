@@ -15,7 +15,7 @@ import {
   LinearProgress,
   CircularProgress
 } from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
+import { orange } from '@material-ui/core/colors';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { UploadCropSingleImage } from 'components';
 import { deepOrange } from '@material-ui/core/colors';
@@ -34,7 +34,7 @@ const useStyles = makeStyles(theme => ({
     width: 100,
     flexShrink: 0,
     flexGrow: 0,
-    backgroundColor: red[500],
+    backgroundColor: orange[500],
     textTransform: 'uppercase'
   },
   progress: {
@@ -63,30 +63,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const AccountProfile = props => {
-  const { className, uploadAvatar, mockData, getProfile, loading, loadingAvatar, ...rest } = props;
+  const { className, uploadAvatar, avatarUrl, tokenAvatar, userName, getProfile, loading, loadingAvatar, ...rest } = props;
 
   const classes = useStyles();
 
   const [ openUploader, setOpenUploader ] = useState(false);
 
-  const [ dataImage, setDataImage ] = useState('');
-
   useEffect( () => {
     getProfile();
   },[]);
 
-  const getDataImage = base64 => {
-    setDataImage(base64);
-    // const img = base64.replace(/^data:image\/jpeg;base64,/, "");
-    // api de thay doi avatar
-    uploadAvatar(base64);
-  };
-
-  const handleRemoveAvatar = () => {
-    setDataImage(null);
-    // api de xoa anh avatar
-    // uploadAvatar(null);
-  }
+  const getDataImage = base64 => uploadAvatar(base64, tokenAvatar);
 
   if(loading){
     return (
@@ -126,7 +113,7 @@ const AccountProfile = props => {
               gutterBottom
               variant="h2"
             >
-              { mockData.userName }
+              { userName }
             </Typography>
             <Typography
               className={classes.locationText}
@@ -144,9 +131,9 @@ const AccountProfile = props => {
           </div>
           <Avatar
               className={classes.avatar}
-              src={ mockData.avatarUrl }
+              src={ avatarUrl }
               >
-              {getInitials( mockData.userName )}
+              {getInitials( userName )}
           </Avatar>
         </div>
         <div className={classes.progress}>
@@ -168,14 +155,8 @@ const AccountProfile = props => {
         >
           {loadingAvatar && <CircularProgress size={15} />} Upload avatar
         </Button>
-        <Button 
-        variant="text"
-        onClick={ handleRemoveAvatar }
-        >
-          Xóa avatar
-        </Button>
       </CardActions>
-      <UploadCropSingleImage openDialog={openUploader} imageInit={ mockData.avatarUrl } dataNewImg={ getDataImage} />
+      <UploadCropSingleImage openDialog={openUploader} imageInit={ avatarUrl } dataNewImg={ getDataImage} />
     </Card>
   );
 };
@@ -184,20 +165,24 @@ AccountProfile.propTypes = {
   className: PropTypes.string,
   uploadAvatar: PropTypes.func.isRequired,
   getProfile: PropTypes.func.isRequired,
-  mockData: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
   loadingAvatar: PropTypes.bool.isRequired,
+  avatarUrl: PropTypes.string.isRequired,
+  tokenAvatar: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
-  mockData: state.dataAdminProfile.profile,
-  loading: state.dataAdminProfile.loading,
-  loadingAvatar: state.dataAdminProfile.loadingAvatar
+  loading: state.dataAdminProfile.loadingProfile,
+  loadingAvatar: state.dataAdminProfile.loadingAvatar,
+  avatarUrl: state.dataAdminProfile.avatarUrl,
+  tokenAvatar: state.dataAdminProfile.tokenAvatar,
+  userName: state.dataAdminProfile.userName,
 });
 
 const mapDispatchToProps = dispatch => ({
   getProfile: () => { dispatch( AdminProfile() ) },
-  uploadAvatar: base64 => { dispatch(UploadAvatar(base64)) },
+  uploadAvatar: (base64, token) => { dispatch(UploadAvatar(base64, token)) },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountProfile);
