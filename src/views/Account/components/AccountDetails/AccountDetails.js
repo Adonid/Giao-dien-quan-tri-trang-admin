@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { SelectInput } from 'components';
+import { AdminDetail } from 'redux/actions';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -63,7 +64,7 @@ const schema = {
 };
 
 const AccountDetails = props => {
-  const { className, updateDetail, mockDataRequire, mockDataOptions,  ...rest } = props;
+  const { className, updateDetail, mockDataRequire, mockDataOptions, loading, getProfileDetail, profileDetail,  ...rest } = props;
 
   const classes = useStyles();
 
@@ -88,6 +89,10 @@ const AccountDetails = props => {
   const [ disableDistrict, setDisableDistrict ] = useState(true);
   const [ disableCommune, setDisableCommune ] = useState(true);
   const [ disableStreet, setDisableStreet ] = useState(true);
+
+  useEffect( () => {
+    getProfileDetail();
+  },[]);
 
   useEffect(() => {
     const errors = validate(formState.values, schema);
@@ -151,7 +156,7 @@ const AccountDetails = props => {
     props.updateDetail({required, options});
   }
 
-  if(true){
+  if(loading){
     return (
       <Card
         {...rest}
@@ -210,7 +215,7 @@ const AccountDetails = props => {
                 name="name"
                 required
                 variant="outlined"
-                defaultValue={ mockDataRequire.userName }
+                defaultValue={ profileDetail.userName }
                 onChange={handleChange}
                 error={hasError('name')}
                 helperText={
@@ -230,7 +235,7 @@ const AccountDetails = props => {
                 name="email"
                 required
                 variant="outlined"
-                defaultValue={ mockDataRequire.email }
+                defaultValue={ profileDetail.email }
                 onChange={handleChange}
                 error={hasError('email')}
                 helperText={
@@ -251,7 +256,7 @@ const AccountDetails = props => {
                 type="number"
                 required
                 variant="outlined"
-                defaultValue={ mockDataRequire.phone }
+                defaultValue={ profileDetail.phoneNumber }
                 onChange={handleChange}
                 error={hasError('phone')}
                 helperText={
@@ -317,15 +322,21 @@ AccountDetails.propTypes = {
   className: PropTypes.string,
   updateDetail: PropTypes.func.isRequired,
   mockDataRequire: PropTypes.object.isRequired,
-  mockDataOptions: PropTypes.object.isRequired
+  mockDataOptions: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  getProfileDetail: PropTypes.func.isRequired,
+  profileDetail: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
     mockDataRequire: state.dataUserEditor.dataUser.require,
     mockDataOptions: state.dataUserEditor.dataUser.options,
+    loading: state.dataAdminProfile.loadingDetail,
+    profileDetail: state.dataAdminProfile.profileDetail,
 });
 
 const mapDispatchToProps = dispatch => ({
+  getProfileDetail: () => dispatch( AdminDetail() ),
   updateDetail: data => dispatch({type: "UPDATE_PROFILE",data: data}),
 });
 
