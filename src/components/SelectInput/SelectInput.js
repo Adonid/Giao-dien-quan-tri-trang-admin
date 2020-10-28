@@ -7,7 +7,7 @@ import {
 
 const SelectInput = props => {
 
-    const { label, list, action, disable, margin, fullWidth, required, ...rest } = props;
+    const { label, list, action, disable, margin, fullWidth, required } = props;
 
     const [ item, setItem ] = React.useState( list.filter( item => item.select===true ).length > 0 ? list.filter( item => item.select===true )[0].value : list[0].value);
 
