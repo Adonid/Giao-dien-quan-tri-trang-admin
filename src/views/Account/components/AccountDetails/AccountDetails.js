@@ -13,11 +13,12 @@ import {
   Grid,
   Button,
   TextField,
-  Typography
+  Typography,
+  CircularProgress
 } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { SelectAddress } from 'components';
-import { AdminDetail, DistrictBelongToProvince, CommunesBelongToDistrict } from 'redux/actions';
+import { AdminDetail, DistrictBelongToProvince, CommunesBelongToDistrict, UpdateProfile } from 'redux/actions';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -66,12 +67,11 @@ const schema = {
 
 const AccountDetails = props => {
   const { 
-    className, 
-    updateDetail, 
-    mockDataRequire, 
-    mockDataOptions, 
-    loading, 
+    className,
+    loading,
+    loadingUpdate,
     getProfileDetail,
+    updateProfile,
     districtsBelongToProvince,
     communesBelongToDistrict,
     profileDetail, 
@@ -88,7 +88,7 @@ const AccountDetails = props => {
 
   const [formState, setFormState] = useState({
     isValid: false,
-    values: {phoneNumber: mockDataRequire.phone , userName: mockDataRequire.userName , email: mockDataRequire.email },
+    values: {phoneNumber: profileDetail.phoneNumber , userName: profileDetail.userName , email: profileDetail.email },
     touched: {},
     errors: {}
   });
@@ -163,11 +163,9 @@ const AccountDetails = props => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    const required = formState.values;
-    const options = formOptions;
-    const newProfile = {...formState.values, address: {...formOptions}}
-    console.log(newProfile);
-    props.updateDetail({required, options});
+    const newProfile = {...formState.values, address: {...formOptions}};
+
+    updateProfile( newProfile );
   }
 
   if(loading){
@@ -295,7 +293,7 @@ const AccountDetails = props => {
               xs={12}
             >
               <Typography variant="caption" color="textSecondary">
-                  Địa chỉ: { formOptions.street??"." } { formOptions.commune??"." } { formOptions.district??"." } { formOptions.province??".." }
+                  Địa chỉ: { formOptions.street||profileDetail.address.street } { formOptions.commune||profileDetail.address.commune } { formOptions.district||profileDetail.address.district } { formOptions.province||profileDetail.address.province }
               </Typography>
             </Grid>
           </Grid>
@@ -306,9 +304,9 @@ const AccountDetails = props => {
             color="primary"
             variant="contained"
             type="submit"
-            disabled={!formState.isValid}
+            disabled={!formState.isValid||loadingUpdate}
           >
-            Save details
+            {loadingUpdate && <CircularProgress size={15} />} Cập nhật
           </Button>
         </CardActions>
       </form>
@@ -318,11 +316,10 @@ const AccountDetails = props => {
 
 AccountDetails.propTypes = {
   className: PropTypes.string,
-  updateDetail: PropTypes.func.isRequired,
-  mockDataRequire: PropTypes.object.isRequired,
-  mockDataOptions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
+  loadingUpdate: PropTypes.bool.isRequired,
   getProfileDetail: PropTypes.func.isRequired,
+  updateProfile: PropTypes.func.isRequired,
   districtsBelongToProvince: PropTypes.func.isRequired,
   profileDetail: PropTypes.object.isRequired,
   provinces: PropTypes.array.isRequired,
@@ -334,9 +331,8 @@ AccountDetails.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    mockDataRequire: state.dataUserEditor.dataUser.require,
-    mockDataOptions: state.dataUserEditor.dataUser.options,
     loading: state.dataAdminProfile.loadingDetail,
+    loadingUpdate: state.dataAdminProfile.loadingUpdate,
     profileDetail: state.dataAdminProfile.profileDetail,
     provinces: state.dataAdminProfile.provinces,
     districts: state.dataAdminProfile.districts,
@@ -348,7 +344,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getProfileDetail: () => dispatch( AdminDetail() ),
-  updateDetail: data => dispatch({type: "UPDATE_PROFILE",data: data}),
+  updateProfile: profile => dispatch( UpdateProfile(profile)),
   districtsBelongToProvince: provinceCode => dispatch( DistrictBelongToProvince(provinceCode) ),
   communesBelongToDistrict: districtCode => dispatch( CommunesBelongToDistrict(districtCode) ),
 });
