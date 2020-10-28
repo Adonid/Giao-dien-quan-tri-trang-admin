@@ -64,7 +64,7 @@ const schema = {
 };
 
 const AccountDetails = props => {
-  const { className, updateDetail, mockDataRequire, mockDataOptions, loading, getProfileDetail, profileDetail,  ...rest } = props;
+  const { className, updateDetail, mockDataRequire, mockDataOptions, loading, getProfileDetail, profileDetail, provinces,  ...rest } = props;
 
   const classes = useStyles();
 
@@ -269,7 +269,7 @@ const AccountDetails = props => {
               md={6}
               xs={12}
             >
-              <SelectAddress list={listProvince} fullWidth={true} margin="dense" action={ getProvince } label="Tỉnh/thành phố" />
+              <SelectAddress list={ provinces } valSelect={ profileDetail.address.province } fullWidth={true} margin="dense" action={ getProvince } label="Tỉnh/thành phố" />
             </Grid>
             <Grid
               item
@@ -296,6 +296,7 @@ const AccountDetails = props => {
                 margin="dense"
                 name="street"
                 variant="outlined"
+                defaultValue={ profileDetail.address.street }
                 disabled={disableStreet}
                 onChange={ handleStreet }
               />
@@ -326,6 +327,7 @@ AccountDetails.propTypes = {
   loading: PropTypes.bool.isRequired,
   getProfileDetail: PropTypes.func.isRequired,
   profileDetail: PropTypes.object.isRequired,
+  provinces: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -333,6 +335,7 @@ const mapStateToProps = state => ({
     mockDataOptions: state.dataUserEditor.dataUser.options,
     loading: state.dataAdminProfile.loadingDetail,
     profileDetail: state.dataAdminProfile.profileDetail,
+    provinces: state.dataAdminProfile.provinces,
 });
 
 const mapDispatchToProps = dispatch => ({
