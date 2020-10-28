@@ -17,6 +17,16 @@ const AdminDetail = () => async dispatch => {
                         userName
                         phoneNumber
                         email
+                        address{
+                            province
+                            district
+                            commune
+                            street
+                        }
+                    }
+                    provinces{
+                        name_with_type
+                        code
                     }
                 }`,
                 variables: {}
@@ -26,6 +36,7 @@ const AdminDetail = () => async dispatch => {
             type: ADMIN_DETAIL_SUCCESS,
             payload: {
                 profileDetail: res.data.data.adminDetail,
+                provinces: res.data.data.provinces
             }
         });
     }
