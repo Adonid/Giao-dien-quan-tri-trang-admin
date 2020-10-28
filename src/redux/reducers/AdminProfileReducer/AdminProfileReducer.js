@@ -9,6 +9,7 @@ const dataAdminProfile = {
     loadingAvatar: false,
     loadingDetail: true,
     profileDetail: {},
+    provinces: [],
     avatarUrl: '',
     tokenAvatar: '',
     userName: '',
@@ -45,7 +46,7 @@ const AdminProfileReducer = (state = dataAdminProfile, action) => {
             return { ...state, loadingDetail: true };
 
         case ADMIN_DETAIL_SUCCESS:
-            return { ...state, loadingDetail: false, profileDetail: action.payload.profileDetail };
+            return { ...state, loadingDetail: false, profileDetail: action.payload.profileDetail, provinces: action.payload.provinces };
 
         case ADMIN_DETAIL_ERROR:
             return { ...state, loadingDetail: false, message: action.payload.message };
