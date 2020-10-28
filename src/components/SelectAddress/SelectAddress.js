@@ -9,7 +9,7 @@ const SelectAddress = props => {
 
     const { label, list, valSelect, action, disable, margin, fullWidth, required } = props;
 
-    const [ itemSelect, setItemSlect ] = useState(valSelect);
+    const [ itemSelect, setItemSlect ] = useState(valSelect??"");
 
     const handleChange = event => {
       event.persist();
@@ -26,14 +26,14 @@ const SelectAddress = props => {
             select
             margin={ margin??"none" }
             label={label??"Sắp xếp"}
-            value={ itemSelect??0 }
+            value={ itemSelect }
             onChange={handleChange}
             // helperText="Thứ tự sắp xếp"
             variant="outlined"
             disabled={ disable??false}
         >
             {
-              list.map( option => (
+              list.sort((a, b) => parseInt(Number(a.code)) - parseInt(Number(b.code))).map( option => (
                 <MenuItem key={option.code} value={option.code}>
                   {option.name_with_type}
                 </MenuItem>
