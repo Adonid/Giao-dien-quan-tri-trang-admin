@@ -6,3 +6,4 @@ export { default as UploadAvatar } from './UploadAvatar';
 export { default as AdminDetail } from './AdminDetail';
 export { default as DistrictBelongToProvince } from './DistrictBelongToProvince';
 export { default as CommunesBelongToDistrict } from './CommunesBelongToDistrict';
+export { default as UpdateProfile } from './UpdateProfile';
