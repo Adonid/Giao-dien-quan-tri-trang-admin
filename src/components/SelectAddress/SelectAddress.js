@@ -28,13 +28,12 @@ const SelectAddress = props => {
             label={label??"Sắp xếp"}
             value={ itemSelect }
             onChange={handleChange}
-            // helperText="Thứ tự sắp xếp"
             variant="outlined"
             disabled={ disable??false}
         >
             {
               list.sort((a, b) => parseInt(Number(a.code)) - parseInt(Number(b.code))).map( option => (
-                <MenuItem key={option.code} value={option.code}>
+                <MenuItem key={option.code} value={option}>
                   {option.name_with_type}
                 </MenuItem>
               ))
