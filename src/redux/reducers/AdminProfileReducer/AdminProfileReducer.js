@@ -1,15 +1,32 @@
 import { 
     ADMIN_PROFILE_SUCCESS, ADMIN_PROFILE_ERROR, ADMIN_PROFILE,
     UPLOAD_AVATAR_SUCCESS, UPLOAD_AVATAR_ERROR, UPLOAD_AVATAR,
-    ADMIN_DETAIL_SUCCESS, ADMIN_DETAIL_ERROR, ADMIN_DETAIL
+    ADMIN_DETAIL_SUCCESS, ADMIN_DETAIL_ERROR, ADMIN_DETAIL,
+    DISTRICTS_BELONGTO_PROVINCE_SUCCESS, DISTRICTS_BELONGTO_PROVINCE_ERROR, DISTRICTS_BELONGTO_PROVINCE,
+    COMMUNES_BELONGTO_DISTRICT_SUCCESS, COMMUNES_BELONGTO_DISTRICT_ERROR, COMMUNES_BELONGTO_DISTRICT,
  } from 'redux/constans';
 
 const dataAdminProfile = {
     loadingProfile: true,
     loadingAvatar: false,
     loadingDetail: true,
-    profileDetail: {},
+    profileDetail: {
+        phoneNumber: "",
+        userName: "",
+        email: "",
+        address: {
+            province: "",
+            district: "",
+            commune: "",
+            street: ""
+        }
+    },
     provinces: [],
+    districts: [{code: "000", name_with_type: "Quận/huyện"}],
+    communes: [{code: "00000", name_with_type: "Phường/xã"}],
+    enableProvince: true,
+    enableDistrict: false,
+    enableCommune: false,
     avatarUrl: '',
     tokenAvatar: '',
     userName: '',
@@ -50,6 +67,26 @@ const AdminProfileReducer = (state = dataAdminProfile, action) => {
 
         case ADMIN_DETAIL_ERROR:
             return { ...state, loadingDetail: false, message: action.payload.message };
+
+        
+        case DISTRICTS_BELONGTO_PROVINCE:
+            return { ...state, enableDistrict: false };
+
+        case DISTRICTS_BELONGTO_PROVINCE_SUCCESS:
+            return { ...state, enableDistrict: true, districts: action.payload.districts };
+
+        case DISTRICTS_BELONGTO_PROVINCE_ERROR:
+            return { ...state, enableDistrict: false, message: action.payload.message };
+
+        
+        case COMMUNES_BELONGTO_DISTRICT:
+            return { ...state, enableCommune: false };
+
+        case COMMUNES_BELONGTO_DISTRICT_SUCCESS:
+            return { ...state, enableCommune: true, communes: action.payload.communes };
+
+        case COMMUNES_BELONGTO_DISTRICT_ERROR:
+            return { ...state, enableCommune: false, message: action.payload.message };
 
 
 
