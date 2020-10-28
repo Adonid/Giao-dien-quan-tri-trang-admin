@@ -222,12 +222,7 @@ const AccountDetails = props => {
                     hasError('name') ? formState.errors.name[0] : null
                 }
               />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+              &nbsp;
               <TextField
                 fullWidth
                 label="Email"
@@ -242,12 +237,7 @@ const AccountDetails = props => {
                     hasError('email') ? formState.errors.email[0] : null
                 }
               />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+              &nbsp;
               <TextField
                 fullWidth
                 label="Số điện thoại"
@@ -270,26 +260,11 @@ const AccountDetails = props => {
               xs={12}
             >
               <SelectAddress list={ provinces } valSelect={ profileDetail.address.province } fullWidth={true} margin="dense" action={ getProvince } label="Tỉnh/thành phố" />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+              &nbsp;
               <SelectAddress list={states} fullWidth={true} disable={disableDistrict} margin="dense" action={ getDistrict } label="Quận/huyện" />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+              &nbsp;
               <SelectAddress list={states} fullWidth={true} disable={disableCommune} margin="dense" action={ getCommune } label="Phường/xã" />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+              &nbsp;
               <TextField
                 fullWidth
                 label="Số nhà/đường/thôn/xóm"
