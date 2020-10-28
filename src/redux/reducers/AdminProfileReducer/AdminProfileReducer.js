@@ -4,12 +4,14 @@ import {
     ADMIN_DETAIL_SUCCESS, ADMIN_DETAIL_ERROR, ADMIN_DETAIL,
     DISTRICTS_BELONGTO_PROVINCE_SUCCESS, DISTRICTS_BELONGTO_PROVINCE_ERROR, DISTRICTS_BELONGTO_PROVINCE,
     COMMUNES_BELONGTO_DISTRICT_SUCCESS, COMMUNES_BELONGTO_DISTRICT_ERROR, COMMUNES_BELONGTO_DISTRICT,
+    UPDATE_PROFILE_SUCCESS, UPDATE_PROFILE_ERROR, UPDATE_PROFILE,
  } from 'redux/constans';
 
 const dataAdminProfile = {
     loadingProfile: true,
     loadingAvatar: false,
     loadingDetail: true,
+    loadingUpdate: false,
     profileDetail: {
         phoneNumber: "",
         userName: "",
@@ -70,13 +72,13 @@ const AdminProfileReducer = (state = dataAdminProfile, action) => {
 
         
         case DISTRICTS_BELONGTO_PROVINCE:
-            return { ...state, enableDistrict: false };
+            return { ...state, enableProvince: false, enableDistrict: false, enableCommune: false };
 
         case DISTRICTS_BELONGTO_PROVINCE_SUCCESS:
-            return { ...state, enableDistrict: true, districts: action.payload.districts };
+            return { ...state, enableProvince: true, enableDistrict: true, districts: action.payload.districts };
 
         case DISTRICTS_BELONGTO_PROVINCE_ERROR:
-            return { ...state, enableDistrict: false, message: action.payload.message };
+            return { ...state, message: action.payload.message };
 
         
         case COMMUNES_BELONGTO_DISTRICT:
@@ -86,7 +88,17 @@ const AdminProfileReducer = (state = dataAdminProfile, action) => {
             return { ...state, enableCommune: true, communes: action.payload.communes };
 
         case COMMUNES_BELONGTO_DISTRICT_ERROR:
-            return { ...state, enableCommune: false, message: action.payload.message };
+            return { ...state, message: action.payload.message };
+
+        
+        case UPDATE_PROFILE:
+            return { ...state, loadingUpdate: true };
+
+        case UPDATE_PROFILE_SUCCESS:
+            return { ...state, loadingUpdate: false };
+
+        case UPDATE_PROFILE_ERROR:
+            return { ...state, loadingUpdate: false, message: action.payload.message };
 
 
 
