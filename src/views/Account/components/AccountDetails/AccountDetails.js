@@ -15,7 +15,7 @@ import {
   TextField
 } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { SelectInput } from 'components';
+import { SelectAddress } from 'components';
 import { AdminDetail } from 'redux/actions';
 
 const useStyles = makeStyles(() => ({
@@ -82,7 +82,7 @@ const AccountDetails = props => {
     street: ""
   });
 
-  const [ listProvince, setListProvince ] = useState([{value: 0, label: "Tỉnh/thành phố"}]);
+  const [ listProvince, setListProvince ] = useState([{code: 0, name_with_type: "Tỉnh/thành phố"}]);
   const [ listDistrict, setListDistrict ] = useState([{value: 0, label: "Quận/huyện"}]);
   const [ listCommune, setListCommune ] = useState([{value: 0, label: "Phường/xã"}]);
 
@@ -269,21 +269,21 @@ const AccountDetails = props => {
               md={6}
               xs={12}
             >
-              <SelectInput list={listProvince} fullWidth={true} margin="dense" action={ getProvince } label="Tỉnh/thành phố" />
+              <SelectAddress list={listProvince} fullWidth={true} margin="dense" action={ getProvince } label="Tỉnh/thành phố" />
             </Grid>
             <Grid
               item
               md={6}
               xs={12}
             >
-              <SelectInput list={states} fullWidth={true} disable={disableDistrict} margin="dense" action={ getDistrict } label="Quận/huyện" />
+              <SelectAddress list={states} fullWidth={true} disable={disableDistrict} margin="dense" action={ getDistrict } label="Quận/huyện" />
             </Grid>
             <Grid
               item
               md={6}
               xs={12}
             >
-              <SelectInput list={states} fullWidth={true} disable={disableCommune} margin="dense" action={ getCommune } label="Phường/xã" />
+              <SelectAddress list={states} fullWidth={true} disable={disableCommune} margin="dense" action={ getCommune } label="Phường/xã" />
             </Grid>
             <Grid
               item
