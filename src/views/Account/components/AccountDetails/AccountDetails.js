@@ -12,11 +12,12 @@ import {
   Divider,
   Grid,
   Button,
-  TextField
+  TextField,
+  Typography
 } from '@material-ui/core';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { SelectAddress } from 'components';
-import { AdminDetail } from 'redux/actions';
+import { AdminDetail, DistrictBelongToProvince, CommunesBelongToDistrict } from 'redux/actions';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -31,7 +32,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const schema = {
-  name: {
+  userName: {
       presence: { allowEmpty: false, message: '^Tên người dùng không được trống!' },
       length: {
           minimum: 3,
@@ -49,7 +50,7 @@ const schema = {
       message: "tối đa 64 ký tự!",
     }
   },
-  phone: {
+  phoneNumber: {
       presence: { allowEmpty: false, message: '^Số điện thoại không để trống' },
       length: {
         is: 10,
@@ -64,31 +65,42 @@ const schema = {
 };
 
 const AccountDetails = props => {
-  const { className, updateDetail, mockDataRequire, mockDataOptions, loading, getProfileDetail, profileDetail, provinces,  ...rest } = props;
+  const { 
+    className, 
+    updateDetail, 
+    mockDataRequire, 
+    mockDataOptions, 
+    loading, 
+    getProfileDetail,
+    districtsBelongToProvince,
+    communesBelongToDistrict,
+    profileDetail, 
+    provinces, 
+    districts,
+    communes,
+    enableProvince,
+    enableDistrict,
+    enableCommune,
+    ...rest 
+  } = props;
 
   const classes = useStyles();
 
   const [formState, setFormState] = useState({
     isValid: false,
-    values: {phone: mockDataRequire.phone , name: mockDataRequire.userName , email: mockDataRequire.email },
+    values: {phoneNumber: mockDataRequire.phone , userName: mockDataRequire.userName , email: mockDataRequire.email },
     touched: {},
     errors: {}
   });
 
   const [formOptions, setFormOptions] = useState({
-    province: 0,
-    district: 0,
-    commune: 0,
-    street: ""
+    province: profileDetail.address.province,
+    district: profileDetail.address.district,
+    commune: profileDetail.address.commune,
+    street: profileDetail.address.street
   });
 
-  const [ listProvince, setListProvince ] = useState([{code: 0, name_with_type: "Tỉnh/thành phố"}]);
-  const [ listDistrict, setListDistrict ] = useState([{value: 0, label: "Quận/huyện"}]);
-  const [ listCommune, setListCommune ] = useState([{value: 0, label: "Phường/xã"}]);
-
-  const [ disableDistrict, setDisableDistrict ] = useState(true);
-  const [ disableCommune, setDisableCommune ] = useState(true);
-  const [ disableStreet, setDisableStreet ] = useState(true);
+  const [ enableStreet, setEnableStreet ] = useState(false);
 
   useEffect( () => {
     getProfileDetail();
@@ -121,28 +133,28 @@ const AccountDetails = props => {
       }));
   }
 
-  const handleChangeSwitch = event => setEmailVerify(event.target.checked);
-
   const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
 
-  const states = [
-    {
-      value: 'alabama',
-      label: 'Alabama'
-    },
-    {
-      value: 'new-york',
-      label: 'New York'
-    },
-    {
-      value: 'san-francisco',
-      label: 'San Francisco'
-    }
-  ];
-
-  const getProvince = val => setFormOptions( formOptions => ({...formOptions, province: val}));
-  const getDistrict = val => setFormOptions( formOptions => ({...formOptions, district: val}));
-  const getCommune = val => setFormOptions( formOptions => ({...formOptions, commune: val}));
+  const getProvince = val => {
+    setFormOptions( formOptions => ({...formOptions, province: val.name_with_type}));
+    setEnableStreet(false);
+    districtsBelongToProvince(val.code);
+    setFormOptions( formOptions => ({...formOptions, district: ""}));
+    setFormOptions( formOptions => ({...formOptions, commune: ""}));
+  }
+  
+  const getDistrict = val => {
+    setFormOptions( formOptions => ({...formOptions, district: val.name_with_type}));
+    setEnableStreet(false);
+    communesBelongToDistrict(val.code);
+    setFormOptions( formOptions => ({...formOptions, commune: ""}));
+  }
+  
+  const getCommune = val => {
+    setFormOptions( formOptions => ({...formOptions, commune: val.name_with_type}));
+    
+    setEnableStreet(true);
+  }
 
   const handleStreet = event => {
     event.persist();
@@ -153,6 +165,8 @@ const AccountDetails = props => {
     event.preventDefault();
     const required = formState.values;
     const options = formOptions;
+    const newProfile = {...formState.values, address: {...formOptions}}
+    console.log(newProfile);
     props.updateDetail({required, options});
   }
 
@@ -212,14 +226,14 @@ const AccountDetails = props => {
                 helperText="Please specify the first name"
                 label="Họ tên"
                 margin="dense"
-                name="name"
+                name="userName"
                 required
                 variant="outlined"
                 defaultValue={ profileDetail.userName }
                 onChange={handleChange}
-                error={hasError('name')}
+                error={hasError('userName')}
                 helperText={
-                    hasError('name') ? formState.errors.name[0] : null
+                    hasError('userName') ? formState.errors.userName[0] : null
                 }
               />
               &nbsp;
@@ -242,15 +256,15 @@ const AccountDetails = props => {
                 fullWidth
                 label="Số điện thoại"
                 margin="dense"
-                name="phone"
+                name="phoneNumber"
                 type="number"
                 required
                 variant="outlined"
                 defaultValue={ profileDetail.phoneNumber }
                 onChange={handleChange}
-                error={hasError('phone')}
+                error={hasError('phoneNumber')}
                 helperText={
-                    hasError('phone') ? formState.errors.phone[0] : null
+                    hasError('phoneNumber') ? formState.errors.phoneNumber[0] : null
                 }
               />
             </Grid>
@@ -259,11 +273,11 @@ const AccountDetails = props => {
               md={6}
               xs={12}
             >
-              <SelectAddress list={ provinces } valSelect={ profileDetail.address.province } fullWidth={true} margin="dense" action={ getProvince } label="Tỉnh/thành phố" />
+              <SelectAddress list={ provinces } fullWidth={true} disable={!enableProvince} margin="dense" action={ getProvince } label="Tỉnh/thành phố" />
               &nbsp;
-              <SelectAddress list={states} fullWidth={true} disable={disableDistrict} margin="dense" action={ getDistrict } label="Quận/huyện" />
+              <SelectAddress list={districts} fullWidth={true} disable={!enableDistrict} margin="dense" action={ getDistrict } label="Quận/huyện" />
               &nbsp;
-              <SelectAddress list={states} fullWidth={true} disable={disableCommune} margin="dense" action={ getCommune } label="Phường/xã" />
+              <SelectAddress list={communes} fullWidth={true} disable={!enableCommune} margin="dense" action={ getCommune } label="Phường/xã" />
               &nbsp;
               <TextField
                 fullWidth
@@ -272,9 +286,17 @@ const AccountDetails = props => {
                 name="street"
                 variant="outlined"
                 defaultValue={ profileDetail.address.street }
-                disabled={disableStreet}
+                disabled={!enableStreet}
                 onChange={ handleStreet }
               />
+            </Grid>
+            <Grid
+              item
+              xs={12}
+            >
+              <Typography variant="caption" color="textSecondary">
+                  Địa chỉ: { formOptions.street??"." } { formOptions.commune??"." } { formOptions.district??"." } { formOptions.province??".." }
+              </Typography>
             </Grid>
           </Grid>
         </CardContent>
@@ -301,8 +323,14 @@ AccountDetails.propTypes = {
   mockDataOptions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
   getProfileDetail: PropTypes.func.isRequired,
+  districtsBelongToProvince: PropTypes.func.isRequired,
   profileDetail: PropTypes.object.isRequired,
   provinces: PropTypes.array.isRequired,
+  districts: PropTypes.array.isRequired,
+  communes: PropTypes.array.isRequired,
+  enableProvince: PropTypes.bool.isRequired,
+  enableDistrict: PropTypes.bool.isRequired,
+  enableCommune: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -311,11 +339,18 @@ const mapStateToProps = state => ({
     loading: state.dataAdminProfile.loadingDetail,
     profileDetail: state.dataAdminProfile.profileDetail,
     provinces: state.dataAdminProfile.provinces,
+    districts: state.dataAdminProfile.districts,
+    communes: state.dataAdminProfile.communes,
+    enableProvince: state.dataAdminProfile.enableProvince,
+    enableDistrict: state.dataAdminProfile.enableDistrict,
+    enableCommune: state.dataAdminProfile.enableCommune,
 });
 
 const mapDispatchToProps = dispatch => ({
   getProfileDetail: () => dispatch( AdminDetail() ),
   updateDetail: data => dispatch({type: "UPDATE_PROFILE",data: data}),
+  districtsBelongToProvince: provinceCode => dispatch( DistrictBelongToProvince(provinceCode) ),
+  communesBelongToDistrict: districtCode => dispatch( CommunesBelongToDistrict(districtCode) ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountDetails)
