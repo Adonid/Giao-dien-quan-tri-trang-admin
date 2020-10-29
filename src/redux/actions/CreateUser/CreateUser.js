@@ -13,7 +13,7 @@ const CreateUser = dataUser => async dispatch => {
             headers: { Authorization: "Bearer " + ReadCookie()},
             data: dataUser
             });
-            
+
         dispatch( {type: CREATE_USER_SUCCESS});
 
         dispatch( {
@@ -27,7 +27,7 @@ const CreateUser = dataUser => async dispatch => {
         dispatch( {
             type: CREATE_USER_ERROR,
             payload: {
-                message: "Địa chỉ email đã có người sử dụng hoặc không tồn tại!",
+                message: "Email hoặc số điện thoại đã có người sử dụng!",
             },
         });
     }
