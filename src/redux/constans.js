@@ -1,3 +1,5 @@
+export const MESSAGE_MAIN = 'MESSAGE_MAIN';
+
 export const LOGIN_ADMIN = 'LOGIN_ADMIN';
 export const LOGIN_ADMIN_SUCCESS = 'LOGIN_ADMIN_SUCCESS';
 export const LOGIN_ADMIN_ERROR = 'LOGIN_ADMIN_ERROR';
