@@ -37,13 +37,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UsersToolbar = props => {
-  const { className, showModalAddNewUser, ...rest } = props;
+  const { className, openForm, ...rest } = props;
 
   const classes = useStyles();
-
-  const showModalAddUser = () => {
-    showModalAddNewUser();
-}
 
   return (
     <div
@@ -60,7 +56,7 @@ const UsersToolbar = props => {
         <Button
           color="primary"
           variant="contained"
-          onClick={ showModalAddUser }
+          onClick={ openForm }
           disableunderline="true"
         >
           <PersonAddOutlinedIcon/> Thêm mới
@@ -77,15 +73,11 @@ const UsersToolbar = props => {
 
 UsersToolbar.propTypes = {
   className: PropTypes.string,
-  showModalAddNewUser: PropTypes.func.isRequired,
+  openForm: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-    prop: state.prop,
-});
-
 const mapDispatchToProps = dispatch => ({
-    showModalAddNewUser: () => dispatch({type: 'SHOW_MODAL_ADD_USER'}),
+    openForm: () => dispatch({type: 'OPEN_FORM_ADD_USER'}),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersToolbar)
+export default connect(null, mapDispatchToProps)(UsersToolbar)
