@@ -10,6 +10,7 @@ import {
     Grid
  } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { CreateUser } from 'redux/actions';
 
  const schema = {
     userName: {
@@ -107,11 +108,9 @@ import { connect } from 'react-redux';
 
 const FormAddUser = props =>  {
 
-    const { openCall, ...rest} = props;
+    const { openForm, addNewUser, closeForm } = props;
 
     const classes = useStyles();
-
-    const [open, setOpen] = useState(false);
 
     const [formState, setFormState] = useState({
         isValid: false,
@@ -129,21 +128,6 @@ const FormAddUser = props =>  {
           errors: errors || {}
         }));
       }, [formState.values]);
-
-      /** Khong xuat hien dialog lan dau khi chay. Khoi tao cac useState ve tt ban dau */
-    const firstUpdate = useRef(true);
-    useLayoutEffect(() => {
-      if (firstUpdate.current) {
-        firstUpdate.current = false;
-        return;
-      }
-      setOpen(openCall);
-    },[openCall])
-    /** End */
-
-    const handleClose = () => {
-        props.closeFormAddNewUser();
-    };
 
     const handleChange = event => {
         event.persist();
@@ -166,14 +150,14 @@ const FormAddUser = props =>  {
 
     const handleSignUp = event => {
         event.preventDefault();
-        props.addNewUser(formState.values);
+        addNewUser(formState.values);
       };
 
     const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
 
     return (
         <div>
-        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <Dialog disableBackdropClick disableEscapeKeyDown open={ openForm } onClose={ closeForm } aria-labelledby="form-dialog-title">
             <Grid
                 className={classes.content}
             >
@@ -192,7 +176,7 @@ const FormAddUser = props =>  {
                             color="textSecondary"
                             gutterBottom
                             >
-                            Sử dụng 1 email và 1 số điện thoại để tạo mới 1 tài khoản
+                            Sử dụng email và số điện thoại để tạo mới 1 tài khoản
                             </Typography>
                             <TextField
                             className={classes.textField}
@@ -262,7 +246,7 @@ const FormAddUser = props =>  {
                                     </Button>
                                 </ThemeProvider>
                                 <ThemeProvider theme={themeButtonClose}>
-                                    <Button color="primary" className={classes.margin}  onClick={handleClose}>
+                                    <Button color="primary" className={classes.margin}  onClick={ closeForm }>
                                         Đóng lại
                                     </Button>
                                 </ThemeProvider>
@@ -277,29 +261,21 @@ const FormAddUser = props =>  {
 }
 
 FormAddUser.propTypes = {
-  openCall : PropTypes.bool
+  openForm : PropTypes.bool.isRequired,
+  closeForm : PropTypes.func.isRequired,
+  addNewUser: PropTypes.func.isRequired,
 };
 
-  const mapStateToProps = (state, ownProps) => {
-    return {
-      prop: state.prop
-    }
-  }
+const mapStateToProps = state => ({
+  openForm: state.dataMannegerUser.openForm
+});
 
-  const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-      closeFormAddNewUser: () => {
-        dispatch({
-          type: 'CLOSE_MODAL_ADD_NEW_USER'
-        });
-      },
-      addNewUser: dataForm => {
-        dispatch({
-          type: 'ADD_NEW_USER',
-          dataForm: dataForm
-        });
-      }
-    }
-  }
+const mapDispatchToProps = dispatch => ({
+
+  closeForm: () => dispatch({type: 'CLOSE_FORM_ADD_USER'}),
+
+  addNewUser: userInfo => dispatch( CreateUser( userInfo )),
+  
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormAddUser)
