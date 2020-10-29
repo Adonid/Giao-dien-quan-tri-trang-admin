@@ -16,8 +16,7 @@ const CreateUser = dataUser => async dispatch => {
         dispatch( {
             type: CREATE_USER_SUCCESS,
             payload: {
-                sucure: res.data.token,
-                logged: true,
+                message: res.data.message,
             }
         });
     }
@@ -25,8 +24,7 @@ const CreateUser = dataUser => async dispatch => {
         dispatch( {
             type: CREATE_USER_ERROR,
             payload: {
-                message: "Email hoặc mật khẩu không đúng!",
-                logged: false,
+                message: "Địa chỉ email đã có người sử dụng hoặc không tồn tại!",
             },
         });
     }
