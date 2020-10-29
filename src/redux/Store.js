@@ -1,7 +1,7 @@
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-import { persistStore, persistReducer } from 'redux-persist';
+import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import {
     NotifysReducers as Notifys,
@@ -18,6 +18,7 @@ import {
     LoginReducer as Login,
     ForgetPwReducer as ForgetPw,
     AdminProfileReducer as AdminProfile,
+    MannegerUserReducer as MannegerUser,
 
 } from './reducers';
 
@@ -37,6 +38,7 @@ const allReducers = combineReducers({
     dataLogin: Login,
     dataResetPassword: ForgetPw,
     dataAdminProfile: AdminProfile,
+    dataMannegerUser: MannegerUser,
 });
 
 const persistedReducer = persistReducer({key: 'root', storage} , allReducers);
