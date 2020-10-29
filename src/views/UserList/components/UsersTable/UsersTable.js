@@ -232,7 +232,7 @@ const UsersTable = props => {
                     <TableCell>Chọn</TableCell>
                     <TableCell>Người dùng</TableCell>
                     <TableCell>Số điện thoại</TableCell>
-                    <TableCell>Bài viết</TableCell>
+                    <TableCell>Trạng thái</TableCell>
                     <TableCell>Ngày đăng kí</TableCell>
                     <TableCell align="center">Actions</TableCell>
                   </TableRow>
