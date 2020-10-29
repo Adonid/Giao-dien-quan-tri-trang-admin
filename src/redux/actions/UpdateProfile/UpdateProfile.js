@@ -15,14 +15,6 @@ const UpdateProfile = newProfile => async dispatch => {
                 query: `mutation updateProfile($newInfo: InfoAdmin!) {
                     updateProfile(newInfo: $newInfo){
                         userName
-                        phoneNumber
-                        email
-                        address{
-                            province
-                            district
-                            commune
-                            street
-                        }
                     }
                         
                 }`,
