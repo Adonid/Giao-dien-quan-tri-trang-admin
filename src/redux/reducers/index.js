@@ -14,3 +14,4 @@ export { default as LoginReducer  } from './LoginReducer';
 export { default as ForgetPwReducer  } from './ForgetPwReducer';
 export { default as AdminProfileReducer  } from './AdminProfileReducer';
 export { default as MannegerUserReducer  } from './MannegerUserReducer';
+export { default as MessageReducer  } from './MessageReducer';
