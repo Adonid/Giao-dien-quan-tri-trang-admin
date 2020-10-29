@@ -37,6 +37,7 @@ const Main = props => {
     dataAlertUpdateTerm, 
 
     openForm,
+    mainMessage,
 
   } = props;
 
@@ -84,7 +85,10 @@ const Main = props => {
       <Snackbars data={ dataAlertDetailNewPost } />
       <Snackbars data={ dataAlertUpdateTerm } />
 
+      <Snackbars data={ mainMessage } />
+      
       <FormAddUser openForm={ openForm } />
+
     </div>
   );
 };
@@ -101,6 +105,7 @@ Main.propTypes = {
   dataAlertUpdateTerm: PropTypes.object.isRequired,
 
   openForm: PropTypes.bool.isRequired,
+  mainMessage: PropTypes.object.isRequired,
 }
 
   const mapStateToProps = state => ({
@@ -113,6 +118,8 @@ Main.propTypes = {
       dataAlertUpdateTerm: state.dataTerm.alert,
 
       openForm: state.dataMannegerUser.openForm,
+
+      mainMessage: state.dataMessage.mainMessage,
   });
 
 export default connect(mapStateToProps, null)(Main);
