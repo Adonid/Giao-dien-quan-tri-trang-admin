@@ -4,6 +4,8 @@ import {
 
 const dataMannegerUser = {
     openForm: false,
+    loadingCreate: false,
+    messageCreate:"",
 }
 
 const MannegerUserReducer = (state = dataMannegerUser, action) => {
@@ -17,13 +19,13 @@ const MannegerUserReducer = (state = dataMannegerUser, action) => {
             return { ...state, openForm: false };
 
         case CREATE_USER:
-            return { ...state, loadingProfile: true };
+            return { ...state, loadingCreate: true };
 
         case CREATE_USER_SUCCESS:
-            return { ...state, loadingProfile: false, avatarUrl: action.payload.profile.avatar.url, tokenAvatar: action.payload.profile.avatar.token, userName: action.payload.profile.userName };
+            return { ...state, loadingCreate: false, openForm: false };
 
         case CREATE_USER_ERROR:
-            return { ...state, loadingProfile: true, message: action.payload.message };
+            return { ...state, loadingCreate: false, messageCreate: action.payload.message };
 
         default:
             return state
