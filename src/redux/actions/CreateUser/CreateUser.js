@@ -1,5 +1,5 @@
 import axios from 'common/Axios';
-import { CREATE_USER_SUCCESS, CREATE_USER_ERROR, CREATE_USER } from 'redux/constans';
+import { CREATE_USER_SUCCESS, CREATE_USER_ERROR, CREATE_USER, MESSAGE_MAIN } from 'redux/constans';
 import { ReadCookie } from 'common';
 
 const CreateUser = dataUser => async dispatch => {
@@ -13,8 +13,11 @@ const CreateUser = dataUser => async dispatch => {
             headers: { Authorization: "Bearer " + ReadCookie()},
             data: dataUser
             });
+            
+        dispatch( {type: CREATE_USER_SUCCESS});
+
         dispatch( {
-            type: CREATE_USER_SUCCESS,
+            type: MESSAGE_MAIN,
             payload: {
                 message: res.data.message,
             }
