@@ -19,6 +19,7 @@ import {
     ForgetPwReducer as ForgetPw,
     AdminProfileReducer as AdminProfile,
     MannegerUserReducer as MannegerUser,
+    MessageReducer as Message,
 
 } from './reducers';
 
@@ -35,6 +36,7 @@ const allReducers = combineReducers({
     dataCategoryTag: CategoryTag,
     dataTerm: Term,
     
+    dataMessage: Message,
     dataLogin: Login,
     dataResetPassword: ForgetPw,
     dataAdminProfile: AdminProfile,
