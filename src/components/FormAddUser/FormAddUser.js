@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
@@ -7,7 +7,8 @@ import {
     Button,
     TextField,
     Dialog,
-    Grid
+    Grid,
+    CircularProgress
  } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { CreateUser } from 'redux/actions';
@@ -108,7 +109,7 @@ import { CreateUser } from 'redux/actions';
 
 const FormAddUser = props =>  {
 
-    const { openForm, addNewUser, closeForm } = props;
+    const { openForm, addNewUser, closeForm, loading, message } = props;
 
     const classes = useStyles();
 
@@ -129,7 +130,19 @@ const FormAddUser = props =>  {
         }));
       }, [formState.values]);
 
-    const handleChange = event => {
+    var first = useRef(true);
+    useEffect( () => {
+      if(first.current){
+        first.current = false;
+        return;
+      }
+      setFormState(formState => ({
+        ...formState,
+        errors: !loading ? {message: message} : {}
+      }));
+    }, [loading]);
+    
+      const handleChange = event => {
         event.persist();
     
         setFormState(formState => ({
@@ -154,6 +167,7 @@ const FormAddUser = props =>  {
       };
 
     const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
+    const hasErrorApi = field => formState.errors[field] ? true : false;
 
     return (
         <div>
@@ -234,15 +248,26 @@ const FormAddUser = props =>  {
                             value={formState.values.password || ''}
                             variant="outlined"
                             />
+                            <TextField
+                              className={classes.textField}
+                              error={true}
+                              fullWidth
+                              helperText={
+                                hasErrorApi('message') ? formState.errors.message : null
+                              }
+                              name="message"
+                              type="hidden"
+                              variant="outlined"
+                            />
                             <div className={classes.groupButton}>
                                 <ThemeProvider theme={themeButtonAdd}>
                                     <Button 
                                         variant="contained" 
                                         color="primary" 
-                                        disabled={!formState.isValid}
+                                        disabled={!formState.isValid||loading}
                                         type="submit"
                                     >
-                                        Thêm người dùng
+                                      { loading && <CircularProgress size={15}/> }  Thêm người dùng
                                     </Button>
                                 </ThemeProvider>
                                 <ThemeProvider theme={themeButtonClose}>
@@ -262,12 +287,15 @@ const FormAddUser = props =>  {
 
 FormAddUser.propTypes = {
   openForm : PropTypes.bool.isRequired,
+  loading : PropTypes.bool.isRequired,
   closeForm : PropTypes.func.isRequired,
   addNewUser: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
-  openForm: state.dataMannegerUser.openForm
+  loading: state.dataMannegerUser.loadingCreate,
+  message: state.dataMannegerUser.messageCreate
 });
 
 const mapDispatchToProps = dispatch => ({
