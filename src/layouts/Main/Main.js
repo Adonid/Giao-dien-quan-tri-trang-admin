@@ -35,7 +35,9 @@ const Main = props => {
     dataAlertCreateNewPost, 
     dataAlertDetailNewPost, 
     dataAlertUpdateTerm, 
-    openAddNewUser, 
+
+    openForm,
+
   } = props;
 
   const classes = useStyles();
@@ -81,17 +83,27 @@ const Main = props => {
       <Snackbars data={ dataAlertCreateNewPost } />
       <Snackbars data={ dataAlertDetailNewPost } />
       <Snackbars data={ dataAlertUpdateTerm } />
-      <FormAddUser openCall={openAddNewUser} />
+
+      <FormAddUser openForm={ openForm } />
     </div>
   );
 };
 
 Main.propTypes = {
-  children: PropTypes.node
-};
+  children: PropTypes.node,
 
-  const mapStateToProps = (state, ownProps) => {
-    return {
+  dataAlertNotify: PropTypes.object.isRequired,
+  dataAlertAddUser: PropTypes.object.isRequired,
+  dataAlertUserDetail: PropTypes.object.isRequired,
+  dataAlertUserEditor: PropTypes.object.isRequired,
+  dataAlertCreateNewPost: PropTypes.object.isRequired,
+  dataAlertDetailNewPost: PropTypes.object.isRequired,
+  dataAlertUpdateTerm: PropTypes.object.isRequired,
+
+  openForm: PropTypes.bool.isRequired,
+}
+
+  const mapStateToProps = state => ({
       dataAlertNotify: state.dataNotifys.alert,
       dataAlertAddUser: state.dataNewUser.alert,
       dataAlertUserDetail: state.dataUserDetail.alert,
@@ -99,27 +111,8 @@ Main.propTypes = {
       dataAlertCreateNewPost: state.dataManipulationPost.createPost.alert,
       dataAlertDetailNewPost: state.dataPostDetail.limitInfo.alert,
       dataAlertUpdateTerm: state.dataTerm.alert,
-      openAddNewUser: state.dataNewUser.show,
-    }
-  }
 
-  const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-      dispatch1: () => {
-        dispatch(actionCreator)
-      }
-    }
-  }
+      openForm: state.dataMannegerUser.openForm,
+  });
 
-  Main.propTypes = {
-    dataAlertNotify: PropTypes.object.isRequired,
-    dataAlertAddUser: PropTypes.object.isRequired,
-    dataAlertUserDetail: PropTypes.object.isRequired,
-    dataAlertUserEditor: PropTypes.object.isRequired,
-    dataAlertCreateNewPost: PropTypes.object.isRequired,
-    dataAlertDetailNewPost: PropTypes.object.isRequired,
-    dataAlertUpdateTerm: PropTypes.object.isRequired,
-    openAddUser: PropTypes.bool,
-  }
-
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, null)(Main);
