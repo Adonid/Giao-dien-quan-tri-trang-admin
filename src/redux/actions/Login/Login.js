@@ -1,5 +1,5 @@
 import axios from 'common/Axios';
-import { LOGIN_ADMIN_SUCCESS, LOGIN_ADMIN_ERROR, LOGIN_ADMIN } from 'redux/constans';
+import { LOGIN_ADMIN_SUCCESS, LOGIN_ADMIN_ERROR, LOGIN_ADMIN, MESSAGE_MAIN } from 'redux/constans';
 
 const Login = userLogin => async dispatch => {
     
@@ -16,6 +16,13 @@ const Login = userLogin => async dispatch => {
                 payload: {
                     sucure: response.data.token,
                     logged: true,
+                }
+            });
+            dispatch( {
+                type: MESSAGE_MAIN,
+                payload: {
+                    message: "Đăng nhập thành công, hãy bắt đầu phiên làm việc hiệu quả",
+                    type: "success",
                 }
             });
         })
