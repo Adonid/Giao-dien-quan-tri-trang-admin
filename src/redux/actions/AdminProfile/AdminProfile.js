@@ -35,7 +35,7 @@ const AdminProfile = () => async dispatch => {
             dispatch( {
                 type: ADMIN_PROFILE_ERROR,
                 payload: {
-                    message: "Đã có lỗi xảy ra. status: 500",
+                    message: error.response.data.message,
                 },
             });
     });
