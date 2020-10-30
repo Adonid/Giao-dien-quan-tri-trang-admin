@@ -6,37 +6,36 @@ const DistrictBelongToProvince = parentCode => async dispatch => {
     
     dispatch({type: DISTRICTS_BELONGTO_PROVINCE});
 
-    try{
-        const res = await axios({
-            method: 'POST',
-            url: 'admin/',
-            headers: { Authorization: "Bearer " + ReadCookie()},
-            data: {
-                query: `{
-                    districts: districtsBelongToProvince(parent_code: "${parentCode}"){
-                        name_with_type
-                        code
-                    }
-                }`,
-                variables: {}
-            }
+    const res = await axios({
+        method: 'POST',
+        url: 'admin/',
+        headers: { Authorization: "Bearer " + ReadCookie()},
+        data: {
+            query: `{
+                districts: districtsBelongToProvince(parent_code: "${parentCode}"){
+                    name_with_type
+                    code
+                }
+            }`,
+            variables: {}
+        }
+        })
+        .then( res => {
+            dispatch( {
+                type: DISTRICTS_BELONGTO_PROVINCE_SUCCESS,
+                payload: {
+                    districts: res.data.data.districts
+                }
             });
-        dispatch( {
-            type: DISTRICTS_BELONGTO_PROVINCE_SUCCESS,
-            payload: {
-                districts: res.data.data.districts
-            }
+        })
+        .catch( error => {
+            dispatch( {
+                type: DISTRICTS_BELONGTO_PROVINCE_ERROR,
+                payload: {
+                    message: "Đã có lỗi xảy ra. status: 500",
+                },
+            });
         });
-    }
-    catch(e){
-        dispatch( {
-            type: DISTRICTS_BELONGTO_PROVINCE_ERROR,
-            payload: {
-                message: "Đã có lỗi xảy ra. status: 500",
-            },
-        });
-    }
-
 }
 
 export default DistrictBelongToProvince;
