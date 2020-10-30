@@ -5,29 +5,28 @@ const ForgetPassword = email => async dispatch => {
     
     dispatch({type: FORGET_PASSWORD});
 
-    try{
-        const res = await axios({
-            method: 'POST',
-            url: 'authentication-admin/reset-password',
-            headers: {'X-Requested-With': 'XMLHttpRequest'},
-            data: email
+    const res = await axios({
+        method: 'POST',
+        url: 'authentication-admin/reset-password',
+        headers: {'X-Requested-With': 'XMLHttpRequest'},
+        data: email
+        })
+        .then( res => {
+            dispatch( {
+                type: FORGET_PASSWORD_SUCCESS,
+                payload: {
+                    message: res.data.message,
+                }
             });
-        dispatch( {
-            type: FORGET_PASSWORD_SUCCESS,
-            payload: {
-                message: res.data.message,
-            }
+        })
+        .catch( error => {
+            dispatch( {
+                type: FORGET_PASSWORD_ERROR,
+                payload: {
+                    message: "Email không tồn tại hoặc chưa đăng ký!",
+                },
+            });
         });
-    }
-    catch(e){
-        dispatch( {
-            type: FORGET_PASSWORD_ERROR,
-            payload: {
-                message: "Email không tồn tại hoặc chưa đăng ký!",
-            },
-        });
-    }
-
 }
 
 export default ForgetPassword;
