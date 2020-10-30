@@ -5,7 +5,7 @@ const Login = userLogin => async dispatch => {
     
     dispatch({type: LOGIN_ADMIN});
 
-    const res = await axios({
+    await axios({
         method: 'POST',
         url: 'authentication-admin/login',
         data: userLogin
@@ -16,6 +16,7 @@ const Login = userLogin => async dispatch => {
                 payload: {
                     sucure: response.data.token,
                     logged: true,
+                    message: response
                 }
             });
             dispatch( {
