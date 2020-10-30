@@ -32,7 +32,7 @@ const DistrictBelongToProvince = parentCode => async dispatch => {
             dispatch( {
                 type: DISTRICTS_BELONGTO_PROVINCE_ERROR,
                 payload: {
-                    message: "Đã có lỗi xảy ra. status: 500",
+                    message: error.response.data.message,
                 },
             });
         });
