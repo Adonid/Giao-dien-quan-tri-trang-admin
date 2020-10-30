@@ -10,11 +10,11 @@ const Login = userLogin => async dispatch => {
         url: 'authentication-admin/login',
         data: userLogin
         })
-        .then( res => {
+        .then( response => {
             dispatch( {
                 type: LOGIN_ADMIN_SUCCESS,
                 payload: {
-                    sucure: res.data.token,
+                    sucure: response.data.token,
                     logged: true,
                 }
             });
@@ -23,7 +23,7 @@ const Login = userLogin => async dispatch => {
             dispatch( {
                 type: LOGIN_ADMIN_ERROR,
                 payload: {
-                    message: "Email hoặc mật khẩu không đúng!",
+                    message: error.response.data.message,
                     logged: false,
                 },
             });
