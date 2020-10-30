@@ -6,30 +6,30 @@ const UploadAvatar = (base64, token) => async dispatch => {
     
     dispatch({type: UPLOAD_AVATAR});
 
-    try{
-        const res = await axios({
-            method: 'POST',
-            url: 'admin/upload-avatar',
-            headers: { Authorization: "Bearer " + ReadCookie()},
-            data: { base64: base64, token: token }
+    const res = await axios({
+        method: 'POST',
+        url: 'admin/upload-avatar',
+        headers: { Authorization: "Bearer " + ReadCookie()},
+        data: { base64: base64, token: token }
+        })
+        .then( res => {
+            dispatch( {
+                type: UPLOAD_AVATAR_SUCCESS,
+                payload: {
+                    message: res.data.message,
+                    url: res.data.url,
+                    token: res.data.token
+                }
             });
-        dispatch( {
-            type: UPLOAD_AVATAR_SUCCESS,
-            payload: {
-                message: res.data.message,
-                url: res.data.url,
-                token: res.data.token
-            }
+        })
+        .catch( error => {
+            dispatch( {
+                type: UPLOAD_AVATAR_ERROR,
+                payload: {
+                    message: "Đã có lỗi xảy ra. status: 500",
+                },
+            });
         });
-    }
-    catch(e){
-        dispatch( {
-            type: UPLOAD_AVATAR_ERROR,
-            payload: {
-                message: "Đã có lỗi xảy ra. status: 500",
-            },
-        });
-    }
 
 }
 
