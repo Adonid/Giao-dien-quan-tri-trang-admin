@@ -26,7 +26,7 @@ const CreateUser = dataUser => async dispatch => {
             dispatch( {
                 type: CREATE_USER_ERROR,
                 payload: {
-                    message: "Email hoặc số điện thoại đã có người sử dụng!",
+                    message: error.response.data.message,
                 },
             });
         });
