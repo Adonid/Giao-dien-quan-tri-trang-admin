@@ -44,7 +44,7 @@ const AdminDetail = () => async dispatch => {
             dispatch( {
                 type: ADMIN_DETAIL_ERROR,
                 payload: {
-                    message: "Đã có lỗi xảy ra. status: 500",
+                    message: error.response.data.message,
                 },
             });
         });
