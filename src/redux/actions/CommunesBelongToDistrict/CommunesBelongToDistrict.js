@@ -32,7 +32,7 @@ const CommunesBelongToDistrict = parentCode => async dispatch => {
             dispatch( {
                 type: COMMUNES_BELONGTO_DISTRICT_ERROR,
                 payload: {
-                    message: "Đã có lỗi xảy ra. status: 500",
+                    message: error.response.data.message,
                 },
             });
         });
