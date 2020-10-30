@@ -6,39 +6,39 @@ const AdminProfile = () => async dispatch => {
     
     dispatch({type: ADMIN_PROFILE});
 
-    try{
-        const res = await axios({
-            method: 'POST',
-            url: 'admin/',
-            headers: { Authorization: "Bearer " + ReadCookie()},
-            data: {
-                query: `{
-                    adminProfile{
-                        userName
-                        avatar{
-                            url
-                            token
-                        }
+    const res = await axios({
+        method: 'POST',
+        url: 'admin/',
+        headers: { Authorization: "Bearer " + ReadCookie()},
+        data: {
+            query: `{
+                adminProfile{
+                    userName
+                    avatar{
+                        url
+                        token
                     }
-                }`,
-                variables: {}
-            }
+                }
+            }`,
+            variables: {}
+        }
+        })
+        .then( res => {
+            dispatch( {
+                type: ADMIN_PROFILE_SUCCESS,
+                payload: {
+                    profile: res.data.data.adminProfile,
+                }
             });
-        dispatch( {
-            type: ADMIN_PROFILE_SUCCESS,
-            payload: {
-                profile: res.data.data.adminProfile,
-            }
-        });
-    }
-    catch(e){
-        dispatch( {
-            type: ADMIN_PROFILE_ERROR,
-            payload: {
-                message: "Đã có lỗi xảy ra. status: 500",
-            },
-        });
-    }
+        })
+        .catch( error => {
+            dispatch( {
+                type: ADMIN_PROFILE_ERROR,
+                payload: {
+                    message: "Đã có lỗi xảy ra. status: 500",
+                },
+            });
+    });
 
 }
 
