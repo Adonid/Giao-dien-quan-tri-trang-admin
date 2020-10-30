@@ -34,7 +34,7 @@ const UpdateProfile = newProfile => async dispatch => {
             dispatch( {
                 type: UPDATE_PROFILE_ERROR,
                 payload: {
-                    message: "Đã có lỗi xảy ra. status: 500",
+                    message: error.response.data.message,
                 },
             });
         });
