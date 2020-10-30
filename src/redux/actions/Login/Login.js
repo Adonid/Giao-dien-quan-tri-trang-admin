@@ -5,30 +5,29 @@ const Login = userLogin => async dispatch => {
     
     dispatch({type: LOGIN_ADMIN});
 
-    try{
-        const res = await axios({
-            method: 'POST',
-            url: 'authentication-admin/login',
-            data: userLogin
+    const res = await axios({
+        method: 'POST',
+        url: 'authentication-admin/login',
+        data: userLogin
+        })
+        .then( res => {
+            dispatch( {
+                type: LOGIN_ADMIN_SUCCESS,
+                payload: {
+                    sucure: res.data.token,
+                    logged: true,
+                }
             });
-        dispatch( {
-            type: LOGIN_ADMIN_SUCCESS,
-            payload: {
-                sucure: res.data.token,
-                logged: true,
-            }
+        })
+        .catch( error => {
+            dispatch( {
+                type: LOGIN_ADMIN_ERROR,
+                payload: {
+                    message: "Email hoặc mật khẩu không đúng!",
+                    logged: false,
+                },
+            });
         });
-    }
-    catch(e){
-        dispatch( {
-            type: LOGIN_ADMIN_ERROR,
-            payload: {
-                message: "Email hoặc mật khẩu không đúng!",
-                logged: false,
-            },
-        });
-    }
-
 }
 
 export default Login;
