@@ -1,5 +1,5 @@
 import axios from 'common/Axios';
-import { FORGET_PASSWORD_SUCCESS, FORGET_PASSWORD_ERROR, FORGET_PASSWORD } from 'redux/constans';
+import { MESSAGE_MINI, FORGET_PASSWORD_ERROR, FORGET_PASSWORD } from 'redux/constans';
 
 const ForgetPassword = email => async dispatch => {
     
@@ -13,9 +13,10 @@ const ForgetPassword = email => async dispatch => {
         })
         .then( res => {
             dispatch( {
-                type: FORGET_PASSWORD_SUCCESS,
+                type: MESSAGE_MINI,
                 payload: {
                     message: res.data.message,
+                    type: "success"
                 }
             });
         })
