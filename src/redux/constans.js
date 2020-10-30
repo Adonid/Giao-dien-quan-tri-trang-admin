@@ -1,4 +1,5 @@
 export const MESSAGE_MAIN = 'MESSAGE_MAIN';
+export const MESSAGE_MINI = 'MESSAGE_MINI';
 
 export const LOGIN_ADMIN = 'LOGIN_ADMIN';
 export const LOGIN_ADMIN_SUCCESS = 'LOGIN_ADMIN_SUCCESS';
