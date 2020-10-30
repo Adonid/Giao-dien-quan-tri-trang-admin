@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
 const Minimal = props => {
   const { 
     children,
-    sendPwResetEmail,
+    alertMini,
    } = props;
 
   const classes = useStyles();
@@ -28,18 +28,18 @@ const Minimal = props => {
     <div className={classes.root}>
       <Topbar />
       <main className={classes.content}>{children}</main>
-      <Snackbars data={ sendPwResetEmail } />
+      <Snackbars data={ alertMini } />
     </div>
   );
 };
 
 Minimal.propTypes = {
   children: PropTypes.node,
-  sendPwResetEmail: PropTypes.object.isRequired,
+  alertMini: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  sendPwResetEmail: state.dataResetPassword.alert,
+  alertMini: state.dataMessage.miniMessage,
 });
 
 export default connect(mapStateToProps, null)(Minimal)
