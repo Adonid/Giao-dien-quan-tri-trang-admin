@@ -26,7 +26,7 @@ const UploadAvatar = (base64, token) => async dispatch => {
             dispatch( {
                 type: UPLOAD_AVATAR_ERROR,
                 payload: {
-                    message: "Đã có lỗi xảy ra. status: 500",
+                    message: error.response.data.message,
                 },
             });
         });
