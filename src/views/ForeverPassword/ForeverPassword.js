@@ -76,16 +76,11 @@ const useStyles = makeStyles(theme => ({
   contentHeader: {
     display: 'flex',
     alignItems: 'center',
-    paddingTop: theme.spacing(5),
-    paddingBototm: theme.spacing(2),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2)
   },
   logoImage: {
     marginLeft: theme.spacing(4)
   },
   contentBody: {
-    flexGrow: 1,
     display: 'flex',
     alignItems: 'center',
     [theme.breakpoints.down('md')]: {
@@ -278,7 +273,7 @@ const ForeverPassword = props => {
                   type="submit"
                   variant="contained"
                 >
-                  {loading && <CircularProgress size={24} />} Khôi phục ngay
+                  {loading && <CircularProgress size={18} />} Khôi phục ngay
                 </Button>
               </form>
             </div>
