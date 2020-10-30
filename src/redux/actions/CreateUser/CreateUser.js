@@ -19,6 +19,7 @@ const CreateUser = dataUser => async dispatch => {
                 type: MESSAGE_MAIN,
                 payload: {
                     message: res.data.message,
+                    type: "success"
                 }
             });
         })
