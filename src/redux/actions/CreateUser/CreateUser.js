@@ -6,7 +6,7 @@ const CreateUser = dataUser => async dispatch => {
     
     dispatch({type: CREATE_USER});
 
-    const res = await axios({
+    await axios({
         method: 'POST',
         url: 'admin/create-user',
         headers: { Authorization: "Bearer " + ReadCookie()},
