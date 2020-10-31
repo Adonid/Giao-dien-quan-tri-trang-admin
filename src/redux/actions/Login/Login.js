@@ -15,14 +15,13 @@ const Login = userLogin => async dispatch => {
                 type: LOGIN_ADMIN_SUCCESS,
                 payload: {
                     sucure: response.data.token,
-                    logged: true,
-                    message: response
+                    logged: true
                 }
             });
             dispatch( {
                 type: MESSAGE_MAIN,
                 payload: {
-                    message: "Đăng nhập thành công, hãy bắt đầu phiên làm việc hiệu quả",
+                    message: response.data.message,
                     type: "success",
                 }
             });
