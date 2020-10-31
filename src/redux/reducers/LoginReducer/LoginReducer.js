@@ -14,7 +14,6 @@ const LoginReducer = (state = loginData, action) => {
             return { ...state, loading: true };
 
         case LOGIN_ADMIN_SUCCESS:
-            console.log(action.payload.message);
             window.document.cookie = "__Sucure_user=" + action.payload.sucure + ";expires=" + new Date( (new Date()).setDate((new Date()).getDate() + 0.5) ).toString();
             return { ...state, enable: action.payload.logged, loading: false, message: "" };
         
