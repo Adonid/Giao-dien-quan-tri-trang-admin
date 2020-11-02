@@ -74,7 +74,27 @@ const useStyles = makeStyles(theme => ({
   },
   gutterLeft: {
     marginLeft: theme.spacing(4)
-  }
+  },
+  textHighLightVerify: {
+    color: '#4caf50',
+    backgroundColor: '#4caf5014',
+    fontWeight: 500,
+    fontSize: 11,
+    padding: '2px 5px',
+    borderRadius: 3,
+    width: "fit-content",
+    textTransform: "uppercase"
+  },
+  textHighLightNoVerify:{
+    color: '#ffab40',
+    backgroundColor: '#ffefc2',
+    fontWeight: 500,
+    fontSize: 11,
+    padding: '2px 5px',
+    borderRadius: 3,
+    width: "fit-content",
+    textTransform: "uppercase"
+  },
 }));
 
 const lists = [
@@ -103,7 +123,7 @@ const UsersTable = props => {
 
   const list =  lists;
 
-  const [ originUsers ] = useState(mockData);
+  const [ originUsers, setOriginUsers ] = useState(mockData);
   const [ users, setUsers] = useState(mockData);
 
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -116,6 +136,10 @@ const UsersTable = props => {
   useEffect( () => {
     getAllUsers();
   }, []);
+  useEffect( () => {
+    setOriginUsers(mockData);
+    setUsers(mockData);
+  }, [mockData]);
 
   const handleSelectAll = event => {
     let userSelect;
@@ -305,9 +329,9 @@ const UsersTable = props => {
                         </Link>
                       </TableCell>
                       <TableCell>
-                        { user.emailVerified ? <Typography className={classes.activeText}>Active</Typography> : <Typography className={classes.disabledText}>Chưa kích hoạt</Typography>}
+                        { user.emailVerified ? <Typography className={classes.textHighLightVerify}>Active</Typography> : <Typography className={classes.textHighLightNoVerify}>Chưa kích hoạt</Typography>}
                         &nbsp;
-                        { !user.disabled ? <Typography className={classes.activeText}>Active</Typography> : <Typography className={classes.disabledText}>Đang bị khóa</Typography>}
+                        { !user.disabled ? null : <Typography className={classes.disabledText}>Đang bị khóa</Typography>}
                       </TableCell>
                       <TableCell>{dayjs(user.creationTime).format('DD/MM/YYYY | HH:MM')}</TableCell>
                       <TableCell align="right">
