@@ -117,7 +117,7 @@ const lists = [
 ];
 
 const UsersTable = props => {
-  const { className, loading, getAllUsers, mockData, dispathSelect, ...rest } = props;
+  const { className, loading, getAllUsers, lockUsers, mockData, ...rest } = props;
 
   const classes = useStyles();
 
@@ -132,7 +132,7 @@ const UsersTable = props => {
 
   const [ openDialog, setOpenDialog ] = useState(false);
 
-  // Moi lan vao component se tu dong loading lai data user
+  // Moi lan vao component se tu dong loading lai data user va cap nhat lai vao cac state
   useEffect( () => {
     getAllUsers();
   }, []);
@@ -181,7 +181,14 @@ const UsersTable = props => {
     setPage(0);
   };
 
-  const deleteUsers = () => dispathSelect(selectedUsers);
+  const lockUsersSelect = () => {
+    const contentConfirm = {
+      type:'block', 
+      title:`Đóng ${selectedUsers.length>1 ?? ''} tài khoản đã chọn`, 
+      note:`Khóa tài khoản của ${selectedUsers.length>1 ?? ''} người dùng này. Bạn có chắc?`
+    }
+    lockUsers(selectedUsers, contentConfirm);
+  };
 
   const sortBy = val => {
     let usersBy = [...users];
@@ -242,7 +249,7 @@ const UsersTable = props => {
   }
 
   const handleSearch = val => {
-    const index = [...originUsers].map( item => (item.name.indexOf(val) !== -1) ? item : null).filter( item => item!=null);
+    const index = [...originUsers].map( item => (toSlug(item.displayName).indexOf(toSlug(val)) !== -1) ? item : null).filter( item => item!=null);
     setUsers( index );
   }
 
@@ -383,7 +390,7 @@ const UsersTable = props => {
         </CardActions>
       
       </Card>
-      <ConfirmDialog action={ deleteUsers } openDialog={ openDialog } content={{type:'block', title:`Đóng ${selectedUsers.length>1 ? selectedUsers.length : ''} tài khoản đã chọn`, note:`Vô hiệu hóa ${selectedUsers.length>1 ? selectedUsers.length : ''} người này dùng khỏi hệ thống. Bạn có chắc?`}} />
+      <ConfirmDialog action={ lockUsersSelect } openDialog={ openDialog } content={{type:'block', title:`Đóng ${selectedUsers.length>1 ? selectedUsers.length : ''} tài khoản đã chọn`, note:`Vô hiệu hóa ${selectedUsers.length>1 ? selectedUsers.length : ''} người này dùng khỏi hệ thống. Bạn có chắc?`}} />
     </React.Fragment>
   );
 };
@@ -391,8 +398,8 @@ const UsersTable = props => {
 UsersTable.propTypes = {
   className: PropTypes.string,
   mockData: PropTypes.array.isRequired,
-  dispathSelect: PropTypes.func.isRequired,
   getAllUsers: PropTypes.func.isRequired,
+  lockUsers: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
 };
 
@@ -402,13 +409,14 @@ UsersTable.propTypes = {
   });
 
   const mapDispatchToProps = dispatch => ({
-    dispathSelect: usersTick => {
-      dispatch({
-        type: 'DELETE_SELECT_USERS',
-        selectedUsers: usersTick
-      })
-    },
-    getAllUsers: () => dispatch( GetAllUsers() )
+    
+    getAllUsers: () => dispatch( GetAllUsers() ),
+
+    lockUsers: (usersTick, content) => dispatch({
+      type: "OPEN_DIALOG_CONFIRM",
+      dataConfirm: usersTick,
+      contentConfirm: content
+    })
   });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersTable)
