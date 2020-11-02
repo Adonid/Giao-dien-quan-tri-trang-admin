@@ -31,9 +31,11 @@ import { getInitials, toSlug } from 'helpers';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import EditAttributesIcon from '@material-ui/icons/EditAttributes';
 
-import { ConfirmDialog } from 'alerts';
 import { connect } from 'react-redux';
 import { GetAllUsers } from 'redux/actions';
+import { 
+  LOCK_USERS
+} from 'redux/constans';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -183,9 +185,10 @@ const UsersTable = props => {
 
   const lockUsersSelect = () => {
     const contentConfirm = {
+      action: LOCK_USERS,
       type:'block', 
-      title:`Đóng ${selectedUsers.length>1 ?? ''} tài khoản đã chọn`, 
-      note:`Khóa tài khoản của ${selectedUsers.length>1 ?? ''} người dùng này. Bạn có chắc?`
+      title:`Đóng ${selectedUsers.length} tài khoản đã chọn`, 
+      note:`Khóa tài khoản của ${selectedUsers.length} người dùng này. Bạn có chắc?`
     }
     lockUsers(selectedUsers, contentConfirm);
   };
@@ -372,7 +375,7 @@ const UsersTable = props => {
             variant="outlined" 
             disabled={ !selectedUsers.length ? true : false } 
             className={ classes.gutterLeft} 
-            onClick={() => {setOpenDialog(!openDialog)}}
+            onClick={ lockUsersSelect }
           >
             ĐÓNG TK{ selectedUsers.length ? `(${selectedUsers.length})` : ''}
           </Button>
@@ -390,7 +393,6 @@ const UsersTable = props => {
         </CardActions>
       
       </Card>
-      <ConfirmDialog action={ lockUsersSelect } openDialog={ openDialog } content={{type:'block', title:`Đóng ${selectedUsers.length>1 ? selectedUsers.length : ''} tài khoản đã chọn`, note:`Vô hiệu hóa ${selectedUsers.length>1 ? selectedUsers.length : ''} người này dùng khỏi hệ thống. Bạn có chắc?`}} />
     </React.Fragment>
   );
 };
@@ -409,7 +411,7 @@ UsersTable.propTypes = {
   });
 
   const mapDispatchToProps = dispatch => ({
-    
+
     getAllUsers: () => dispatch( GetAllUsers() ),
 
     lockUsers: (usersTick, content) => dispatch({
