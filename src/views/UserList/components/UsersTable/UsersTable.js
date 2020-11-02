@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Link as RouterLink
 } from "react-router-dom";
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -23,7 +23,8 @@ import {
   Button,
   Box,
   Link,
-  IconButton
+  IconButton,
+  LinearProgress 
 } from '@material-ui/core';
 import { SearchInput, SelectInput } from 'components';
 import { getInitials, toSlug } from 'helpers';
@@ -32,11 +33,22 @@ import EditAttributesIcon from '@material-ui/icons/EditAttributes';
 
 import { ConfirmDialog } from 'alerts';
 import { connect } from 'react-redux';
+import { GetAllUsers } from 'redux/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {},
   content: {
     padding: 0
+  },
+  contentLoading: {
+    paddingBottom: theme.spacing(3),
+    paddingTop: theme.spacing(3),
+    width: "50%",
+    textAlign: "center",
+    margin: "auto",
+  },
+  cardLoading: {
+    backgroundColor: "#9e9e9e14"
   },
   inner: {
     minWidth: 1050
@@ -85,7 +97,7 @@ const lists = [
 ];
 
 const UsersTable = props => {
-  const { className, mockData, dispathSelect, ...rest } = props;
+  const { className, loading, getAllUsers, mockData, dispathSelect, ...rest } = props;
 
   const classes = useStyles();
 
@@ -99,6 +111,11 @@ const UsersTable = props => {
   const [page, setPage] = useState(0);
 
   const [ openDialog, setOpenDialog ] = useState(false);
+
+  // Moi lan vao component se tu dong loading lai data user
+  useEffect( () => {
+    getAllUsers();
+  }, []);
 
   const handleSelectAll = event => {
     let userSelect;
@@ -205,6 +222,18 @@ const UsersTable = props => {
     setUsers( index );
   }
 
+  if(loading){
+    return (
+      <React.Fragment>
+        <Card className={classes.cardLoading}>
+          <CardContent className={classes.contentLoading}>
+            <LinearProgress />
+          </CardContent>
+        </Card>
+      </React.Fragment>
+    )
+  }
+
   return (
     <React.Fragment>
       <Card
@@ -243,14 +272,14 @@ const UsersTable = props => {
                     <TableRow
                       className={classes.tableRow}
                       hover
-                      key={user.id}
-                      selected={selectedUsers.indexOf(user.id) !== -1}
+                      key={user.uid}
+                      selected={selectedUsers.indexOf(user.uid) !== -1}
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
-                          checked={selectedUsers.indexOf(user.id) !== -1}
+                          checked={selectedUsers.indexOf(user.uid) !== -1}
                           color="primary"
-                          onChange={event => handleSelectOne(event, user.id)}
+                          onChange={event => handleSelectOne(event, user.uid)}
                           value="true"
                         />
                       </TableCell>
@@ -258,12 +287,12 @@ const UsersTable = props => {
                         <Box className={classes.nameContainer}>
                           <Avatar
                             className={classes.avatar}
-                            src={user.avatarUrl}
+                            src={user.photoURL}
                           >
-                            {getInitials(user.name)}
+                            {getInitials(user.displayName)}
                           </Avatar>
                           <div>
-                            <Typography variant="h6">{user.name}</Typography>
+                            <Typography variant="h6">{user.displayName}</Typography>
                             <Link href={'mailto:'+user.email} variant="body2" color="inherit">
                               {user.email}
                             </Link>
@@ -271,15 +300,16 @@ const UsersTable = props => {
                         </Box>
                       </TableCell>
                       <TableCell>
-                        <Link href={'tel:'+user.phone} color="inherit">
-                            {user.phone}
+                        <Link href={'tel:'+user.phoneNumber} color="inherit">
+                            {user.phoneNumber}
                         </Link>
                       </TableCell>
                       <TableCell>
-                        {user.address.city}, {user.address.state},{' '}
-                        {user.address.country}
+                        { user.emailVerified ? <Typography className={classes.activeText}>Active</Typography> : <Typography className={classes.disabledText}>Chưa kích hoạt</Typography>}
+                        &nbsp;
+                        { !user.disabled ? <Typography className={classes.activeText}>Active</Typography> : <Typography className={classes.disabledText}>Đang bị khóa</Typography>}
                       </TableCell>
-                      <TableCell>{moment(user.createdAt).format('DD/MM/YYYY | HH:MM')}</TableCell>
+                      <TableCell>{dayjs(user.creationTime).format('DD/MM/YYYY | HH:MM')}</TableCell>
                       <TableCell align="right">
                         <Link component={RouterLink} to="/user-editor">
                           <IconButton><EditAttributesIcon /></IconButton>
@@ -339,21 +369,23 @@ UsersTable.propTypes = {
   className: PropTypes.string,
   mockData: PropTypes.array.isRequired,
   dispathSelect: PropTypes.func.isRequired,
+  getAllUsers: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
   const mapStateToProps = state => ({
-    mockData: state.dataNewUser.users,
+    mockData: state.dataMannegerUser.users,
+    loading: state.dataMannegerUser.loadingPage,
   });
 
-  const mapDispatchToProps = dispatch => {
-    return {
-      dispathSelect: usersTick => {
-        dispatch({
-          type: 'DELETE_SELECT_USERS',
-          selectedUsers: usersTick
-        })
-      }
-    }
-  }
+  const mapDispatchToProps = dispatch => ({
+    dispathSelect: usersTick => {
+      dispatch({
+        type: 'DELETE_SELECT_USERS',
+        selectedUsers: usersTick
+      })
+    },
+    getAllUsers: () => dispatch( GetAllUsers() )
+  });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersTable)
