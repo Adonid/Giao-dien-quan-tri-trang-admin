@@ -1,4 +1,4 @@
-export default (str) => {
+export default (str='') => {
     // Chuyển hết sang chữ thường
     str = str.toLowerCase();     
     // xóa dấu
