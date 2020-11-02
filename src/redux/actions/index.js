@@ -9,3 +9,4 @@ export { default as CommunesBelongToDistrict } from './CommunesBelongToDistrict'
 export { default as UpdateProfile } from './UpdateProfile';
 export { default as CreateUser } from './CreateUser';
 export { default as GetAllUsers } from './GetAllUsers';
+export { default as LockUsers } from './LockUsers';
