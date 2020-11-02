@@ -1,15 +1,17 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {
   Button,
   Dialog,
   Typography, 
-  Grid
+  Grid,
+  CircularProgress
 } from '@material-ui/core';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -82,140 +84,136 @@ const themeButtonOpen = createMuiTheme({
 
 const ConfirmDialog = props => {
 
-  const {action, content, openDialog, ...rest } = props;
+  const {action, content, openDialog, loading, ...rest } = props;
 
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(openDialog);
+  const handleClose = () => CloseConfirm();
 
-  const firstUpdate = useRef(true);
-  useLayoutEffect (() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      return;
-    }
-    setOpen(true);
-  },[openDialog]);
-
-  const handleConfirm = () => {
-    action();
-    handleClose();
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleConfirm = () => action();
 
   return (
     <div>
       <Dialog
-        open={open}
+        open={openDialog}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <Grid
-                className={classes.content}
-            >
-                <div className={classes.content}>
-                    <div className={classes.contentBody}>
-                        <form
-                            className={classes.form}
-                        >
-                            <Typography
-                                gutterBottom
-                                variant="h2"
-                            >
-                            { content.title }
-                            </Typography>
-                            <Typography
-                            color="textSecondary"
-                            gutterBottom
-                            >
-                            { content.note }
-                            </Typography>
-                            <div className={classes.groupButton}>
-                                {
-                                  content.type==='delete'
+        <Grid className={classes.content}>
+          <div className={classes.content}>
+              <div className={classes.contentBody}>
+                  <form
+                      className={classes.form}
+                  >
+                      <Typography
+                          gutterBottom
+                          variant="h2"
+                      >
+                      { content.title }
+                      </Typography>
+                      <Typography
+                      color="textSecondary"
+                      gutterBottom
+                      >
+                      { content.note }
+                      </Typography>
+                      <div className={classes.groupButton}>
+                          {
+                            content.type==='delete'
+                            ?
+                            <ThemeProvider theme={themeButtonDelete}>
+                                <Button 
+                                    variant="contained" 
+                                    color="primary" 
+                                    onClick={ handleConfirm }
+                                    startIcon={<DeleteOutlineIcon />}
+                                    disabled={loading}
+                                >
+                                    {loading && <CircularProgress size={18} />} ok, Xóa tài khoản
+                                </Button>
+                            </ThemeProvider>
+                            :
+                              content.type==='block'
+                              ?
+                              <ThemeProvider theme={themeButtonBlock}>
+                                <Button 
+                                    variant="contained" 
+                                    onClick={ handleConfirm }
+                                    startIcon={<NotInterestedIcon />}
+                                    disabled={loading}
+                                >
+                                    {loading && <CircularProgress size={18} />} ok, Đóng tài khoản
+                                </Button>
+                              </ThemeProvider>
+                              :
+                                content.type==='denied'
+                                ?
+                                <ThemeProvider theme={themeButtonBlock}>
+                                  <Button 
+                                      variant="contained" 
+                                      onClick={ handleConfirm }
+                                      startIcon={<NotInterestedIcon />}
+                                      disabled={loading}
+                                  >
+                                      {loading && <CircularProgress size={18} />} ok, Dừng đăng
+                                  </Button>
+                                </ThemeProvider>
+                                :
+                                  content.type==='approve'
                                   ?
-                                  <ThemeProvider theme={themeButtonDelete}>
+                                    <ThemeProvider theme={themeButtonOpen}>
                                       <Button 
                                           variant="contained" 
-                                          color="primary" 
+                                          color="primary"
                                           onClick={ handleConfirm }
-                                          startIcon={<DeleteOutlineIcon />}
+                                          startIcon={<LockOpenIcon />}
+                                          disabled={loading}
                                       >
-                                          ok, Xóa tài khoản
-                                      </Button>
-                                  </ThemeProvider>
-                                  :
-                                    content.type==='block'
-                                    ?
-                                    <ThemeProvider theme={themeButtonBlock}>
-                                      <Button 
-                                          variant="contained" 
-                                          onClick={ handleConfirm }
-                                          startIcon={<NotInterestedIcon />}
-                                      >
-                                          ok, Đóng tài khoản
+                                          {loading && <CircularProgress size={18} />} ok, Đăng lại
                                       </Button>
                                     </ThemeProvider>
-                                    :
-                                      content.type==='denied'
-                                      ?
-                                      <ThemeProvider theme={themeButtonBlock}>
-                                        <Button 
-                                            variant="contained" 
-                                            onClick={ handleConfirm }
-                                            startIcon={<NotInterestedIcon />}
-                                        >
-                                            ok, Dừng đăng
-                                        </Button>
-                                      </ThemeProvider>
-                                      :
-                                        content.type==='approve'
-                                        ?
-                                          <ThemeProvider theme={themeButtonOpen}>
-                                            <Button 
-                                                variant="contained" 
-                                                color="primary"
-                                                onClick={ handleConfirm }
-                                                startIcon={<LockOpenIcon />}
-                                            >
-                                                ok, Đăng lại
-                                            </Button>
-                                          </ThemeProvider>
-                                        :
-                                          <ThemeProvider theme={themeButtonOpen}>
-                                            <Button 
-                                                variant="contained" 
-                                                color="primary"
-                                                onClick={ handleConfirm }
-                                                startIcon={<LockOpenIcon />}
-                                            >
-                                                ok, Mở tài khoản
-                                            </Button>
-                                          </ThemeProvider>
-                                }
-                                <ThemeProvider theme={themeButtonClose}>
-                                    <Button color="primary" className={classes.margin}  onClick={ handleClose } >
-                                        Đóng lại
-                                    </Button>
-                                </ThemeProvider>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </Grid>
+                                  :
+                                    <ThemeProvider theme={themeButtonOpen}>
+                                      <Button 
+                                          variant="contained" 
+                                          color="primary"
+                                          onClick={ handleConfirm }
+                                          startIcon={<LockOpenIcon />}
+                                          disabled={loading}
+                                      >
+                                          {loading && <CircularProgress size={18} />} ok, Mở tài khoản
+                                      </Button>
+                                    </ThemeProvider>
+                          }
+                          <ThemeProvider theme={themeButtonClose}>
+                              <Button color="primary" className={classes.margin}  onClick={ handleClose } >
+                                  Đóng lại
+                              </Button>
+                          </ThemeProvider>
+                      </div>
+                  </form>
+              </div>
+          </div>
+        </Grid>
       </Dialog>
     </div>
   );
 }
 
 ConfirmDialog.propTypes = {
-  action : PropTypes.func,
-  content : PropTypes.object,
-  openDialog : PropTypes.bool,
+  action : PropTypes.func.isRequired,
+  content : PropTypes.object.isRequired,
+  openDialog : PropTypes.bool.isRequired,
+  loading : PropTypes.bool.isRequired,
 }
 
-export default ConfirmDialog;
+const mapStateToProps = state => ({
+  prop: state.prop,
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatch1: () => dispatch(actionCreator),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmDialog)
