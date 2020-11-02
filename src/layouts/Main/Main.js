@@ -7,7 +7,7 @@ import { useMediaQuery } from '@material-ui/core';
 
 import { Sidebar, Topbar, Footer } from './components';
 import { Snackbars } from 'alerts';
-import { FormAddUser } from 'components';
+import { FormAddUser, DialogConfirm } from 'components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,8 +37,7 @@ const Main = props => {
     dataAlertUpdateTerm, 
 
     openForm,
-    mainMessage,
-
+    mainMessage
   } = props;
 
   const classes = useStyles();
@@ -88,6 +87,8 @@ const Main = props => {
       <Snackbars data={ mainMessage } />
       
       <FormAddUser openForm={ openForm } />
+
+      <DialogConfirm />
 
     </div>
   );
