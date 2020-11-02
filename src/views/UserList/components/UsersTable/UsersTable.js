@@ -145,7 +145,7 @@ const UsersTable = props => {
     let userSelect;
 
     if (event.target.checked) {
-      userSelect = users.map(user => user.id);
+      userSelect = users.map(user => user.uid);
     } else {
       userSelect = [];
     }
@@ -357,8 +357,7 @@ const UsersTable = props => {
               checked={selectedUsers.length === users.length}
               color="primary"
               indeterminate={
-                selectedUsers.length > 0 &&
-                selectedUsers.length < users.length
+                selectedUsers.length > 0 && selectedUsers.length < users.length
               }
               onChange={handleSelectAll}
             />
