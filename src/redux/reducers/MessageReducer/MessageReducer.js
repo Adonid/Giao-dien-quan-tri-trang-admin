@@ -1,4 +1,3 @@
-import { LockUsers } from 'redux/actions';
 import { 
     MESSAGE_MAIN, MESSAGE_MINI,
     OPEN_DIALOG_CONFIRM,
