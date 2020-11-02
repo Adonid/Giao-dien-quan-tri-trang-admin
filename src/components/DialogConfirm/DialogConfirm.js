@@ -13,6 +13,10 @@ import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { connect } from 'react-redux';
 import { LockUsers } from 'redux/actions';
+import { 
+  LOCK_USERS,
+  CLOSE_DIALOG_CONFIRM
+} from 'redux/constans';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -85,19 +89,28 @@ const themeButtonOpen = createMuiTheme({
 
 const DialogConfirm = props => {
 
-  const { lockUsers, content, openConfirm, loading, dataConfirm } = props;
+  const { lockUsers, content, openConfirm, closeDialogConfirm, loading, dataConfirm } = props;
 
   const classes = useStyles();
 
-  const handleClose = () => CloseConfirm();
-
-  const handleConfirm = () => action();
+  const handleConfirm = () => {
+    switch (content.action) {
+      case LOCK_USERS:
+        lockUsers(dataConfirm);
+        break;
+    
+      default:
+        break;
+    }
+  };
 
   return (
     <div>
       <Dialog
+        disableBackdropClick 
+        disableEscapeKeyDown
         open={openConfirm}
-        onClose={handleClose}
+        onClose={closeDialogConfirm}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -188,7 +201,7 @@ const DialogConfirm = props => {
                                     </ThemeProvider>
                           }
                           <ThemeProvider theme={themeButtonClose}>
-                              <Button color="primary" className={classes.margin}  onClick={ handleClose } >
+                              <Button color="primary" className={classes.margin}  onClick={ closeDialogConfirm } >
                                   Đóng lại
                               </Button>
                           </ThemeProvider>
@@ -209,6 +222,7 @@ DialogConfirm.propTypes = {
   loading: PropTypes.bool.isRequired,
 
   lockUsers: PropTypes.func.isRequired,
+  closeDialogConfirm: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -220,6 +234,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     lockUsers: uids => dispatch( LockUsers(uids) ),
+    closeDialogConfirm: () => dispatch({type: CLOSE_DIALOG_CONFIRM}),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogConfirm);
