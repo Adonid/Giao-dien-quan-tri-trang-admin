@@ -1,5 +1,5 @@
 import axios from 'common/Axios';
-import { CREATE_USER_SUCCESS, CREATE_USER_ERROR, CREATE_USER, MESSAGE_MAIN } from 'redux/constans';
+import { CREATE_USER_SUCCESS, CREATE_USER_ERROR, CREATE_USER, MESSAGE_MAIN, LOGIN_ADMIN } from 'redux/constans';
 import { ReadCookie } from 'common';
 
 const CreateUser = dataUser => async dispatch => {
@@ -24,6 +24,15 @@ const CreateUser = dataUser => async dispatch => {
             });
         })
         .catch( error => {
+            if(error.response.data.exit){
+                dispatch( {
+                    type: LOGOUT_ADMIN,
+                    payload: {
+                        message: error.response.data.message,
+                        logged: false
+                    },
+                });
+            }
             dispatch( {
                 type: CREATE_USER_ERROR,
                 payload: {
