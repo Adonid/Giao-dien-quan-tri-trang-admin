@@ -12,7 +12,7 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { connect } from 'react-redux';
-import { LockUsers } from 'redux/actions';
+import { LockUsers, GetAllUsers } from 'redux/actions';
 import { 
   LOCK_USERS,
   CLOSE_DIALOG_CONFIRM
@@ -95,16 +95,17 @@ const DialogConfirm = props => {
     openConfirm, 
     closeDialogConfirm, 
     loading, 
-    dataConfirm 
+    dataConfirm,
+    getAllUsers
   } = props;
 
   const classes = useStyles();
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     switch (content.action) {
       case LOCK_USERS:
-        lockUsers(dataConfirm);
-        console.log(dataConfirm);
+        await lockUsers(dataConfirm);
+        await getAllUsers();
         break;
     
       default:
@@ -231,6 +232,7 @@ DialogConfirm.propTypes = {
 
   lockUsers: PropTypes.func.isRequired,
   closeDialogConfirm: PropTypes.func.isRequired,
+  getAllUsers: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -241,6 +243,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    getAllUsers: () => dispatch( GetAllUsers() ),
     lockUsers: uids => dispatch( LockUsers(uids) ),
     closeDialogConfirm: () => dispatch({type: CLOSE_DIALOG_CONFIRM}),
 });
