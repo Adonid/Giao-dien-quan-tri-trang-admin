@@ -10,7 +10,7 @@ const LockUsers = uids => async dispatch => {
         method: 'POST',
         url: 'admin/lock-users',
         headers: { Authorization: "Bearer " + ReadCookie()},
-        data: uids
+        data: { uids: uids }
         })
         .then( res => {
             dispatch( {
