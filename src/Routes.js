@@ -52,13 +52,13 @@ const Routes = () => {
         component={UserDetailView}
         exact
         layout={MainLayout}
-        path="/user-detail/:slug"
+        path="/user-detail/:slug.:uid"
       />
       <PrivateRoute
         component={UserEditorView}
         exact
         layout={MainLayout}
-        path="/user-editor/:slug"
+        path="/user-editor/:slug.:uid"
       />
       <PrivateRoute
         component={ProductListView}
