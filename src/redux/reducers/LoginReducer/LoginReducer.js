@@ -28,7 +28,7 @@ const LoginReducer = (state = loginData, action) => {
          *  */ 
         case LOGOUT_ADMIN:
             window.document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
-            return { ...state, enable: action.payload.logged, info: action.payload.message, };
+            return { ...state, enable: action.payload.logged };
 
         default:
             return state
