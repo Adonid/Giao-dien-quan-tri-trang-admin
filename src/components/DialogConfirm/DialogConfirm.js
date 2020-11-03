@@ -89,7 +89,14 @@ const themeButtonOpen = createMuiTheme({
 
 const DialogConfirm = props => {
 
-  const { lockUsers, content, openConfirm, closeDialogConfirm, loading, dataConfirm } = props;
+  const { 
+    lockUsers, 
+    content, 
+    openConfirm, 
+    closeDialogConfirm, 
+    loading, 
+    dataConfirm 
+  } = props;
 
   const classes = useStyles();
 
@@ -97,6 +104,7 @@ const DialogConfirm = props => {
     switch (content.action) {
       case LOCK_USERS:
         lockUsers(dataConfirm);
+        console.log(dataConfirm);
         break;
     
       default:
