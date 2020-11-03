@@ -11,7 +11,7 @@ import {
     CircularProgress
  } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { CreateUser } from 'redux/actions';
+import { CreateUser, GetAllUsers } from 'redux/actions';
 
  const schema = {
     userName: {
@@ -109,7 +109,7 @@ import { CreateUser } from 'redux/actions';
 
 const FormAddUser = props =>  {
 
-    const { openForm, addNewUser, closeForm, loading, message } = props;
+    const { openForm, addNewUser, closeForm, loading, message, getAllUsers } = props;
 
     const classes = useStyles();
 
@@ -161,9 +161,10 @@ const FormAddUser = props =>  {
         }));
       };
 
-    const handleSignUp = event => {
+    const handleSignUp = async (event) => {
         event.preventDefault();
-        addNewUser(formState.values);
+        await addNewUser(formState.values);
+        await getAllUsers();
       };
 
     const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
@@ -290,6 +291,7 @@ FormAddUser.propTypes = {
   loading : PropTypes.bool.isRequired,
   closeForm : PropTypes.func.isRequired,
   addNewUser: PropTypes.func.isRequired,
+  getAllUsers: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
 };
 
@@ -299,6 +301,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+
+  getAllUsers: () => dispatch( GetAllUsers() ),
 
   closeForm: () => dispatch({type: 'CLOSE_FORM_ADD_USER'}),
 
