@@ -343,10 +343,10 @@ const UsersTable = props => {
                       </TableCell>
                       <TableCell>{dayjs(user.creationTime).format('DD/MM/YYYY | HH:MM')}</TableCell>
                       <TableCell align="right">
-                        <Link component={RouterLink} to={"/user-editor/" + toSlug(user.displayName).replace(/(\s+)/g, '-')}>
+                        <Link component={RouterLink} to={"/user-editor/" + toSlug(user.displayName).replace(/(\s+)/g, '-') + "." + user.uid}>
                           <IconButton><EditAttributesIcon /></IconButton>
                         </Link>
-                        <Link component={RouterLink} to={"/user-detail/" + toSlug(user.displayName).replace(/(\s+)/g, '-')}>
+                        <Link component={RouterLink} to={"/user-detail/" + toSlug(user.displayName).replace(/(\s+)/g, '-') + "." + user.uid}>
                           <IconButton><ArrowForwardIcon fontSize="small" /></IconButton>
                         </Link>
                       </TableCell>
