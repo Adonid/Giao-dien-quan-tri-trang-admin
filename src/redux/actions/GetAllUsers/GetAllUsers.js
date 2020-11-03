@@ -1,5 +1,8 @@
 import axios from 'common/Axios';
-import { GET_ALL_USER_SUCCESS, GET_ALL_USER_ERROR, GET_ALL_USER } from 'redux/constans';
+import { GET_ALL_USER_SUCCESS, GET_ALL_USER_ERROR, GET_ALL_USER,
+     LOGOUT_ADMIN,
+     MESSAGE_MINI
+} from 'redux/constans';
 import { ReadCookie } from 'common';
 
 const GetAllUsers = () => async dispatch => {
@@ -20,6 +23,21 @@ const GetAllUsers = () => async dispatch => {
             });
         })
         .catch( error => {
+            if(error.response.data.exit){
+                dispatch( {
+                    type: LOGOUT_ADMIN,
+                    payload: {
+                        logged: false
+                    },
+                });
+                dispatch( {
+                    type: MESSAGE_MINI,
+                    payload: {
+                        message: error.response.data.message,
+                        type: "warning"
+                    },
+                });
+            }
             dispatch( {
                 type: GET_ALL_USER_ERROR,
                 payload: {
