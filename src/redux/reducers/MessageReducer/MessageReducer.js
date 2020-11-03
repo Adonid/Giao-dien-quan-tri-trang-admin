@@ -1,7 +1,8 @@
 import { 
     MESSAGE_MAIN, MESSAGE_MINI,
     OPEN_DIALOG_CONFIRM,
-    CLOSE_DIALOG_CONFIRM
+    CLOSE_DIALOG_CONFIRM,
+    LOADING_CONFIRM
  } from 'redux/constans';
 
 const dataMessage = {
@@ -34,8 +35,11 @@ const MessageReducer = (state = dataMessage, action) => {
             const content = action.contentConfirm;
             return { ...state, openConfirm: true, contentConfirm: content, dataConfirm: data };
         
+        case LOADING_CONFIRM:
+            return { ...state, loadingConfirm: true };
+        
         case CLOSE_DIALOG_CONFIRM:
-            return { ...state, openConfirm: false };
+            return { ...state, openConfirm: false, loadingConfirm: false };
 
         default:
             return state
