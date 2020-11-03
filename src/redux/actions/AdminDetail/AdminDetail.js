@@ -1,12 +1,15 @@
 import axios from 'common/Axios';
-import { ADMIN_DETAIL_SUCCESS, ADMIN_DETAIL_ERROR, ADMIN_DETAIL } from 'redux/constans';
+import { ADMIN_DETAIL_SUCCESS, ADMIN_DETAIL_ERROR, ADMIN_DETAIL,
+     LOGOUT_ADMIN,
+     MESSAGE_MINI
+} from 'redux/constans';
 import { ReadCookie } from 'common';
 
 const AdminDetail = () => async dispatch => {
     
     dispatch({type: ADMIN_DETAIL});
 
-    const res = await axios({
+    await axios({
         method: 'POST',
         url: 'admin/',
         headers: { Authorization: "Bearer " + ReadCookie()},
@@ -41,6 +44,21 @@ const AdminDetail = () => async dispatch => {
             });
         })
         .catch( error => {
+            if(error.response.data.exit){
+                dispatch( {
+                    type: LOGOUT_ADMIN,
+                    payload: {
+                        logged: false
+                    },
+                });
+                dispatch( {
+                    type: MESSAGE_MINI,
+                    payload: {
+                        message: error.response.data.message,
+                        type: "warning"
+                    },
+                });
+            }
             dispatch( {
                 type: ADMIN_DETAIL_ERROR,
                 payload: {
