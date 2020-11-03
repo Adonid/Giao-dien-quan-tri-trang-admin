@@ -339,9 +339,9 @@ const UsersTable = props => {
                         </Link>
                       </TableCell>
                       <TableCell>
-                        { user.emailVerified ? <Typography className={classes.textHighLightVerify}>Active</Typography> : <Typography className={classes.textHighLightNoVerify}>Chưa kích hoạt</Typography>}
+                        { user.emailVerified ? <Typography className={classes.textHighLightVerify}>Active email</Typography> : <Typography className={classes.textHighLightNoVerify}>Chưa kích hoạt email</Typography>}
                         &nbsp;
-                        { !user.disabled ? null : <Typography className={classes.disabledText}>Đang bị khóa</Typography>}
+                        { !user.disabled ? null : <Typography className={classes.textHighLightNoVerify}>Đang bị khóa</Typography>}
                       </TableCell>
                       <TableCell>{dayjs(user.creationTime).format('DD/MM/YYYY | HH:MM')}</TableCell>
                       <TableCell align="right">
