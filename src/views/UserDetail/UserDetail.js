@@ -535,41 +535,37 @@ const UserDetail = props => {
   );
 };
 
-  const mapStateToProps = (state, ownProps) => {
-    return {
+  const mapStateToProps = state => ({
       userinfo: state.dataUserDetail.user.userinfo,
       postinfo: state.dataUserDetail.user.postinfo,
       listSent: state.dataUserDetail.user.listSent,
-    }
-  }
+});
 
-  const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-      actionSend: user => {
-        dispatch({
-          type : 'ACTION_SEND',
-          user : user
-        })
-      },
-      closeAccount: user => {
-        dispatch({
-          type : 'CLOSE_ACCOUNT',
-          user : user
-        })
-      },
-      openAccount: user => {
-        dispatch({
-          type : 'OPEN_ACCOUNT',
-          user : user
-        })
-      },
-      distroyAccount: user => {
-        dispatch({
-          type : 'DISTROY_ACCOUNT',
-          user : user
-        })
-      }
+  const mapDispatchToProps = dispatch => ({
+    actionSend: user => {
+      dispatch({
+        type : 'ACTION_SEND',
+        user : user
+      })
+    },
+    closeAccount: user => {
+      dispatch({
+        type : 'CLOSE_ACCOUNT',
+        user : user
+      })
+    },
+    openAccount: user => {
+      dispatch({
+        type : 'OPEN_ACCOUNT',
+        user : user
+      })
+    },
+    distroyAccount: user => {
+      dispatch({
+        type : 'DISTROY_ACCOUNT',
+        user : user
+      })
     }
-  }
+  });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserDetail)
+export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);
