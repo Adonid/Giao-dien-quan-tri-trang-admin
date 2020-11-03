@@ -5,7 +5,7 @@ const ForgetPassword = email => async dispatch => {
     
     dispatch({type: FORGET_PASSWORD});
 
-    const res = await axios({
+    await axios({
         method: 'POST',
         url: 'authentication-admin/reset-password',
         headers: {'X-Requested-With': 'XMLHttpRequest'},
