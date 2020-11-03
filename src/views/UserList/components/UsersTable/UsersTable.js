@@ -197,14 +197,14 @@ const UsersTable = props => {
     switch (Number(val)) {
       case 1:
         // Theo moi nhat
-        usersBy.sort( (a, b) =>  a.createdAt - b.createdAt).reverse();
+        usersBy.sort( (a, b) =>  a.creationTime - b.creationTime).reverse();
         setUsers(usersBy);
         // end
         break;
       
       case 2:
         // Theo cu nhat 
-        usersBy.sort( (a, b) =>  a.createdAt - b.createdAt);
+        usersBy.sort( (a, b) =>  a.creationTime - b.creationTime);
         setUsers(usersBy);
         // end
         break;
@@ -212,15 +212,15 @@ const UsersTable = props => {
       case 3:
         // Theo ten A-Z
         usersBy.sort( (a, b) => {
-          let x = toSlug(a.name);
-          let y = toSlug(b.name);
+          let x = toSlug(a.displayName);
+          let y = toSlug(b.displayName);
           if(x < y) {
            return -1;
          }
          if(x > y) {
              return 1;
          }
-         // name same same
+         // displayName same same
          return 0;
         });
         setUsers(usersBy);
@@ -230,15 +230,15 @@ const UsersTable = props => {
       case 4:
         // Theo ten Z-A
         usersBy.sort( (a, b) => {
-          let x = toSlug(a.name);
-          let y = toSlug(b.name);
+          let x = toSlug(a.displayName);
+          let y = toSlug(b.displayName);
           if(x < y) {
            return -1;
          }
          if(x > y) {
              return 1;
          }
-         // name same same
+         // displayName same same
          return 0;
         }).reverse();
         setUsers(usersBy);
@@ -283,7 +283,7 @@ const UsersTable = props => {
                 placeholder="Search user"
                 search={ val => handleSearch(val) }
               />
-              <SelectInput list={ list } action={ val => sortBy(val) } />
+              <SelectInput list={ list } action={ sortBy } />
             </div>
 
             <div className={classes.inner}>
@@ -343,10 +343,10 @@ const UsersTable = props => {
                       </TableCell>
                       <TableCell>{dayjs(user.creationTime).format('DD/MM/YYYY | HH:MM')}</TableCell>
                       <TableCell align="right">
-                        <Link component={RouterLink} to="/user-editor">
+                        <Link component={RouterLink} to={"/user-editor/" + toSlug(user.displayName).replace(/(\s+)/g, '-')}>
                           <IconButton><EditAttributesIcon /></IconButton>
                         </Link>
-                        <Link component={RouterLink} to="/user-detail">
+                        <Link component={RouterLink} to={"/user-detail/" + toSlug(user.displayName).replace(/(\s+)/g, '-')}>
                           <IconButton><ArrowForwardIcon fontSize="small" /></IconButton>
                         </Link>
                       </TableCell>
