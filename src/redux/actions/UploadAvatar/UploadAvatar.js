@@ -1,12 +1,15 @@
 import axios from 'common/Axios';
-import { UPLOAD_AVATAR_SUCCESS, UPLOAD_AVATAR_ERROR, UPLOAD_AVATAR } from 'redux/constans';
+import { UPLOAD_AVATAR_SUCCESS, UPLOAD_AVATAR_ERROR, UPLOAD_AVATAR, 
+    LOGOUT_ADMIN,
+    MESSAGE_MINI
+} from 'redux/constans';
 import { ReadCookie } from 'common';
 
 const UploadAvatar = (base64, token) => async dispatch => {
     
     dispatch({type: UPLOAD_AVATAR});
 
-    const res = await axios({
+    await axios({
         method: 'POST',
         url: 'admin/upload-avatar',
         headers: { Authorization: "Bearer " + ReadCookie()},
@@ -23,6 +26,21 @@ const UploadAvatar = (base64, token) => async dispatch => {
             });
         })
         .catch( error => {
+            if(error.response.data.exit){
+                dispatch( {
+                    type: LOGOUT_ADMIN,
+                    payload: {
+                        logged: false
+                    },
+                });
+                dispatch( {
+                    type: MESSAGE_MINI,
+                    payload: {
+                        message: error.response.data.message,
+                        type: "warning"
+                    },
+                });
+            }
             dispatch( {
                 type: UPLOAD_AVATAR_ERROR,
                 payload: {
