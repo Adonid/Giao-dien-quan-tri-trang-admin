@@ -1,13 +1,16 @@
 import axios from 'common/Axios';
-import { LOCK_USERS_SUCCESS, LOCK_USERS_ERROR, LOCK_USERS,
+import { 
+     LOADING_CONFIRM,
      LOGOUT_ADMIN,
-     MESSAGE_MINI
+     MESSAGE_MAIN,
+     MESSAGE_MINI,
+     CLOSE_DIALOG_CONFIRM
 } from 'redux/constans';
 import { ReadCookie } from 'common';
 
 const LockUsers = uids => async dispatch => {
     
-    dispatch({type: LOCK_USERS});
+    dispatch({type: LOADING_CONFIRM});
 
     await axios({
         method: 'POST',
@@ -16,15 +19,17 @@ const LockUsers = uids => async dispatch => {
         data: { uids: uids }
         })
         .then( res => {
+            dispatch({type: CLOSE_DIALOG_CONFIRM});
             dispatch( {
-                type: LOCK_USERS_SUCCESS,
+                type: MESSAGE_MAIN,
                 payload: {
                     message: res.data.message,
+                    type: "info"
                 }
             });
         })
         .catch( error => {
-            if(error.response.data.exit){
+            if(typeof(error.response.data.exit) !== 'undefined'){
                 dispatch( {
                     type: LOGOUT_ADMIN,
                     payload: {
@@ -39,11 +44,13 @@ const LockUsers = uids => async dispatch => {
                     },
                 });
             }
+            dispatch({type: CLOSE_DIALOG_CONFIRM});
             dispatch( {
-                type: LOCK_USERS_ERROR,
+                type: MESSAGE_MAIN,
                 payload: {
                     message: error.response.data.message,
-                },
+                    type: "warning"
+                }
             });
         });
 }
