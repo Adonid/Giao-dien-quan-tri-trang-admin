@@ -132,8 +132,6 @@ const UsersTable = props => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [page, setPage] = useState(0);
 
-  const [ openDialog, setOpenDialog ] = useState(false);
-
   // Moi lan vao component se tu dong loading lai data user va cap nhat lai vao cac state
   useEffect( () => {
     getAllUsers();
@@ -141,6 +139,7 @@ const UsersTable = props => {
   useEffect( () => {
     setOriginUsers(mockData);
     setUsers(mockData);
+    setSelectedUsers([]);
   }, [mockData]);
 
   const handleSelectAll = event => {
@@ -340,7 +339,6 @@ const UsersTable = props => {
                       </TableCell>
                       <TableCell>
                         { user.emailVerified ? <Typography className={classes.textHighLightVerify}>Active email</Typography> : <Typography className={classes.textHighLightNoVerify}>Chưa kích hoạt email</Typography>}
-                        &nbsp;
                         { !user.disabled ? null : <Typography className={classes.textHighLightNoVerify}>Đang bị khóa</Typography>}
                       </TableCell>
                       <TableCell>{dayjs(user.creationTime).format('DD/MM/YYYY | HH:MM')}</TableCell>
