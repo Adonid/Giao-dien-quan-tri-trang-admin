@@ -1,12 +1,15 @@
 import axios from 'common/Axios';
-import { DISTRICTS_BELONGTO_PROVINCE_SUCCESS, DISTRICTS_BELONGTO_PROVINCE_ERROR, DISTRICTS_BELONGTO_PROVINCE } from 'redux/constans';
+import { DISTRICTS_BELONGTO_PROVINCE_SUCCESS, DISTRICTS_BELONGTO_PROVINCE_ERROR, DISTRICTS_BELONGTO_PROVINCE,
+     LOGOUT_ADMIN,
+     MESSAGE_MINI
+} from 'redux/constans';
 import { ReadCookie } from 'common';
 
 const DistrictBelongToProvince = parentCode => async dispatch => {
     
     dispatch({type: DISTRICTS_BELONGTO_PROVINCE});
 
-    const res = await axios({
+    await axios({
         method: 'POST',
         url: 'admin/',
         headers: { Authorization: "Bearer " + ReadCookie()},
@@ -29,6 +32,21 @@ const DistrictBelongToProvince = parentCode => async dispatch => {
             });
         })
         .catch( error => {
+            if(error.response.data.exit){
+                dispatch( {
+                    type: LOGOUT_ADMIN,
+                    payload: {
+                        logged: false
+                    },
+                });
+                dispatch( {
+                    type: MESSAGE_MINI,
+                    payload: {
+                        message: error.response.data.message,
+                        type: "warning"
+                    },
+                });
+            }
             dispatch( {
                 type: DISTRICTS_BELONGTO_PROVINCE_ERROR,
                 payload: {
