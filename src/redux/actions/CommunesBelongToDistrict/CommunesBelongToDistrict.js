@@ -1,12 +1,15 @@
 import axios from 'common/Axios';
-import { COMMUNES_BELONGTO_DISTRICT_SUCCESS, COMMUNES_BELONGTO_DISTRICT_ERROR, COMMUNES_BELONGTO_DISTRICT } from 'redux/constans';
+import { COMMUNES_BELONGTO_DISTRICT_SUCCESS, COMMUNES_BELONGTO_DISTRICT_ERROR, COMMUNES_BELONGTO_DISTRICT,
+     LOGOUT_ADMIN,
+     MESSAGE_MINI
+} from 'redux/constans';
 import { ReadCookie } from 'common';
 
 const CommunesBelongToDistrict = parentCode => async dispatch => {
 
     dispatch({type: COMMUNES_BELONGTO_DISTRICT});
 
-    const res = await axios({
+    await axios({
         method: 'POST',
         url: 'admin/',
         headers: { Authorization: "Bearer " + ReadCookie()},
@@ -29,6 +32,21 @@ const CommunesBelongToDistrict = parentCode => async dispatch => {
             });
         })
         .catch( error => {
+            if(error.response.data.exit){
+                dispatch( {
+                    type: LOGOUT_ADMIN,
+                    payload: {
+                        logged: false
+                    },
+                });
+                dispatch( {
+                    type: MESSAGE_MINI,
+                    payload: {
+                        message: error.response.data.message,
+                        type: "warning"
+                    },
+                });
+            }
             dispatch( {
                 type: COMMUNES_BELONGTO_DISTRICT_ERROR,
                 payload: {
