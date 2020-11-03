@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
-  Link as RouterLink
+  Link as RouterLink,
+  useParams
 } from "react-router-dom";
 import moment from 'moment';
 import { makeStyles, ThemeProvider } from '@material-ui/styles';
@@ -21,7 +22,8 @@ import {
     Box,
     CardContent,
     createMuiTheme,
-    TextField
+    TextField,
+    LinearProgress
 } from '@material-ui/core';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import EditAttributesOutlinedIcon from '@material-ui/icons/EditAttributesOutlined';
@@ -39,6 +41,16 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     marginTop: theme.spacing(5)
+  },
+  contentLoading: {
+    paddingBottom: theme.spacing(3),
+    paddingTop: theme.spacing(3),
+    width: "50%",
+    textAlign: "center",
+    margin: "auto",
+  },
+  cardLoading: {
+    backgroundColor: "#9e9e9e14"
   },
   row: {
     height: '42px',
@@ -144,6 +156,12 @@ const themeButtonDelete = createMuiTheme({
 
 const UserDetail = props => {
 
+  const {
+
+  } = props;
+
+  const { uid } = useParams();
+
   const classes = useStyles();
 
   const [ typeSend, setTypeSend ] = useState(1);
@@ -157,6 +175,11 @@ const UserDetail = props => {
   const [ openDistroy, setOpenDistroy ] = useState(false);
 
   const listSendActions = lists;
+
+  useEffect( () => {
+    // Load du lieu nguoi dung o day
+    console.log(uid);
+  });
 
   const actionSend = val => {
     const value = Number(val);
@@ -195,6 +218,18 @@ const UserDetail = props => {
   const handleOpening = () => props.openAccount({id: props.userinfo, name: props.userinfo.name});
 
   const handleDistroyUser = () => props.distroyAccount({id: props.userinfo, name: props.userinfo.name});
+
+  if(true){
+    return (
+      <React.Fragment>
+        <Card className={classes.cardLoading}>
+          <CardContent className={classes.contentLoading}>
+            <LinearProgress />
+          </CardContent>
+        </Card>
+      </React.Fragment>
+    )
+  }
 
   return (
     <div className={classes.root}>
