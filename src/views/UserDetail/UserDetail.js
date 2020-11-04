@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import {
   Link as RouterLink,
   useParams
@@ -34,6 +35,7 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { SelectInput } from 'components';
 import { ConfirmDialog } from 'alerts';
+import { GetUserDetail } from 'redux/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -157,7 +159,10 @@ const themeButtonDelete = createMuiTheme({
 const UserDetail = props => {
 
   const {
-
+    loading,
+    account,
+    userStorage,
+    getUserDetail
   } = props;
 
   const { uid } = useParams();
@@ -178,7 +183,7 @@ const UserDetail = props => {
 
   useEffect( () => {
     // Load du lieu nguoi dung o day
-    console.log(uid);
+    getUserDetail(uid);
   });
 
   const actionSend = val => {
@@ -219,7 +224,7 @@ const UserDetail = props => {
 
   const handleDistroyUser = () => props.distroyAccount({id: props.userinfo, name: props.userinfo.name});
 
-  if(true){
+  if(loading){
     return (
       <React.Fragment>
         <Card className={classes.cardLoading}>
@@ -570,10 +575,21 @@ const UserDetail = props => {
   );
 };
 
+UserDetail.propTypes = {
+  getUserDetail: PropTypes.func.isRequired,
+  account: PropTypes.object.isRequired,
+  userStorage: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+}
+
   const mapStateToProps = state => ({
       userinfo: state.dataUserDetail.user.userinfo,
       postinfo: state.dataUserDetail.user.postinfo,
       listSent: state.dataUserDetail.user.listSent,
+
+      loading: state.dataMannegerUser.loadingDetail,
+      account: state.dataMannegerUser.userDetail.account,
+      userStorage: state.dataMannegerUser.userDetail.userStorage,
 });
 
   const mapDispatchToProps = dispatch => ({
@@ -600,7 +616,9 @@ const UserDetail = props => {
         type : 'DISTROY_ACCOUNT',
         user : user
       })
-    }
+    },
+
+    getUserDetail: uid => dispatch( GetUserDetail(uid) )
   });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);
