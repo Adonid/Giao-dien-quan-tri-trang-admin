@@ -566,14 +566,14 @@ const UserDetail = props => {
                           startIcon={ <LockOpenIcon fontSize="small" />}
                           onClick={ handleUnlockUser }
                         >
-                            MỞ TÀI KHOẢN
+                            MỞ KHÓA TÀI KHOẢN
                         </Button>
                         :
                         <Button 
                           startIcon={ <NotInterestedIcon fontSize="small" />}
                           onClick={ handleClockUser }
                         >
-                            ĐÓNG TÀI KHOẢN
+                            KHÓA TÀI KHOẢN
                         </Button>
                       }
                     </Box>
