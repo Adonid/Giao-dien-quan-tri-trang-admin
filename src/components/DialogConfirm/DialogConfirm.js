@@ -122,6 +122,7 @@ const DialogConfirm = props => {
       case DISTROY_USER:
         await distroyUser(dataConfirm);
         // await getUserDetail(dataConfirm);
+        window.history.back();
         // Ve danh sach quan ly
         break;
     
