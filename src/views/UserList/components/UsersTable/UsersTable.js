@@ -34,7 +34,7 @@ import EditAttributesIcon from '@material-ui/icons/EditAttributes';
 import { connect } from 'react-redux';
 import { GetAllUsers } from 'redux/actions';
 import { 
-  LOCK_USERS
+  LOCK_USERS, OPEN_DIALOG_CONFIRM
 } from 'redux/constans';
 
 const useStyles = makeStyles(theme => ({
@@ -413,7 +413,7 @@ UsersTable.propTypes = {
     getAllUsers: () => dispatch( GetAllUsers() ),
 
     lockUsers: (usersTick, content) => dispatch({
-      type: "OPEN_DIALOG_CONFIRM",
+      type: OPEN_DIALOG_CONFIRM,
       dataConfirm: usersTick,
       contentConfirm: content
     })
