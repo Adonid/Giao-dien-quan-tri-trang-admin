@@ -33,9 +33,16 @@ import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import { toSlug } from 'helpers';
 import { SelectInput } from 'components';
 import { ConfirmDialog } from 'alerts';
 import { GetUserDetail } from 'redux/actions';
+import { 
+  OPEN_DIALOG_CONFIRM,
+  UNLOCK_USERS,
+  LOCK_USERS,
+  DISTROY_USER
+} from 'redux/constans';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -162,7 +169,10 @@ const UserDetail = props => {
     loading,
     account,
     userStorage,
-    getUserDetail
+    getUserDetail,
+    unLockUsers,
+    lockUsers,
+    distroyUsers
   } = props;
 
   const { uid } = useParams();
@@ -184,7 +194,7 @@ const UserDetail = props => {
   useEffect( () => {
     // Load du lieu nguoi dung o day
     getUserDetail(uid);
-  });
+  },[]);
 
   const actionSend = val => {
     const value = Number(val);
@@ -222,7 +232,37 @@ const UserDetail = props => {
 
   const handleOpening = () => props.openAccount({id: props.userinfo, name: props.userinfo.name});
 
-  const handleDistroyUser = () => props.distroyAccount({id: props.userinfo, name: props.userinfo.name});
+  const handleDistroyUser0 = () => props.distroyAccount({id: props.userinfo, name: props.userinfo.name});
+
+  const handleUnlockUser = () => {
+    const contentConfirm = {
+      action: UNLOCK_USERS,
+      type: 'open', 
+      title: 'Mở khóa tài khoản ' + account.displayName, 
+      note: account.displayName + ' sẽ được kích hoạt trở lại. Mở khóa tài khoản?'
+    }
+    unLockUsers(uid, contentConfirm);
+  }
+
+  const handleClockUser = () => {
+    const contentConfirm = {
+      action: LOCK_USERS,
+      type: 'block', 
+      title: 'Khóa tài khoản của ' + account.displayName, 
+      note: account.displayName + ' sẽ bị dừng tất cả hoạt động cho đến khi bạn kích hoạt lại. Bạn có chắc?'
+    }
+    lockUsers([uid], contentConfirm);
+  }
+
+  const handleDistroyUser = () => {
+    const contentConfirm = {
+      action: DISTROY_USER,
+      type: 'delete', 
+      title: 'Xóa dữ liệu tài khoản của ' + account.displayName, 
+      note: account.displayName + ' sẽ bị xóa hoàn toàn thông tin, chỉ những bài viết hoặc sản phẩm sẽ được giữ lại. Bạn có chắc?'
+    }
+    distroyUsers(uid, contentConfirm);
+  }
 
   if(loading){
     return (
@@ -247,9 +287,9 @@ const UserDetail = props => {
                 <Link color="inherit" component={RouterLink} to="/users">
                   Quản lý người dùng
                 </Link>
-                <Typography color="textPrimary">{ props.userinfo.name }</Typography>
+                <Typography color="textPrimary">{ account.displayName }</Typography>
             </Breadcrumbs>
-            <Link color="inherit" underline="none" component={RouterLink} to="/user-editor">
+            <Link color="inherit" underline="none" component={RouterLink} to={"/user-editor/" + toSlug(account.displayName).replace(/(\s+)/g, '-') + "." + account.uid}>
               <Button
                 color="primary"
                 variant="contained"
@@ -260,13 +300,13 @@ const UserDetail = props => {
         </div>
         <div>
             <Typography variant="h3" gutterBottom>
-              { props.userinfo.name }
+              { account.displayName }
             </Typography>
         </div>
       </div>
       <div className={classes.content}>
         <Box>
-          <Grid container spacing={5}>
+          <Grid container spacing={3}>
               <Grid 
                 item 
                 xs={12} 
@@ -286,10 +326,10 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                            { props.userinfo.email.address }
+                            { account.email }
                           </Typography>
                           {
-                            props.userinfo.email.verify
+                            account.emailVerified
                             ?
                               <Typography variant="body2" className={ classes.textHighLightVerify }>
                                   EMAIL ĐÃ XÁC NHẬN
@@ -309,7 +349,7 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                              { props.userinfo.phone }
+                              { account.phoneNumber }
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -321,7 +361,7 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                            { props.userinfo.address.province }
+                            { userStorage.address.province }
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -333,7 +373,7 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                            { props.userinfo.address.district }
+                            { userStorage.address.district }
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -345,7 +385,7 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                            { props.userinfo.address.commune }
+                            { userStorage.address.commune }
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -357,7 +397,7 @@ const UserDetail = props => {
                         </TableCell>
                         <TableCell>
                           <Typography variant="body1" color="textSecondary">
-                            { props.userinfo.address.street }
+                            { userStorage.address.street }
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -530,18 +570,18 @@ const UserDetail = props => {
                   <CardContent>
                     <Box>
                       {
-                        props.userinfo.isClosed 
+                        account.disabled 
                         ?
                         <Button 
                           startIcon={ <LockOpenIcon fontSize="small" />}
-                          onClick={ ()=>setOpenOpen(!openOpen) }
+                          onClick={ handleUnlockUser }
                         >
                             MỞ TÀI KHOẢN
                         </Button>
                         :
                         <Button 
                           startIcon={ <NotInterestedIcon fontSize="small" />}
-                          onClick={ ()=>setOpenBlock(!openBlock) }
+                          onClick={ handleClockUser }
                         >
                             ĐÓNG TÀI KHOẢN
                         </Button>
@@ -557,7 +597,7 @@ const UserDetail = props => {
                             variant="contained" 
                             color="primary" 
                             startIcon={ <DeleteOutlinedIcon fontSize="small" />}
-                          onClick={ ()=>setOpenDistroy(!openDistroy) }
+                            onClick={ handleDistroyUser }
                         >
                             XÓA TÀI KHOẢN
                         </Button>
@@ -570,13 +610,16 @@ const UserDetail = props => {
       </div>
       <ConfirmDialog action={ handleBlocking } openDialog={openBlock} content={{type:'block', title:'Đóng tài khoản người dùng', note:`Tài khoản người dùng ${ props.userinfo.name } sẽ bị vô hiệu hóa cho đến khi bạn cho phép kích hoạt trở lại. Đóng tài khoản?`}} />
       <ConfirmDialog action={ handleOpening } openDialog={openOpen} content={{type:'open', title:'Mở khóa tài khoản người dùng', note:`Tài khoản người dùng ${ props.userinfo.name } sẽ được phép hoạt động trở lại. Mở khóa cho tài khoản?`}} />
-      <ConfirmDialog action={ handleDistroyUser } openDialog={openDistroy} content={{type:'delete', title:'Xóa vĩnh viễn tài khoản người dùng', note:`Tài khoản ${ props.userinfo.name } sẽ bị xóa hoàn toàn trên hệ thống, thực thi sẽ không khôi phục được. Bạn có chắc?`}}/>
+      <ConfirmDialog action={ handleDistroyUser0 } openDialog={openDistroy} content={{type:'delete', title:'Xóa vĩnh viễn tài khoản người dùng', note:`Tài khoản ${ props.userinfo.name } sẽ bị xóa hoàn toàn trên hệ thống, thực thi sẽ không khôi phục được. Bạn có chắc?`}}/>
     </div>
   );
 };
 
 UserDetail.propTypes = {
   getUserDetail: PropTypes.func.isRequired,
+  unLockUsers: PropTypes.func.isRequired,
+  lockUsers: PropTypes.func.isRequired,
+  distroyUsers: PropTypes.func.isRequired,
   account: PropTypes.object.isRequired,
   userStorage: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
@@ -618,7 +661,23 @@ UserDetail.propTypes = {
       })
     },
 
-    getUserDetail: uid => dispatch( GetUserDetail(uid) )
+    getUserDetail: uid => dispatch( GetUserDetail(uid) ),
+
+    lockUsers: (uid, content) => dispatch({
+      type: OPEN_DIALOG_CONFIRM,
+      dataConfirm: uid,
+      contentConfirm: content
+    }),
+    unLockUsers: (uid, content) => dispatch({
+      type: OPEN_DIALOG_CONFIRM,
+      dataConfirm: uid,
+      contentConfirm: content
+    }),
+    distroyUsers: (uid, content) => dispatch({
+      type: OPEN_DIALOG_CONFIRM,
+      dataConfirm: uid,
+      contentConfirm: content
+    }),
   });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);
