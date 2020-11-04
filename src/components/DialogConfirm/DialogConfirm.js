@@ -115,7 +115,7 @@ const DialogConfirm = props => {
     
       case UNLOCK_USERS:
         await unLockUsers(dataConfirm);
-        await getUserDetail(dataConfirm[0]);
+        await getUserDetail(dataConfirm);
         break;
     
       default:
