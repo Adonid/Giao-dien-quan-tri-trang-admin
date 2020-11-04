@@ -11,4 +11,5 @@ export { default as CreateUser } from './CreateUser';
 export { default as GetAllUsers } from './GetAllUsers';
 export { default as LockUsers } from './LockUsers';
 export { default as GetUserDetail } from './GetUserDetail';
-export { default as UnLockUsers } from './UnLockUsers';
+export { default as UnLockUser } from './UnLockUser';
+export { default as DistroyUser } from './DistroyUser';
