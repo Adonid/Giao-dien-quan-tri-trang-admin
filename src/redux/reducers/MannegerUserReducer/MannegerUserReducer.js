@@ -2,6 +2,7 @@ import {
     CREATE_USER_SUCCESS, CREATE_USER_ERROR, CREATE_USER, OPEN_FORM_ADD_USER, CLOSE_FORM_ADD_USER,
     GET_ALL_USER_SUCCESS, GET_ALL_USER_ERROR, GET_ALL_USER,
     LOCK_USERS_SUCCESS, LOCK_USERS_ERROR, LOCK_USERS,
+    GET_USER_DETAIL_SUCCESS, GET_USER_DETAIL_ERROR, GET_USER_DETAIL,
  } from 'redux/constans';
 
 const dataMannegerUser = {
@@ -10,7 +11,10 @@ const dataMannegerUser = {
     messageCreate:"",
 
     users: [],
-    loadingPage: true
+    loadingPage: true,
+
+    loadingDetail: true,
+    userDetail: {account:{}, userStorage: {}}
 }
 
 const MannegerUserReducer = (state = dataMannegerUser, action) => {
@@ -55,6 +59,18 @@ const MannegerUserReducer = (state = dataMannegerUser, action) => {
 
         case LOCK_USERS_ERROR:
             return { ...state, loadingPage: false };
+
+        
+        // LAY THONG TIN CHI TIET NGUOI DUNG
+
+        case GET_USER_DETAIL:
+            return { ...state, loadingDetail: true };
+
+        case GET_USER_DETAIL_SUCCESS:
+            return { ...state, loadingDetail: false, userDetail:{ account: action.payload.account, userStorage: action.payload.userStorage } };
+
+        case GET_USER_DETAIL_ERROR:
+            return { ...state, loadingDetail: true };
 
 
         default:
