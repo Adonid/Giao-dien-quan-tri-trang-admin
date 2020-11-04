@@ -12,10 +12,12 @@ import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import NotInterestedIcon from '@material-ui/icons/NotInterested';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { connect } from 'react-redux';
-import { LockUsers, GetAllUsers } from 'redux/actions';
+import { LockUsers, UnLockUsers, GetAllUsers, GetUserDetail } from 'redux/actions';
 import { 
+  UNLOCK_USERS,
   LOCK_USERS,
-  CLOSE_DIALOG_CONFIRM
+  DISTROY_USER,
+  CLOSE_DIALOG_CONFIRM,
 } from 'redux/constans';
 
 const useStyles = makeStyles((theme) => ({
@@ -91,12 +93,14 @@ const DialogConfirm = props => {
 
   const { 
     lockUsers, 
+    unLockUsers, 
     content, 
     openConfirm, 
     closeDialogConfirm, 
     loading, 
     dataConfirm,
-    getAllUsers
+    getAllUsers,
+    getUserDetail,
   } = props;
 
   const classes = useStyles();
@@ -106,6 +110,12 @@ const DialogConfirm = props => {
       case LOCK_USERS:
         await lockUsers(dataConfirm);
         await getAllUsers();
+        await getUserDetail(dataConfirm[0]);
+        break;
+    
+      case UNLOCK_USERS:
+        await unLockUsers(dataConfirm);
+        await getUserDetail(dataConfirm[0]);
         break;
     
       default:
@@ -231,8 +241,11 @@ DialogConfirm.propTypes = {
   loading: PropTypes.bool.isRequired,
 
   lockUsers: PropTypes.func.isRequired,
+  unLockUsers: PropTypes.func.isRequired,
   closeDialogConfirm: PropTypes.func.isRequired,
   getAllUsers: PropTypes.func.isRequired,
+  getUserDetail: PropTypes.func.isRequired,
+
 }
 
 const mapStateToProps = state => ({
@@ -244,7 +257,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     getAllUsers: () => dispatch( GetAllUsers() ),
+    getUserDetail: uid => dispatch( GetUserDetail(uid) ),
     lockUsers: uids => dispatch( LockUsers(uids) ),
+    unLockUsers: uid => dispatch( UnLockUsers(uid) ),
     closeDialogConfirm: () => dispatch({type: CLOSE_DIALOG_CONFIRM}),
 });
 
