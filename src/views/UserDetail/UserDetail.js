@@ -5,7 +5,7 @@ import {
   Link as RouterLink,
   useParams
 } from "react-router-dom";
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { makeStyles, ThemeProvider } from '@material-ui/styles';
 import { 
     Breadcrumbs, 
@@ -24,7 +24,8 @@ import {
     CardContent,
     createMuiTheme,
     TextField,
-    LinearProgress
+    LinearProgress,
+    CircularProgress
 } from '@material-ui/core';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import EditAttributesOutlinedIcon from '@material-ui/icons/EditAttributesOutlined';
@@ -35,8 +36,7 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import { toSlug } from 'helpers';
 import { SelectInput } from 'components';
-import { ConfirmDialog } from 'alerts';
-import { GetUserDetail } from 'redux/actions';
+import { GetUserDetail, SendPasswordResetEmail, SendVerifyEmail } from 'redux/actions';
 import { 
   OPEN_DIALOG_CONFIRM,
   UNLOCK_USERS,
@@ -119,7 +119,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   maxHeightPerfectScrollbar: {
-    maxHeight: 123
+    maxHeight: 150
   },
   isHidenField: {
     display: 'none'
@@ -137,12 +137,8 @@ const lists = [
   },
   {
     value: '3',
-    label: 'Gửi email nhắc nhở',
-  },
-  {
-    value: '4',
-    label: 'Gửi email cảnh báo đóng tài khoản',
-  },
+    label: 'Gửi lại email xác nhận',
+  }
 ];
 
 const themeButtonSend = createMuiTheme({
@@ -167,12 +163,15 @@ const UserDetail = props => {
 
   const {
     loading,
+    loadingButtonSend,
     account,
     userStorage,
     getUserDetail,
     unLockUsers,
     lockUsers,
-    distroyUsers
+    distroyUsers,
+    sendPasswordResetEmail,
+    sendVerifyEmail,
   } = props;
 
   const { uid } = useParams();
@@ -195,7 +194,7 @@ const UserDetail = props => {
   const actionSend = val => {
     const value = Number(val);
     setTypeSend(value);
-    // Neu la thong bao cho field hien len, neu khong de an
+    // Neu la thong bao thi cho field hien len, neu khong de an
     if(value===2){
       setHidenTextField(false);
       setContextNotify('');
@@ -209,17 +208,26 @@ const UserDetail = props => {
 
   const handleTextField = val => setContextNotify(val.target.value);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     // goi redux de tien hanh thuc thi
-    const u = {
-      id: props.userinfo.id,
-      email: props.userinfo.email,
-      name: props.userinfo.name,
-      type: typeSend,
-      notify: contextNotify,
-      isClosed: props.userinfo.isClosed
+    switch (typeSend) {
+      case 1:
+        await sendPasswordResetEmail(uid);
+        await getUserDetail(uid);
+        break;
+    
+      case 2:
+        // gui thong bao: uid, contextNotify
+        break;
+    
+      case 3:
+        await sendVerifyEmail(uid);
+        await getUserDetail(uid);
+        break;
+    
+      default:
+        break;
     }
-    props.actionSend(u);
     // Gui xong roi
     typeSend===2?setContextNotify(''):null;
   }
@@ -277,7 +285,7 @@ const UserDetail = props => {
                 <Link color="inherit" component={RouterLink} to="/users">
                   Quản lý người dùng
                 </Link>
-                <Typography color="textPrimary">{ account.displayName }</Typography>
+                <Typography color="textPrimary">{ toSlug(account.displayName).replace(/(\s+)/g, '-')}</Typography>
             </Breadcrumbs>
             <Link color="inherit" underline="none" component={RouterLink} to={"/user-editor/" + toSlug(account.displayName).replace(/(\s+)/g, '-') + "." + account.uid}>
               <Button
@@ -512,10 +520,11 @@ const UserDetail = props => {
                           <Button 
                               variant="contained" 
                               color="default" 
-                              startIcon={ <MailOutlineIcon fontSize="small" />}
+                              startIcon={ !loadingButtonSend ? <MailOutlineIcon fontSize="small" /> : <></>}
                               onClick={ handleSend }
-                              disabled={Boolean(contextNotify) ? false : true}
+                              disabled={ !Boolean(contextNotify)||loadingButtonSend}
                           >
+                            {loadingButtonSend && <CircularProgress size={18} />}
                               GỬI
                           </Button>
                       </ThemeProvider>
@@ -525,16 +534,16 @@ const UserDetail = props => {
                         <Table>
                           <TableBody>
                             {
-                              props.listSent.map( item => 
-                                <TableRow key={item.dateTime}>
+                              Object.values(userStorage.receives).map( item => 
+                                <TableRow key={item.time}>
                                   <TableCell>
                                     <Typography variant="body2">
-                                      {moment(item.dateTime).format('DD/MM/YYYY | HH:MM')}
+                                      {dayjs(item.time).format('DD/MM/YYYY | HH:MM')}
                                     </Typography>
                                   </TableCell>
                                   <TableCell>
                                     <Typography variant="body1" color="textSecondary">
-                                        { item.reason }
+                                        { item.type }
                                     </Typography>
                                   </TableCell>
                                 </TableRow>
@@ -607,9 +616,12 @@ UserDetail.propTypes = {
   unLockUsers: PropTypes.func.isRequired,
   lockUsers: PropTypes.func.isRequired,
   distroyUsers: PropTypes.func.isRequired,
+  sendPasswordResetEmail: PropTypes.func.isRequired,
+  sendVerifyEmail: PropTypes.func.isRequired,
   account: PropTypes.object.isRequired,
   userStorage: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
+  loadingButtonSend: PropTypes.bool.isRequired,
 }
 
   const mapStateToProps = state => ({
@@ -618,6 +630,7 @@ UserDetail.propTypes = {
       listSent: state.dataUserDetail.user.listSent,
 
       loading: state.dataMannegerUser.loadingDetail,
+      loadingButtonSend: state.dataMannegerUser.loadingButtonSend,
       account: state.dataMannegerUser.userDetail.account,
       userStorage: state.dataMannegerUser.userDetail.userStorage,
 });
@@ -626,24 +639,6 @@ UserDetail.propTypes = {
     actionSend: user => {
       dispatch({
         type : 'ACTION_SEND',
-        user : user
-      })
-    },
-    closeAccount: user => {
-      dispatch({
-        type : 'CLOSE_ACCOUNT',
-        user : user
-      })
-    },
-    openAccount: user => {
-      dispatch({
-        type : 'OPEN_ACCOUNT',
-        user : user
-      })
-    },
-    distroyAccount: user => {
-      dispatch({
-        type : 'DISTROY_ACCOUNT',
         user : user
       })
     },
@@ -665,6 +660,8 @@ UserDetail.propTypes = {
       dataConfirm: uid,
       contentConfirm: content
     }),
+    sendPasswordResetEmail: uid => dispatch( SendPasswordResetEmail(uid) ),
+    sendVerifyEmail: uid => dispatch( SendVerifyEmail(uid) ),
   });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);
