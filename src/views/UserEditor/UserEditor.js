@@ -18,7 +18,8 @@ import {
     createMuiTheme,
     TextField,
     Switch,
-    Avatar
+    Avatar,
+    LinearProgress
 } from '@material-ui/core';
 import { deepOrange } from '@material-ui/core/colors';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
@@ -33,6 +34,16 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     marginTop: theme.spacing(5)
+  },
+  contentLoading: {
+    paddingBottom: theme.spacing(3),
+    paddingTop: theme.spacing(3),
+    width: "50%",
+    textAlign: "center",
+    margin: "auto",
+  },
+  cardLoading: {
+    backgroundColor: "#9e9e9e14"
   },
   row: {
     height: '42px',
@@ -108,7 +119,7 @@ const themeButtonUpdate = createMuiTheme({
 
 const UserEditor = props => {
 
-    const { mockData, ...rest } = props;
+  const { mockData, ...rest } = props;
 
   const classes = useStyles();
 
@@ -193,6 +204,18 @@ const UserEditor = props => {
     const options = formOptions;
     const avatar = dataNewImage?dataNewImage.replace(/^data:image\/jpeg;base64,/, ""):null;
     props.updateUser({required, options, avatar, emailVerify})
+  }
+
+  if(false){
+    return (
+      <React.Fragment>
+        <Card className={classes.cardLoading}>
+          <CardContent className={classes.contentLoading}>
+            <LinearProgress />
+          </CardContent>
+        </Card>
+      </React.Fragment>
+    )
   }
 
   return (
