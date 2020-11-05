@@ -3,6 +3,7 @@ import {
     GET_ALL_USER_SUCCESS, GET_ALL_USER_ERROR, GET_ALL_USER,
     LOCK_USERS_SUCCESS, LOCK_USERS_ERROR, LOCK_USERS,
     GET_USER_DETAIL_SUCCESS, GET_USER_DETAIL_ERROR, GET_USER_DETAIL,
+    SEND_ACTION_SUCCESS, SEND_ACTION_ERROR, SEND_ACTION,
  } from 'redux/constans';
 
 const dataMannegerUser = {
@@ -14,7 +15,9 @@ const dataMannegerUser = {
     loadingPage: true,
 
     loadingDetail: true,
-    userDetail: {account:{}, userStorage: {}}
+    userDetail: {account:{}, userStorage: {address:{}, receives: {}}},
+
+    loadingButtonSend: false,
 }
 
 const MannegerUserReducer = (state = dataMannegerUser, action) => {
@@ -71,6 +74,18 @@ const MannegerUserReducer = (state = dataMannegerUser, action) => {
 
         case GET_USER_DETAIL_ERROR:
             return { ...state, loadingDetail: true };
+
+        
+        // THAO TAC GUI EMAIL, THONG BAO CHO NGUOI DUNG
+
+        case SEND_ACTION:
+            return { ...state, loadingButtonSend: true };
+
+        case SEND_ACTION_SUCCESS:
+            return { ...state, loadingButtonSend: false };
+
+        case SEND_ACTION_ERROR:
+            return { ...state, loadingButtonSend: false };
 
 
         default:
