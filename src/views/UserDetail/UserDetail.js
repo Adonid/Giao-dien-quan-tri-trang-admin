@@ -636,12 +636,6 @@ UserDetail.propTypes = {
 });
 
   const mapDispatchToProps = dispatch => ({
-    actionSend: user => {
-      dispatch({
-        type : 'ACTION_SEND',
-        user : user
-      })
-    },
 
     getUserDetail: uid => dispatch( GetUserDetail(uid) ),
 
