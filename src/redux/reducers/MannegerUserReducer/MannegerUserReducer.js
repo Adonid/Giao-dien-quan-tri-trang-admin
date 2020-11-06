@@ -18,6 +18,7 @@ const dataMannegerUser = {
     userDetail: {account:{}, userStorage: {address:{}, receives: {}}},
 
     loadingButtonSend: false,
+    loadingButtonSave: false,
 }
 
 const MannegerUserReducer = (state = dataMannegerUser, action) => {
