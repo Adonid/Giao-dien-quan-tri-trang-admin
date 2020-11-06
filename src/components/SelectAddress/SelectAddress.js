@@ -22,7 +22,6 @@ const SelectAddress = props => {
         <TextField
             required={ required??false }
             fullWidth={fullWidth??false}
-            id="outlined-select-item"
             select
             margin={ margin??"none" }
             label={label??"Sắp xếp"}
