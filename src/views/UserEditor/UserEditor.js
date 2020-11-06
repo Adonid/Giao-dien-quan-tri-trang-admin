@@ -148,17 +148,17 @@ const UserEditor = props => {
     errors: {}
   });
   const [formOptions, setFormOptions] = useState({
-    province: "-",
-    district: "-",
-    commune: "-",
-    street: "-"
+    province: address.province,
+    district: address.district,
+    commune: address.commune,
+    street: address.street
   });
 
   const [ emailVerify, setEmailVerify ] = useState(account?account.emailVerified:'');
 
   const [ openUploader, setOpenUploader ] = useState(false);
 
-  const [ dataImage, setDataImage ] = useState(account?account.photoURL:'');
+  const [ dataImage, setDataImage ] = useState('');
 
   useEffect( () => {
     // Load du lieu nguoi dung o day
@@ -228,7 +228,7 @@ const UserEditor = props => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    const newProfile = {...formState.values, address: {...formOptions}, emailVerifed: emailVerify, imgBase64: dataImage};
+    const newProfile = { uid, ...formState.values, ...formOptions, emailVerifed: emailVerify, photoURL: dataImage};
     console.log(newProfile);
     // update
   }
@@ -332,8 +332,9 @@ const UserEditor = props => {
                                     <Button
                                         variant="contained"
                                         color="default"
-                                        startIcon={<PublishOutlinedIcon />}
+                                        startIcon={ !loadingButtonSave ? <PublishOutlinedIcon /> : <></>}
                                         onClick={ () => setOpenUploader(!openUploader) }
+                                        disabled={loadingButtonSave}
                                     >
                                         Cập nhật avatar 
                                     </Button>
@@ -352,11 +353,8 @@ const UserEditor = props => {
                                 sm={6}
                             >
                                 <SelectAddress list={ provinces } fullWidth={true} disable={!enableProvince} action={ getProvince } label="Tỉnh/thành phố" />
-                                &nbsp;
                                 <SelectAddress list={districts} fullWidth={true} disable={!enableDistrict} action={ getDistrict } label="Quận/huyện" />
-                                &nbsp;
                                 <SelectAddress list={communes} fullWidth={true} disable={!enableCommune} action={ getCommune } label="Phường/xã" />
-                                &nbsp;
 
                                 <TextField
                                     fullWidth
@@ -369,7 +367,7 @@ const UserEditor = props => {
                                     onChange={ handleStreet }
                                 />
                                 <Typography variant="h6" color="textSecondary">
-                                    Địa chỉ: { formOptions.street||address.street } { formOptions.commune||address.commune } { formOptions.district||address.district } { formOptions.province||address.province }
+                                    Địa chỉ: { formOptions.street } { formOptions.commune } { formOptions.district } { formOptions.province }
                                 </Typography>
                             </Grid>
                         </Grid>
@@ -420,7 +418,7 @@ const UserEditor = props => {
             </Card>
         </Box>
       </div>
-      <UploadCropSingleImage openDialog={openUploader} imageInit={dataImage} dataNewImg={ getDataImage} />
+      <UploadCropSingleImage openDialog={openUploader} imageInit={account?account.photoURL:''} dataNewImg={ getDataImage} />
     </div>
   );
 };
