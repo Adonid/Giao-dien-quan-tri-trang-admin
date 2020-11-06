@@ -7,7 +7,7 @@ import { useMediaQuery } from '@material-ui/core';
 
 import { Sidebar, Topbar, Footer } from './components';
 import { Snackbars } from 'alerts';
-import { FormAddUser, DialogConfirm } from 'components';
+import { FormAddUser, DialogConfirm, UploadCropImg } from 'components';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -90,6 +90,7 @@ const Main = props => {
 
       <DialogConfirm />
 
+      <UploadCropImg />
     </div>
   );
 };
