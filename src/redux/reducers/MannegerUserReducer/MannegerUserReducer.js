@@ -3,21 +3,35 @@ import {
     GET_ALL_USER_SUCCESS, GET_ALL_USER_ERROR, GET_ALL_USER,
     LOCK_USERS_SUCCESS, LOCK_USERS_ERROR, LOCK_USERS,
     GET_USER_DETAIL_SUCCESS, GET_USER_DETAIL_ERROR, GET_USER_DETAIL,
+    GET_USER_EDIT_SUCCESS, GET_USER_EDIT_ERROR, GET_USER_EDIT,
     SEND_ACTION_SUCCESS, SEND_ACTION_ERROR, SEND_ACTION,
  } from 'redux/constans';
 
 const dataMannegerUser = {
+    // FORM THEM USER
     openForm: false,
     loadingCreate: false,
     messageCreate:"",
 
+    // LAY DANH SACH USER
     users: [],
     loadingPage: true,
 
+    // LAY CHI TIET USER
     loadingDetail: true,
     userDetail: {account:{}, userStorage: {address:{}, receives: {}}},
-
     loadingButtonSend: false,
+
+    // LAY USER RA SUA
+    accountEdit: {},
+    addressEdit: {},
+    provinces: [],
+    districts: [],
+    communes: [],
+    enableProvince: true,
+    enableDistrict: false,
+    enableCommune: false,
+    loadingEdit: false,
     loadingButtonSave: false,
 }
 
@@ -87,6 +101,18 @@ const MannegerUserReducer = (state = dataMannegerUser, action) => {
 
         case SEND_ACTION_ERROR:
             return { ...state, loadingButtonSend: false };
+
+        
+        // LAY THONG TIN NGUOI DUNG RA DE SUA
+
+        case GET_USER_EDIT:
+            return { ...state, loadingEdit: true };
+
+        case GET_USER_EDIT_SUCCESS:
+            return { ...state, loadingEdit: false, accountEdit: action.payload.account, addressEdit: action.payload.address, provinces: action.payload.provinces };
+
+        case GET_USER_EDIT_ERROR:
+            return { ...state, loadingEdit: false };
 
 
         default:
