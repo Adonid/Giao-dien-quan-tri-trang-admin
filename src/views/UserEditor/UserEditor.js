@@ -25,10 +25,11 @@ import {
 import { deepOrange } from '@material-ui/core/colors';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PublishOutlinedIcon from '@material-ui/icons/PublishOutlined';
-import { UploadCropSingleImage, SelectAddress } from 'components';
+import { UploadCropImg, SelectAddress } from 'components';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { CommunesBelongToDistrict, DistrictBelongToProvince, GetUserEdit } from 'redux/actions';
 import { getInitials, toSlug } from 'helpers';
+import { OPEN_DIALOG_UPLOAD_IMG } from 'redux/constans';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -135,6 +136,7 @@ const UserEditor = props => {
     enableCommune,
     districtsBelongToProvince,
     communesBelongToDistrict,
+    openUploadImg,
    } = props;
 
    const { uid } = useParams();
@@ -155,8 +157,6 @@ const UserEditor = props => {
   });
 
   const [ emailVerify, setEmailVerify ] = useState(account?account.emailVerified:'');
-
-  const [ openUploader, setOpenUploader ] = useState(false);
 
   const [ dataImage, setDataImage ] = useState('');
 
@@ -225,6 +225,14 @@ const UserEditor = props => {
     event.persist();
     setFormOptions( formOptions => ({...formOptions, street: event.target.value}));
     };
+
+  const openUploadAvatar = () => {
+      const contentUpload = {
+        imageInit: account.photoURL,
+        titleName: "Tải lên ảnh avatar"
+      };
+      openUploadImg(contentUpload);
+  }
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -333,7 +341,7 @@ const UserEditor = props => {
                                         variant="contained"
                                         color="default"
                                         startIcon={ !loadingButtonSave ? <PublishOutlinedIcon /> : <></>}
-                                        onClick={ () => setOpenUploader(!openUploader) }
+                                        onClick={ openUploadAvatar }
                                         disabled={loadingButtonSave}
                                     >
                                         Cập nhật avatar 
@@ -418,7 +426,6 @@ const UserEditor = props => {
             </Card>
         </Box>
       </div>
-      <UploadCropSingleImage openDialog={openUploader} imageInit={account?account.photoURL:''} dataNewImg={ getDataImage} />
     </div>
   );
 };
@@ -432,6 +439,7 @@ UserEditor.propTypes = {
     getUserEdit: PropTypes.func.isRequired,
     districtsBelongToProvince: PropTypes.func.isRequired,
     communesBelongToDistrict: PropTypes.func.isRequired,
+    openUploadImg: PropTypes.func.isRequired,
 
     profileDetail: PropTypes.object.isRequired,
     provinces: PropTypes.array.isRequired,
@@ -461,6 +469,11 @@ const mapDispatchToProps = dispatch => ({
 
     districtsBelongToProvince: provinceCode => dispatch( DistrictBelongToProvince(provinceCode) ),
     communesBelongToDistrict: districtCode => dispatch( CommunesBelongToDistrict(districtCode) ),
+
+    openUploadImg: content => dispatch({
+      type: OPEN_DIALOG_UPLOAD_IMG,
+      content: content
+    })
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserEditor)
