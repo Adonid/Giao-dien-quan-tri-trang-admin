@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState, forwardRef, useCallback} from 'react';
+import React, { useEffect, useRef, useState, forwardRef, useCallback} from 'react';
 import ReactCrop from "react-image-crop";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,14 +15,11 @@ import {
     Typography,
     Slide,
     Divider, 
-    TextField
  } from '@material-ui/core';
  import CloseIcon from '@material-ui/icons/Close';
  import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-
- import "components/UploadCropImg/node_modules/react-image-crop/dist/ReactCrop.css";
-import { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { CLOSE_DIALOG_UPLOAD_IMG } from 'redux/constans';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -45,13 +42,11 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const UploadCropImg = props => {
 
-  const { openDialog, imageInit, dataNewImg, titleName, dataName, ...rest } = props;
+  const { openUploadImg, closeUploadImg, contentUploadImg, sendImg, ...rest } = props;
 
   const classes = useStyles();
 
-  const [open, setOpen] = useState(false);
-
-  const [upImg, setUpImg] = useState(imageInit);
+  const [upImg, setUpImg] = useState(contentUploadImg.imageInit);
   const imgRef = useRef('');
   const previewCanvasRef = useRef(null);
   const [crop, setCrop] = useState({ unit: "%", width: 30, aspect: 4 / 3 });
@@ -59,24 +54,10 @@ const UploadCropImg = props => {
 
   const [ dataImage, setDataImage ] = useState('');
 
-  const [ valueInput, setValueInput ] = useState(dataName);
-  useEffect(() => {
-    setValueInput(dataName);
-  },[dataName])
-
-  const firstUpdate = useRef(true);
-    useLayoutEffect(() => {
-      if (firstUpdate.current) {
-        firstUpdate.current = false;
-        return;
-      }
-      setOpen(true);
-    },[openDialog]);
-
     const onSelectFile = e => {
         if (e.target.files && e.target.files.length > 0) {
             const reader = new FileReader();
-            reader.addEventListener('load', () => { valueInput ? setValueInput( valueInput => ({ ...valueInput, avatar: reader.result }) ) : setUpImg(reader.result)});
+            reader.addEventListener('load', () => setUpImg(reader.result));
             reader.readAsDataURL(e.target.files[0]);
         }
     };
@@ -119,20 +100,15 @@ const UploadCropImg = props => {
     }, [completedCrop]);
 
     const sendImageBase64 = () => {
-      dataName ? dataNewImg({ ...valueInput, avatar: dataImage}) : dataNewImg(dataImage);
-      setOpen(false);
+      sendImg(dataImage);
     }
 
-    const handeChange = val => {
-      const newValueInput = { ...valueInput, label: val.target.value };
-      setValueInput(newValueInput);
-    }
   return (
     <div>
-      <Dialog fullScreen open={open} onClose={ () => setOpen(false) } TransitionComponent={Transition}>
+      <Dialog fullScreen open={openUploadImg} onClose={ closeUploadImg } TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
           <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={ () => setOpen(false) } aria-label="close">
+            <IconButton edge="start" color="inherit" onClick={ closeUploadImg } aria-label="close">
               <CloseIcon />
             </IconButton>
             <Typography variant="h3" color="inherit" className={classes.title}>
@@ -147,7 +123,7 @@ const UploadCropImg = props => {
             <Card>
                 <CardContent>
                     <Grid container spacing={3}>
-                        <Grid item xs={12} sm={ valueInput ? 6 : 12}>
+                        <Grid item xs={12}>
                                 <input
                                     id="icon-button-file"
                                     accept="image/*"
@@ -157,35 +133,17 @@ const UploadCropImg = props => {
                                 />
                                 <label htmlFor="icon-button-file">
                                     <Button variant="contained" color="secondary" component="span" startIcon={<CloudUploadIcon />}>
-                                        { titleName??"Tải lên ảnh avatar" }
+                                        { contentUploadImg.titleName??"Tải lên ảnh avatar" }
                                     </Button>
                                 </label>
-                        </Grid>
-                        {
-                          valueInput
-                          ?
-                            <Grid item xs={12} sm={6}>
-                              <TextField
-                                autoFocus
-                                variant="outlined"
-                                label={ valueInput.title }
-                                type="text"
-                                fullWidth
-                                value={ valueInput.label }
-                                onChange={ handeChange }
-                              />
-                            </Grid>
-                          :
-                            null
-                        }
-                          
+                        </Grid>                          
                         <Divider/>
                         <Grid item xs={12} sm={6}>
                           <Typography variant="h5" color="inherit" gutterBottom>
                             Ảnh gốc
                           </Typography>
                             <ReactCrop
-                                src={ valueInput ? valueInput.avatar : upImg }
+                                src={ upImg }
                                 onImageLoaded={onLoad}
                                 crop={crop}
                                 onChange={(c) => setCrop(c)}
@@ -216,22 +174,22 @@ const UploadCropImg = props => {
   );
 }
 
-UploadCropSingleImage.propTypes = {
-    openDialog : PropTypes.bool.isRequired,
-    imageInit : PropTypes.string.isRequired,
-    dataNewImg : PropTypes.func.isRequired,
-    titleName : PropTypes.string,
-    dataName : PropTypes.object,
+UploadCropImg.propTypes = {
+    openUploadImg : PropTypes.bool.isRequired,
+    closeUploadImg : PropTypes.func.isRequired,
+    contentUploadImg : PropTypes.object.isRequired,
+
+    sendImg : PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
-  prop: state.prop
+    openUploadImg: state.dataMessage.openUploadImg,
+    contentUploadImg: state.dataMessage.contentUploadImg,
 });
 
 const mapDispatchToProps = dispatch => ({
-  dispatch1: () => {
-    dispatch(actionCreator)
-  }
+    closeUploadImg: () => dispatch({type: CLOSE_DIALOG_UPLOAD_IMG}),
+    sendImg: () => dispatch({type: CLOSE_DIALOG_UPLOAD_IMG}),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UploadCropImg)
+export default connect(mapStateToProps, mapDispatchToProps)(UploadCropImg);
