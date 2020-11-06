@@ -15,3 +15,4 @@ export { default as UnLockUser } from './UnLockUser';
 export { default as DistroyUser } from './DistroyUser';
 export { default as SendPasswordResetEmail } from './SendPasswordResetEmail';
 export { default as SendVerifyEmail } from './SendVerifyEmail';
+export { default as GetUserEdit } from './GetUserEdit';
