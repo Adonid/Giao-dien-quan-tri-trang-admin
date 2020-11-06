@@ -25,9 +25,9 @@ import {
 import { deepOrange } from '@material-ui/core/colors';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PublishOutlinedIcon from '@material-ui/icons/PublishOutlined';
-import { UploadCropSingleImage, SelectInput } from 'components';
+import { UploadCropSingleImage, SelectAddress } from 'components';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import { GetUserDetail } from 'redux/actions';
+import { CommunesBelongToDistrict, DistrictBelongToProvince, GetUserEdit } from 'redux/actions';
 import { getInitials, toSlug } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
@@ -122,12 +122,19 @@ const themeButtonUpdate = createMuiTheme({
 const UserEditor = props => {
 
   const { 
-    mockData, 
     loading,
     loadingButtonSave,
     account,
-    userStorage,
-    getUserDetail,
+    address,
+    getUserEdit,
+    provinces, 
+    districts,
+    communes,
+    enableProvince,
+    enableDistrict,
+    enableCommune,
+    districtsBelongToProvince,
+    communesBelongToDistrict,
    } = props;
 
    const { uid } = useParams();
@@ -136,36 +143,26 @@ const UserEditor = props => {
 
   const [formState, setFormState] = useState({
     isValid: false,
-    values: {phoneNumber: account.phoneNumber , displayName: account.displayName , email: account.email },
+    values: account?{phoneNumber: account.phoneNumber , displayName: account.displayName , email: account.email }:{},
     touched: {},
     errors: {}
   });
   const [formOptions, setFormOptions] = useState({
-    province: 0,
-    district: 0,
-    commune: 0,
-    street: ""
+    province: "-",
+    district: "-",
+    commune: "-",
+    street: "-"
   });
 
-  const [ emailVerify, setEmailVerify ] = useState(mockData.verifyEmail);
+  const [ emailVerify, setEmailVerify ] = useState(account?account.emailVerified:'');
 
   const [ openUploader, setOpenUploader ] = useState(false);
 
-  const [ dataImage, setDataImage ] = useState(mockData.avatar);
-
-  const [ dataNewImage, setDataNewImage ] = useState(null);
-
-  const [ listProvince, setListProvince ] = useState([{value: 0, label: "Tỉnh/thành phố"}]);
-  const [ listDistrict, setListDistrict ] = useState([{value: 0, label: "Quận/huyện"}]);
-  const [ listCommune, setListCommune ] = useState([{value: 0, label: "Phường/xã"}]);
-
-  const [ disableDistrict, setDisableDistrict ] = useState(true);
-  const [ disableCommune, setDisableCommune ] = useState(true);
-  const [ disableStreet, setDisableStreet ] = useState(true);
+  const [ dataImage, setDataImage ] = useState(account?account.photoURL:'');
 
   useEffect( () => {
     // Load du lieu nguoi dung o day
-    getUserDetail(uid);
+    getUserEdit(uid);
   },[]);
 
   useEffect(() => {
@@ -199,15 +196,30 @@ const UserEditor = props => {
 
   const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
 
-  const getDataImage = imgBase64 => {
-    setDataNewImage(imgBase64);
-    setDataImage(imgBase64);
-    // Thuc hien den day coi nhu da thay doi avatar
-  };
+  const getDataImage = imgBase64 => setDataImage(imgBase64);
 
-  const getProvince = val => setFormOptions( formOptions => ({...formOptions, province: val}));
-  const getDistrict = val => setFormOptions( formOptions => ({...formOptions, district: val}));
-  const getCommune = val => setFormOptions( formOptions => ({...formOptions, commune: val}));
+  const [ enableStreet, setEnableStreet ] = useState(false);
+
+  const getProvince = val => {
+    setFormOptions( formOptions => ({...formOptions, province: val.name_with_type}));
+    setEnableStreet(false);
+    districtsBelongToProvince(val.code);
+    setFormOptions( formOptions => ({...formOptions, district: ""}));
+    setFormOptions( formOptions => ({...formOptions, commune: ""}));
+  }
+  
+  const getDistrict = val => {
+    setFormOptions( formOptions => ({...formOptions, district: val.name_with_type}));
+    setEnableStreet(false);
+    communesBelongToDistrict(val.code);
+    setFormOptions( formOptions => ({...formOptions, commune: ""}));
+  }
+  
+  const getCommune = val => {
+    setFormOptions( formOptions => ({...formOptions, commune: val.name_with_type}));
+    
+    setEnableStreet(true);
+  }
 
   const handleStreet = event => {
     event.persist();
@@ -216,10 +228,9 @@ const UserEditor = props => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    const required = formState.values;
-    const options = formOptions;
-    const avatar = dataNewImage?dataNewImage.replace(/^data:image\/jpeg;base64,/, ""):null;
-    props.updateUser({required, options, avatar, emailVerify})
+    const newProfile = {...formState.values, address: {...formOptions}, emailVerifed: emailVerify, imgBase64: dataImage};
+    console.log(newProfile);
+    // update
   }
 
   if(loading){
@@ -310,7 +321,7 @@ const UserEditor = props => {
                                     name="phoneNumber"
                                     type="text"
                                     variant="outlined"
-                                    defaultValue={ account.phoneNumber.replace("+84", "0") }
+                                    defaultValue={ account.phoneNumber ? account.phoneNumber.replace("+84", "0") : '' }
                                     onChange={handleChange}
                                     error={hasError('phoneNumber')}
                                     helperText={
@@ -340,9 +351,12 @@ const UserEditor = props => {
                                 xs={12} 
                                 sm={6}
                             >
-                                <SelectInput list={listProvince} action={ getProvince } label="Tỉnh/thành phố" />
-                                <SelectInput list={listDistrict} action={ getDistrict } disable={disableDistrict} label="Quận/huyện" />
-                                <SelectInput list={listCommune} action={ getCommune } disable={disableCommune} label="Phường/xã" />
+                                <SelectAddress list={ provinces } fullWidth={true} disable={!enableProvince} action={ getProvince } label="Tỉnh/thành phố" />
+                                &nbsp;
+                                <SelectAddress list={districts} fullWidth={true} disable={!enableDistrict} action={ getDistrict } label="Quận/huyện" />
+                                &nbsp;
+                                <SelectAddress list={communes} fullWidth={true} disable={!enableCommune} action={ getCommune } label="Phường/xã" />
+                                &nbsp;
 
                                 <TextField
                                     fullWidth
@@ -350,10 +364,13 @@ const UserEditor = props => {
                                     name="street"
                                     type="text"
                                     variant="outlined"
-                                    disabled={disableStreet}
-                                    defaultValue={userStorage.address.street}
+                                    disabled={!enableStreet}
+                                    defaultValue={address.street}
                                     onChange={ handleStreet }
                                 />
+                                <Typography variant="h6" color="textSecondary">
+                                    Địa chỉ: { formOptions.street||address.street } { formOptions.commune||address.commune } { formOptions.district||address.district } { formOptions.province||address.province }
+                                </Typography>
                             </Grid>
                         </Grid>
                         <Grid container spacing={5} className={ classes.customspace}>
@@ -370,7 +387,7 @@ const UserEditor = props => {
                                 </Typography>
                                 <ThemeProvider theme={themeButtonUpdate}>
                                     <Switch
-                                        defaultChecked={account.emailVerified}
+                                        checked={emailVerify}
                                         onChange={handleChangeSwitch}
                                         color="primary"
                                         name="emailVerified"
@@ -409,30 +426,43 @@ const UserEditor = props => {
 };
 
 UserEditor.propTypes = {
-    mockData: PropTypes.object,
     loading: PropTypes.bool.isRequired,
     loadingButtonSave: PropTypes.bool.isRequired,
     account: PropTypes.object.isRequired,
-    userStorage: PropTypes.object.isRequired,
-    getUserDetail: PropTypes.func.isRequired,
+    address: PropTypes.object.isRequired,
+
+    getUserEdit: PropTypes.func.isRequired,
+    districtsBelongToProvince: PropTypes.func.isRequired,
+    communesBelongToDistrict: PropTypes.func.isRequired,
+
+    profileDetail: PropTypes.object.isRequired,
+    provinces: PropTypes.array.isRequired,
+    districts: PropTypes.array.isRequired,
+    communes: PropTypes.array.isRequired,
+    enableProvince: PropTypes.bool.isRequired,
+    enableDistrict: PropTypes.bool.isRequired,
+    enableCommune: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = state => ({
-    mockData: state.dataUserEditor.dataUser,
-    loading: state.dataMannegerUser.loadingDetail,
+    loading: state.dataMannegerUser.loadingEdit,
     loadingButtonSave: state.dataMannegerUser.loadingButtonSave,
-    account: state.dataMannegerUser.userDetail.account,
-    userStorage: state.dataMannegerUser.userDetail.userStorage,
+    account: state.dataMannegerUser.accountEdit,
+    address: state.dataMannegerUser.addressEdit,
+    provinces: state.dataMannegerUser.provinces,
+
+    districts: state.dataAdminProfile.districts,
+    communes: state.dataAdminProfile.communes,
+    enableProvince: state.dataAdminProfile.enableProvince,
+    enableDistrict: state.dataAdminProfile.enableDistrict,
+    enableCommune: state.dataAdminProfile.enableCommune,
 });
 
 const mapDispatchToProps = dispatch => ({
-    updateUser: data => {
-      dispatch({
-          type: "UPDATE_USER",
-          data: data
-      })
-    },
-    getUserDetail: uid => dispatch( GetUserDetail(uid) ),
+    getUserEdit: uid => dispatch( GetUserEdit(uid) ),
+
+    districtsBelongToProvince: provinceCode => dispatch( DistrictBelongToProvince(provinceCode) ),
+    communesBelongToDistrict: districtCode => dispatch( CommunesBelongToDistrict(districtCode) ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserEditor)
