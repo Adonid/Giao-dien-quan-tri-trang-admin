@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { connect } from 'react-redux';
 import {
-    Link as RouterLink
+    Link as RouterLink, 
+    useParams
   } from "react-router-dom";
 import { makeStyles, ThemeProvider } from '@material-ui/styles';
 import { 
@@ -25,8 +26,9 @@ import { deepOrange } from '@material-ui/core/colors';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PublishOutlinedIcon from '@material-ui/icons/PublishOutlined';
 import { UploadCropSingleImage, SelectInput } from 'components';
-import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
-
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import { GetUserDetail } from 'redux/actions';
+import { getInitials, toSlug } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -76,7 +78,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const schema = {
-    userName: {
+    displayName: {
         presence: { allowEmpty: false, message: '^Tên người dùng không được trống!' },
         length: {
             minimum: 3,
@@ -94,7 +96,7 @@ const schema = {
         message: "tối đa 64 ký tự!",
       }
     },
-    phone: {
+    phoneNumber: {
         presence: { allowEmpty: false, message: '^Số điện thoại không để trống' },
         length: {
           is: 10,
@@ -119,13 +121,22 @@ const themeButtonUpdate = createMuiTheme({
 
 const UserEditor = props => {
 
-  const { mockData, ...rest } = props;
+  const { 
+    mockData, 
+    loading,
+    loadingButtonSave,
+    account,
+    userStorage,
+    getUserDetail,
+   } = props;
+
+   const { uid } = useParams();
 
   const classes = useStyles();
 
   const [formState, setFormState] = useState({
     isValid: false,
-    values: {phone: mockData.require.phone , userName: mockData.require.userName , email: mockData.require.email },
+    values: {phoneNumber: account.phoneNumber , displayName: account.displayName , email: account.email },
     touched: {},
     errors: {}
   });
@@ -151,6 +162,11 @@ const UserEditor = props => {
   const [ disableDistrict, setDisableDistrict ] = useState(true);
   const [ disableCommune, setDisableCommune ] = useState(true);
   const [ disableStreet, setDisableStreet ] = useState(true);
+
+  useEffect( () => {
+    // Load du lieu nguoi dung o day
+    getUserDetail(uid);
+  },[]);
 
   useEffect(() => {
     const errors = validate(formState.values, schema);
@@ -206,7 +222,7 @@ const UserEditor = props => {
     props.updateUser({required, options, avatar, emailVerify})
   }
 
-  if(false){
+  if(loading){
     return (
       <React.Fragment>
         <Card className={classes.cardLoading}>
@@ -229,20 +245,20 @@ const UserEditor = props => {
                 <Link color="inherit" component={RouterLink} to="/users">
                   Quản lý người dùng
                 </Link>
-                <Typography color="textPrimary">{ mockData.require.userName }</Typography>
+                <Typography color="textPrimary">{ toSlug(account.displayName).replace(/(\s+)/g, '-')}</Typography>
             </Breadcrumbs>
-            <Link color="inherit" underline="none" component={RouterLink} to="/users">
+            <Link color="inherit" underline="none" component={RouterLink}  to={"/user-detail/" + toSlug(account.displayName).replace(/(\s+)/g, '-') + "." + account.uid}>
               <Button
                 color="primary"
                 variant="contained"
               >
-                  <PeopleOutlineIcon/> Danh sách
+                  <PersonOutlineIcon/> Xem user
               </Button>
             </Link>
         </div>
         <div>
             <Typography variant="h3" gutterBottom>
-                { mockData.require.userName }
+                { account.displayName }
             </Typography>
         </div>
       </div>
@@ -263,14 +279,14 @@ const UserEditor = props => {
                                     required 
                                     fullWidth
                                     label="Họ tên"
-                                    name="userName"
+                                    name="displayName"
                                     type="text"
                                     variant="outlined"
-                                    defaultValue={ mockData.require.userName }
+                                    defaultValue={ account.displayName }
                                     onChange={handleChange}
-                                    error={hasError('userName')}
+                                    error={hasError('displayName')}
                                     helperText={
-                                        hasError('userName') ? formState.errors.userName[0] : null
+                                        hasError('displayName') ? formState.errors.displayName[0] : null
                                     }
                                 />
                                 <TextField
@@ -280,7 +296,7 @@ const UserEditor = props => {
                                     name="email"
                                     type="email"
                                     variant="outlined"
-                                    defaultValue={ mockData.require.email }
+                                    defaultValue={ account.email }
                                     onChange={handleChange}
                                     error={hasError('email')}
                                     helperText={
@@ -291,14 +307,14 @@ const UserEditor = props => {
                                     required 
                                     fullWidth
                                     label="Số điện thoại"
-                                    name="phone"
+                                    name="phoneNumber"
                                     type="text"
                                     variant="outlined"
-                                    defaultValue={ mockData.require.phone }
+                                    defaultValue={ account.phoneNumber.replace("+84", "0") }
                                     onChange={handleChange}
-                                    error={hasError('phone')}
+                                    error={hasError('phoneNumber')}
                                     helperText={
-                                        hasError('phone') ? formState.errors.phone[0] : null
+                                        hasError('phoneNumber') ? formState.errors.phoneNumber[0] : null
                                     }
                                 />
                                 <Box className={classes.upload}>
@@ -310,11 +326,13 @@ const UserEditor = props => {
                                     >
                                         Cập nhật avatar 
                                     </Button>
-                                    <Avatar 
-                                        alt="Remy Sharp" 
-                                        src={ dataImage??null } 
-                                        className={classes.largeAvatar} 
-                                    />
+                                    <Avatar
+                                      alt={account.displayName}
+                                      className={classes.largeAvatar}
+                                      src={account.photoURL}
+                                    >
+                                      {getInitials(account.displayName)}
+                                    </Avatar>
                                 </Box>
                             </Grid>
                             <Grid 
@@ -333,6 +351,7 @@ const UserEditor = props => {
                                     type="text"
                                     variant="outlined"
                                     disabled={disableStreet}
+                                    defaultValue={userStorage.address.street}
                                     onChange={ handleStreet }
                                 />
                             </Grid>
@@ -351,10 +370,10 @@ const UserEditor = props => {
                                 </Typography>
                                 <ThemeProvider theme={themeButtonUpdate}>
                                     <Switch
-                                        checked={emailVerify}
+                                        defaultChecked={account.emailVerified}
                                         onChange={handleChangeSwitch}
                                         color="primary"
-                                        name="emailVerify"
+                                        name="emailVerified"
                                         inputProps={{ 'aria-label': 'primary checkbox' }}
                                     />
                                 </ThemeProvider>
@@ -390,24 +409,30 @@ const UserEditor = props => {
 };
 
 UserEditor.propTypes = {
-    mockData: PropTypes.object
+    mockData: PropTypes.object,
+    loading: PropTypes.bool.isRequired,
+    loadingButtonSave: PropTypes.bool.isRequired,
+    account: PropTypes.object.isRequired,
+    userStorage: PropTypes.object.isRequired,
+    getUserDetail: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        mockData: state.dataUserEditor.dataUser
-    }
-}
+const mapStateToProps = state => ({
+    mockData: state.dataUserEditor.dataUser,
+    loading: state.dataMannegerUser.loadingDetail,
+    loadingButtonSave: state.dataMannegerUser.loadingButtonSave,
+    account: state.dataMannegerUser.userDetail.account,
+    userStorage: state.dataMannegerUser.userDetail.userStorage,
+});
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        updateUser: data => {
-            dispatch({
-                type: "UPDATE_USER",
-                data: data
-            })
-        }
-    }
-}
+const mapDispatchToProps = dispatch => ({
+    updateUser: data => {
+      dispatch({
+          type: "UPDATE_USER",
+          data: data
+      })
+    },
+    getUserDetail: uid => dispatch( GetUserDetail(uid) ),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserEditor)
