@@ -625,9 +625,7 @@ UserDetail.propTypes = {
 }
 
   const mapStateToProps = state => ({
-      userinfo: state.dataUserDetail.user.userinfo,
       postinfo: state.dataUserDetail.user.postinfo,
-      listSent: state.dataUserDetail.user.listSent,
 
       loading: state.dataMannegerUser.loadingDetail,
       loadingButtonSend: state.dataMannegerUser.loadingButtonSend,
