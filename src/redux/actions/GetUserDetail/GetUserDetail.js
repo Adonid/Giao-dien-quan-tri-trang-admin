@@ -9,7 +9,7 @@ import {
 } from 'redux/constans';
 import { ReadCookie } from 'common';
 
-const LockUsers = uid => async dispatch => {
+const GetUserDetail = uid => async dispatch => {
     
     dispatch({type: GET_USER_DETAIL});
 
@@ -55,4 +55,4 @@ const LockUsers = uid => async dispatch => {
         });
 }
 
-export default LockUsers;
+export default GetUserDetail;
