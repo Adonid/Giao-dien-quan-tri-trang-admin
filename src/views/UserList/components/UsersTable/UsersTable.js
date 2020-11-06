@@ -319,6 +319,7 @@ const UsersTable = props => {
                       <TableCell>
                         <Box className={classes.nameContainer}>
                           <Avatar
+                            alt={user.displayName}
                             className={classes.avatar}
                             src={user.photoURL}
                           >
