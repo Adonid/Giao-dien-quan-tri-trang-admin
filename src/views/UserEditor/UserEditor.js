@@ -229,7 +229,9 @@ const UserEditor = props => {
   const openUploadAvatar = () => {
       const contentUpload = {
         imageInit: account.photoURL,
-        titleName: "Tải lên ảnh avatar"
+        titleName: "Tải lên ảnh avatar",
+        uid,
+        type: 'upload-avatar-user'
       };
       openUploadImg(contentUpload);
   }
