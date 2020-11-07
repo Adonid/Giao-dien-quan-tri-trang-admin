@@ -21,13 +21,6 @@ const LockUsers = uid => async dispatch => {
         })
         .then( res => {
             dispatch({type: SEND_ACTION_SUCCESS});
-            dispatch( {
-                type: MESSAGE_MAIN,
-                payload: {
-                    message: res.data.message,
-                    type: "info"
-                }
-            });
         })
         .catch( error => {
             if(typeof(error.response.data.exit) === 'boolean'){
