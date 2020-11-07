@@ -28,8 +28,8 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PublishOutlinedIcon from '@material-ui/icons/PublishOutlined';
 import { SelectAddress } from 'components';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import { CommunesBelongToDistrict, DistrictBelongToProvince, GetUserEdit } from 'redux/actions';
-import { getInitials, toSlug } from 'helpers';
+import { CommunesBelongToDistrict, DistrictBelongToProvince, GetUserEdit, UpdateUser } from 'redux/actions';
+import { getInitials, toSlug, getAvatarUrl } from 'helpers';
 import { OPEN_DIALOG_UPLOAD_IMG } from 'redux/constans';
 
 const useStyles = makeStyles(theme => ({
@@ -140,6 +140,7 @@ const UserEditor = props => {
     districtsBelongToProvince,
     communesBelongToDistrict,
     openUploadImg,
+    updateUser
    } = props;
 
    const { uid } = useParams();
@@ -147,7 +148,7 @@ const UserEditor = props => {
   const classes = useStyles();
 
   const [formState, setFormState] = useState({
-    isValid: false,
+    isValid: true,
     values: account?{phoneNumber: account.phoneNumber , displayName: account.displayName , email: account.email }:{},
     touched: {},
     errors: {}
@@ -160,8 +161,6 @@ const UserEditor = props => {
   });
 
   const [ emailVerify, setEmailVerify ] = useState(false);
-
-  const [ dataImage, setDataImage ] = useState('');
 
   useEffect( () => {
     // Load du lieu nguoi dung o day
@@ -198,8 +197,6 @@ const UserEditor = props => {
   const handleChangeSwitch = event => setEmailVerify(event.target.checked);
 
   const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
-
-  const getDataImage = imgBase64 => setDataImage(imgBase64);
 
   const [ enableStreet, setEnableStreet ] = useState(false);
 
@@ -241,11 +238,10 @@ const UserEditor = props => {
       openUploadImg(contentUpload);
   }
 
-  const handleSubmit = event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const newProfile = { uid, ...formState.values, ...formOptions, emailVerifed: emailVerify, photoURL: dataImage};
-    console.log(newProfile);
-    // update
+    const newProfile = { uid, ...formState.values, ...formOptions, emailVerifed: emailVerify};
+    updateUser(newProfile);
   }
 
   if(loading){
@@ -356,7 +352,7 @@ const UserEditor = props => {
                                     <Avatar
                                       alt={account.displayName}
                                       className={classes.largeAvatar}
-                                      src={account.photoURL}
+                                      src={account.photoURL ? account.photoURL : getAvatarUrl(avatar.newToken)}
                                     >
                                       {getInitials(account.displayName)}
                                     </Avatar>
@@ -400,7 +396,7 @@ const UserEditor = props => {
                                 </Typography>
                                 <ThemeProvider theme={themeButtonUpdate}>
                                     <Switch
-                                        checked={emailVerify||account.emailVerified}
+                                        defaultChecked={account.emailVerified}
                                         onChange={handleChangeSwitch}
                                         color="primary"
                                         name="emailVerified"
@@ -421,9 +417,9 @@ const UserEditor = props => {
                                         variant="contained" 
                                         color="primary" 
                                         type="submit"
-                                        disabled={!formState.isValid}
+                                        disabled={!formState.isValid||loadingButtonSave}
                                     >
-                                        CẬP NHẬT USER
+                                        { loadingButtonSave && <CircularProgress size={18} />}CẬP NHẬT USER
                                     </Button>
                                 </ThemeProvider>
                             </Grid>
@@ -449,6 +445,7 @@ UserEditor.propTypes = {
     districtsBelongToProvince: PropTypes.func.isRequired,
     communesBelongToDistrict: PropTypes.func.isRequired,
     openUploadImg: PropTypes.func.isRequired,
+    updateUser: PropTypes.func.isRequired,
 
     provinces: PropTypes.array.isRequired,
     districts: PropTypes.array.isRequired,
@@ -485,7 +482,9 @@ const mapDispatchToProps = dispatch => ({
     openUploadImg: content => dispatch({
       type: OPEN_DIALOG_UPLOAD_IMG,
       content: content
-    })
+    }),
+
+    updateUser: dataUpdate => dispatch( UpdateUser(dataUpdate) )
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserEditor)
