@@ -99,6 +99,10 @@ const UploadCropImg = props => {
         setDataImage(canvas.toDataURL('image/jpeg'));
     }, [completedCrop]);
 
+    useEffect( () =>{
+        setUpImg(contentUploadImg.imageInit);
+    },[contentUploadImg]);
+
     const sendImageBase64 = () => {
       sendImg(dataImage);
     }
