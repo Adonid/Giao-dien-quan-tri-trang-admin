@@ -20,12 +20,13 @@ import {
     TextField,
     Switch,
     Avatar,
-    LinearProgress
+    LinearProgress,
+    CircularProgress
 } from '@material-ui/core';
 import { deepOrange } from '@material-ui/core/colors';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PublishOutlinedIcon from '@material-ui/icons/PublishOutlined';
-import { UploadCropImg, SelectAddress } from 'components';
+import { SelectAddress } from 'components';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { CommunesBelongToDistrict, DistrictBelongToProvince, GetUserEdit } from 'redux/actions';
 import { getInitials, toSlug } from 'helpers';
@@ -124,9 +125,11 @@ const UserEditor = props => {
 
   const { 
     loading,
+    loadingButtonUpload,
     loadingButtonSave,
     account,
     address,
+    avatar,
     getUserEdit,
     provinces, 
     districts,
@@ -150,10 +153,10 @@ const UserEditor = props => {
     errors: {}
   });
   const [formOptions, setFormOptions] = useState({
-    province: address.province,
-    district: address.district,
-    commune: address.commune,
-    street: address.street
+    province: address ? address.province : "-",
+    district: address ? address.district : "-",
+    commune: address ? address.commune : "-",
+    street: address ? address.street : "-"
   });
 
   const [ emailVerify, setEmailVerify ] = useState(false);
@@ -228,10 +231,12 @@ const UserEditor = props => {
 
   const openUploadAvatar = () => {
       const contentUpload = {
-        imageInit: account.photoURL,
-        titleName: "Tải lên ảnh avatar",
         uid,
-        type: 'upload-avatar-user'
+        token: avatar.newToken,
+        type: 'upload-avatar',
+        imageInit: account.photoURL,
+        titleName: 'Tải lên ảnh avatar',
+        options:{}
       };
       openUploadImg(contentUpload);
   }
@@ -342,9 +347,9 @@ const UserEditor = props => {
                                     <Button
                                         variant="contained"
                                         color="default"
-                                        startIcon={ !loadingButtonSave ? <PublishOutlinedIcon /> : <></>}
+                                        startIcon={ !loadingButtonUpload ? <PublishOutlinedIcon /> : <CircularProgress size={18} />}
                                         onClick={ openUploadAvatar }
-                                        disabled={loadingButtonSave}
+                                        disabled={loadingButtonUpload}
                                     >
                                         Cập nhật avatar 
                                     </Button>
@@ -434,16 +439,17 @@ const UserEditor = props => {
 
 UserEditor.propTypes = {
     loading: PropTypes.bool.isRequired,
+    loadingButtonUpload: PropTypes.bool.isRequired,
     loadingButtonSave: PropTypes.bool.isRequired,
     account: PropTypes.object.isRequired,
     address: PropTypes.object.isRequired,
+    avatar: PropTypes.object.isRequired,
 
     getUserEdit: PropTypes.func.isRequired,
     districtsBelongToProvince: PropTypes.func.isRequired,
     communesBelongToDistrict: PropTypes.func.isRequired,
     openUploadImg: PropTypes.func.isRequired,
 
-    profileDetail: PropTypes.object.isRequired,
     provinces: PropTypes.array.isRequired,
     districts: PropTypes.array.isRequired,
     communes: PropTypes.array.isRequired,
@@ -454,9 +460,13 @@ UserEditor.propTypes = {
 
 const mapStateToProps = state => ({
     loading: state.dataMannegerUser.loadingEdit,
+
+    loadingButtonUpload: state.dataMessage.loadingUpload,
+
     loadingButtonSave: state.dataMannegerUser.loadingButtonSave,
     account: state.dataMannegerUser.accountEdit,
     address: state.dataMannegerUser.addressEdit,
+    avatar: state.dataMannegerUser.avatarEdit,
     provinces: state.dataMannegerUser.provinces,
 
     districts: state.dataAdminProfile.districts,
