@@ -25,6 +25,7 @@ const GetUserEdit = uid => async dispatch => {
                 payload: {
                     account: res.data.account,
                     address: res.data.address,
+                    avatarDraft: res.data.avatarDraft,
                     provinces: res.data.provinces,
                 }
             });
