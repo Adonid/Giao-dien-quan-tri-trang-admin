@@ -25,6 +25,7 @@ const dataMannegerUser = {
     // LAY USER RA SUA
     accountEdit: {},
     addressEdit: {},
+    avatarEdit: {},
     provinces: [],
     districts: [],
     communes: [],
@@ -109,7 +110,7 @@ const MannegerUserReducer = (state = dataMannegerUser, action) => {
             return { ...state, loadingEdit: true };
 
         case GET_USER_EDIT_SUCCESS:
-            return { ...state, loadingEdit: false, accountEdit: action.payload.account, addressEdit: action.payload.address, provinces: action.payload.provinces };
+            return { ...state, loadingEdit: false, accountEdit: action.payload.account, addressEdit: action.payload.address, avatarEdit: action.payload.avatarDraft, provinces: action.payload.provinces };
 
         case GET_USER_EDIT_ERROR:
             return { ...state, loadingEdit: false };
