@@ -1,3 +1,4 @@
+import getAvatarUrl from 'helpers/getAvatarUrl';
 import { 
     CREATE_USER_SUCCESS, CREATE_USER_ERROR, CREATE_USER, OPEN_FORM_ADD_USER, CLOSE_FORM_ADD_USER,
     GET_ALL_USER_SUCCESS, GET_ALL_USER_ERROR, GET_ALL_USER,
@@ -5,6 +6,7 @@ import {
     GET_USER_DETAIL_SUCCESS, GET_USER_DETAIL_ERROR, GET_USER_DETAIL,
     GET_USER_EDIT_SUCCESS, GET_USER_EDIT_ERROR, GET_USER_EDIT,
     SEND_ACTION_SUCCESS, SEND_ACTION_ERROR, SEND_ACTION,
+    UPLOAD_AVATAR_COMPLATE,
  } from 'redux/constans';
 
 const dataMannegerUser = {
@@ -114,6 +116,10 @@ const MannegerUserReducer = (state = dataMannegerUser, action) => {
 
         case GET_USER_EDIT_ERROR:
             return { ...state, loadingEdit: false };
+        
+        case UPLOAD_AVATAR_COMPLATE:
+            return { ...state, accountEdit: {...state.accountEdit, photoURL: getAvatarUrl(action.payload.token)}, avatarEdit: {...state.avatarEdit, newToken: action.payload.token} };  // Cap nhat lai token & url anh khi up len
+        
 
 
         default:
