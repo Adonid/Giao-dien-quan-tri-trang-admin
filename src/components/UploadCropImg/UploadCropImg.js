@@ -20,6 +20,7 @@ import {
  import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { connect } from 'react-redux';
 import { CLOSE_DIALOG_UPLOAD_IMG } from 'redux/constans';
+import { UploadAvatar } from 'redux/actions';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -42,7 +43,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const UploadCropImg = props => {
 
-  const { openUploadImg, closeUploadImg, contentUploadImg, sendImg, ...rest } = props;
+  const { openUploadImg, closeUploadImg, contentUploadImg, uploadAvatar, ...rest } = props;
 
   const classes = useStyles();
 
@@ -104,7 +105,21 @@ const UploadCropImg = props => {
     },[contentUploadImg]);
 
     const sendImageBase64 = () => {
-      sendImg(dataImage);
+      const dataUpload = {
+        uid: contentUploadImg.uid,
+        token: contentUploadImg.token,
+        base64: dataImage,
+      }
+      switch (contentUploadImg.type) {
+        case 'upload-avatar':
+          // Toi action upload anh avatar
+          uploadAvatar(dataUpload);
+          console.log(dataUpload);
+          break;
+      
+        default:
+          break;
+      }
     }
 
   return (
@@ -118,7 +133,7 @@ const UploadCropImg = props => {
             <Typography variant="h3" color="inherit" className={classes.title}>
                 Trình upload ảnh
             </Typography>
-            <Button autoFocus color="inherit" onClick={ sendImageBase64 }>
+            <Button autoFocus color="inherit" disabled={!dataImage} onClick={ sendImageBase64 }>
                 Dùng ảnh này
             </Button>
           </Toolbar>
@@ -136,7 +151,7 @@ const UploadCropImg = props => {
                                     onChange={ onSelectFile }
                                 />
                                 <label htmlFor="icon-button-file">
-                                    <Button variant="contained" color="secondary" component="span" startIcon={<CloudUploadIcon />}>
+                                    <Button variant="contained" component="span" startIcon={<CloudUploadIcon />}>
                                         { contentUploadImg.titleName??"Tải lên ảnh avatar" }
                                     </Button>
                                 </label>
@@ -183,7 +198,7 @@ UploadCropImg.propTypes = {
     closeUploadImg : PropTypes.func.isRequired,
     contentUploadImg : PropTypes.object.isRequired,
 
-    sendImg : PropTypes.func.isRequired,
+    uploadAvatar : PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -193,7 +208,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     closeUploadImg: () => dispatch({type: CLOSE_DIALOG_UPLOAD_IMG}),
-    sendImg: () => dispatch({type: CLOSE_DIALOG_UPLOAD_IMG}),
+
+    uploadAvatar: dataUpload => dispatch( UploadAvatar(dataUpload) ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadCropImg);
