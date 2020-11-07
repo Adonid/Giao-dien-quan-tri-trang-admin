@@ -37,6 +37,7 @@ const UpdateUser = dataUpdate => async dispatch => {
             });
         })
         .catch( error => {
+            console.log(error);
             if(typeof(error.response.data.exit) === 'boolean'){
                 dispatch( {
                     type: LOGOUT_ADMIN,
