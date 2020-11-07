@@ -2,6 +2,7 @@ import axios from 'common/Axios';
 import { 
     CLOSE_DIALOG_UPLOAD_IMG,
     PROCESS_DIALOG_UPLOAD_IMG,
+    UPLOAD_AVATAR_COMPLATE,
     LOGOUT_ADMIN,
     MESSAGE_MINI,
     MESSAGE_MAIN
@@ -29,7 +30,14 @@ const UploadAvatar = dataUpload => async dispatch => {
                 type: PROCESS_DIALOG_UPLOAD_IMG,
                 payload: {
                     message: res.data.message,
+                    token: res.data.tokenImg,
                     loading: false
+                }
+            });
+            dispatch( {
+                type: UPLOAD_AVATAR_COMPLATE,
+                payload: {
+                    token: res.data.tokenImg,
                 }
             });
         })
