@@ -1,7 +1,8 @@
-import getAvatarUrl from 'helpers/getAvatarUrl';
+import {getAvatarUrl} from 'helpers';
 import { 
     CREATE_USER_SUCCESS, CREATE_USER_ERROR, CREATE_USER, OPEN_FORM_ADD_USER, CLOSE_FORM_ADD_USER,
     GET_ALL_USER_SUCCESS, GET_ALL_USER_ERROR, GET_ALL_USER,
+    UPDATE_USER_SUCCESS, UPDATE_USER_ERROR, UPDATE_USER,
     LOCK_USERS_SUCCESS, LOCK_USERS_ERROR, LOCK_USERS,
     GET_USER_DETAIL_SUCCESS, GET_USER_DETAIL_ERROR, GET_USER_DETAIL,
     GET_USER_EDIT_SUCCESS, GET_USER_EDIT_ERROR, GET_USER_EDIT,
@@ -120,7 +121,17 @@ const MannegerUserReducer = (state = dataMannegerUser, action) => {
         case UPLOAD_AVATAR_COMPLATE:
             return { ...state, accountEdit: {...state.accountEdit, photoURL: getAvatarUrl(action.payload.token)}, avatarEdit: {...state.avatarEdit, newToken: action.payload.token} };  // Cap nhat lai token & url anh khi up len
         
+        
+        // CAP NHAT USER
 
+        case UPDATE_USER:
+            return { ...state, loadingButtonSave: true };
+
+        case UPDATE_USER_SUCCESS:
+            return { ...state, loadingButtonSave: false };
+
+        case UPDATE_USER_ERROR:
+            return { ...state, loadingButtonSave: false };
 
         default:
             return state
