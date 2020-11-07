@@ -156,7 +156,7 @@ const UserEditor = props => {
     street: address.street
   });
 
-  const [ emailVerify, setEmailVerify ] = useState(account?account.emailVerified:'');
+  const [ emailVerify, setEmailVerify ] = useState(false);
 
   const [ dataImage, setDataImage ] = useState('');
 
@@ -395,7 +395,7 @@ const UserEditor = props => {
                                 </Typography>
                                 <ThemeProvider theme={themeButtonUpdate}>
                                     <Switch
-                                        checked={emailVerify}
+                                        checked={emailVerify||account.emailVerified}
                                         onChange={handleChangeSwitch}
                                         color="primary"
                                         name="emailVerified"
