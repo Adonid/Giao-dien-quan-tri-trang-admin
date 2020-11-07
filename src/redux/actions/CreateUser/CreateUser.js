@@ -24,7 +24,7 @@ const CreateUser = dataUser => async dispatch => {
             });
         })
         .catch( error => {
-            if(error.response.data.exit){
+            if(typeof(error.response.data.exit) === 'boolean'){
                 dispatch( {
                     type: LOGOUT_ADMIN,
                     payload: {
