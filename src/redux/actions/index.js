@@ -16,3 +16,4 @@ export { default as DistroyUser } from './DistroyUser';
 export { default as SendPasswordResetEmail } from './SendPasswordResetEmail';
 export { default as SendVerifyEmail } from './SendVerifyEmail';
 export { default as GetUserEdit } from './GetUserEdit';
+export { default as UpdateUser } from './UpdateUser';
