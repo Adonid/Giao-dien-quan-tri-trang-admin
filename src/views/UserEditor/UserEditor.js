@@ -28,7 +28,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import PublishOutlinedIcon from '@material-ui/icons/PublishOutlined';
 import { SelectAddress } from 'components';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
-import { CommunesBelongToDistrict, DistrictBelongToProvince, GetUserEdit, UpdateUser } from 'redux/actions';
+import { CommunesBelongToDistrict, DistrictBelongToProvince, GetUserEdit, SendVerifyEmail, UpdateUser } from 'redux/actions';
 import { getInitials, toSlug, getAvatarUrl } from 'helpers';
 import { OPEN_DIALOG_UPLOAD_IMG } from 'redux/constans';
 
@@ -140,7 +140,8 @@ const UserEditor = props => {
     districtsBelongToProvince,
     communesBelongToDistrict,
     openUploadImg,
-    updateUser
+    updateUser,
+    sendVerifyEmail
    } = props;
 
    const { uid } = useParams();
@@ -241,7 +242,12 @@ const UserEditor = props => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newProfile = { uid, ...formState.values, ...formOptions, emailVerifed: emailVerify};
-    updateUser(newProfile);
+    if (emailVerify) {
+      await updateUser(newProfile);
+    } else {
+      await updateUser(newProfile);
+      await sendVerifyEmail(uid);
+    }
   }
 
   if(loading){
@@ -446,6 +452,7 @@ UserEditor.propTypes = {
     communesBelongToDistrict: PropTypes.func.isRequired,
     openUploadImg: PropTypes.func.isRequired,
     updateUser: PropTypes.func.isRequired,
+    sendVerifyEmail: PropTypes.func.isRequired,
 
     provinces: PropTypes.array.isRequired,
     districts: PropTypes.array.isRequired,
@@ -484,7 +491,8 @@ const mapDispatchToProps = dispatch => ({
       content: content
     }),
 
-    updateUser: dataUpdate => dispatch( UpdateUser(dataUpdate) )
+    updateUser: dataUpdate => dispatch( UpdateUser(dataUpdate) ),
+    sendVerifyEmail: uid => dispatch( SendVerifyEmail(uid) ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserEditor)
