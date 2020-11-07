@@ -1,27 +1,35 @@
 import axios from 'common/Axios';
-import { UPLOAD_AVATAR_SUCCESS, UPLOAD_AVATAR_ERROR, UPLOAD_AVATAR, 
+import { 
+    CLOSE_DIALOG_UPLOAD_IMG,
+    PROCESS_DIALOG_UPLOAD_IMG,
     LOGOUT_ADMIN,
-    MESSAGE_MINI
+    MESSAGE_MINI,
+    MESSAGE_MAIN
 } from 'redux/constans';
 import { ReadCookie } from 'common';
 
-const UploadAvatar = (base64, token) => async dispatch => {
+const UploadAvatar = dataUpload => async dispatch => {
     
-    dispatch({type: UPLOAD_AVATAR});
+    dispatch({type: CLOSE_DIALOG_UPLOAD_IMG});
+    dispatch({
+        type: PROCESS_DIALOG_UPLOAD_IMG,
+        payload: {
+            loading: true
+        }
+    });
 
     await axios({
         method: 'POST',
-        url: 'admin/upload-avatar',
+        url: 'admin/upload-avatar-writer',
         headers: { Authorization: "Bearer " + ReadCookie()},
-        data: { base64: base64, token: token }
+        data: dataUpload
         })
         .then( res => {
             dispatch( {
-                type: UPLOAD_AVATAR_SUCCESS,
+                type: PROCESS_DIALOG_UPLOAD_IMG,
                 payload: {
                     message: res.data.message,
-                    url: res.data.url,
-                    token: res.data.token
+                    loading: false
                 }
             });
         })
@@ -41,11 +49,18 @@ const UploadAvatar = (base64, token) => async dispatch => {
                     },
                 });
             }
+            dispatch({
+                type: PROCESS_DIALOG_UPLOAD_IMG,
+                payload: {
+                    loading: false
+                }
+            });
             dispatch( {
-                type: UPLOAD_AVATAR_ERROR,
+                type: MESSAGE_MAIN,
                 payload: {
                     message: error.response.data.message,
-                },
+                    type: "error"
+                }
             });
         });
 
