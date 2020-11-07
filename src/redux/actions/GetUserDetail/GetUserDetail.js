@@ -29,7 +29,7 @@ const GetUserDetail = uid => async dispatch => {
             });
         })
         .catch( error => {
-            if(typeof(error.response.data.exit) !== 'undefined'){
+            if(typeof(error.response.data.exit) === 'boolean'){
                 dispatch( {
                     type: LOGOUT_ADMIN,
                     payload: {
