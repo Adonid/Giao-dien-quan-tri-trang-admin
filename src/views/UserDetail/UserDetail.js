@@ -212,7 +212,7 @@ const UserDetail = props => {
     // goi redux de tien hanh thuc thi
     switch (typeSend) {
       case 1:
-        await sendPasswordResetEmail(uid);
+        await sendPasswordResetEmail({uid: uid, time: new Date()});
         await getUserDetail(uid);
         break;
     
@@ -221,7 +221,7 @@ const UserDetail = props => {
         break;
     
       case 3:
-        await sendVerifyEmail(uid);
+        await sendVerifyEmail({uid: uid, time: new Date()});
         await getUserDetail(uid);
         break;
     
@@ -535,7 +535,7 @@ const UserDetail = props => {
                           <TableBody>
                             {
                               Object.values(userStorage.receives).map( item => 
-                                <TableRow key={item.time}>
+                                <TableRow key={Math.floor(Math.random() * Math.floor(1000))}>
                                   <TableCell>
                                     <Typography variant="body2">
                                       {dayjs(item.time).format('DD/MM/YYYY | HH:MM')}
