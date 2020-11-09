@@ -23,14 +23,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Profile = props => {
-  const { className, avatarUrl, userName, ...rest } = props;
+  const { avatarUrl, userName } = props;
 
   const classes = useStyles();
 
   return (
     <div
-      {...rest}
-      className={clsx(classes.root, className)}
+      className={clsx(classes.root)}
     >
       <Avatar
         alt="Person"
@@ -51,7 +50,6 @@ const Profile = props => {
 };
 
 Profile.propTypes = {
-  className: PropTypes.string,
   avatarUrl: PropTypes.string.isRequired,
   userName: PropTypes.string.isRequired,
 };
