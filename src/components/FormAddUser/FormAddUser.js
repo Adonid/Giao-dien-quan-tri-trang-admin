@@ -11,7 +11,8 @@ import {
     CircularProgress
  } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { CreateUser, GetAllUsers } from 'redux/actions';
+import { CreateUser, GetAllUsers, SendVerifyEmail } from 'redux/actions';
+import uuid from 'uuid';
 
  const schema = {
     userName: {
@@ -109,7 +110,7 @@ import { CreateUser, GetAllUsers } from 'redux/actions';
 
 const FormAddUser = props =>  {
 
-    const { openForm, addNewUser, closeForm, loading, message, getAllUsers } = props;
+    const { openForm, addNewUser, sendVerifyEmail, closeForm, loading, message, getAllUsers } = props;
 
     const classes = useStyles();
 
@@ -163,8 +164,11 @@ const FormAddUser = props =>  {
 
     const handleSignUp = async (event) => {
         event.preventDefault();
-        await addNewUser(formState.values);
-        await getAllUsers();
+        const uid = uuid.v4();
+        const dataNewUser = {...formState.values, uid: uid}
+        await addNewUser(dataNewUser).then( () => { sendVerifyEmail(uid); return true}).then( () => {getAllUsers(); return true});
+        // await sendVerifyEmail(uid);
+        // await getAllUsers();
       };
 
     const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
@@ -292,6 +296,7 @@ FormAddUser.propTypes = {
   closeForm : PropTypes.func.isRequired,
   addNewUser: PropTypes.func.isRequired,
   getAllUsers: PropTypes.func.isRequired,
+  sendVerifyEmail: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
 };
 
@@ -308,6 +313,7 @@ const mapDispatchToProps = dispatch => ({
 
   addNewUser: userInfo => dispatch( CreateUser( userInfo )),
   
+  sendVerifyEmail: uid => dispatch( SendVerifyEmail(uid) ),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormAddUser)
