@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
 import { createMuiTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles';
@@ -11,7 +12,7 @@ import {
     CircularProgress
  } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { CreateUser, GetAllUsers, SendVerifyEmail } from 'redux/actions';
+import { CreateUser } from 'redux/actions';
 import uuid from 'uuid';
 import dayjs from 'dayjs';
 
@@ -110,8 +111,8 @@ import dayjs from 'dayjs';
   });
 
 const FormAddUser = props =>  {
-
-    const { openForm, addNewUser, sendVerifyEmail, closeForm, loading, message, getAllUsers } = props;
+    let history = useHistory();
+    const { openForm, addNewUser, closeForm, loading, message } = props;
 
     const classes = useStyles();
 
@@ -166,9 +167,10 @@ const FormAddUser = props =>  {
     const handleSignUp = async (event) => {
         event.preventDefault();
         const uid = uuid.v4();
-        const time = dayjs().format('L LT');
+        const time = dayjs().format('MM/DD/YYYY | h:mm A');
         const dataNewUser = {...formState.values, uid: uid, time: time }
-        await addNewUser(dataNewUser).then( () => { sendVerifyEmail(uid); return true}).then( () => {getAllUsers(); return true});
+        await addNewUser(dataNewUser);
+        history.push('/users');
       };
 
     const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
@@ -295,8 +297,6 @@ FormAddUser.propTypes = {
   loading : PropTypes.bool.isRequired,
   closeForm : PropTypes.func.isRequired,
   addNewUser: PropTypes.func.isRequired,
-  getAllUsers: PropTypes.func.isRequired,
-  sendVerifyEmail: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
 };
 
@@ -307,13 +307,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 
-  getAllUsers: () => dispatch( GetAllUsers() ),
-
   closeForm: () => dispatch({type: 'CLOSE_FORM_ADD_USER'}),
 
   addNewUser: userInfo => dispatch( CreateUser( userInfo )),
   
-  sendVerifyEmail: uid => dispatch( SendVerifyEmail(uid) ),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormAddUser)
