@@ -9,7 +9,7 @@ import {
 } from 'redux/constans';
 import { ReadCookie } from 'common';
 
-const LockUsers = uid => async dispatch => {
+const LockUsers = dataUser => async dispatch => {
     
     dispatch({type: SEND_ACTION});
 
@@ -17,7 +17,7 @@ const LockUsers = uid => async dispatch => {
         method: 'POST',
         url: 'admin/send-password-reset-email',
         headers: { Authorization: "Bearer " + ReadCookie()},
-        data: { uid: uid }
+        data: dataUser
         })
         .then( res => {
             dispatch({type: SEND_ACTION_SUCCESS});
