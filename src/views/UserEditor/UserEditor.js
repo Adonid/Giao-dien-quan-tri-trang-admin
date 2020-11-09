@@ -161,7 +161,7 @@ const UserEditor = props => {
     street: address ? address.street : "-"
   });
 
-  const [ emailVerify, setEmailVerify ] = useState(false);
+  const [ emailVerified, setEmailVerified ] = useState(account.emailVerified);
 
   useEffect( () => {
     // Load du lieu nguoi dung o day
@@ -195,7 +195,7 @@ const UserEditor = props => {
       }));
   }
 
-  const handleChangeSwitch = event => setEmailVerify(event.target.checked);
+  const handleChangeSwitch = event => setEmailVerified(event.target.checked);
 
   const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
 
@@ -205,21 +205,20 @@ const UserEditor = props => {
     setFormOptions( formOptions => ({...formOptions, province: val.name_with_type}));
     setEnableStreet(false);
     districtsBelongToProvince(val.code);
-    setFormOptions( formOptions => ({...formOptions, district: ""}));
-    setFormOptions( formOptions => ({...formOptions, commune: ""}));
+    setFormOptions( formOptions => ({...formOptions, district: "", commune: "", street: ""}));
   }
   
   const getDistrict = val => {
     setFormOptions( formOptions => ({...formOptions, district: val.name_with_type}));
     setEnableStreet(false);
     communesBelongToDistrict(val.code);
-    setFormOptions( formOptions => ({...formOptions, commune: ""}));
+    setFormOptions( formOptions => ({...formOptions, commune: "", street: ""}));
   }
   
   const getCommune = val => {
-    setFormOptions( formOptions => ({...formOptions, commune: val.name_with_type}));
-    
+    setFormOptions( formOptions => ({...formOptions, commune: val.name_with_type}));    
     setEnableStreet(true);
+    setFormOptions( formOptions => ({...formOptions, street: ""}));
   }
 
   const handleStreet = event => {
@@ -239,15 +238,10 @@ const UserEditor = props => {
       openUploadImg(contentUpload);
   }
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const newProfile = { uid, ...formState.values, ...formOptions, emailVerifed: emailVerify};
-    if (emailVerify) {
-      await updateUser(newProfile);
-    } else {
-      await updateUser(newProfile);
-      await sendVerifyEmail(uid);
-    }
+    const newProfile = { uid, ...formState.values, ...formOptions, emailVerified: emailVerified};
+    updateUser(newProfile);
   }
 
   if(loading){
