@@ -352,7 +352,7 @@ const UserEditor = props => {
                                     <Avatar
                                       alt={account.displayName}
                                       className={classes.largeAvatar}
-                                      src={account.photoURL ? account.photoURL : getAvatarUrl(avatar.newToken)}
+                                      src={account.photoURL ? account.photoURL : avatar.newToken ? getAvatarUrl(avatar.newToken) : ''}
                                     >
                                       {getInitials(account.displayName)}
                                     </Avatar>
