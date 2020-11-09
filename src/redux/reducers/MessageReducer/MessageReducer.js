@@ -43,9 +43,7 @@ const MessageReducer = (state = dataMessage, action) => {
             return { ...state, miniMessage: { type: action.payload.type, content: action.payload.message } };
         // Mo cua so xac nhan
         case OPEN_DIALOG_CONFIRM:
-            const data = action.dataConfirm;
-            const content = action.contentConfirm;
-            return { ...state, openConfirm: true, contentConfirm: content, dataConfirm: data };
+            return { ...state, openConfirm: true, contentConfirm: action.contentConfirm, dataConfirm: action.dataConfirm };
         // Trang thai loading xac nhan
         case LOADING_CONFIRM:
             return { ...state, loadingConfirm: true };
