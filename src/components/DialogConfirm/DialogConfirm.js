@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {
@@ -90,7 +91,7 @@ const themeButtonOpen = createMuiTheme({
 });
 
 const DialogConfirm = props => {
-
+  let history = useHistory();
   const { 
     lockUsers, 
     unLockUser, 
@@ -122,7 +123,7 @@ const DialogConfirm = props => {
       case DISTROY_USER:
         await distroyUser(dataConfirm);
         // await getUserDetail(dataConfirm);
-        window.history.back();
+        history.push('/users');
         // Ve danh sach quan ly
         break;
     
