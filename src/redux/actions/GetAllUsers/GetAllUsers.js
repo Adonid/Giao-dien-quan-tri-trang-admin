@@ -10,9 +10,10 @@ const GetAllUsers = () => async dispatch => {
     dispatch({type: GET_ALL_USER});
 
     await axios({
-        method: 'GET',
+        method: 'POST',
         url: 'admin/get-all-users',
         headers: { Authorization: "Bearer " + ReadCookie()},
+        data: {method: "POST"}
         })
         .then( res => {
             dispatch( {
