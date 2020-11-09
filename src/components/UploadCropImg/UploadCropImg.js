@@ -112,9 +112,7 @@ const UploadCropImg = props => {
       }
       switch (contentUploadImg.type) {
         case 'upload-avatar':
-          // Toi action upload anh avatar
           uploadAvatar(dataUpload);
-          console.log(dataUpload);
           break;
       
         default:
