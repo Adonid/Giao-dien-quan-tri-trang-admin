@@ -43,7 +43,6 @@ import {
   LOCK_USERS,
   DISTROY_USER
 } from 'redux/constans';
-import dayjs from 'dayjs';
 
 const useStyles = makeStyles(theme => ({
   root: {
