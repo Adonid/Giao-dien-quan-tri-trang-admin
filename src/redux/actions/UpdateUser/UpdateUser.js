@@ -20,24 +20,18 @@ const UpdateUser = dataUpdate => async dispatch => {
         data: dataUpdate
         })
         .then( res => {
-            dispatch( {
-                type: UPDATE_USER_SUCCESS,
-                payload: {
-                    message: res.data.message,
-                    token: res.data.tokenImg,
-                    loading: false
-                }
-            });
+            dispatch( {type: UPDATE_USER_SUCCESS});
             dispatch( {
                 type: MESSAGE_MAIN,
                 payload: {
                     message: res.data.message,
-                    type: "success"
+                    type: "info"
                 }
             });
         })
         .catch( error => {
             console.log(error);
+            console.log(typeof error);
             if(typeof(error.response.data.exit) === 'boolean'){
                 dispatch( {
                     type: LOGOUT_ADMIN,
