@@ -31,7 +31,6 @@ const Main = props => {
     dataAlertNotify, 
     dataAlertUserDetail, 
     dataAlertAddUser, 
-    dataAlertUserEditor, 
     dataAlertCreateNewPost, 
     dataAlertDetailNewPost, 
     dataAlertUpdateTerm, 
@@ -79,7 +78,6 @@ const Main = props => {
       <Snackbars data={ dataAlertNotify } />
       <Snackbars data={ dataAlertAddUser } />
       <Snackbars data={ dataAlertUserDetail } />
-      <Snackbars data={ dataAlertUserEditor } />
       <Snackbars data={ dataAlertCreateNewPost } />
       <Snackbars data={ dataAlertDetailNewPost } />
       <Snackbars data={ dataAlertUpdateTerm } />
@@ -101,7 +99,6 @@ Main.propTypes = {
   dataAlertNotify: PropTypes.object.isRequired,
   dataAlertAddUser: PropTypes.object.isRequired,
   dataAlertUserDetail: PropTypes.object.isRequired,
-  dataAlertUserEditor: PropTypes.object.isRequired,
   dataAlertCreateNewPost: PropTypes.object.isRequired,
   dataAlertDetailNewPost: PropTypes.object.isRequired,
   dataAlertUpdateTerm: PropTypes.object.isRequired,
@@ -114,7 +111,6 @@ Main.propTypes = {
       dataAlertNotify: state.dataNotifys.alert,
       dataAlertAddUser: state.dataNewUser.alert,
       dataAlertUserDetail: state.dataUserDetail.alert,
-      dataAlertUserEditor: state.dataUserEditor.alert,
       dataAlertCreateNewPost: state.dataManipulationPost.createPost.alert,
       dataAlertDetailNewPost: state.dataPostDetail.limitInfo.alert,
       dataAlertUpdateTerm: state.dataTerm.alert,
