@@ -43,6 +43,7 @@ import {
   LOCK_USERS,
   DISTROY_USER
 } from 'redux/constans';
+import dayjs from 'dayjs';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -212,7 +213,7 @@ const UserDetail = props => {
     // goi redux de tien hanh thuc thi
     switch (typeSend) {
       case 1:
-        await sendPasswordResetEmail({uid: uid, time: new Date()});
+        await sendPasswordResetEmail({uid: uid, time: dayjs().format('L LT')});
         await getUserDetail(uid);
         break;
     
@@ -221,7 +222,7 @@ const UserDetail = props => {
         break;
     
       case 3:
-        await sendVerifyEmail({uid: uid, time: new Date()});
+        await sendVerifyEmail({uid: uid, time: dayjs().format('L LT') });
         await getUserDetail(uid);
         break;
     
@@ -538,7 +539,7 @@ const UserDetail = props => {
                                 <TableRow key={Math.floor(Math.random() * Math.floor(1000))}>
                                   <TableCell>
                                     <Typography variant="body2">
-                                      {dayjs(item.time).format('DD/MM/YYYY | HH:MM')}
+                                      { item.time }
                                     </Typography>
                                   </TableCell>
                                   <TableCell>
