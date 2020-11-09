@@ -13,6 +13,7 @@ import {
 import { connect } from 'react-redux';
 import { CreateUser, GetAllUsers, SendVerifyEmail } from 'redux/actions';
 import uuid from 'uuid';
+import dayjs from 'dayjs';
 
  const schema = {
     userName: {
@@ -165,10 +166,9 @@ const FormAddUser = props =>  {
     const handleSignUp = async (event) => {
         event.preventDefault();
         const uid = uuid.v4();
-        const dataNewUser = {...formState.values, uid: uid}
+        const time = dayjs().format('L LT');
+        const dataNewUser = {...formState.values, uid: uid, time: time }
         await addNewUser(dataNewUser).then( () => { sendVerifyEmail(uid); return true}).then( () => {getAllUsers(); return true});
-        // await sendVerifyEmail(uid);
-        // await getAllUsers();
       };
 
     const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
