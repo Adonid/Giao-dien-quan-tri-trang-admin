@@ -29,8 +29,6 @@ const UploadAvatar = dataUpload => async dispatch => {
             dispatch( {
                 type: PROCESS_DIALOG_UPLOAD_IMG,
                 payload: {
-                    message: res.data.message,
-                    token: res.data.tokenImg,
                     loading: false
                 }
             });
