@@ -113,6 +113,7 @@ const UploadCropImg = props => {
       switch (contentUploadImg.type) {
         case 'upload-avatar':
           uploadAvatar(dataUpload);
+          // console.log(dataUpload);
           break;
       
         default:
