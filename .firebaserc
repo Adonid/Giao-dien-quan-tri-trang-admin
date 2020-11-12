@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "blogger-firebase"
+    "default": "blogger-firebase",
+    "blogger": "blogger-firebase"
   }
 }
