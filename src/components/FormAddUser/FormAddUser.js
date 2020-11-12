@@ -13,7 +13,6 @@ import {
  } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { CreateUser } from 'redux/actions';
-import uuid from 'uuid';
 import dayjs from 'dayjs';
 
  const schema = {
@@ -166,9 +165,8 @@ const FormAddUser = props =>  {
 
     const handleSignUp = async (event) => {
         event.preventDefault();
-        const uid = uuid.v4();
         const time = dayjs().format('MM/DD/YYYY | h:mm A');
-        const dataNewUser = {...formState.values, uid: uid, time: time }
+        const dataNewUser = {...formState.values, time: time }
         await addNewUser(dataNewUser);
         history.push('/users');
       };
