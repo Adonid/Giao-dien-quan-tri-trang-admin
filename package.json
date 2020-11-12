@@ -1,10 +1,10 @@
 {
-  "name": "react-material-dashboard",
-  "author": "DeviasIO",
-  "email": "contact@devias.io",
+  "name": "HieuLee",
+  "author": "MoonsLight",
+  "email": "xavan912@gmail.com",
   "licence": "MIT",
-  "version": "0.3.0",
-  "private": false,
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
