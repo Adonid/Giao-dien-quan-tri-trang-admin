@@ -212,7 +212,7 @@ const UserDetail = props => {
     // goi redux de tien hanh thuc thi
     switch (typeSend) {
       case 1:
-        await sendPasswordResetEmail({uid: uid, time: dayjs().format('MM/DD/YYYY | h:mm A')});
+        await sendPasswordResetEmail({uid: uid, time: dayjs().format('MM/DD/YYYY | hh:mm')});
         // await getUserDetail(uid);
         break;
     
@@ -221,7 +221,7 @@ const UserDetail = props => {
         break;
     
       case 3:
-        await sendVerifyEmail({uid: uid, time: dayjs().format('MM/DD/YYYY | h:mm A') });
+        await sendVerifyEmail({uid: uid, time: dayjs().format('MM/DD/YYYY | hh:mm') });
         // await getUserDetail(uid);
         break;
     
