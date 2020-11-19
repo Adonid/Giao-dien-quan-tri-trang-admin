@@ -31,6 +31,7 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import { CommunesBelongToDistrict, DistrictBelongToProvince, GetUserEdit, SendVerifyEmail, UpdateUser } from 'redux/actions';
 import { getInitials, toSlug, getAvatarUrl } from 'helpers';
 import { OPEN_DIALOG_UPLOAD_IMG } from 'redux/constans';
+import dayjs from 'dayjs';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -240,7 +241,7 @@ const UserEditor = props => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newProfile = { uid, ...formState.values, ...formOptions, emailVerified: emailVerified};
+    const newProfile = { uid, ...formState.values, ...formOptions, emailVerified: emailVerified, time: dayjs().format('MM/DD/YYYY | hh:mm')};
     updateUser(newProfile);
   }
 
