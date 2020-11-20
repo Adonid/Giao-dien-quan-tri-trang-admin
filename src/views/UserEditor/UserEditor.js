@@ -230,7 +230,6 @@ const UserEditor = props => {
   const openUploadAvatar = () => {
       const contentUpload = {
         uid,
-        token: avatar.newToken,
         type: 'upload-avatar',
         imageInit: account.photoURL,
         titleName: 'Tải lên ảnh avatar',
