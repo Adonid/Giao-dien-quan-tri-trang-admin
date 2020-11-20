@@ -241,7 +241,7 @@ const UserEditor = props => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newProfile = { uid, ...formState.values, ...formOptions, emailVerified: emailVerified, time: dayjs().format('MM/DD/YYYY | hh:mm')};
+    const newProfile = { uid, ...formState.values, ...formOptions, emailVerified: emailVerified, time: dayjs().format('MM/DD/YYYY | h:mm A')};
     updateUser(newProfile);
   }
 
