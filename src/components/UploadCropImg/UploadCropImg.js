@@ -107,13 +107,12 @@ const UploadCropImg = props => {
     const sendImageBase64 = () => {
       const dataUpload = {
         uid: contentUploadImg.uid,
-        token: contentUploadImg.token,
         base64: dataImage,
       }
       switch (contentUploadImg.type) {
         case 'upload-avatar':
-          uploadAvatar(dataUpload);
-          // console.log(dataUpload);
+          // uploadAvatar(dataUpload);
+          console.log(dataUpload);
           break;
       
         default:
