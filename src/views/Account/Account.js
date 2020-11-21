@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
 
 import { AccountProfile, AccountDetails } from './components';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -10,7 +12,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Account = () => {
+const Account = props => {
+  const { profile, } = props;
   const classes = useStyles();
 
   return (
@@ -42,4 +45,15 @@ const Account = () => {
   );
 };
 
-export default Account;
+Account.propTypes = {
+  profile: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = state => ({
+  profile: state.dataUserProfile
+});
+
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Account);
