@@ -16,12 +16,9 @@ import {
   CircularProgress
 } from '@material-ui/core';
 import { orange } from '@material-ui/core/colors';
-import Skeleton from '@material-ui/lab/Skeleton';
 import { UploadCropSingleImage } from 'components';
 import { deepOrange } from '@material-ui/core/colors';
 import { getInitials } from 'helpers';
-import {AdminProfile, UploadAvatar} from 'redux/actions';
-
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -52,14 +49,6 @@ const useStyles = makeStyles(theme => ({
     flexShrink: 0,
     flexGrow: 0
   },
-  skeletonDetail: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  skeletonText: {
-    position: 'relative',
-    width: '100%',
-  }
 }));
 
 const AccountProfile = props => {
@@ -74,32 +63,6 @@ const AccountProfile = props => {
   },[]);
 
   const getDataImage = base64 => uploadAvatar(base64, tokenAvatar);
-
-  if(loading){
-    return (
-      <Card
-        {...rest}
-        className={clsx(classes.root, className)}
-      >
-        <CardContent>
-          <div className={classes.skeletonDetail}>
-            <div className={ classes.skeletonText}>
-              <Skeleton animation="wave" style={{ marginBottom: 10 }} width="60%" />
-              <Skeleton animation="wave" style={{ marginBottom: 5 }} height={10} width="80%" />
-              <Skeleton animation="wave" height={10} width="60%" />
-            </div>
-            <div>
-              <Skeleton animation="wave" variant="circle" width={80} height={80} />
-            </div>
-          </div>
-        </CardContent>
-        <Divider />
-        <CardActions>
-            <Skeleton animation="wave" height={10} width="60%"/>
-        </CardActions>
-      </Card>
-    );
-  }
 
   return (
     <Card
@@ -162,27 +125,15 @@ const AccountProfile = props => {
 };
 
 AccountProfile.propTypes = {
-  className: PropTypes.string,
-  uploadAvatar: PropTypes.func.isRequired,
-  getProfile: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
-  loadingAvatar: PropTypes.bool.isRequired,
-  avatarUrl: PropTypes.string.isRequired,
-  tokenAvatar: PropTypes.string.isRequired,
-  userName: PropTypes.string.isRequired,
+  className: PropTypes.string
 };
 
 const mapStateToProps = state => ({
-  loading: state.dataAdminProfile.loadingProfile,
-  loadingAvatar: state.dataAdminProfile.loadingAvatar,
-  avatarUrl: state.dataAdminProfile.avatarUrl,
-  tokenAvatar: state.dataAdminProfile.tokenAvatar,
-  userName: state.dataAdminProfile.userName,
+  
 });
 
 const mapDispatchToProps = dispatch => ({
-  getProfile: () => { dispatch( AdminProfile() ) },
-  uploadAvatar: (base64, token) => { dispatch(UploadAvatar(base64, token)) },
+  
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountProfile);
