@@ -1,9 +1,10 @@
 import { 
-    USER_PROFILE, USER_PROFILE_SUCCESS, USER_PROFILE_ERROR
+    GET_PROFILE_USER, GET_PROFILE_USER_SUCCESS
  } from 'redux/constans';
 
 const dataUserProfile = {
     profile: {},
+    profileExtend: {},
     loading: true,
 }
 
@@ -11,18 +12,12 @@ const UserProfileReducer = (state = dataUserProfile, action) => {
     
     switch (action.type) {
         
-        case USER_PROFILE:
+        case GET_PROFILE_USER:
             return { ...state, loading: true };
 
         
-        case USER_PROFILE_SUCCESS:
-            return { ...state, loading: false, profile: action.payload.profile };
-
-        
-        case USER_PROFILE_ERROR:
-            return { ...state, loading: true };
-
-        
+        case GET_PROFILE_USER_SUCCESS:
+            return { ...state, loading: false, profile: action.payload.profile, profileExtend: payload.profileExtend };        
         
         default:
             return state
