@@ -14,11 +14,13 @@ import {
     ProductEditReducer as ProductEdit,
     CategoryTagReducer as CategoryTag,
     TermReducer as Term,
+
     LoginReducer as Login,
     ForgetPwReducer as ForgetPw,
     AdminProfileReducer as AdminProfile,
     MannegerUserReducer as MannegerUser,
     MessageReducer as Message,
+    UserProfileReducer as UserProfile,
 
 } from './reducers';
 
@@ -39,6 +41,7 @@ const allReducers = combineReducers({
     dataResetPassword: ForgetPw,
     dataAdminProfile: AdminProfile,
     dataMannegerUser: MannegerUser,
+    dataUserProfile: UserProfile,
 });
 
 const persistedReducer = persistReducer({key: 'root', storage} , allReducers);
