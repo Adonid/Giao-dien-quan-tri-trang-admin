@@ -52,7 +52,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const AccountProfile = props => {
-  const { className, uploadAvatar, avatarUrl, tokenAvatar, userName, getProfile, loading, loadingAvatar, ...rest } = props;
+  const { 
+    className, uploadAvatar, avatarUrl, tokenAvatar, userName, getProfile, loadingAvatar,
+    user,
+    ...rest
+   } = props;
 
   const classes = useStyles();
 
@@ -76,7 +80,7 @@ const AccountProfile = props => {
               gutterBottom
               variant="h2"
             >
-              { userName }
+              { user.profile.displayName }
             </Typography>
             <Typography
               className={classes.locationText}
@@ -94,9 +98,9 @@ const AccountProfile = props => {
           </div>
           <Avatar
               className={classes.avatar}
-              src={ avatarUrl }
+              src={ user.profile.photoURL }
               >
-              {getInitials( userName )}
+              {getInitials( user.profile.displayName )}
           </Avatar>
         </div>
         <div className={classes.progress}>
@@ -114,9 +118,9 @@ const AccountProfile = props => {
           color="primary"
           variant="text"
           onClick={ () => setOpenUploader(!openUploader) }
-          disabled={loadingAvatar}
+          disabled={false}
         >
-          {loadingAvatar && <CircularProgress size={15} />} Upload avatar
+          {false && <CircularProgress size={15} />} Upload avatar
         </Button>
       </CardActions>
       <UploadCropSingleImage openDialog={openUploader} imageInit={ avatarUrl } dataNewImg={ getDataImage} />
@@ -125,15 +129,12 @@ const AccountProfile = props => {
 };
 
 AccountProfile.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  user: PropTypes.object.isRequired,
 };
-
-const mapStateToProps = state => ({
-  
-});
 
 const mapDispatchToProps = dispatch => ({
   
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AccountProfile);
+export default connect(null, mapDispatchToProps)(AccountProfile);
