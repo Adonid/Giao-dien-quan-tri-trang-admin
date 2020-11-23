@@ -15,10 +15,11 @@ import {
   LinearProgress,
   CircularProgress
 } from '@material-ui/core';
+import PublishOutlinedIcon from '@material-ui/icons/PublishOutlined';
 import { orange } from '@material-ui/core/colors';
-import { UploadCropSingleImage } from 'components';
 import { deepOrange } from '@material-ui/core/colors';
-import { getInitials } from 'helpers';
+import { getAvatarUrl, getInitials } from 'helpers';
+import { OPEN_DIALOG_UPLOAD_IMG } from 'redux/constans';
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -27,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     marginLeft: 'auto',
-    height: 110,
+    height: 100,
     width: 100,
     flexShrink: 0,
     flexGrow: 0,
@@ -49,24 +50,44 @@ const useStyles = makeStyles(theme => ({
     flexShrink: 0,
     flexGrow: 0
   },
+  hozirator: {
+    justifyContent: 'space-evenly'
+  },
+  textInfo: {
+    padding: '6px',
+    fontSize: '10px',
+  },
+  textWarning: {
+    backgroundColor: '#ffefc2',
+    color: '#ffab40!important',
+  },
+  textSuccess: {
+    backgroundColor: '#4caf5014',
+    color: '#4caf50!important',
+  },
 }));
 
 const AccountProfile = props => {
   const { 
-    className, uploadAvatar, avatarUrl, tokenAvatar, userName, getProfile, loadingAvatar,
-    user,
+    className,
+    loading,
+    tokenAvatar,
+    profile,
+    openUploadImg,
     ...rest
    } = props;
 
   const classes = useStyles();
 
-  const [ openUploader, setOpenUploader ] = useState(false);
-
-  useEffect( () => {
-    getProfile();
-  },[]);
-
-  const getDataImage = base64 => uploadAvatar(base64, tokenAvatar);
+  const openUploadAvatar = () => {
+    const contentUpload = {
+      type: 'upload-avatar-directly',
+      imageInit: profile.photoURL || getAvatarUrl(profile.avatarDraft.newToken),
+      titleName: 'Cập nhật ảnh đại diện',
+      options:{}
+    };
+    openUploadImg(contentUpload);
+}
 
   return (
     <Card
@@ -80,7 +101,7 @@ const AccountProfile = props => {
               gutterBottom
               variant="h2"
             >
-              { user.profile.displayName }
+              { profile.displayName }
             </Typography>
             <Typography
               className={classes.locationText}
@@ -98,9 +119,9 @@ const AccountProfile = props => {
           </div>
           <Avatar
               className={classes.avatar}
-              src={ user.profile.photoURL }
+              src={ tokenAvatar ? getAvatarUrl(tokenAvatar) : profile.photoURL }
               >
-              {getInitials( user.profile.displayName )}
+              {getInitials( profile.displayName )}
           </Avatar>
         </div>
         <div className={classes.progress}>
@@ -112,29 +133,42 @@ const AccountProfile = props => {
         </div>
       </CardContent>
       <Divider />
-      <CardActions>
+      <CardActions className={classes.hozirator}>
         <Button
           className={classes.uploadButton}
-          color="primary"
           variant="text"
-          onClick={ () => setOpenUploader(!openUploader) }
-          disabled={false}
+          startIcon={ !loading ? <PublishOutlinedIcon /> : <CircularProgress size={15} />}
+          onClick={ openUploadAvatar }
+          disabled={loading}
         >
-          {false && <CircularProgress size={15} />} Upload avatar
+          Ảnh avatar
+        </Button>
+        <Button size="small" disabled className={clsx(classes.textInfo, profile.emailVerified ? classes.textSuccess : classes.textWarning)}>
+          Email {profile.emailVerified ? "đã" : "chưa"} xác nhận
         </Button>
       </CardActions>
-      <UploadCropSingleImage openDialog={openUploader} imageInit={ avatarUrl } dataNewImg={ getDataImage} />
     </Card>
   );
 };
 
 AccountProfile.propTypes = {
   className: PropTypes.string,
-  user: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  tokenAvatar: PropTypes.string.isRequired,
+  openUploadImg: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = dispatch => ({
-  
+const mapStateToProps = state => ({
+  loading: state.dataUploadAvatar.loading,
+  tokenAvatar: state.dataUploadAvatar.tokenAvatar,
 });
 
-export default connect(null, mapDispatchToProps)(AccountProfile);
+const mapDispatchToProps = dispatch => ({
+  openUploadImg: content => dispatch({
+    type: OPEN_DIALOG_UPLOAD_IMG,
+    content: content
+  }),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountProfile);
