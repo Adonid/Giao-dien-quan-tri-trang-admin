@@ -13,17 +13,7 @@ const UpdateProfile = newProfile => async dispatch => {
         method: 'POST',
         url: 'admin/',
         headers: { Authorization: "Bearer " + ReadCookie()},
-        data: {
-            query: `mutation updateProfile($newInfo: InfoAdmin!) {
-                updateProfile(newInfo: $newInfo){
-                    userName
-                }
-                    
-            }`,
-            variables: {
-                "newInfo": newProfile
-            }
-        }
+        data: newProfile
         })
         .then( res => {
             dispatch( {
