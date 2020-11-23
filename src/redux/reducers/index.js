@@ -11,7 +11,8 @@ export { default as TermReducer  } from './TermReducer';
 
 export { default as LoginReducer  } from './LoginReducer';
 export { default as ForgetPwReducer  } from './ForgetPwReducer';
-export { default as AdminProfileReducer  } from './AdminProfileReducer';
 export { default as MannegerUserReducer  } from './MannegerUserReducer';
 export { default as MessageReducer  } from './MessageReducer';
 export { default as UserProfileReducer  } from './UserProfileReducer';
+export { default as UploadAvatarReducer  } from './UploadAvatarReducer';
+export { default as AddressReducer  } from './AddressReducer';
