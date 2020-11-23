@@ -17,7 +17,7 @@ const UserProfileReducer = (state = dataUserProfile, action) => {
 
         
         case GET_PROFILE_USER_SUCCESS:
-            return { ...state, loading: false, profile: action.payload.profile, profileExtend: payload.profileExtend };        
+            return { ...state, loading: false, profile: action.payload.profile, profileExtend: action.payload.profileExtend };        
         
         default:
             return state
