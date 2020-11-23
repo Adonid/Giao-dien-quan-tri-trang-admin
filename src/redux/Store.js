@@ -17,10 +17,11 @@ import {
 
     LoginReducer as Login,
     ForgetPwReducer as ForgetPw,
-    AdminProfileReducer as AdminProfile,
     MannegerUserReducer as MannegerUser,
     MessageReducer as Message,
     UserProfileReducer as UserProfile,
+    UploadAvatarReducer as UploadAvatar,
+    AddressReducer as Address,
 
 } from './reducers';
 
@@ -39,9 +40,10 @@ const allReducers = combineReducers({
     dataMessage: Message,
     dataLogin: Login,
     dataResetPassword: ForgetPw,
-    dataAdminProfile: AdminProfile,
     dataMannegerUser: MannegerUser,
     dataUserProfile: UserProfile,
+    dataUploadAvatar: UploadAvatar,
+    dataAddress: Address,
 });
 
 const persistedReducer = persistReducer({key: 'root', storage} , allReducers);
