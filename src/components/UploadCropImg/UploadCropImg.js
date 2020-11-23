@@ -20,7 +20,7 @@ import {
  import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { connect } from 'react-redux';
 import { CLOSE_DIALOG_UPLOAD_IMG } from 'redux/constans';
-import { UploadAvatar } from 'redux/actions';
+import { UploadAvatar, UploadAvatarDirectly } from 'redux/actions';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -43,7 +43,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const UploadCropImg = props => {
 
-  const { openUploadImg, closeUploadImg, contentUploadImg, uploadAvatar, ...rest } = props;
+  const { openUploadImg, closeUploadImg, contentUploadImg, uploadAvatar, uploadAvatarDirectly, ...rest } = props;
 
   const classes = useStyles();
 
@@ -111,8 +111,11 @@ const UploadCropImg = props => {
       }
       switch (contentUploadImg.type) {
         case 'upload-avatar':
-          // uploadAvatar(dataUpload);
-          console.log(dataUpload);
+          uploadAvatar(dataUpload);
+          break;
+      
+        case 'upload-avatar-directly':
+          uploadAvatarDirectly({base64: dataImage});
           break;
       
         default:
@@ -197,6 +200,7 @@ UploadCropImg.propTypes = {
     contentUploadImg : PropTypes.object.isRequired,
 
     uploadAvatar : PropTypes.func.isRequired,
+    uploadAvatarDirectly : PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -208,6 +212,7 @@ const mapDispatchToProps = dispatch => ({
     closeUploadImg: () => dispatch({type: CLOSE_DIALOG_UPLOAD_IMG}),
 
     uploadAvatar: dataUpload => dispatch( UploadAvatar(dataUpload) ),
+    uploadAvatarDirectly: base64 => dispatch( UploadAvatarDirectly(base64) ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadCropImg);
