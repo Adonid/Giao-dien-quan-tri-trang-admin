@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Avatar, Typography } from '@material-ui/core';
-import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,8 +22,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Profile = props => {
-  const { avatarUrl, userName } = props;
-
   const classes = useStyles();
 
   return (
@@ -35,14 +32,14 @@ const Profile = props => {
         alt="Person"
         className={classes.avatar}
         component={RouterLink}
-        src={ avatarUrl }
+        src={ "https://firebasestorage.googleapis.com/v0/b/blogger-firebase.appspot.com/o/avatar%2Fa2587759-cdfb-46cd-8215-96c2a44da9ae.jpg?alt=media&token=a2587759-cdfb-46cd-8215-96c2a44da9ae" }
         to="/settings"
       />
       <Typography
         className={classes.name}
         variant="h4"
       >
-        { userName }
+        { "Phan Trọng Hoàng" }
       </Typography>
       <Typography variant="body2">Quản trị website</Typography>
     </div>
@@ -50,13 +47,7 @@ const Profile = props => {
 };
 
 Profile.propTypes = {
-  avatarUrl: PropTypes.string.isRequired,
-  userName: PropTypes.string.isRequired,
+  
 };
 
-const mapStateToProps = state => ({
-  avatarUrl: state.dataAdminProfile.avatarUrl,
-  userName: state.dataAdminProfile.userName,
-});
-
-export default connect(mapStateToProps, null)(Profile)
+export default Profile
