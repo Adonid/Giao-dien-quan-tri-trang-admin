@@ -36,8 +36,8 @@ const Account = props => {
   const { className, loading, profile, profileExtend, getProfileUser, rest } = props;
   const classes = useStyles();
 
-  useEffect( async () => {
-    await getProfileUser();
+  useEffect( () => {
+    getProfileUser();
   },[]);
 
   if(loading){
@@ -119,7 +119,7 @@ const Account = props => {
           xl={4}
           xs={12}
         >
-          <AccountProfile user={{profile, profileExtend}} />
+          <AccountProfile profile={{ displayName: profile.displayName, photoURL: profile.photoURL, avatarDraft: profileExtend.avatarDraft, emailVerified: profile.emailVerified}} />
         </Grid>
         <Grid
           item
@@ -128,7 +128,7 @@ const Account = props => {
           xl={8}
           xs={12}
         >
-          <AccountDetails user={{profile, profileExtend}} />
+          <AccountDetails profileExtend={{ displayName: profile.displayName, phoneNumber: profile.phoneNumber, email: profile.email, address: profileExtend.address, avatarDraft: profileExtend.avatarDraft}} />
         </Grid>
       </Grid>
     </div>
