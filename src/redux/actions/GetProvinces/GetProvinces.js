@@ -7,7 +7,7 @@ import {
 } from 'redux/constans';
 import { ReadCookie } from 'common';
 
-const GetProfileUser = () => async dispatch => {
+const GetProvinces = () => async dispatch => {
     
     dispatch({type: GET_PROVINCES});
 
@@ -52,4 +52,4 @@ const GetProfileUser = () => async dispatch => {
 
 }
 
-export default GetProfileUser;
+export default GetProvinces;
