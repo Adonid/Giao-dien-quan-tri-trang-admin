@@ -5,7 +5,6 @@ import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import {
     NotifysReducers as Notifys,
-    UsersListReducers as UsersList,
     UserDetailReducer as UsersDetail,
     ChatsDataReducer as ChatsData,
     ProductsListReducer as ProductsList,
@@ -19,7 +18,7 @@ import {
     ForgetPwReducer as ForgetPw,
     MannegerUserReducer as MannegerUser,
     MessageReducer as Message,
-    UserProfileReducer as UserProfile,
+    MyProfileReducer as MyProfile,
     UploadAvatarReducer as UploadAvatar,
     AddressReducer as Address,
 
@@ -27,7 +26,6 @@ import {
 
 const allReducers = combineReducers({
     dataNotifys: Notifys,
-    dataNewUser: UsersList,
     dataUserDetail: UsersDetail,
     ChatsData: ChatsData,
     dataProductsList: ProductsList,
@@ -41,7 +39,7 @@ const allReducers = combineReducers({
     dataLogin: Login,
     dataResetPassword: ForgetPw,
     dataMannegerUser: MannegerUser,
-    dataUserProfile: UserProfile,
+    dataMyProfile: MyProfile,
     dataUploadAvatar: UploadAvatar,
     dataAddress: Address,
 });
