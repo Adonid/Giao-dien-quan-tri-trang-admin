@@ -373,7 +373,7 @@ const UserEditor = props => {
                                     onChange={ handleStreet }
                                 />
                                 <Typography variant="h6" color="textSecondary">
-                                Địa chỉ: { formOptions.street||address.street } { formOptions.commune||address.commune } { formOptions.district||address.district } { formOptions.province||profileExtend.address.province }
+                                Địa chỉ: { formOptions.street||address.street } { formOptions.commune||address.commune } { formOptions.district||address.district } { formOptions.province||address.province }
                                 </Typography>
                             </Grid>
                         </Grid>
