@@ -23,12 +23,12 @@ const SelectAddress = props => {
             required={ required??false }
             fullWidth={fullWidth??false}
             select
-            margin={ margin??"none" }
-            label={label??"Sắp xếp"}
+            margin={ margin||"none" }
+            label={label||"Sắp xếp"}
             value={ itemSelect }
             onChange={handleChange}
             variant="outlined"
-            disabled={ disable??false}
+            disabled={ disable||false}
         >
             {
               list.sort((a, b) => parseInt(Number(a.code)) - parseInt(Number(b.code))).map( option => (
