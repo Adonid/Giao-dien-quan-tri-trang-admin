@@ -32,7 +32,7 @@ const Profile = props => {
         alt="Person"
         className={classes.avatar}
         component={RouterLink}
-        src={ "https://firebasestorage.googleapis.com/v0/b/blogger-firebase.appspot.com/o/avatar%2Fa2587759-cdfb-46cd-8215-96c2a44da9ae.jpg?alt=media&token=a2587759-cdfb-46cd-8215-96c2a44da9ae" }
+        src={ "https://firebasestorage.googleapis.com/v0/b/blogger-firebase.appspot.com/o/avatar%2Ff1cdd5de-681b-4837-8bf4-adcbd5803e73.jpg?alt=media&token=f1cdd5de-681b-4837-8bf4-adcbd5803e73" }
         to="/settings"
       />
       <Typography
