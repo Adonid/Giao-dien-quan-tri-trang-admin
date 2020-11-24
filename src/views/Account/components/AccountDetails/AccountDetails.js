@@ -17,7 +17,7 @@ import {
   CircularProgress
 } from '@material-ui/core';
 import { SelectAddress } from 'components';
-import { GetProvinces, UpdateProfile } from 'redux/actions';
+import { GetProvinces, GetDistricts, GetCommunes, UpdateMyProfile } from 'redux/actions';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const schema = {
-  userName: {
+  displayName: {
       presence: { allowEmpty: false, message: '^Tên người dùng không được trống!' },
       length: {
           minimum: 3,
@@ -67,11 +67,22 @@ const schema = {
 const AccountDetails = props => {
   const { 
     className,
+
     getProvinces,
+    getDistricts,
+    getCommunes,
     provinces,
     provincesLoading,
-    updateProfile,
+    districts,
+    districtsLoading,
+    communes,
+    communesLoading,
+    streetLoading,
+
+    updateMyProfile,
     profileExtend,
+
+    loadingButton,
     ...rest 
   } = props;
 
@@ -85,10 +96,10 @@ const AccountDetails = props => {
   });
 
   const [formOptions, setFormOptions] = useState({
-    province: "",
-    district: "",
-    commune: "",
-    street: ""
+    province: profileExtend.address.province,
+    district: profileExtend.address.district,
+    commune: profileExtend.address.commune,
+    street: profileExtend.address.street
   });
 
 
@@ -126,21 +137,18 @@ const AccountDetails = props => {
   const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
 
   const getProvince = val => {
-    
+    getDistricts(val.code);
+    setFormOptions( formOptions => ({...formOptions, province: val.name_with_type, district: "-", commune: "-", street: "-"}));
   }
   
-  // const getDistrict = val => {
-  //   setFormOptions( formOptions => ({...formOptions, district: val.name_with_type}));
-  //   setEnableStreet(false);
-  //   communesBelongToDistrict(val.code);
-  //   setFormOptions( formOptions => ({...formOptions, commune: ""}));
-  // }
+  const getDistrict = val => {
+    getCommunes(val.code);
+    setFormOptions( formOptions => ({...formOptions, district: val.name_with_type, commune: "-", street: "-"}));
+  }
   
-  // const getCommune = val => {
-  //   setFormOptions( formOptions => ({...formOptions, commune: val.name_with_type}));
-    
-  //   setEnableStreet(true);
-  // }
+  const getCommune = val => {
+    setFormOptions( formOptions => ({...formOptions, commune: val.name_with_type, street: "-"}));
+  }
 
   const handleStreet = event => {
     event.persist();
@@ -150,8 +158,8 @@ const AccountDetails = props => {
   const handleSubmit = event => {
     event.preventDefault();
     const newProfile = {...formState.values, address: {...formOptions}};
-
-    updateProfile( newProfile );
+    updateMyProfile( newProfile );
+    // console.log(newProfile);
   }
 
   return (
@@ -183,14 +191,14 @@ const AccountDetails = props => {
                 helperText="Please specify the first name"
                 label="Họ tên"
                 margin="dense"
-                name="userName"
+                name="displayName"
                 required
                 variant="outlined"
                 defaultValue={ profileExtend.displayName }
                 onChange={handleChange}
-                error={hasError('userName')}
+                error={hasError('displayName')}
                 helperText={
-                    hasError('userName') ? formState.errors.userName[0] : null
+                    hasError('displayName') ? formState.errors.displayName[0] : null
                 }
               />
               &nbsp;
@@ -217,7 +225,7 @@ const AccountDetails = props => {
                 type="number"
                 required
                 variant="outlined"
-                defaultValue={ profileExtend.phoneNumber }
+                defaultValue={ profileExtend.phoneNumber ? profileExtend.phoneNumber.replace("+84", "0") : '' }
                 onChange={handleChange}
                 error={hasError('phoneNumber')}
                 helperText={
@@ -232,9 +240,9 @@ const AccountDetails = props => {
             >
               <SelectAddress list={ provinces } fullWidth={true} disable={provincesLoading} margin="dense" action={ getProvince } label="Tỉnh/thành phố" />
               &nbsp;
-              {/* <SelectAddress list={districts} fullWidth={true} disable={!enableDistrict} margin="dense" action={ getDistrict } label="Quận/huyện" /> */}
+              <SelectAddress list={districts} fullWidth={true} disable={districtsLoading} margin="dense" action={ getDistrict } label="Quận/huyện" />
               &nbsp;
-              {/* <SelectAddress list={communes} fullWidth={true} disable={!enableCommune} margin="dense" action={ getCommune } label="Phường/xã" /> */}
+              <SelectAddress list={communes} fullWidth={true} disable={communesLoading} margin="dense" action={ getCommune } label="Phường/xã" />
               &nbsp;
               <TextField
                 fullWidth
@@ -243,7 +251,7 @@ const AccountDetails = props => {
                 name="street"
                 variant="outlined"
                 defaultValue={ profileExtend.address.street }
-                disabled={true}
+                disabled={streetLoading}
                 onChange={ handleStreet }
               />
             </Grid>
@@ -263,9 +271,9 @@ const AccountDetails = props => {
             color="primary"
             variant="contained"
             type="submit"
-            disabled={!formState.isValid||false}
+            disabled={!formState.isValid||loadingButton}
           >
-            {false && <CircularProgress size={15} />} Cập nhật
+            {loadingButton && <CircularProgress size={15} />} Cập nhật
           </Button>
         </CardActions>
       </form>
@@ -279,19 +287,37 @@ AccountDetails.propTypes = {
 
   provinces: PropTypes.array.isRequired,
   provincesLoading: PropTypes.bool.isRequired,
+  districts: PropTypes.array.isRequired,
+  districtsLoading: PropTypes.bool.isRequired,
+  communes: PropTypes.array.isRequired,
+  communesLoading: PropTypes.bool.isRequired,
+  streetLoading: PropTypes.bool.isRequired,
 
   getProvinces: PropTypes.func.isRequired,
-  updateProfile: PropTypes.func.isRequired,
+  getDistricts: PropTypes.func.isRequired,
+  getCommunes: PropTypes.func.isRequired,
+  updateMyProfile: PropTypes.func.isRequired,
+
+  loadingButton: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
     provinces: state.dataAddress.provinces,
     provincesLoading: state.dataAddress.provincesLoading,
+    districts: state.dataAddress.districts,
+    districtsLoading: state.dataAddress.districtsLoading,
+    communes: state.dataAddress.communes,
+    communesLoading: state.dataAddress.communesLoading,
+    streetLoading: state.dataAddress.streetLoading,
+
+    loadingButton: state.dataMyProfile.loadingButton
 });
 
 const mapDispatchToProps = dispatch => ({
   getProvinces: () => dispatch( GetProvinces() ),
-  updateProfile: profile => dispatch( UpdateProfile(profile)),
+  getDistricts: code => dispatch( GetDistricts(code) ),
+  getCommunes: code => dispatch( GetCommunes(code) ),
+  updateMyProfile: profile => dispatch( UpdateMyProfile(profile)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountDetails)
