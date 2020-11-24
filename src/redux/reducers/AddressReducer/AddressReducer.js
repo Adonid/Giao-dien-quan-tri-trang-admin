@@ -19,7 +19,7 @@ const AddressReducer = (state = dataAddress, action) => {
     switch (action.type) {
         
         case GET_PROVINCES:
-            return { ...state, provincesLoading: true };
+            return { ...state, provincesLoading: true, districtsLoading: true, communesLoading: true, streetLoading: true };
         
         case GET_PROVINCES_SUCCESS:
             return { ...state, provincesLoading: false, provinces: action.payload.provinces };
@@ -29,7 +29,7 @@ const AddressReducer = (state = dataAddress, action) => {
 
             
         case GET_DISTRICTS:
-            return { ...state, districtsLoading: true };
+            return { ...state, districtsLoading: true, communesLoading: true, streetLoading: true };
         
         case GET_DISTRICTS_SUCCESS:
             return { ...state, districtsLoading: false, districts: action.payload.districts };
@@ -38,10 +38,10 @@ const AddressReducer = (state = dataAddress, action) => {
             return { ...state, districtsLoading: false };
 
         case GET_COMMUNES:
-            return { ...state, communesLoading: true };
+            return { ...state, communesLoading: true, streetLoading: true };
         
         case GET_COMMUNES_SUCCESS:
-            return { ...state, communesLoading: false, communes: action.payload.communes };
+            return { ...state, communesLoading: false, streetLoading: false, communes: action.payload.communes };
 
         case GET_COMMUNES_ERROR:
             return { ...state, communesLoading: false };
