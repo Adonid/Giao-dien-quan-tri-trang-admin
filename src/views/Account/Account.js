@@ -13,7 +13,7 @@ import {
 import Skeleton from '@material-ui/lab/Skeleton';
 import { AccountProfile, AccountDetails } from './components';
 import { connect } from 'react-redux';
-import { GetProfileUser } from 'redux/actions';
+import { GetMyProfile } from 'redux/actions';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,11 +33,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Account = props => {
-  const { className, loading, profile, profileExtend, getProfileUser, rest } = props;
+  const { className, loading, profile, profileExtend, getMyProfile, rest } = props;
   const classes = useStyles();
 
   useEffect( () => {
-    getProfileUser();
+    getMyProfile();
   },[]);
 
   if(loading){
@@ -140,17 +140,17 @@ Account.propTypes = {
   profile: PropTypes.object.isRequired,
   profileExtend: PropTypes.object.isRequired,
 
-  getProfileUser: PropTypes.func.isRequired,
+  getMyProfile: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  profile: state.dataUserProfile.profile,
-  profileExtend: state.dataUserProfile.profileExtend,
-  loading: state.dataUserProfile.loading,
+  profile: state.dataMyProfile.profile,
+  profileExtend: state.dataMyProfile.profileExtend,
+  loading: state.dataMyProfile.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getProfileUser: () => dispatch( GetProfileUser() ),
+  getMyProfile: () => dispatch( GetMyProfile() ),
 });
 
 
