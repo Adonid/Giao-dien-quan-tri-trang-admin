@@ -159,7 +159,6 @@ const AccountDetails = props => {
     event.preventDefault();
     const newProfile = {...formState.values, address: {...formOptions}};
     updateMyProfile( newProfile );
-    // console.log(newProfile);
   }
 
   return (
