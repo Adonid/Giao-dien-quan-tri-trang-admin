@@ -30,7 +30,6 @@ const Main = props => {
     children, 
     dataAlertNotify, 
     dataAlertUserDetail, 
-    dataAlertAddUser, 
     dataAlertCreateNewPost, 
     dataAlertDetailNewPost, 
     dataAlertUpdateTerm, 
@@ -76,7 +75,6 @@ const Main = props => {
       </main>
 
       <Snackbars data={ dataAlertNotify } />
-      <Snackbars data={ dataAlertAddUser } />
       <Snackbars data={ dataAlertUserDetail } />
       <Snackbars data={ dataAlertCreateNewPost } />
       <Snackbars data={ dataAlertDetailNewPost } />
@@ -97,7 +95,6 @@ Main.propTypes = {
   children: PropTypes.node,
 
   dataAlertNotify: PropTypes.object.isRequired,
-  dataAlertAddUser: PropTypes.object.isRequired,
   dataAlertUserDetail: PropTypes.object.isRequired,
   dataAlertCreateNewPost: PropTypes.object.isRequired,
   dataAlertDetailNewPost: PropTypes.object.isRequired,
@@ -109,7 +106,6 @@ Main.propTypes = {
 
   const mapStateToProps = state => ({
       dataAlertNotify: state.dataNotifys.alert,
-      dataAlertAddUser: state.dataNewUser.alert,
       dataAlertUserDetail: state.dataUserDetail.alert,
       dataAlertCreateNewPost: state.dataManipulationPost.createPost.alert,
       dataAlertDetailNewPost: state.dataPostDetail.limitInfo.alert,
