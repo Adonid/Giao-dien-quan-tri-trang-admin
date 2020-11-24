@@ -119,7 +119,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   maxHeightPerfectScrollbar: {
-    maxHeight: 150
+    maxHeight: 204
   },
   isHidenField: {
     display: 'none'
