@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import clsx from 'clsx';
 import validate from 'validate.js';
 import { makeStyles } from '@material-ui/styles';
@@ -86,7 +85,7 @@ const Password = props => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    props.updatePassword(formState.values.password);
+    // props.updatePassword(formState.values.password);
     setFormState(formState => ({...formState, isValid: false}));
   }
 
@@ -104,7 +103,19 @@ const Password = props => {
         <CardContent>
           <TextField
             fullWidth
-            label="Mật khẩu"
+            label="Mật khẩu hiện tại"
+            name="oldPassword"
+            type="password"
+            required
+            variant="outlined"
+            onChange={handleChange}
+          />
+        </CardContent>
+        <Divider />
+        <CardContent>
+          <TextField
+            fullWidth
+            label="Mật khẩu mới"
             name="password"
             type="password"
             required
@@ -117,7 +128,7 @@ const Password = props => {
           />
           <TextField
             fullWidth
-            label="Xác nhận mật khẩu"
+            label="Nhập lại mật khẩu"
             name="confirm"
             style={{ marginTop: '1rem' }}
             type="password"
@@ -150,21 +161,5 @@ Password.propTypes = {
   className: PropTypes.string
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    prop: state.prop
-  }
-}
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    updatePassword: pw => {
-      dispatch({
-        type: "UPDATE_PASSWORD",
-        password: pw
-      })
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Password)
+export default Password;
