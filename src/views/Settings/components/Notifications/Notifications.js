@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/styles';
 import {
@@ -29,7 +28,7 @@ const Notifications = props => {
 
   const classes = useStyles();
 
-  const [formChecked, setFormChecked] = useState(props.mockDataNotifys);
+  const [formChecked, setFormChecked] = useState({});
 
   const handleChange = event => {
     event.persist();
@@ -42,7 +41,7 @@ const Notifications = props => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    props.applyNotify(formChecked)
+    console.log(formChecked);
   }
 
   return (
@@ -90,7 +89,7 @@ const Notifications = props => {
                   <Checkbox
                     color="primary"
                     name="comment"
-                    defaultChecked={ props.mockDataNotifys.comment }
+                    defaultChecked={ true }
                     onChange={ handleChange }
                   />
                 }
@@ -101,7 +100,7 @@ const Notifications = props => {
                   <Checkbox
                     color="primary"
                     name="system"
-                    defaultChecked={ props.mockDataNotifys.system }
+                    defaultChecked={ false }
                     onChange={ handleChange }
                   />
                 }
@@ -146,7 +145,7 @@ const Notifications = props => {
                   <Checkbox
                     color="primary"
                     name="user"
-                    defaultChecked={ props.mockDataNotifys.user }
+                    defaultChecked={ false }
                     onChange={ handleChange }
                   />
                 }
@@ -161,7 +160,7 @@ const Notifications = props => {
             color="primary"
             variant="outlined"
             type="submit"
-            disabled={ props.mockDataNotifys==formChecked??false}
+            disabled={false}
           >
             Áp dụng
           </Button>
@@ -175,22 +174,5 @@ Notifications.propTypes = {
   className: PropTypes.string
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    mockDataNotifys: state.dataUserEditor.dataUser.notifys,
-  }
-}
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    applyNotify: data => {
-      dispatch({
-        type: "APPLY_NOTIFY",
-        data: data
-      })
-    }
-  }
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Notifications)
+export default Notifications;

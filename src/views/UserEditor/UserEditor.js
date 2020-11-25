@@ -152,7 +152,7 @@ const UserEditor = props => {
   const classes = useStyles();
 
   const [formState, setFormState] = useState({
-    isValid: true,
+    isValid: false,
     values: {},
     touched: {},
     errors: {}
@@ -226,7 +226,7 @@ const UserEditor = props => {
       const contentUpload = {
         uid,
         type: 'upload-avatar',
-        imageInit: account.photoURL,
+        imageInit: account.photoURL ? account.photoURL : avatar.newToken ? getAvatarUrl(avatar.newToken) : '',
         titleName: 'Tải lên ảnh avatar',
         options:{}
       };
@@ -462,7 +462,6 @@ const mapStateToProps = state => ({
     account: state.dataMannegerUser.accountEdit,
     address: state.dataMannegerUser.addressEdit,
     avatar: state.dataMannegerUser.avatarEdit,
-    provinces: state.dataMannegerUser.provinces,
 
     provinces: state.dataAddress.provinces,
     provincesLoading: state.dataAddress.provincesLoading,

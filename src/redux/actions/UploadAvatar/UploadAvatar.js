@@ -35,7 +35,7 @@ const UploadAvatar = dataUpload => async dispatch => {
             dispatch( {
                 type: UPLOAD_AVATAR_COMPLATE,
                 payload: {
-                    token: res.data.tokenImg,
+                    token: res.data.token,
                 }
             });
         })

@@ -43,7 +43,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const UploadCropImg = props => {
 
-  const { openUploadImg, closeUploadImg, contentUploadImg, uploadAvatar, uploadAvatarDirectly, ...rest } = props;
+  const { openUploadImg, closeUploadImg, contentUploadImg, uploadAvatar, uploadAvatarDirectly } = props;
 
   const classes = useStyles();
 

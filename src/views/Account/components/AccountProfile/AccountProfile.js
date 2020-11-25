@@ -82,7 +82,7 @@ const AccountProfile = props => {
   const openUploadAvatar = () => {
     const contentUpload = {
       type: 'upload-avatar-directly',
-      imageInit: profile.photoURL || getAvatarUrl(profile.avatarDraft.newToken),
+      imageInit: tokenAvatar ? getAvatarUrl(tokenAvatar) : profile.photoURL,
       titleName: 'Cập nhật ảnh đại diện',
       options:{}
     };

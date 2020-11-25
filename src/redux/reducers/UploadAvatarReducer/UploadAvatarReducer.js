@@ -15,7 +15,7 @@ const UploadAvatarReducer = (state = dataUploadAvatar, action) => {
             return { ...state, loading: true };
 
         case UPLOAD_AVATAR_DIRECTLY_SUCCESS:
-            return { ...state, loading: false, tokenAvatar: action.payload.token };        
+            return { ...state, loading: false, tokenAvatar: action.payload.token }; 
         
         case UPLOAD_AVATAR_DIRECTLY_ERROR:
             return { ...state, loading: false };        

@@ -42,67 +42,69 @@ const Account = props => {
 
   if(loading){
     return (
-      <Grid
-        container
-        spacing={2}
-      >
+      <div className={classes.root}>
         <Grid
-          item
-          md={6}
-          xs={12}
+          container
+          spacing={2}
         >
-          <Card
-            {...rest}
-            className={clsx(classes.padding, className)}
+          <Grid
+            item
+            md={5}
+            xs={12}
           >
-            <CardContent>
-              <div className={classes.skeletonDetail}>
-                <div className={ classes.skeletonText}>
-                  <Skeleton animation="wave" style={{ marginBottom: 10 }} width="60%" />
-                  <Skeleton animation="wave" style={{ marginBottom: 5 }} height={10} width="60%" />
-                  <Skeleton animation="wave" height={10} width="60%" />
-                </div>
-                <div>
-                  <Skeleton animation="wave" variant="circle" width={80} height={80} />
-                </div>
-              </div>
-            </CardContent>
-            <Divider />
-            <CardActions>
-                <Skeleton animation="wave" style={{ marginBottom: 10 }} width="15%" />
-            </CardActions>
-          </Card>
-        </Grid>
-
-        <Grid
-          item
-          md={6}
-          xs={12}
-        >
             <Card
               {...rest}
               className={clsx(classes.padding, className)}
             >
-              <CardHeader
-                title={<Skeleton animation="wave" style={{ marginBottom: 5 }} width="20%" />}
-                subheader={<Skeleton animation="wave" height={10} width="40%" />}
-              />
-              <Divider />
               <CardContent>
-                <Grid container spacing={5} >
-                  <Grid item xs={12} sm={6}>
-                    <Skeleton animation="wave" style={{ marginBottom: 15 }} width="100%" />
-                    <Skeleton animation="wave" width="100%" />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Skeleton animation="wave" style={{ marginBottom: 15 }} width="100%" />
-                    <Skeleton animation="wave" width="100%" />
-                  </Grid>
-                </Grid>
+                <div className={classes.skeletonDetail}>
+                  <div className={ classes.skeletonText}>
+                    <Skeleton animation="wave" style={{ marginBottom: 10 }} width="60%" />
+                    <Skeleton animation="wave" style={{ marginBottom: 5 }} height={10} width="60%" />
+                    <Skeleton animation="wave" height={10} width="60%" />
+                  </div>
+                  <div>
+                    <Skeleton animation="wave" variant="circle" width={80} height={80} />
+                  </div>
+                </div>
               </CardContent>
+              <Divider />
+              <CardActions>
+                  <Skeleton animation="wave" style={{ marginBottom: 10 }} width="20%" />
+              </CardActions>
             </Card>
+          </Grid>
+
+          <Grid
+            item
+            md={7}
+            xs={12}
+          >
+              <Card
+                {...rest}
+                className={clsx(classes.padding, className)}
+              >
+                <CardHeader
+                  title={<Skeleton animation="wave" style={{ marginBottom: 5 }} width="20%" />}
+                  subheader={<Skeleton animation="wave" height={10} width="40%" />}
+                />
+                <Divider />
+                <CardContent>
+                  <Grid container spacing={5} >
+                    <Grid item xs={12} sm={6}>
+                      <Skeleton animation="wave" style={{ marginBottom: 15 }} width="100%" />
+                      <Skeleton animation="wave" width="100%" />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <Skeleton animation="wave" style={{ marginBottom: 15 }} width="100%" />
+                      <Skeleton animation="wave" width="100%" />
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
+          </Grid>
         </Grid>
-      </Grid>
+      </div>
     );
   }
 

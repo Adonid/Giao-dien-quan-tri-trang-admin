@@ -29,14 +29,8 @@ const dataMannegerUser = {
     accountEdit: {},
     addressEdit: {},
     avatarEdit: {},
-    provinces: [],
-    districts: [],
-    communes: [],
-    enableProvince: true,
-    enableDistrict: false,
-    enableCommune: false,
     loadingEdit: false,
-    loadingButtonSave: false,
+    loadingButtonSave: false
 }
 
 const MannegerUserReducer = (state = dataMannegerUser, action) => {
@@ -113,13 +107,13 @@ const MannegerUserReducer = (state = dataMannegerUser, action) => {
             return { ...state, loadingEdit: true };
 
         case GET_USER_EDIT_SUCCESS:
-            return { ...state, loadingEdit: false, accountEdit: action.payload.account, addressEdit: action.payload.address, avatarEdit: action.payload.avatarDraft, provinces: action.payload.provinces };
+            return { ...state, loadingEdit: false, accountEdit: action.payload.account, addressEdit: action.payload.address, avatarEdit: action.payload.avatarDraft };
 
         case GET_USER_EDIT_ERROR:
             return { ...state, loadingEdit: false };
         
         case UPLOAD_AVATAR_COMPLATE:
-            return { ...state, accountEdit: {...state.accountEdit, photoURL: getAvatarUrl(action.payload.token)}, avatarEdit: {...state.avatarEdit, newToken: action.payload.token} };  // Cap nhat lai token & url anh khi up len
+            return { ...state, accountEdit: {...state.accountEdit, photoURL: getAvatarUrl(action.payload.token)} };  // Anh tai vi tri trang sua user
         
         
         // CAP NHAT USER

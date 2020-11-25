@@ -4,6 +4,8 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Avatar, Typography } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { getAvatarUrl } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,6 +24,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Profile = props => {
+  const { tokenAvatar } = props;
   const classes = useStyles();
 
   return (
@@ -32,7 +35,7 @@ const Profile = props => {
         alt="Person"
         className={classes.avatar}
         component={RouterLink}
-        src={ "https://firebasestorage.googleapis.com/v0/b/blogger-firebase.appspot.com/o/avatar%2Ff1cdd5de-681b-4837-8bf4-adcbd5803e73.jpg?alt=media&token=f1cdd5de-681b-4837-8bf4-adcbd5803e73" }
+        src={ tokenAvatar ? getAvatarUrl(tokenAvatar) : "https://firebasestorage.googleapis.com/v0/b/blogger-firebase.appspot.com/o/avatar%2Ff1cdd5de-681b-4837-8bf4-adcbd5803e73.jpg?alt=media&token=f1cdd5de-681b-4837-8bf4-adcbd5803e73" }
         to="/settings"
       />
       <Typography
@@ -47,7 +50,11 @@ const Profile = props => {
 };
 
 Profile.propTypes = {
-  
+   tokenAvatar: PropTypes.string.isRequired,
 };
 
-export default Profile
+const mapStateToProps = state => ({
+  tokenAvatar: state.dataUploadAvatar.tokenAvatar
+});
+
+export default connect(mapStateToProps, null)(Profile)

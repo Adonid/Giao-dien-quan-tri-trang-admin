@@ -26,7 +26,6 @@ const GetUserEdit = uid => async dispatch => {
                     account: res.data.account,
                     address: res.data.address,
                     avatarDraft: res.data.avatarDraft,
-                    provinces: res.data.provinces,
                 }
             });
         })
