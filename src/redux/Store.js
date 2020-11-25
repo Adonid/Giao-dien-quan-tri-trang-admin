@@ -21,6 +21,7 @@ import {
     MyProfileReducer as MyProfile,
     UploadAvatarReducer as UploadAvatar,
     AddressReducer as Address,
+    NotifyRulesReducer as NotifyRules,
 
 } from './reducers';
 
@@ -42,6 +43,7 @@ const allReducers = combineReducers({
     dataMyProfile: MyProfile,
     dataUploadAvatar: UploadAvatar,
     dataAddress: Address,
+    dataNotifyRules: NotifyRules,
 });
 
 const persistedReducer = persistReducer({key: 'root', storage} , allReducers);

@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(4)
   },
   padding: {
-    padding: theme.spacing(2.5)
+    padding: '0 15px 15px 15px'
   },
   skeletonDetail: {
     display: 'flex',

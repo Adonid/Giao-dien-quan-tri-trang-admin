@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Avatar, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getAvatarUrl } from 'helpers';
+import { getAvatarUrl, getInitials } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,12 +32,14 @@ const Profile = props => {
       className={clsx(classes.root)}
     >
       <Avatar
-        alt="Person"
-        className={classes.avatar}
-        component={RouterLink}
-        src={ tokenAvatar ? getAvatarUrl(tokenAvatar) : "https://firebasestorage.googleapis.com/v0/b/blogger-firebase.appspot.com/o/avatar%2Ff1cdd5de-681b-4837-8bf4-adcbd5803e73.jpg?alt=media&token=f1cdd5de-681b-4837-8bf4-adcbd5803e73" }
-        to="/settings"
-      />
+          alt="Admin"
+          className={classes.avatar}
+          component={RouterLink}
+          src={ tokenAvatar ? getAvatarUrl(tokenAvatar) : "https://firebasestorage.googleapis.com/v0/b/blogger-firebase.appspot.com/o/avatar%2Ff1cdd5de-681b-4837-8bf4-adcbd5803e73.jpg?alt=media&token=f1cdd5de-681b-4837-8bf4-adcbd5803e73" }
+          to="/settings"
+          >
+          {getInitials( "Phan Trọng Hoàng" )}
+      </Avatar>
       <Typography
         className={classes.name}
         variant="h4"

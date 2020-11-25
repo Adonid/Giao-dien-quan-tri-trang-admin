@@ -15,3 +15,4 @@ export { default as MessageReducer  } from './MessageReducer';
 export { default as MyProfileReducer  } from './MyProfileReducer';
 export { default as UploadAvatarReducer  } from './UploadAvatarReducer';
 export { default as AddressReducer  } from './AddressReducer';
+export { default as NotifyRulesReducer  } from './NotifyRulesReducer';

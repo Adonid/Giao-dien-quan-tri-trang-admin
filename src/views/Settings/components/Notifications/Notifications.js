@@ -12,8 +12,11 @@ import {
   FormControlLabel,
   Checkbox,
   Typography,
-  Button
+  Button,
+  CircularProgress
 } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { UpdateNotifyRules } from 'redux/actions';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -24,11 +27,15 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Notifications = props => {
-  const { className, ...rest } = props;
+  const { className, loading, updateNotifyRules , notifyRules, ...rest } = props;
 
   const classes = useStyles();
 
-  const [formChecked, setFormChecked] = useState({});
+  const [formChecked, setFormChecked] = useState({
+    user: notifyRules.getUserEmail,
+    admin: notifyRules.getAdminEmail,
+    comment: notifyRules.getComment,
+  });
 
   const handleChange = event => {
     event.persist();
@@ -41,7 +48,7 @@ const Notifications = props => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log(formChecked);
+    updateNotifyRules(formChecked);
   }
 
   return (
@@ -88,23 +95,22 @@ const Notifications = props => {
                 control={
                   <Checkbox
                     color="primary"
-                    name="comment"
-                    defaultChecked={ true }
-                    onChange={ handleChange }
+                    defaultChecked
+                    disabled
                   />
                 }
-                label="Từ bình luận bài viết"
+                label="Từ hệ thống"
               />
               <FormControlLabel
                 control={
                   <Checkbox
                     color="primary"
-                    name="system"
-                    defaultChecked={ false }
+                    name="comment"
+                    defaultChecked={ notifyRules.getComment }
                     onChange={ handleChange }
                   />
                 }
-                label="Từ hệ thống"
+                label="Từ bình luận bài viết"
               />
             </Grid>
             <Grid
@@ -134,8 +140,9 @@ const Notifications = props => {
                 control={
                   <Checkbox 
                     color="primary"
-                    defaultChecked
-                    disabled 
+                    name="admin"
+                    defaultChecked={ notifyRules.getAdminEmail }
+                    onChange={ handleChange }
                   />
                 }
                 label="Từ Admin"
@@ -145,7 +152,7 @@ const Notifications = props => {
                   <Checkbox
                     color="primary"
                     name="user"
-                    defaultChecked={ false }
+                    defaultChecked={ notifyRules.getUserEmail }
                     onChange={ handleChange }
                   />
                 }
@@ -160,9 +167,9 @@ const Notifications = props => {
             color="primary"
             variant="outlined"
             type="submit"
-            disabled={false}
+            disabled={loading}
           >
-            Áp dụng
+            {loading && <CircularProgress size={15} />} Áp dụng
           </Button>
         </CardActions>
       </form>
@@ -171,8 +178,20 @@ const Notifications = props => {
 };
 
 Notifications.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
+  notifyRules: PropTypes.object.isRequired,
+
+  updateNotifyRules: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = state => ({
+    loading: state.dataNotifyRules.loadingSaveNotify
+});
 
-export default Notifications;
+const mapDispatchToProps = dispatch => ({
+    updateNotifyRules: newRules => dispatch( UpdateNotifyRules(newRules) ),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications)

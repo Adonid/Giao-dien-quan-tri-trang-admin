@@ -18,3 +18,5 @@ export { default as GetMyProfile } from './GetMyProfile';
 export { default as GetProvinces } from './GetProvinces';
 export { default as GetDistricts } from './GetDistricts';
 export { default as GetCommunes } from './GetCommunes';
+export { default as GetNotifyRules } from './GetNotifyRules';
+export { default as UpdateNotifyRules } from './UpdateNotifyRules';
