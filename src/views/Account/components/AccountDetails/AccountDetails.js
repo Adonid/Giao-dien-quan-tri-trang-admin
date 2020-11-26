@@ -89,7 +89,7 @@ const AccountDetails = props => {
   const classes = useStyles();
 
   const [formState, setFormState] = useState({
-    isValid: false,
+    isValid: true,
     values: {},
     touched: {},
     errors: {}
@@ -159,6 +159,7 @@ const AccountDetails = props => {
     event.preventDefault();
     const newProfile = {...formState.values, address: {...formOptions}};
     updateMyProfile( newProfile );
+    setFormState(formState => ({...formState, isValid: false}));
   }
 
   return (

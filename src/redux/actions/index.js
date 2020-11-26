@@ -20,3 +20,5 @@ export { default as GetDistricts } from './GetDistricts';
 export { default as GetCommunes } from './GetCommunes';
 export { default as GetNotifyRules } from './GetNotifyRules';
 export { default as UpdateNotifyRules } from './UpdateNotifyRules';
+export { default as UpdatePassword } from './UpdatePassword';
+export { default as CreateCategory } from './CreateCategory';

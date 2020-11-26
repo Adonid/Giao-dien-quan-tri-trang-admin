@@ -35,7 +35,7 @@ const Settings = props => {
 
   useEffect( () => {
     getNotifyRules();
-    document.title="Nhận thông báo";
+    document.title="Nhận thông báo | Thay đổi mật khẩu";
   }, []);
 
   if(loading){
@@ -61,27 +61,27 @@ const Settings = props => {
               <CardContent>
                 <Grid container spacing={5} >
                     <Grid item xs={12} sm={6} className={classes.horizator}>
-                      <Skeleton animation="wave" style={{ marginRight: 15 }} width="27px" height="36px" />
+                      <Skeleton animation="wave" style={{ marginRight: 15 }} width="20px" height="28px" />
                       <Skeleton animation="wave" width="50%" height={10} />
                     </Grid>
                     <Grid item xs={12} sm={6} className={classes.horizator}>
-                      <Skeleton animation="wave" style={{ marginRight: 15 }} width="27px" height="36px" />
+                      <Skeleton animation="wave" style={{ marginRight: 15 }} width="20px" height="28px" />
                       <Skeleton animation="wave" width="50%" height={10} />
                     </Grid>
                     <Grid item xs={12} sm={6} className={classes.horizator}>
-                      <Skeleton animation="wave" style={{ marginRight: 15 }} width="27px" height="36px" />
+                      <Skeleton animation="wave" style={{ marginRight: 15 }} width="20px" height="28px" />
                       <Skeleton animation="wave" width="50%" height={10} />
                     </Grid>
                     <Grid item xs={12} sm={6} className={classes.horizator}>
-                      <Skeleton animation="wave" style={{ marginRight: 15 }} width="27px" height="36px" />
+                      <Skeleton animation="wave" style={{ marginRight: 15 }} width="20px" height="28px" />
                       <Skeleton animation="wave" width="50%" height={10} />
                     </Grid>
                     <Grid item xs={12} sm={6} className={classes.horizator}>
-                      <Skeleton animation="wave" style={{ marginRight: 15 }} width="27px" height="36px" />
+                      <Skeleton animation="wave" style={{ marginRight: 15 }} width="20px" height="28px" />
                       <Skeleton animation="wave" width="50%" height={10} />
                     </Grid>
                     <Grid item xs={12} sm={6} className={classes.horizator}>
-                      <Skeleton animation="wave" style={{ marginRight: 15 }} width="27px" height="36px" />
+                      <Skeleton animation="wave" style={{ marginRight: 15 }} width="20px" height="28px" />
                       <Skeleton animation="wave" width="50%" height={10} />
                     </Grid>
                 </Grid>

@@ -10,14 +10,23 @@ import {
   CardActions,
   Divider,
   Button,
-  TextField
+  TextField,
+  CircularProgress
 } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { UpdatePassword } from 'redux/actions';
 
-const useStyles = makeStyles(() => ({
-  root: {}
+const useStyles = makeStyles( theme => ({
+  root: {},
+  textField: {
+    marginTop: theme.spacing(2)
+  },
 }));
 
 const schema = {
+  oldPassword: {
+    presence: { allowEmpty: false, message: '^Mật khẩu không để trống' },
+  },
   password: {
     presence: { allowEmpty: false, message: '^Mật khẩu không để trống' },
     length: {
@@ -41,7 +50,7 @@ const schema = {
 };
 
 const Password = props => {
-  const { className, ...rest } = props;
+  const { className, loading, message, updatePassword, ...rest } = props;
 
   const classes = useStyles();
 
@@ -54,13 +63,19 @@ const Password = props => {
 
   useEffect(() => {
     const errors = validate(formState.values, schema);
-
     setFormState(formState => ({
       ...formState,
       isValid: errors ? false : true,
       errors: errors || {}
     }));
   }, [formState.values]);
+
+  useEffect( () => {
+    setFormState(formState => ({
+      ...formState,
+      errors: !loading ? {message: message} : {}
+    }));
+  }, [loading]);
 
   const handleChange = event => {
     event.persist();
@@ -82,10 +97,11 @@ const Password = props => {
   };
 
   const hasError = field => formState.touched[field] && formState.errors[field] ? true : false;
+  const hasErrorApi = field => formState.errors[field] ? true : false;
 
   const handleSubmit = event => {
     event.preventDefault();
-    // props.updatePassword(formState.values.password);
+    updatePassword(formState.values);
     setFormState(formState => ({...formState, isValid: false}));
   }
 
@@ -96,7 +112,7 @@ const Password = props => {
     >
       <form onSubmit={ handleSubmit }>
         <CardHeader
-          subheader="Cập nhật mật khẩu"
+          subheader="Thay đổi mật khẩu"
           title="Mật khẩu"
         />
         <Divider />
@@ -108,6 +124,10 @@ const Password = props => {
             type="password"
             required
             variant="outlined"
+            error={hasError('oldPassword')}
+            helperText={
+              hasError('oldPassword') ? formState.errors.oldPassword[0] : null
+            }
             onChange={handleChange}
           />
         </CardContent>
@@ -140,6 +160,17 @@ const Password = props => {
             }
             onChange={handleChange}
           />
+          <TextField
+            className={classes.textField}
+            error={true}
+            fullWidth
+            helperText={
+              hasErrorApi('message') ? formState.errors.message : null
+            }
+            name="message"
+            type="hidden"
+            variant="outlined"
+          />
         </CardContent>
         <Divider />
         <CardActions>
@@ -147,9 +178,9 @@ const Password = props => {
             color="primary"
             variant="outlined"
             type="submit"
-            disabled={!formState.isValid}
+            disabled={!formState.isValid||loading}
           >
-            Cập nhật
+            {loading && <CircularProgress size={15} />} Cập nhật
           </Button>
         </CardActions>
       </form>
@@ -158,8 +189,20 @@ const Password = props => {
 };
 
 Password.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
+
+  updatePassword: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = state => ({
+    loading: state.dataNotifyRules.loadingSavePassword,
+    message: state.dataNotifyRules.messagePassword,
+});
 
-export default Password;
+const mapDispatchToProps = dispatch =>  ({
+  updatePassword: password => dispatch(UpdatePassword(password)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Password)
