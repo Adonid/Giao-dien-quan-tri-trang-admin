@@ -1,25 +1,25 @@
 import axios from 'common/Axios';
 import { 
-    CREATE_CATEGORY, CREATE_CATEGORY_SUCCESS, CREATE_CATEGORY_ERROR,
+    DELETE_CATEGORY, DELETE_CATEGORY_SUCCESS, DELETE_CATEGORY_ERROR,
     LOGOUT_ADMIN,
     MESSAGE_MINI,
     MESSAGE_MAIN
 } from 'redux/constans';
 import { ReadCookie } from 'common';
 
-const CreateCategory = category => async dispatch => {
+const DeleteCategory = id => async dispatch => {
 
-    dispatch({ type: CREATE_CATEGORY});
+    dispatch({ type: DELETE_CATEGORY});
 
     await axios({
         method: 'POST',
-        url: 'admin/create-category',
+        url: 'admin/delete-category',
         headers: { Authorization: "Bearer " + ReadCookie()},
-        data: category
+        data: {id}
         })
         .then( res => {
             dispatch( {
-                type: CREATE_CATEGORY_SUCCESS,
+                type: DELETE_CATEGORY_SUCCESS,
                 payload: {
                     categorys: res.data.categorys,
                 }
@@ -48,9 +48,9 @@ const CreateCategory = category => async dispatch => {
                     type: "warning"
                 },
             });
-            dispatch({ type: CREATE_CATEGORY_ERROR});
+            dispatch({ type: DELETE_CATEGORY_ERROR});
         });
 
 }
 
-export default CreateCategory;
+export default DeleteCategory;

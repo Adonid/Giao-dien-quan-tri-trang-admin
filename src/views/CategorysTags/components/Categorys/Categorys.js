@@ -13,13 +13,15 @@ import {
     Box, 
     Chip, 
     Avatar,
-    CircularProgress
+    CircularProgress,
+    Tooltip
  } from '@material-ui/core';
  import CategoryOutlinedIcon from '@material-ui/icons/CategoryOutlined';
- import { InputNotBorder, UploadCropSingleImage } from 'components';
+ import { InputNotBorder } from 'components';
 import { getCategoryPhotoUrl, getInitials } from 'helpers';
-import { CreateCategory } from 'redux/actions';
+import { CreateCategory, DeleteCategory } from 'redux/actions';
 import dayjs from 'dayjs';
+import { OPEN_DIALOG_UPLOAD_IMG } from 'redux/constans';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -46,34 +48,39 @@ const useStyles = makeStyles(theme => ({
 
 const Categorys = props => {
 
-    const { className, categorys, createCategory, deleteCategory, updateCategory, ...rest } = props;
+    const { 
+        className, 
+        categorys, 
+        createCategory, 
+        deleteCategory, 
+        updateCategory, 
+        loadingCreate,
+        loadingEdit,
+        openEditCategory,
+        ...rest } = props;
 
     const classes = useStyles();
-
-    const [chipsCat, setChipsCat] = useState(categorys);
-
-    const [ openUploadImage, setOpenUploadImage ] = useState(false);
-    const [ dataImage, setDataImage ] = useState('/images/products/contemplative-reptile.jpg');
-    const [ dataChip, setDataChip ] = useState(null);
     
-      const handleDelete = chipToDelete => () => {
-        deleteCategory(Number(chipToDelete));
+      const handleDelete = id => () => {
+        deleteCategory(id);
       };
 
     const handleAddCategory = name => {
         createCategory({name, time: dayjs().format("MM/DD/YYYY | hh:mm A")});
-        // console.log({category, time: dayjs().format("MM/DD/YYYY | hh:mm A")});
     }
     
-    const handleClick = chip => {
-        setOpenUploadImage(!openUploadImage);
-        const updateDataChip = [...chipsCat].filter( item => item.id===Number(chip))[0];
-        setDataChip( { ...updateDataChip, title: "Tên danh mục"}); 
+    const handleUpdateCategory = (id, tokenImg, name) => {
+        const contentUpload = {
+            type: 'edit-category',
+            idCategory: id,
+            imageInit: tokenImg ? getCategoryPhotoUrl(tokenImg) : "",
+            titleName: 'Upload ảnh danh mục',
+            valueText: name,
+            labelText: 'Tên danh mục',
+            options:{}
+          };
+          openEditCategory(contentUpload);
     }
-
-    const updateCat = dataCat => {
-        updateCategory( dataCat );
-    };
 
     return (
         <React.Fragment>
@@ -85,7 +92,7 @@ const Categorys = props => {
                     >
                         <CardActions disableSpacing className={classes.padding}>
                             <FormControl fullWidth >
-                                <InputNotBorder callBack={ handleAddCategory } placeholder={<CircularProgress size={18} />} icon={ <CategoryOutlinedIcon /> } fullWidth autoFocus />
+                                <InputNotBorder callBack={ handleAddCategory } placeholder="Tên danh mục" icon={ loadingCreate ? <CircularProgress size={15} /> : <CategoryOutlinedIcon /> } fullWidth autoFocus />
                             </FormControl>
                         </CardActions>
                         <Divider/>
@@ -93,21 +100,27 @@ const Categorys = props => {
                             <Box component="ul" className={classes.contentCategorys}>
                                 {categorys.map( chip => (
                                     <li key={ chip.id }>
-                                        <Chip
-                                            label={chip.name + `(${chip.postsList.length})`}
-                                            onDelete={ chip.id==="default" ? undefined : handleDelete( chip.id ) }
-                                            className={classes.chip}
-                                            variant="outlined"
-                                            onClick={ event => handleClick(chip.id) }
-                                            avatar={
-                                                <Avatar
-                                                className={classes.avatar}
-                                                src={ chip.tokenImg ? getCategoryPhotoUrl(chip.tokenImg) : "" }
-                                                >
-                                                {getInitials( chip.name )}
-                                                </Avatar>
-                                            }
-                                        />
+                                        <Tooltip 
+                                            placement="bottom" 
+                                            title={ Object.keys(chip.postsList).length ? Object.values(chip.postsList).map( post => <React.Fragment><span>{ post.name }</span> <br/></React.Fragment>) : <React.Fragment><span>Chưa có bài viết</span> <br/></React.Fragment> }
+                                        >
+                                            <Chip
+                                                label={chip.name + ` (${Object.keys(chip.postsList).length})`}
+                                                onDelete={ chip.id==="default" ? undefined : handleDelete( chip.id ) }
+                                                className={classes.chip}
+                                                disabled={loadingEdit}
+                                                variant="outlined"
+                                                onClick={ event => handleUpdateCategory(chip.id, chip.tokenImg, chip.name) }
+                                                avatar={
+                                                    <Avatar
+                                                    className={classes.avatar}
+                                                    src={ chip.tokenImg ? getCategoryPhotoUrl(chip.tokenImg) : "" }
+                                                    >
+                                                    {getInitials( chip.name )}
+                                                    </Avatar>
+                                                }
+                                            />
+                                        </Tooltip>
                                     </li>
                                 ))}
                             </Box>
@@ -115,25 +128,33 @@ const Categorys = props => {
                     </Card>
                 </Grid>
             </Grid>
-            <UploadCropSingleImage openDialog={openUploadImage} imageInit={dataImage} dataNewImg={ updateCat} titleName="Cập nhật ảnh danh mục" dataName={dataChip} />
         </React.Fragment>
     );
 };
 
 Categorys.propTypes = {
     categorys: PropTypes.array.isRequired,
+    loadingCreate: PropTypes.bool.isRequired,
+    loadingEdit: PropTypes.bool.isRequired,
 
     createCategory: PropTypes.func.isRequired,
     deleteCategory: PropTypes.func.isRequired,
     updateCategory: PropTypes.func.isRequired,
+    openEditCategory: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-    // categorys: state.dataCategoryTag.categorys,
+    loadingCreate: state.dataCategoryTag.loadingCreate,
+    loadingEdit: state.dataCategoryTag.loadingEdit,
 })
 
 const mapDispatchToProps = dispatch => ({
     createCategory: category => dispatch( CreateCategory(category) ),
+    deleteCategory: id => dispatch( DeleteCategory(id) ),
+    openEditCategory: content => dispatch({
+        type: OPEN_DIALOG_UPLOAD_IMG,
+        content: content
+      }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Categorys)

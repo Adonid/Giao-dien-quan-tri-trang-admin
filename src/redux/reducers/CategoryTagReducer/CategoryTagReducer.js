@@ -1,7 +1,8 @@
 import { 
     GET_CATEGORYS_TAGS, GET_CATEGORYS_TAGS_SUCCESS,
-    CREATE_CATEGORY_SUCCESS,
-
+    CREATE_CATEGORY, CREATE_CATEGORY_SUCCESS, CREATE_CATEGORY_ERROR,
+    DELETE_CATEGORY, DELETE_CATEGORY_SUCCESS, DELETE_CATEGORY_ERROR,
+    UPDATE_CATEGORY, UPDATE_CATEGORY_SUCCESS, UPDATE_CATEGORY_ERROR,
  } from 'redux/constans';
 import mockCategory from './dataCat';
 import mockTag from './dataTag';
@@ -12,6 +13,8 @@ const dataCategoryTag = {
     tags: mockTag,
 
     categorysList: [],
+    loadingCreate: false,
+    loadingEdit: false,
     tagsList: [],
 
 }
@@ -25,8 +28,32 @@ const CategoryTagReducer = (state = dataCategoryTag, action) => {
         case GET_CATEGORYS_TAGS_SUCCESS:
             return {...state, loading: false, categorysList: action.payload.categorys, tagsList: action.payload.tags };
 
+        case CREATE_CATEGORY:
+            return {...state, loadingCreate: true };
+
         case CREATE_CATEGORY_SUCCESS:
-            return {...state, categorysList: action.payload.categorys };
+            return {...state, loadingCreate: false, categorysList: action.payload.categorys };
+
+        case CREATE_CATEGORY_ERROR:
+            return {...state, loadingCreate: false };
+
+        case DELETE_CATEGORY:
+            return {...state, loadingEdit: true };
+
+        case DELETE_CATEGORY_SUCCESS:
+            return {...state, loadingEdit: false, categorysList: action.payload.categorys };
+
+        case DELETE_CATEGORY_ERROR:
+            return {...state, loadingEdit: false };
+
+        case UPDATE_CATEGORY:
+            return {...state, loadingEdit: true };
+
+        case UPDATE_CATEGORY_SUCCESS:
+            return {...state, loadingEdit: false, categorysList: action.payload.categorys };
+
+        case UPDATE_CATEGORY_ERROR:
+            return {...state, loadingEdit: false };
 
 
         case 'ADD_NEW_CAT':

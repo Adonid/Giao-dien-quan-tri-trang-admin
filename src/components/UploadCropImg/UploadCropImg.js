@@ -15,12 +15,13 @@ import {
     Typography,
     Slide,
     Divider, 
+    TextField,
  } from '@material-ui/core';
  import CloseIcon from '@material-ui/icons/Close';
  import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { connect } from 'react-redux';
 import { CLOSE_DIALOG_UPLOAD_IMG } from 'redux/constans';
-import { UploadAvatar, UploadAvatarDirectly } from 'redux/actions';
+import { UploadAvatar, UploadAvatarDirectly, UpdateCategory } from 'redux/actions';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -43,7 +44,12 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const UploadCropImg = props => {
 
-  const { openUploadImg, closeUploadImg, contentUploadImg, uploadAvatar, uploadAvatarDirectly } = props;
+  const { 
+    openUploadImg, closeUploadImg, 
+    contentUploadImg, 
+    uploadAvatar, uploadAvatarDirectly ,
+    updateCategory,
+  } = props;
 
   const classes = useStyles();
 
@@ -54,6 +60,7 @@ const UploadCropImg = props => {
   const [completedCrop, setCompletedCrop] = useState(null);
 
   const [ dataImage, setDataImage ] = useState('');
+  const [ valueText, setValueText ] = useState('');
 
     const onSelectFile = e => {
         if (e.target.files && e.target.files.length > 0) {
@@ -67,7 +74,7 @@ const UploadCropImg = props => {
         imgRef.current = img;
       }, []);
 
-      useEffect(() => {
+    useEffect(() => {
         if (!completedCrop || !previewCanvasRef.current || !imgRef.current) {
           return;
         }
@@ -102,11 +109,19 @@ const UploadCropImg = props => {
 
     useEffect( () =>{
         setUpImg(contentUploadImg.imageInit);
+        setValueText(contentUploadImg.type==="edit-category" ? contentUploadImg.valueText : '');
     },[contentUploadImg]);
+
+    const handeChange = val => setValueText(val.target.value);
 
     const sendImageBase64 = () => {
       const dataUpload = {
         uid: contentUploadImg.uid,
+        base64: dataImage,
+      }
+      const dataCategory = {
+        id: contentUploadImg.idCategory,
+        name: valueText,
         base64: dataImage,
       }
       switch (contentUploadImg.type) {
@@ -116,6 +131,10 @@ const UploadCropImg = props => {
       
         case 'upload-avatar-directly':
           uploadAvatarDirectly({base64: dataImage});
+          break;
+      
+        case 'edit-category':
+          updateCategory(dataCategory);
           break;
       
         default:
@@ -132,10 +151,10 @@ const UploadCropImg = props => {
               <CloseIcon />
             </IconButton>
             <Typography variant="h3" color="inherit" className={classes.title}>
-                Trình upload ảnh
+                Trình tải lên ảnh
             </Typography>
-            <Button autoFocus color="inherit" disabled={!dataImage} onClick={ sendImageBase64 }>
-                Dùng ảnh này
+            <Button autoFocus color="inherit" disabled={ contentUploadImg.type==="edit-category" ? !valueText : !dataImage} onClick={ sendImageBase64 }>
+                Áp dụng
             </Button>
           </Toolbar>
         </AppBar>
@@ -143,7 +162,7 @@ const UploadCropImg = props => {
             <Card>
                 <CardContent>
                     <Grid container spacing={3}>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} sm={ contentUploadImg.type==="edit-category" ? 6 : 12}>
                                 <input
                                     id="icon-button-file"
                                     accept="image/*"
@@ -156,7 +175,25 @@ const UploadCropImg = props => {
                                         { contentUploadImg.titleName??"Tải lên ảnh avatar" }
                                     </Button>
                                 </label>
-                        </Grid>                          
+                        </Grid>
+                        {
+                          contentUploadImg.type==="edit-category"
+                          ?
+                            <Grid item xs={12} sm={6}>
+                              <TextField
+                                autoFocus
+                                variant="outlined"
+                                label={ contentUploadImg.labelText }
+                                type="text"
+                                fullWidth
+                                required
+                                defaultValue ={ contentUploadImg.valueText }
+                                onChange={ handeChange }
+                              />
+                            </Grid>
+                          :
+                            null
+                        }       
                         <Divider/>
                         <Grid item xs={12} sm={6}>
                           <Typography variant="h5" color="inherit" gutterBottom>
@@ -201,6 +238,7 @@ UploadCropImg.propTypes = {
 
     uploadAvatar : PropTypes.func.isRequired,
     uploadAvatarDirectly : PropTypes.func.isRequired,
+    updateCategory : PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -213,6 +251,7 @@ const mapDispatchToProps = dispatch => ({
 
     uploadAvatar: dataUpload => dispatch( UploadAvatar(dataUpload) ),
     uploadAvatarDirectly: base64 => dispatch( UploadAvatarDirectly(base64) ),
+    updateCategory: dataCategory => dispatch( UpdateCategory(dataCategory) ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadCropImg);

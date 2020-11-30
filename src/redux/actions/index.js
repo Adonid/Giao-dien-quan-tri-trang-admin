@@ -23,3 +23,5 @@ export { default as UpdateNotifyRules } from './UpdateNotifyRules';
 export { default as UpdatePassword } from './UpdatePassword';
 export { default as CreateCategory } from './CreateCategory';
 export { default as GetAllCategorysTags } from './GetAllCategorysTags';
+export { default as DeleteCategory } from './DeleteCategory';
+export { default as UpdateCategory } from './UpdateCategory';

@@ -1,25 +1,27 @@
 import axios from 'common/Axios';
 import { 
-    CREATE_CATEGORY, CREATE_CATEGORY_SUCCESS, CREATE_CATEGORY_ERROR,
+    UPDATE_CATEGORY, UPDATE_CATEGORY_SUCCESS, UPDATE_CATEGORY_ERROR,
+    CLOSE_DIALOG_UPLOAD_IMG,
     LOGOUT_ADMIN,
     MESSAGE_MINI,
     MESSAGE_MAIN
 } from 'redux/constans';
 import { ReadCookie } from 'common';
 
-const CreateCategory = category => async dispatch => {
+const UpdateCategory = dataCategory => async dispatch => {
 
-    dispatch({ type: CREATE_CATEGORY});
+    dispatch({ type: UPDATE_CATEGORY});
+    dispatch({type: CLOSE_DIALOG_UPLOAD_IMG});
 
     await axios({
         method: 'POST',
-        url: 'admin/create-category',
+        url: 'admin/update-category',
         headers: { Authorization: "Bearer " + ReadCookie()},
-        data: category
+        data: dataCategory
         })
         .then( res => {
             dispatch( {
-                type: CREATE_CATEGORY_SUCCESS,
+                type: UPDATE_CATEGORY_SUCCESS,
                 payload: {
                     categorys: res.data.categorys,
                 }
@@ -48,9 +50,9 @@ const CreateCategory = category => async dispatch => {
                     type: "warning"
                 },
             });
-            dispatch({ type: CREATE_CATEGORY_ERROR});
+            dispatch({ type: UPDATE_CATEGORY_ERROR});
         });
 
 }
 
-export default CreateCategory;
+export default UpdateCategory;
