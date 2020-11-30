@@ -12,12 +12,14 @@ import {
     CardActions, 
     Box, 
     Chip, 
-    Avatar
-    
+    Avatar,
+    CircularProgress
  } from '@material-ui/core';
  import CategoryOutlinedIcon from '@material-ui/icons/CategoryOutlined';
  import { InputNotBorder, UploadCropSingleImage } from 'components';
-import { getInitials } from 'helpers';
+import { getCategoryPhotoUrl, getInitials } from 'helpers';
+import { CreateCategory } from 'redux/actions';
+import dayjs from 'dayjs';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -44,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 
 const Categorys = props => {
 
-    const { className, categorys, addCategory, deleteCategory, updateCategory, ...rest } = props;
+    const { className, categorys, createCategory, deleteCategory, updateCategory, ...rest } = props;
 
     const classes = useStyles();
 
@@ -53,17 +55,14 @@ const Categorys = props => {
     const [ openUploadImage, setOpenUploadImage ] = useState(false);
     const [ dataImage, setDataImage ] = useState('/images/products/contemplative-reptile.jpg');
     const [ dataChip, setDataChip ] = useState(null);
-
-    useEffect( () => {
-        setChipsCat(categorys);
-    },[categorys])
     
       const handleDelete = chipToDelete => () => {
         deleteCategory(Number(chipToDelete));
       };
 
-    const handleAddCategory = category => {
-        addCategory(category);
+    const handleAddCategory = name => {
+        createCategory({name, time: dayjs().format("MM/DD/YYYY | hh:mm A")});
+        // console.log({category, time: dayjs().format("MM/DD/YYYY | hh:mm A")});
     }
     
     const handleClick = chip => {
@@ -86,26 +85,26 @@ const Categorys = props => {
                     >
                         <CardActions disableSpacing className={classes.padding}>
                             <FormControl fullWidth >
-                                <InputNotBorder callBack={ handleAddCategory } placeholder="Thêm danh mục" icon={ <CategoryOutlinedIcon /> } fullWidth autoFocus />
+                                <InputNotBorder callBack={ handleAddCategory } placeholder={<CircularProgress size={18} />} icon={ <CategoryOutlinedIcon /> } fullWidth autoFocus />
                             </FormControl>
                         </CardActions>
                         <Divider/>
                         <CardContent className={classes.padding}>
                             <Box component="ul" className={classes.contentCategorys}>
-                                {chipsCat.map( chip => (
-                                    <li key={ chip.key }>
+                                {categorys.map( chip => (
+                                    <li key={ chip.id }>
                                         <Chip
-                                            label={chip.label + ` (${chip.qtyProducts})`}
-                                            onDelete={ chip.id===1 ? undefined : handleDelete( chip.id ) }
+                                            label={chip.name + `(${chip.postsList.length})`}
+                                            onDelete={ chip.id==="default" ? undefined : handleDelete( chip.id ) }
                                             className={classes.chip}
                                             variant="outlined"
                                             onClick={ event => handleClick(chip.id) }
                                             avatar={
                                                 <Avatar
                                                 className={classes.avatar}
-                                                src={ chip.avatar }
+                                                src={ chip.tokenImg ? getCategoryPhotoUrl(chip.tokenImg) : "" }
                                                 >
-                                                {getInitials( chip.label )}
+                                                {getInitials( chip.name )}
                                                 </Avatar>
                                             }
                                         />
@@ -123,38 +122,18 @@ const Categorys = props => {
 
 Categorys.propTypes = {
     categorys: PropTypes.array.isRequired,
-    addCategory: PropTypes.func.isRequired,
+
+    createCategory: PropTypes.func.isRequired,
     deleteCategory: PropTypes.func.isRequired,
     updateCategory: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        categorys: state.dataCategoryTag.categorys,
-    }
-}
+const mapStateToProps = state => ({
+    // categorys: state.dataCategoryTag.categorys,
+})
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        addCategory: name => {
-            dispatch({
-                type: "ADD_NEW_CAT",
-                name: name,
-            })
-        },
-        deleteCategory: id => {
-            dispatch({
-                type: "DELETE_CAT",
-                idCat: id,
-            })
-        },
-        updateCategory: dataUpdate => {
-            dispatch({
-                type: "UPDATE_CAT",
-                dataCatUpdate: dataUpdate,
-            })
-        },
-    }
-}
+const mapDispatchToProps = dispatch => ({
+    createCategory: category => dispatch( CreateCategory(category) ),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Categorys)

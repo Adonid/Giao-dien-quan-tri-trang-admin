@@ -87,7 +87,7 @@ const InputNotBorder = props => {
 }
 
 InputNotBorder.propTypes = {
-    placeholder: PropTypes.string.isRequired,
+    placeholder: PropTypes.any.isRequired,
     icon: PropTypes.node.isRequired,
     callBack: PropTypes.func.isRequired,
 }

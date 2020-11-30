@@ -1,25 +1,28 @@
 import axios from 'common/Axios';
 import { 
-    CREATE_CATEGORY_SUCCESS,
+    GET_CATEGORYS_TAGS, GET_CATEGORYS_TAGS_SUCCESS,
     LOGOUT_ADMIN,
     MESSAGE_MINI,
     MESSAGE_MAIN
 } from 'redux/constans';
 import { ReadCookie } from 'common';
+import data from 'views/Dashboard/components/LatestOrders/data';
 
-const CreateCategory = category => async dispatch => {
+const GetAllCategorysTags = () => async dispatch => {
+    
+    dispatch({type: GET_CATEGORYS_TAGS});
 
     await axios({
-        method: 'POST',
-        url: 'admin/create-category',
+        method: 'GET',
+        url: 'admin/get-all-categorys-tags',
         headers: { Authorization: "Bearer " + ReadCookie()},
-        data: category
         })
         .then( res => {
             dispatch( {
-                type: CREATE_CATEGORY_SUCCESS,
+                type: GET_CATEGORYS_TAGS_SUCCESS,
                 payload: {
                     categorys: res.data.categorys,
+                    tags: res.data.tags,
                 }
             });
         })
@@ -50,4 +53,4 @@ const CreateCategory = category => async dispatch => {
 
 }
 
-export default CreateCategory;
+export default GetAllCategorysTags;

@@ -1,13 +1,34 @@
+import { 
+    GET_CATEGORYS_TAGS, GET_CATEGORYS_TAGS_SUCCESS,
+    CREATE_CATEGORY_SUCCESS,
+
+ } from 'redux/constans';
 import mockCategory from './dataCat';
 import mockTag from './dataTag';
 
 const dataCategoryTag = {
+    loading: true,
     categorys: mockCategory,
     tags: mockTag,
+
+    categorysList: [],
+    tagsList: [],
+
 }
 
 const CategoryTagReducer = (state = dataCategoryTag, action) => {
     switch (action.type) {
+
+        case GET_CATEGORYS_TAGS:
+            return {...state, loading: true };
+
+        case GET_CATEGORYS_TAGS_SUCCESS:
+            return {...state, loading: false, categorysList: action.payload.categorys, tagsList: action.payload.tags };
+
+        case CREATE_CATEGORY_SUCCESS:
+            return {...state, categorysList: action.payload.categorys };
+
+
         case 'ADD_NEW_CAT':
             const nameCat = action.name;
             /** api them moi 1 category */
