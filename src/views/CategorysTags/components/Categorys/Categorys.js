@@ -53,7 +53,6 @@ const Categorys = props => {
         categorys, 
         createCategory, 
         deleteCategory, 
-        updateCategory, 
         loadingCreate,
         loadingEdit,
         openEditCategory,
@@ -139,7 +138,6 @@ Categorys.propTypes = {
 
     createCategory: PropTypes.func.isRequired,
     deleteCategory: PropTypes.func.isRequired,
-    updateCategory: PropTypes.func.isRequired,
     openEditCategory: PropTypes.func.isRequired,
 };
 

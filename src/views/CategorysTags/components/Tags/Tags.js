@@ -11,12 +11,12 @@ import {
     Divider,
     CardActions, 
     Box, 
-    Chip
+    Chip,
+    Tooltip
     
  } from '@material-ui/core';
  import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
  import { InputNotBorder } from 'components';
-import { idText } from 'typescript';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -43,19 +43,13 @@ const Tags = props => {
     const { className, tags, addTag, deleteTag, ...rest } = props;
 
     const classes = useStyles();
-
-    const [chipsTag, setChipsTag] = useState(tags);
-
-    useEffect( () => {
-        setChipsTag(tags);
-    },[tags])
     
       const handleDelete = (chipToDelete) => () => {
-        deleteTag( Number(chipToDelete) );
+        // deleteTag( Number(chipToDelete) );
       };
 
     const handleAddTag = tag => {
-        addTag( tag );
+        // addTag( tag );
     }
 
     return (
@@ -74,13 +68,18 @@ const Tags = props => {
                         <Divider/>
                         <CardContent className={classes.padding}>
                             <Box component="ul" className={classes.contentTags}>
-                                {chipsTag.map( chip => (
+                                { tags.map( chip => (
                                     <li key={ chip.key }>
-                                        <Chip
-                                            label={chip.label + ` (${chip.qtyProducts})`}
-                                            onDelete={ handleDelete( chip.id ) }
-                                            className={classes.chip}
-                                        />
+                                        <Tooltip 
+                                            placement="bottom" 
+                                            title={ Object.keys(chip.tagsList).length ? Object.values(chip.tagsList).map( tag => <React.Fragment><span>{ tag.name }</span> <br/></React.Fragment>) : <React.Fragment><span>Chưa gắn bài viết</span> <br/></React.Fragment> }
+                                        >
+                                            <Chip
+                                                label={chip.name + ` (${Object.keys(chip.tagsList).length})`}
+                                                onDelete={ handleDelete( chip.id ) }
+                                                className={classes.chip}
+                                            />
+                                        </Tooltip>
                                     </li>
                                 ))}
                             </Box>
@@ -94,31 +93,28 @@ const Tags = props => {
 
 Tags.propTypes = {
     tags: PropTypes.array.isRequired,
+
     addTag: PropTypes.func.isRequired,
     deleteTag: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        tags: state.dataCategoryTag.tags
-    }
-}
+const mapStateToProps = state => ({
+    // tags: state.dataCategoryTag.tags
+});
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        addTag: name => {
-            dispatch({
-                type: "ADD_TAG",
-                newTag: name
-            })
-        },
-        deleteTag: id => {
-            dispatch({
-                type: "DELETE_TAG",
-                delTag: id
-            })
-        },
-    }
-}
+const mapDispatchToProps = dispatch => ({
+    addTag: name => {
+        dispatch({
+            type: "ADD_TAG",
+            newTag: name
+        })
+    },
+    deleteTag: id => {
+        dispatch({
+            type: "DELETE_TAG",
+            delTag: id
+        })
+    },
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tags)

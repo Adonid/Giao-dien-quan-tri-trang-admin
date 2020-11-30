@@ -55,7 +55,7 @@ const CategorysTags = props => {
             <div className={classes.content}>
                 <Categorys categorys={categorys} />
 
-                <Tags />
+                <Tags tags={tags} />
             </div>
         </div>
     );
@@ -63,8 +63,8 @@ const CategorysTags = props => {
 
 CategorysTags.propTypes = {
   loading: PropTypes.bool.isRequired, 
-  categorys: PropTypes.object.isRequired, 
-  tags: PropTypes.object.isRequired, 
+  categorys: PropTypes.array.isRequired, 
+  tags: PropTypes.array.isRequired, 
   getAllCategorysTags: PropTypes.func.isRequired,
 };
 
