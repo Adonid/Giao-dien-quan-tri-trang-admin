@@ -25,3 +25,5 @@ export { default as CreateCategory } from './CreateCategory';
 export { default as GetAllCategorysTags } from './GetAllCategorysTags';
 export { default as DeleteCategory } from './DeleteCategory';
 export { default as UpdateCategory } from './UpdateCategory';
+export { default as CreateTag } from './CreateTag';
+export { default as DeleteTag } from './DeleteTag';

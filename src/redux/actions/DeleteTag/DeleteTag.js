@@ -1,26 +1,26 @@
 import axios from 'common/Axios';
 import { 
-    GET_CATEGORYS_TAGS, GET_CATEGORYS_TAGS_SUCCESS,
+    DELETE_TAG, DELETE_TAG_SUCCESS, DELETE_TAG_ERROR,
     LOGOUT_ADMIN,
     MESSAGE_MINI,
     MESSAGE_MAIN
 } from 'redux/constans';
 import { ReadCookie } from 'common';
 
-const GetAllCategorysTags = () => async dispatch => {
-    
-    dispatch({type: GET_CATEGORYS_TAGS});
+const DeleteTag = id => async dispatch => {
+
+    dispatch({ type: DELETE_TAG});
 
     await axios({
-        method: 'GET',
-        url: 'admin/get-all-categorys-tags',
+        method: 'POST',
+        url: 'admin/delete-tag',
         headers: { Authorization: "Bearer " + ReadCookie()},
+        data: {id}
         })
         .then( res => {
             dispatch( {
-                type: GET_CATEGORYS_TAGS_SUCCESS,
+                type: DELETE_TAG_SUCCESS,
                 payload: {
-                    categorys: res.data.categorys,
                     tags: res.data.tags,
                 }
             });
@@ -48,8 +48,9 @@ const GetAllCategorysTags = () => async dispatch => {
                     type: "warning"
                 },
             });
+            dispatch({ type: DELETE_TAG_ERROR});
         });
 
 }
 
-export default GetAllCategorysTags;
+export default DeleteTag;

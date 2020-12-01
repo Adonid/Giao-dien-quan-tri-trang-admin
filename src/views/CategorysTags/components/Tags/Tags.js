@@ -12,11 +12,13 @@ import {
     CardActions, 
     Box, 
     Chip,
-    Tooltip
-    
+    Tooltip,
+    CircularProgress
  } from '@material-ui/core';
  import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
  import { InputNotBorder } from 'components';
+import dayjs from 'dayjs';
+import { CreateTag, DeleteTag } from 'redux/actions';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -40,16 +42,24 @@ const useStyles = makeStyles(theme => ({
 
 const Tags = props => {
 
-    const { className, tags, addTag, deleteTag, ...rest } = props;
+    const { 
+        className, 
+        loadingCreate,
+        loadingDel,
+        tags, 
+        createTag, 
+        deleteTag, 
+        ...rest 
+    } = props;
 
     const classes = useStyles();
     
-      const handleDelete = (chipToDelete) => () => {
-        // deleteTag( Number(chipToDelete) );
+      const handleDelete = id => () => {
+        deleteTag(id );
       };
 
-    const handleAddTag = tag => {
-        // addTag( tag );
+    const handleCreateTag = name => {
+        createTag( {name, time: dayjs().format("MM/DD/YYYY | hh:mm A")} );
     }
 
     return (
@@ -62,26 +72,29 @@ const Tags = props => {
                     >
                         <CardActions disableSpacing className={classes.padding}>
                             <FormControl fullWidth >
-                                <InputNotBorder callBack={ handleAddTag } placeholder="Thêm thẻ tag sản phẩm/bài viết" icon={ <LocalOfferOutlinedIcon /> } fullWidth />
+                                <InputNotBorder callBack={ handleCreateTag } placeholder="Thêm thẻ tag sản phẩm/bài viết" icon={ loadingCreate ? <CircularProgress size={15} /> : <LocalOfferOutlinedIcon /> } fullWidth />
                             </FormControl>
                         </CardActions>
                         <Divider/>
                         <CardContent className={classes.padding}>
                             <Box component="ul" className={classes.contentTags}>
-                                { tags.map( chip => (
-                                    <li key={ chip.key }>
-                                        <Tooltip 
-                                            placement="bottom" 
-                                            title={ Object.keys(chip.tagsList).length ? Object.values(chip.tagsList).map( tag => <React.Fragment><span>{ tag.name }</span> <br/></React.Fragment>) : <React.Fragment><span>Chưa gắn bài viết</span> <br/></React.Fragment> }
-                                        >
-                                            <Chip
-                                                label={chip.name + ` (${Object.keys(chip.tagsList).length})`}
-                                                onDelete={ handleDelete( chip.id ) }
-                                                className={classes.chip}
-                                            />
-                                        </Tooltip>
-                                    </li>
-                                ))}
+                                { 
+                                    tags.map( chip => (
+                                        <li key={ chip.key }>
+                                            <Tooltip 
+                                                placement="bottom" 
+                                                title={ Object.keys(chip.postsList).length ? Object.values(chip.postsList).map( tag => <React.Fragment><span>{ tag.name }</span> <br/></React.Fragment>) : <React.Fragment><span>Chưa gắn bài viết</span> <br/></React.Fragment> }
+                                            >
+                                                <Chip
+                                                    label={chip.name + ` (${Object.keys(chip.postsList).length})`}
+                                                    onDelete={ chip.id==="default" ? undefined : handleDelete( chip.id ) }
+                                                    className={classes.chip}
+                                                    disabled={loadingDel}
+                                                />
+                                            </Tooltip>
+                                        </li>
+                                    ))
+                                }
                             </Box>
                         </CardContent>
                     </Card>
@@ -93,28 +106,23 @@ const Tags = props => {
 
 Tags.propTypes = {
     tags: PropTypes.array.isRequired,
+    loadingCreate: PropTypes.bool.isRequired,
+    loadingDel: PropTypes.bool.isRequired,
 
-    addTag: PropTypes.func.isRequired,
+    createTag: PropTypes.func.isRequired,
     deleteTag: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-    // tags: state.dataCategoryTag.tags
+    loadingCreate: state.dataCategoryTag.loadingCreateTag,
+    loadingDel: state.dataCategoryTag.loadingDelTag,
 });
 
 const mapDispatchToProps = dispatch => ({
-    addTag: name => {
-        dispatch({
-            type: "ADD_TAG",
-            newTag: name
-        })
-    },
-    deleteTag: id => {
-        dispatch({
-            type: "DELETE_TAG",
-            delTag: id
-        })
-    },
+
+    createTag: dataTag => dispatch( CreateTag(dataTag) ),
+
+    deleteTag: id => dispatch( DeleteTag(id) ),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tags)

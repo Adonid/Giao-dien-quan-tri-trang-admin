@@ -3,19 +3,18 @@ import {
     CREATE_CATEGORY, CREATE_CATEGORY_SUCCESS, CREATE_CATEGORY_ERROR,
     DELETE_CATEGORY, DELETE_CATEGORY_SUCCESS, DELETE_CATEGORY_ERROR,
     UPDATE_CATEGORY, UPDATE_CATEGORY_SUCCESS, UPDATE_CATEGORY_ERROR,
+    CREATE_TAG, CREATE_TAG_SUCCESS, CREATE_TAG_ERROR,
+    DELETE_TAG, DELETE_TAG_SUCCESS, DELETE_TAG_ERROR,
  } from 'redux/constans';
-import mockCategory from './dataCat';
-import mockTag from './dataTag';
 
 const dataCategoryTag = {
     loading: true,
-    categorys: mockCategory,
-    tags: mockTag,
-
     categorysList: [],
     loadingCreate: false,
     loadingEdit: false,
     tagsList: [],
+    loadingCreateTag: false,
+    loadingDelTag: false,
 
 }
 
@@ -56,25 +55,23 @@ const CategoryTagReducer = (state = dataCategoryTag, action) => {
             return {...state, loadingEdit: false };
 
             
-        case 'ADD_TAG':
-            const nameTag = action.newTag;
-            /** api them 1 tag */
-                // nameTag: string
-            /** end */
-            // demo sau khi api xong
-            state = {...state, tags: [...state.tags, { id: Math.floor(Math.random() * (99999 - 99)) + 99, label: nameTag, qtyProducts: 0 } ] };
-            return state;
+        case CREATE_TAG:
+            return {...state, loadingCreateTag: true };
 
+        case CREATE_TAG_SUCCESS:
+            return {...state, loadingCreateTag: false, tagsList: action.payload.tags };
+
+        case CREATE_TAG_ERROR:
+            return {...state, loadingCreateTag: false };
         
-        case 'DELETE_TAG':
-            const idTagDel = action.delTag;
-            /** api xoa 1 tag */
-                // idTagDel: int
-            /** end */
-            // demo sau khi api xong
-            state = {...state, tags: [...state.tags].filter( tag => tag.id !== Number(idTagDel)) };
-            return state;
+        case DELETE_TAG:
+            return {...state, loadingDelTag: true };
 
+        case DELETE_TAG_SUCCESS:
+            return {...state, loadingDelTag: false, tagsList: action.payload.tags };
+
+        case DELETE_TAG_ERROR:
+            return {...state, loadingDelTag: false };
         
         default:
             return state
