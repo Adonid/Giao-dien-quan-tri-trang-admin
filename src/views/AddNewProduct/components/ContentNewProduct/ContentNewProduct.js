@@ -21,6 +21,7 @@ import {
  } from '@material-ui/core';
  import AddAPhotoOutlinedIcon from '@material-ui/icons/AddAPhotoOutlined';
  import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
+ import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
  import { UploadCropSingleImage, SelectInput, SelectChips } from 'components';
 
 const useStyles = makeStyles(theme => ({
@@ -46,8 +47,17 @@ const buttonStore = createMuiTheme({
     palette: {
         primary : {
             contrastText: '#fff',
-            main: '#5850EC'
+            main: '#4caf50'
         },
+    },
+  });
+
+const buttonSaveDraft = createMuiTheme({
+    palette: {
+      primary : {
+        main: '#673AB7',
+        contrastText: '#fff',
+      },
     },
   });
 
@@ -145,9 +155,7 @@ const ContentNewProduct = props => {
 
     const handlePost = event => {
         event.preventDefault();
-        /** API xu ly dang nhap o day */
-
-        /** END */
+        
         setLoading( true );
         var dataPost = {}; 
         dataPost.name = formState.values.name;
@@ -326,13 +334,27 @@ const ContentNewProduct = props => {
                     <Grid item xs={12}>
                         <ThemeProvider theme={buttonStore}>
                             <Button 
-                                startIcon={<AssignmentTurnedInOutlinedIcon />}
+                                startIcon={<VerifiedUserOutlinedIcon />}
                                 variant="contained" 
                                 color="primary"
                                 type="submit"
                                 disabled={!formState.isValid||loading}
                             >
                                 {loading && <CircularProgress size={24} className={classes.buttonProgress} />} Lưu, chờ duyệt
+                            </Button>
+                        </ThemeProvider>
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <ThemeProvider theme={buttonSaveDraft}>
+                            <Button 
+                                startIcon={<AssignmentTurnedInOutlinedIcon />}
+                                variant="contained" 
+                                color="primary"
+                                type="submit"
+                                disabled={!formState.isValid||loading}
+                            >
+                                {loading && <CircularProgress size={24} className={classes.buttonProgress} />} Lưu nháp
                             </Button>
                         </ThemeProvider>
                         &nbsp;
@@ -364,23 +386,20 @@ ContentNewProduct.propTypes = {
     
 };
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        isLoading: state.dataManipulationPost.createPost.isLoading,
-        categorys: state.dataManipulationPost.categorys,
-        tags: state.dataManipulationPost.tags,
-    }
-}
+const mapStateToProps = state => ({
+    isLoading: state.dataManipulationPost.createPost.isLoading,
+    categorys: state.dataManipulationPost.categorys,
+    tags: state.dataManipulationPost.tags,
+})
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        createPost: dataPost => {
-            dispatch({
-                type: "CREATE_NEW_POST",
-                data: dataPost
-            })
-        }
+const mapDispatchToProps = dispatch => ({
+
+    createPost: dataPost => {
+        dispatch({
+            type: "CREATE_NEW_POST",
+            data: dataPost
+        })
     }
-}
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContentNewProduct)

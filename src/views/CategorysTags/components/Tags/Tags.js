@@ -83,7 +83,7 @@ const Tags = props => {
                                         <li key={ chip.key }>
                                             <Tooltip 
                                                 placement="bottom" 
-                                                title={ Object.keys(chip.postsList).length ? Object.values(chip.postsList).map( tag => <React.Fragment><span>{ tag.name }</span> <br/></React.Fragment>) : <React.Fragment><span>Chưa gắn bài viết</span> <br/></React.Fragment> }
+                                                title={ Object.keys(chip.postsList).length ? Object.values(chip.postsList).map( tag => <React.Fragment key={tag.key}><span>{ tag.name }</span> <br/></React.Fragment>) : <React.Fragment><span>Chưa gắn bài viết</span> <br/></React.Fragment> }
                                             >
                                                 <Chip
                                                     label={chip.name + ` (${Object.keys(chip.postsList).length})`}

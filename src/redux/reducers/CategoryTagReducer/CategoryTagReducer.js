@@ -26,6 +26,7 @@ const CategoryTagReducer = (state = dataCategoryTag, action) => {
 
         case GET_CATEGORYS_TAGS_SUCCESS:
             return {...state, loading: false, categorysList: action.payload.categorys, tagsList: action.payload.tags };
+            
 
         case CREATE_CATEGORY:
             return {...state, loadingCreate: true };

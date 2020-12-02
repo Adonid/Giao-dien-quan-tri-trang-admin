@@ -17,7 +17,7 @@ const LoginReducer = (state = dataResetPassword, action) => {
             return { ...state, loading: true };
 
         case FORGET_PASSWORD_SUCCESS:
-            return { ...state, message: "", loading: false, alert: {type: "info", content: action.payload.message} };
+            return { ...state, message: "", loading: false };
         
         case FORGET_PASSWORD_ERROR:
             return { ...state, message: action.payload.message, loading: false };
