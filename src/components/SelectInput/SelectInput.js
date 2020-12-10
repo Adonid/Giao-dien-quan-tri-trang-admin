@@ -20,17 +20,17 @@ const SelectInput = props => {
 
     return (
         <TextField
-            required={ required??false }
-            fullWidth={fullWidth??false}
+            required={ required || false }
+            fullWidth={fullWidth || false}
             id="outlined-select-item"
             select
-            margin={ margin??"none" }
-            label={label??"Sắp xếp"}
+            margin={ margin || "none" }
+            label={label || "Sắp xếp"}
             value={item}
             onChange={handleChange}
             // helperText="Thứ tự sắp xếp"
             variant="outlined"
-            disabled={ disable??false}
+            disabled={ disable || false}
         >
             {
               list.map( option => (

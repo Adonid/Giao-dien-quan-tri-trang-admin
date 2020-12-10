@@ -23,6 +23,7 @@ import {
  import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
  import VerifiedUserOutlinedIcon from '@material-ui/icons/VerifiedUserOutlined';
  import { UploadCropSingleImage, SelectInput, SelectChips } from 'components';
+import { toSlug } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -65,19 +66,17 @@ const buttonSaveDraft = createMuiTheme({
     name: {
       presence: { allowEmpty: false, message: '^Hãy nhập tên bài viết!' },
       length: {
-        maximum: 50,
-        message: "^Tối đa 50 ký tự!",
+        maximum: 80,
         minimum: 3,
-        message: "^Tối thiểu 3 ký tự",
+        message: "^Tên bài ít nhất 3, nhiều nhất 80 ký tự!",
       }
     },
     description: {
         presence: { allowEmpty: false, message: '^Hãy nhập trích dẫn bài viết!' },
       length: {
         maximum: 150,
-        message: "^Trích dẫn cần tối đa 150 ký tự",
         minimum: 16,
-        message: "^Trích dẫn cần tối thiểu 16 ký tự",
+        message: "^Trích dẫn ít nhất 16, nhiều nhất 150 ký tự!",
       }
     }
   };
@@ -202,6 +201,7 @@ const ContentNewProduct = props => {
                                         onChange={handleChange}
                                     />
                                 </FormControl>
+                                &nbsp;
                                 <FormControl fullWidth margin="dense">
                                     <TextField
                                         required
@@ -219,6 +219,7 @@ const ContentNewProduct = props => {
                                         onChange={handleChange}
                                     />
                                 </FormControl>
+                                &nbsp;
                                 <FormControl fullWidth margin="dense">
                                     <Box>
                                         <ThemeProvider theme={buttonAddPhoto}>
@@ -292,8 +293,8 @@ const ContentNewProduct = props => {
                                         a11y_advanced_options: true,
                                         image_caption: true,
                                         image_advtab: true,
-                                        // file_picker_types: 'image',  // only image file 
-                                        file_picker_types: 'file image media audio',
+                                        file_picker_types: 'image',  // only image file 
+                                        // file_picker_types: 'file image media audio',
                                         file_picker_callback: function (callback, value, meta) {
                                             var input = document.createElement('input');
                                             input.setAttribute('type', 'file');
@@ -303,10 +304,17 @@ const ContentNewProduct = props => {
                                                 var reader = new FileReader();
                                                 reader.onload = function (e) {
                                                     const ext = file.name.substring(file.name.lastIndexOf('.') + 1);
-                                                    console.log(ext);
+                                                    // Chi chap nhan tai len file: png, jpg, jpeg, gif
+                                                    if( (ext==='png' || ext==='jpg' || ext==='jpeg' || ext==='gif') === false){
+                                                        callback('', { title: '' });
+                                                    }
                                                     
-                                                    const imgbase64 = reader.result.split(',')[1];
-                                                    console.log(imgbase64);
+                                                    const nameImage = file.name.substring(0, file.name.lastIndexOf('.') + 1);
+                                                    const nameFile = toSlug(nameImage).replace(/(\s+)/g, '-')+'.'+ext;
+                                                    // const imgbase64 = reader.result.split(',')[1];
+                                                    const base64 = reader.result;
+                                                    
+                                                    console.log({base64, nameFile});
 
                                                 /* Call AXIOS -> API HERE */
                                                 
@@ -370,7 +378,7 @@ const ContentNewProduct = props => {
                             </Button>
                         </ThemeProvider>
                     </Grid>
-
+                    {/* <WindowMannageImage/> */}
                 </Grid>
             </form>
             <UploadCropSingleImage openDialog={openUploadImage} imageInit={dataImage} dataNewImg={ getDataImage} titleName="Tải lên ảnh cho bài viết" />

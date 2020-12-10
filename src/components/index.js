@@ -10,3 +10,4 @@ export { default as SelectChips } from './SelectChips';
 export { default as InputNotBorder } from './InputNotBorder';
 export { default as SelectAddress } from './SelectAddress';
 export { default as DialogConfirm } from './DialogConfirm';
+export { default as WindowMannageImage } from './WindowMannageImage';
