@@ -33,7 +33,7 @@
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@material-ui/styles": "^4.11.2",
     "@tinymce/tinymce-react": "^3.6.0",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "chart.js": "^2.8.0",
     "clsx": "^1.0.4",
     "dayjs": "^1.9.3",
